@@ -1,0 +1,11 @@
+D:\Semester 7\SWD392\SWD392.OutfitBox.Domain\bin\Debug\net7.0\SWD392.OutfitBox.Domain.deps.json
+D:\Semester 7\SWD392\SWD392.OutfitBox.Domain\bin\Debug\net7.0\SWD392.OutfitBox.Domain.dll
+D:\Semester 7\SWD392\SWD392.OutfitBox.Domain\bin\Debug\net7.0\SWD392.OutfitBox.Domain.pdb
+D:\Semester 7\SWD392\SWD392.OutfitBox.Domain\obj\Debug\net7.0\SWD392.OutfitBox.Domain.GeneratedMSBuildEditorConfig.editorconfig
+D:\Semester 7\SWD392\SWD392.OutfitBox.Domain\obj\Debug\net7.0\SWD392.OutfitBox.Domain.AssemblyInfoInputs.cache
+D:\Semester 7\SWD392\SWD392.OutfitBox.Domain\obj\Debug\net7.0\SWD392.OutfitBox.Domain.AssemblyInfo.cs
+D:\Semester 7\SWD392\SWD392.OutfitBox.Domain\obj\Debug\net7.0\SWD392.OutfitBox.Domain.csproj.CoreCompileInputs.cache
+D:\Semester 7\SWD392\SWD392.OutfitBox.Domain\obj\Debug\net7.0\SWD392.OutfitBox.Domain.dll
+D:\Semester 7\SWD392\SWD392.OutfitBox.Domain\obj\Debug\net7.0\refint\SWD392.OutfitBox.Domain.dll
+D:\Semester 7\SWD392\SWD392.OutfitBox.Domain\obj\Debug\net7.0\SWD392.OutfitBox.Domain.pdb
+D:\Semester 7\SWD392\SWD392.OutfitBox.Domain\obj\Debug\net7.0\ref\SWD392.OutfitBox.Domain.dll

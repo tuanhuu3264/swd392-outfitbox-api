@@ -1,0 +1,36 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v7.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v7.0": {
+      "SWD392.OutfitBox.Core/1.0.0": {
+        "dependencies": {
+          "SWD392.OutfitBox.Domain": "1.0.0"
+        },
+        "runtime": {
+          "SWD392.OutfitBox.Core.dll": {}
+        }
+      },
+      "SWD392.OutfitBox.Domain/1.0.0": {
+        "runtime": {
+          "SWD392.OutfitBox.Domain.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "SWD392.OutfitBox.Core/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "SWD392.OutfitBox.Domain/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

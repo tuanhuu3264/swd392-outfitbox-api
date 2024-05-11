@@ -8,7 +8,7 @@ namespace SWD392.OutfitBox.API.Configurations.Authorizations
     {
         public static void AddJwtAuthorization(this IServiceCollection service, IConfiguration configuration)
         {
-            service.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            /*service.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                .AddJwtBearer(options =>
                {
                    options.SaveToken = true;
@@ -23,7 +23,7 @@ namespace SWD392.OutfitBox.API.Configurations.Authorizations
                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWT:Secret"]))
 
                    };
-               });
+               });*/
 
         }
 
