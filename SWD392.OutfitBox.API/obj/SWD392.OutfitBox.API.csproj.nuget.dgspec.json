@@ -1,0 +1,266 @@
+{
+  "format": 1,
+  "restore": {
+    "D:\\Semester 7\\SWD392\\SWD392.OutfitBox.API\\SWD392.OutfitBox.API.csproj": {}
+  },
+  "projects": {
+    "D:\\Semester 7\\SWD392\\SWD392.OutfitBox.API\\SWD392.OutfitBox.API.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\Semester 7\\SWD392\\SWD392.OutfitBox.API\\SWD392.OutfitBox.API.csproj",
+        "projectName": "SWD392.OutfitBox.API",
+        "projectPath": "D:\\Semester 7\\SWD392\\SWD392.OutfitBox.API\\SWD392.OutfitBox.API.csproj",
+        "packagesPath": "C:\\Users\\BIN\\.nuget\\packages\\",
+        "outputPath": "D:\\Semester 7\\SWD392\\SWD392.OutfitBox.API\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\BIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {
+              "D:\\Semester 7\\SWD392\\SWD392.OutfitBox.Core\\SWD392.OutfitBox.Core.csproj": {
+                "projectPath": "D:\\Semester 7\\SWD392\\SWD392.OutfitBox.Core\\SWD392.OutfitBox.Core.csproj"
+              },
+              "D:\\Semester 7\\SWD392\\SWD392.OutfitBox.Domain\\SWD392.OutfitBox.Domain.csproj": {
+                "projectPath": "D:\\Semester 7\\SWD392\\SWD392.OutfitBox.Domain\\SWD392.OutfitBox.Domain.csproj"
+              },
+              "D:\\Semester 7\\SWD392\\SWD392.OutfitBox.Infratures\\SWD392.OutfitBox.Infrastructure.csproj": {
+                "projectPath": "D:\\Semester 7\\SWD392\\SWD392.OutfitBox.Infratures\\SWD392.OutfitBox.Infrastructure.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "dependencies": {
+            "Microsoft.AspNetCore.OpenApi": {
+              "target": "Package",
+              "version": "[7.0.12, )"
+            },
+            "Microsoft.VisualStudio.Azure.Containers.Tools.Targets": {
+              "target": "Package",
+              "version": "[1.19.4, )"
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[6.5.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.402\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\Semester 7\\SWD392\\SWD392.OutfitBox.Core\\SWD392.OutfitBox.Core.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\Semester 7\\SWD392\\SWD392.OutfitBox.Core\\SWD392.OutfitBox.Core.csproj",
+        "projectName": "SWD392.OutfitBox.Core",
+        "projectPath": "D:\\Semester 7\\SWD392\\SWD392.OutfitBox.Core\\SWD392.OutfitBox.Core.csproj",
+        "packagesPath": "C:\\Users\\BIN\\.nuget\\packages\\",
+        "outputPath": "D:\\Semester 7\\SWD392\\SWD392.OutfitBox.Core\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\BIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {
+              "D:\\Semester 7\\SWD392\\SWD392.OutfitBox.Domain\\SWD392.OutfitBox.Domain.csproj": {
+                "projectPath": "D:\\Semester 7\\SWD392\\SWD392.OutfitBox.Domain\\SWD392.OutfitBox.Domain.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.402\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\Semester 7\\SWD392\\SWD392.OutfitBox.Domain\\SWD392.OutfitBox.Domain.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\Semester 7\\SWD392\\SWD392.OutfitBox.Domain\\SWD392.OutfitBox.Domain.csproj",
+        "projectName": "SWD392.OutfitBox.Domain",
+        "projectPath": "D:\\Semester 7\\SWD392\\SWD392.OutfitBox.Domain\\SWD392.OutfitBox.Domain.csproj",
+        "packagesPath": "C:\\Users\\BIN\\.nuget\\packages\\",
+        "outputPath": "D:\\Semester 7\\SWD392\\SWD392.OutfitBox.Domain\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\BIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.402\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\Semester 7\\SWD392\\SWD392.OutfitBox.Infratures\\SWD392.OutfitBox.Infrastructure.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\Semester 7\\SWD392\\SWD392.OutfitBox.Infratures\\SWD392.OutfitBox.Infrastructure.csproj",
+        "projectName": "SWD392.OutfitBox.Infrastructure",
+        "projectPath": "D:\\Semester 7\\SWD392\\SWD392.OutfitBox.Infratures\\SWD392.OutfitBox.Infrastructure.csproj",
+        "packagesPath": "C:\\Users\\BIN\\.nuget\\packages\\",
+        "outputPath": "D:\\Semester 7\\SWD392\\SWD392.OutfitBox.Infratures\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\BIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {
+              "D:\\Semester 7\\SWD392\\SWD392.OutfitBox.Core\\SWD392.OutfitBox.Core.csproj": {
+                "projectPath": "D:\\Semester 7\\SWD392\\SWD392.OutfitBox.Core\\SWD392.OutfitBox.Core.csproj"
+              },
+              "D:\\Semester 7\\SWD392\\SWD392.OutfitBox.Domain\\SWD392.OutfitBox.Domain.csproj": {
+                "projectPath": "D:\\Semester 7\\SWD392\\SWD392.OutfitBox.Domain\\SWD392.OutfitBox.Domain.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.402\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SWD392.OutfitBox.Core\SWD392.OutfitBox.Core.csproj" />
+    <ProjectReference Include="..\SWD392.OutfitBox.Domain\SWD392.OutfitBox.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Databases\Redis\" />
+    <Folder Include="Databases\SQLServer\" />
+    <Folder Include="Libraries\" />
+    <Folder Include="Repositories\" />
+  </ItemGroup>
+
+</Project>

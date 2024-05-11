@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>cc6f597c-d8cf-4251-a8db-c70b50445ff8</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerfileContext>.</DockerfileContext>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.12" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.4" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SWD392.OutfitBox.Core\SWD392.OutfitBox.Core.csproj" />
+    <ProjectReference Include="..\SWD392.OutfitBox.Domain\SWD392.OutfitBox.Domain.csproj" />
+    <ProjectReference Include="..\SWD392.OutfitBox.Infratures\SWD392.OutfitBox.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Configurations\HTTP\" />
+    <Folder Include="Controllers\Endpoints\" />
+    <Folder Include="Middlewares\" />
+  </ItemGroup>
+
+</Project>
