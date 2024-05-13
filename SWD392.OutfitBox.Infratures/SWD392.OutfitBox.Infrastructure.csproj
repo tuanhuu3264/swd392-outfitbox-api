@@ -13,9 +13,7 @@
 
   <ItemGroup>
     <Folder Include="Databases\Redis\" />
-    <Folder Include="Databases\SQLServer\" />
     <Folder Include="Libraries\" />
-    <Folder Include="Repositories\" />
   </ItemGroup>
 
   <ItemGroup>
