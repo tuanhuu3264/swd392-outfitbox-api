@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using SWD392.OutfitBox.Infrastructure.Databases.SQLServer;
 
 namespace SWD392.OutfitBox.API.Configurations.Databases
 {
@@ -6,9 +7,9 @@ namespace SWD392.OutfitBox.API.Configurations.Databases
     {
         public static void AddSQLServerDatabase(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<DbContext>(options =>
+            services.AddDbContext<Context>(options =>
             {
-                options.UseSqlServer(configuration["ConnectionStrings:DefaultConnection"])
+                options.UseSqlServer("server=localhost;database=OutfitBox;uid=sa;pwd=12345;TrustServerCertificate=True;MultipleActiveResultSets=True")
                        .EnableSensitiveDataLogging();
             });
         }
