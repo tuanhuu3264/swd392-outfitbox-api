@@ -1,6 +1,6 @@
 ﻿using System.Linq.Expressions;
 
-namespace FAMS.Api.Repositories
+namespace SWD392.OutfitBox.Domain
 {
     public interface IBaseRepository<TEntity> where TEntity : class
     {

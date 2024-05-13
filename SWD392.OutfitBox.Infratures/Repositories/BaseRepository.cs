@@ -1,6 +1,6 @@
 ﻿
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Query;
+using SWD392.OutfitBox.Domain;
 using SWD392.OutfitBox.Infrastructure.Databases.SQLServer;
 using System.Linq.Expressions;
 
