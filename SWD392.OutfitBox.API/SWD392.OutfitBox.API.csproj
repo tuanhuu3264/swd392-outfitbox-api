@@ -30,7 +30,6 @@
 
   <ItemGroup>
     <Folder Include="Configurations\HTTP\" />
-    <Folder Include="Controllers\Endpoints\" />
     <Folder Include="Middlewares\" />
   </ItemGroup>
 
