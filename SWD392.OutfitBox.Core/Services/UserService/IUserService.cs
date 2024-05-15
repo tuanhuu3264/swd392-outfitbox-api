@@ -1,4 +1,6 @@
-﻿using SWD392.OutfitBox.Domain.Entities;
+﻿using SWD392.OutfitBox.Core.Models.Requests.User;
+using SWD392.OutfitBox.Core.Models.Responses.User;
+using SWD392.OutfitBox.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,14 +11,14 @@ namespace SWD392.OutfitBox.Core.Services.UserService
 {
     public interface IUserService
     {
-       public Task<List<User>> GetAllUsers();   
+       public Task<List<UserDTO>> GetAllUsers();   
        
-       public Task<User> GetUserById(int id);
+       public Task<UserDTO> GetUserById(int id);
        
-       public Task<User> CreateUser(User user);
+       public Task<CreateUserResponseDTO> CreateUser(CreateUserRequestDTO user);
 
-       public Task<User> UpdateUser(User user);
+       public Task<UpdateUserResponseDTO> UpdateUser(UpdateUserRequestDTO user);
        
-       public Task<User> ActiveAndDeactiveUser(int id);
+       public Task<UserDTO> ActiveAndDeactiveUser(int id);
     }
 }

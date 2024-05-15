@@ -1,8 +1,10 @@
-﻿using SWD392.OutfitBox.Core.Exceptions.Auth;
+﻿using AutoMapper;
+using SWD392.OutfitBox.Core.Exceptions.Auth;
 using SWD392.OutfitBox.Core.Helpers;
 using SWD392.OutfitBox.Core.Models.Requests;
 using SWD392.OutfitBox.Core.Models.Requests.Auth;
 using SWD392.OutfitBox.Core.Models.Responses.Auth;
+using SWD392.OutfitBox.Core.Models.Responses.User;
 using SWD392.OutfitBox.Core.RepoInterfaces;
 using SWD392.OutfitBox.Domain.Entities;
 using System;
@@ -16,16 +18,18 @@ namespace SWD392.OutfitBox.Core.Services.AuthService
 {
     public class AuthService : IAuthService
     {
+        public IMapper _mapper;
         public IUserRepository _userRepository { get; set; }
-        public AuthService(IUserRepository userRepository)
+        public AuthService(IMapper mapper, IUserRepository userRepository)
         {
             _userRepository = userRepository;
+            _mapper = mapper;
         }
         public async Task<ForgetPasswordResponseDTO> ForgetPassword(ForgetPasswordRequestDTO forgetPasswordRequestDTO)
         {
             var user = await _userRepository.GetUserByPhoneOrEmail(forgetPasswordRequestDTO.Email);
             user.OTP = long.Parse(DateTime.Now.ToString("HHmmss"));
-            await _userRepository.Update(user);
+            await _userRepository.UpdateUser(user);
             return new ForgetPasswordResponseDTO() { };
         }
 
@@ -92,7 +96,7 @@ namespace SWD392.OutfitBox.Core.Services.AuthService
                 return new VerifyOTPResponseDTO()
                 {
                     Message = "Verify account successfully!",
-                    UserProfile = user
+                    UserProfile = _mapper.Map<UserDTO>(user)
                 };
             }
             return new VerifyOTPResponseDTO()

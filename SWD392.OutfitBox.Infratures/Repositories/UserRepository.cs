@@ -1,4 +1,4 @@
-﻿using FAMS.Api.Repositories;
+﻿
 using Microsoft.EntityFrameworkCore;
 using SWD392.OutfitBox.Core.RepoInterfaces;
 using SWD392.OutfitBox.Domain.Entities;
@@ -21,7 +21,7 @@ namespace SWD392.OutfitBox.Infrastructure.Repositories
         {
             var user = await this.Get().FirstAsync(x=> x.Id == id);
             user.Status = Math.Abs(1 - user.Status); 
-            return await this.Update(user);
+            return await this.UpdateUser(user);
         }
 
         public async Task<User> Create(User user)
@@ -51,11 +51,12 @@ namespace SWD392.OutfitBox.Infrastructure.Repositories
             return await this.Get().ToListAsync();
         }
 
-        public async Task<User> Update(User user)
+        public async Task<User> UpdateUser(User user)
         {
-            return await this.Update(user);    
+             this.Update(user);
+            return await GetUserById(user.Id);
         }
 
-       
+      
     }
 }

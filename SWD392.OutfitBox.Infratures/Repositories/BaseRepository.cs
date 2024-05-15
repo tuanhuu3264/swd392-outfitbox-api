@@ -4,7 +4,7 @@ using SWD392.OutfitBox.Domain;
 using SWD392.OutfitBox.Infrastructure.Databases.SQLServer;
 using System.Linq.Expressions;
 
-namespace FAMS.Api.Repositories
+namespace SWD392.OutfitBox.Infrastructure.Repositories
 {
     public class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : class
     {

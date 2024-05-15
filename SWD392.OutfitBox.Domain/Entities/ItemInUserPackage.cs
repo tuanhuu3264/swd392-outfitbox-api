@@ -13,9 +13,7 @@ namespace SWD392.OutfitBox.Domain.Entities
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        public long Deposit {  get; set; }
-        public DateTime DateGive { get; set; }
-        public DateTime DateReceive { get; set; }
+        public double Deposit {  get; set; }
         public int Status {  get; set; }
         public int ProductId { get; set; }
         public int UserPackageId { get; set; }

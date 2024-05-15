@@ -11,7 +11,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.21.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Services\CategoryPackageService\" />
+    <Folder Include="Services\ItemInUserPackage\" />
+    <Folder Include="Services\UserPackageService\" />
   </ItemGroup>
 
 </Project>

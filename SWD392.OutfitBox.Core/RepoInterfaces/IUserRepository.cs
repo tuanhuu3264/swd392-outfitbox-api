@@ -1,4 +1,6 @@
-﻿using SWD392.OutfitBox.Domain.Entities;
+﻿using SWD392.OutfitBox.Core.Models.Requests.User;
+using SWD392.OutfitBox.Core.Models.Responses.User;
+using SWD392.OutfitBox.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +14,7 @@ namespace SWD392.OutfitBox.Core.RepoInterfaces
         public Task<List<User>> GetAllUsers(); 
         public Task<User> GetUserById(int id);
         public Task<User> Create(User user);
-        public Task<User> Update(User user);
+        public Task<User> UpdateUser(User user);
         public Task<User> ActiveOrDeActive(int id);
 
         public Task<User> GetUserByPhoneOrEmail(string phoneOrEmail);

@@ -23,12 +23,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SWD392.OutfitBox.Core\SWD392.OutfitBox.Core.csproj" />
-    <ProjectReference Include="..\SWD392.OutfitBox.Domain\SWD392.OutfitBox.Domain.csproj" />
-    <ProjectReference Include="..\SWD392.OutfitBox.Infratures\SWD392.OutfitBox.Infrastructure.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Folder Include="Configurations\HTTP\" />
     <Folder Include="Middlewares\" />
   </ItemGroup>
@@ -43,6 +37,12 @@
 
   <ItemGroup>
     <None Remove="..\.dockerignore" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SWD392.OutfitBox.Core\SWD392.OutfitBox.Core.csproj" />
+    <ProjectReference Include="..\SWD392.OutfitBox.Domain\SWD392.OutfitBox.Domain.csproj" />
+    <ProjectReference Include="..\SWD392.OutfitBox.Infratures\SWD392.OutfitBox.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

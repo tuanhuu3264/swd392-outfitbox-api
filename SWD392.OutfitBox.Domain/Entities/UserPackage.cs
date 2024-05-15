@@ -21,6 +21,9 @@ namespace SWD392.OutfitBox.Domain.Entities
         public DateTime DateFrom { get; set; }
         public DateTime DateTo { get; set; }
         public double Price { get; set; }
+        public string ReceiverName { get; set; } = string.Empty; 
+        public string ReceiverPhone {  get; set; } = string.Empty;
+        public string ReceiverAddress { get; set; } = string.Empty; 
         public int Status { get; set; }
         [ForeignKey("UserId")]
         public User? User {  get; set; }

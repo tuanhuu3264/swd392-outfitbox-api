@@ -1,4 +1,5 @@
-﻿using SWD392.OutfitBox.Domain.Entities;
+﻿using SWD392.OutfitBox.Core.Models.Responses.User;
+using SWD392.OutfitBox.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,6 @@ namespace SWD392.OutfitBox.Core.Models.Responses.Auth
     public class VerifyOTPResponseDTO
     {
         public string Message { get; set; } = string.Empty;
-        public User UserProfile { get; set; } = new User();
+        public UserDTO UserProfile { get; set; } = new UserDTO();
     }
 }

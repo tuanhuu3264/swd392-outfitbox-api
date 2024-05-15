@@ -1,5 +1,4 @@
-﻿using FAMS.Api.Repositories;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using SWD392.OutfitBox.Core.RepoInterfaces;
 using SWD392.OutfitBox.Domain.Entities;
 using SWD392.OutfitBox.Infrastructure.Databases.SQLServer;

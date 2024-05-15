@@ -1347,6 +1347,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v7.0",
         "dependencies": {
+          "AutoMapper": "13.0.1",
           "SWD392.OutfitBox.Domain": "1.0.0",
           "System.IdentityModel.Tokens.Jwt": "6.21.0"
         },

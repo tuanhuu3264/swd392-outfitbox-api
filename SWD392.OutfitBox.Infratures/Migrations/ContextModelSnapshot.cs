@@ -84,6 +84,9 @@ namespace SWD392.OutfitBox.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
                     b.HasKey("ID");
 
                     b.ToTable("Category");
@@ -93,31 +96,36 @@ namespace SWD392.OutfitBox.Infrastructure.Migrations
                         {
                             ID = 1,
                             Description = "",
-                            Name = "Shirt"
+                            Name = "Shirt",
+                            Status = 0
                         },
                         new
                         {
                             ID = 2,
                             Description = "",
-                            Name = "Short"
+                            Name = "Short",
+                            Status = 0
                         },
                         new
                         {
                             ID = 3,
                             Description = "",
-                            Name = "Long-Skirt"
+                            Name = "Long-Skirt",
+                            Status = 0
                         },
                         new
                         {
                             ID = 4,
                             Description = "",
-                            Name = "Short-Skirt"
+                            Name = "Short-Skirt",
+                            Status = 0
                         },
                         new
                         {
                             ID = 5,
                             Description = "",
-                            Name = "Dress"
+                            Name = "Dress",
+                            Status = 0
                         });
                 });
 
@@ -704,6 +712,18 @@ namespace SWD392.OutfitBox.Infrastructure.Migrations
                     b.Property<double>("Price")
                         .HasColumnType("float");
 
+                    b.Property<string>("ReceiverAddress")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ReceiverName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ReceiverPhone")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
@@ -731,6 +751,9 @@ namespace SWD392.OutfitBox.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
