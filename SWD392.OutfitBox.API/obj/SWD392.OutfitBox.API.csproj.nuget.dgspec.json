@@ -1,24 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Admin\\OneDrive\\Máy tính\\swd392-outfitbox-api\\SWD392.OutfitBox.API\\SWD392.OutfitBox.API.csproj": {}
+    "D:\\Semester 7\\SWD392\\api\\swd392-outfitbox-api\\SWD392.OutfitBox.API\\SWD392.OutfitBox.API.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Admin\\OneDrive\\Máy tính\\swd392-outfitbox-api\\SWD392.OutfitBox.API\\SWD392.OutfitBox.API.csproj": {
+    "D:\\Semester 7\\SWD392\\api\\swd392-outfitbox-api\\SWD392.OutfitBox.API\\SWD392.OutfitBox.API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Admin\\OneDrive\\Máy tính\\swd392-outfitbox-api\\SWD392.OutfitBox.API\\SWD392.OutfitBox.API.csproj",
+        "projectUniqueName": "D:\\Semester 7\\SWD392\\api\\swd392-outfitbox-api\\SWD392.OutfitBox.API\\SWD392.OutfitBox.API.csproj",
         "projectName": "SWD392.OutfitBox.API",
-        "projectPath": "C:\\Users\\Admin\\OneDrive\\Máy tính\\swd392-outfitbox-api\\SWD392.OutfitBox.API\\SWD392.OutfitBox.API.csproj",
-        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Admin\\OneDrive\\Máy tính\\swd392-outfitbox-api\\SWD392.OutfitBox.API\\obj\\",
+        "projectPath": "D:\\Semester 7\\SWD392\\api\\swd392-outfitbox-api\\SWD392.OutfitBox.API\\SWD392.OutfitBox.API.csproj",
+        "packagesPath": "C:\\Users\\BIN\\.nuget\\packages\\",
+        "outputPath": "D:\\Semester 7\\SWD392\\api\\swd392-outfitbox-api\\SWD392.OutfitBox.API\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\BIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -26,21 +22,20 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net7.0": {
             "targetAlias": "net7.0",
             "projectReferences": {
-              "C:\\Users\\Admin\\OneDrive\\Máy tính\\swd392-outfitbox-api\\SWD392.OutfitBox.Core\\SWD392.OutfitBox.Core.csproj": {
-                "projectPath": "C:\\Users\\Admin\\OneDrive\\Máy tính\\swd392-outfitbox-api\\SWD392.OutfitBox.Core\\SWD392.OutfitBox.Core.csproj"
+              "D:\\Semester 7\\SWD392\\api\\swd392-outfitbox-api\\SWD392.OutfitBox.Core\\SWD392.OutfitBox.Core.csproj": {
+                "projectPath": "D:\\Semester 7\\SWD392\\api\\swd392-outfitbox-api\\SWD392.OutfitBox.Core\\SWD392.OutfitBox.Core.csproj"
               },
-              "C:\\Users\\Admin\\OneDrive\\Máy tính\\swd392-outfitbox-api\\SWD392.OutfitBox.Domain\\SWD392.OutfitBox.Domain.csproj": {
-                "projectPath": "C:\\Users\\Admin\\OneDrive\\Máy tính\\swd392-outfitbox-api\\SWD392.OutfitBox.Domain\\SWD392.OutfitBox.Domain.csproj"
+              "D:\\Semester 7\\SWD392\\api\\swd392-outfitbox-api\\SWD392.OutfitBox.Domain\\SWD392.OutfitBox.Domain.csproj": {
+                "projectPath": "D:\\Semester 7\\SWD392\\api\\swd392-outfitbox-api\\SWD392.OutfitBox.Domain\\SWD392.OutfitBox.Domain.csproj"
               },
-              "C:\\Users\\Admin\\OneDrive\\Máy tính\\swd392-outfitbox-api\\SWD392.OutfitBox.Infratures\\SWD392.OutfitBox.Infrastructure.csproj": {
-                "projectPath": "C:\\Users\\Admin\\OneDrive\\Máy tính\\swd392-outfitbox-api\\SWD392.OutfitBox.Infratures\\SWD392.OutfitBox.Infrastructure.csproj"
+              "D:\\Semester 7\\SWD392\\api\\swd392-outfitbox-api\\SWD392.OutfitBox.Infratures\\SWD392.OutfitBox.Infrastructure.csproj": {
+                "projectPath": "D:\\Semester 7\\SWD392\\api\\swd392-outfitbox-api\\SWD392.OutfitBox.Infratures\\SWD392.OutfitBox.Infrastructure.csproj"
               }
             }
           }
@@ -109,21 +104,17 @@
         }
       }
     },
-    "C:\\Users\\Admin\\OneDrive\\Máy tính\\swd392-outfitbox-api\\SWD392.OutfitBox.Core\\SWD392.OutfitBox.Core.csproj": {
+    "D:\\Semester 7\\SWD392\\api\\swd392-outfitbox-api\\SWD392.OutfitBox.Core\\SWD392.OutfitBox.Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Admin\\OneDrive\\Máy tính\\swd392-outfitbox-api\\SWD392.OutfitBox.Core\\SWD392.OutfitBox.Core.csproj",
+        "projectUniqueName": "D:\\Semester 7\\SWD392\\api\\swd392-outfitbox-api\\SWD392.OutfitBox.Core\\SWD392.OutfitBox.Core.csproj",
         "projectName": "SWD392.OutfitBox.Core",
-        "projectPath": "C:\\Users\\Admin\\OneDrive\\Máy tính\\swd392-outfitbox-api\\SWD392.OutfitBox.Core\\SWD392.OutfitBox.Core.csproj",
-        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Admin\\OneDrive\\Máy tính\\swd392-outfitbox-api\\SWD392.OutfitBox.Core\\obj\\",
+        "projectPath": "D:\\Semester 7\\SWD392\\api\\swd392-outfitbox-api\\SWD392.OutfitBox.Core\\SWD392.OutfitBox.Core.csproj",
+        "packagesPath": "C:\\Users\\BIN\\.nuget\\packages\\",
+        "outputPath": "D:\\Semester 7\\SWD392\\api\\swd392-outfitbox-api\\SWD392.OutfitBox.Core\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\BIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -131,15 +122,14 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net7.0": {
             "targetAlias": "net7.0",
             "projectReferences": {
-              "C:\\Users\\Admin\\OneDrive\\Máy tính\\swd392-outfitbox-api\\SWD392.OutfitBox.Domain\\SWD392.OutfitBox.Domain.csproj": {
-                "projectPath": "C:\\Users\\Admin\\OneDrive\\Máy tính\\swd392-outfitbox-api\\SWD392.OutfitBox.Domain\\SWD392.OutfitBox.Domain.csproj"
+              "D:\\Semester 7\\SWD392\\api\\swd392-outfitbox-api\\SWD392.OutfitBox.Domain\\SWD392.OutfitBox.Domain.csproj": {
+                "projectPath": "D:\\Semester 7\\SWD392\\api\\swd392-outfitbox-api\\SWD392.OutfitBox.Domain\\SWD392.OutfitBox.Domain.csproj"
               }
             }
           }
@@ -153,6 +143,12 @@
       "frameworks": {
         "net7.0": {
           "targetAlias": "net7.0",
+          "dependencies": {
+            "System.IdentityModel.Tokens.Jwt": {
+              "target": "Package",
+              "version": "[6.21.0, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -173,21 +169,17 @@
         }
       }
     },
-    "C:\\Users\\Admin\\OneDrive\\Máy tính\\swd392-outfitbox-api\\SWD392.OutfitBox.Domain\\SWD392.OutfitBox.Domain.csproj": {
+    "D:\\Semester 7\\SWD392\\api\\swd392-outfitbox-api\\SWD392.OutfitBox.Domain\\SWD392.OutfitBox.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Admin\\OneDrive\\Máy tính\\swd392-outfitbox-api\\SWD392.OutfitBox.Domain\\SWD392.OutfitBox.Domain.csproj",
+        "projectUniqueName": "D:\\Semester 7\\SWD392\\api\\swd392-outfitbox-api\\SWD392.OutfitBox.Domain\\SWD392.OutfitBox.Domain.csproj",
         "projectName": "SWD392.OutfitBox.Domain",
-        "projectPath": "C:\\Users\\Admin\\OneDrive\\Máy tính\\swd392-outfitbox-api\\SWD392.OutfitBox.Domain\\SWD392.OutfitBox.Domain.csproj",
-        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Admin\\OneDrive\\Máy tính\\swd392-outfitbox-api\\SWD392.OutfitBox.Domain\\obj\\",
+        "projectPath": "D:\\Semester 7\\SWD392\\api\\swd392-outfitbox-api\\SWD392.OutfitBox.Domain\\SWD392.OutfitBox.Domain.csproj",
+        "packagesPath": "C:\\Users\\BIN\\.nuget\\packages\\",
+        "outputPath": "D:\\Semester 7\\SWD392\\api\\swd392-outfitbox-api\\SWD392.OutfitBox.Domain\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\BIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -195,7 +187,6 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -233,21 +224,17 @@
         }
       }
     },
-    "C:\\Users\\Admin\\OneDrive\\Máy tính\\swd392-outfitbox-api\\SWD392.OutfitBox.Infratures\\SWD392.OutfitBox.Infrastructure.csproj": {
+    "D:\\Semester 7\\SWD392\\api\\swd392-outfitbox-api\\SWD392.OutfitBox.Infratures\\SWD392.OutfitBox.Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Admin\\OneDrive\\Máy tính\\swd392-outfitbox-api\\SWD392.OutfitBox.Infratures\\SWD392.OutfitBox.Infrastructure.csproj",
+        "projectUniqueName": "D:\\Semester 7\\SWD392\\api\\swd392-outfitbox-api\\SWD392.OutfitBox.Infratures\\SWD392.OutfitBox.Infrastructure.csproj",
         "projectName": "SWD392.OutfitBox.Infrastructure",
-        "projectPath": "C:\\Users\\Admin\\OneDrive\\Máy tính\\swd392-outfitbox-api\\SWD392.OutfitBox.Infratures\\SWD392.OutfitBox.Infrastructure.csproj",
-        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Admin\\OneDrive\\Máy tính\\swd392-outfitbox-api\\SWD392.OutfitBox.Infratures\\obj\\",
+        "projectPath": "D:\\Semester 7\\SWD392\\api\\swd392-outfitbox-api\\SWD392.OutfitBox.Infratures\\SWD392.OutfitBox.Infrastructure.csproj",
+        "packagesPath": "C:\\Users\\BIN\\.nuget\\packages\\",
+        "outputPath": "D:\\Semester 7\\SWD392\\api\\swd392-outfitbox-api\\SWD392.OutfitBox.Infratures\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\BIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -255,18 +242,17 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net7.0": {
             "targetAlias": "net7.0",
             "projectReferences": {
-              "C:\\Users\\Admin\\OneDrive\\Máy tính\\swd392-outfitbox-api\\SWD392.OutfitBox.Core\\SWD392.OutfitBox.Core.csproj": {
-                "projectPath": "C:\\Users\\Admin\\OneDrive\\Máy tính\\swd392-outfitbox-api\\SWD392.OutfitBox.Core\\SWD392.OutfitBox.Core.csproj"
+              "D:\\Semester 7\\SWD392\\api\\swd392-outfitbox-api\\SWD392.OutfitBox.Core\\SWD392.OutfitBox.Core.csproj": {
+                "projectPath": "D:\\Semester 7\\SWD392\\api\\swd392-outfitbox-api\\SWD392.OutfitBox.Core\\SWD392.OutfitBox.Core.csproj"
               },
-              "C:\\Users\\Admin\\OneDrive\\Máy tính\\swd392-outfitbox-api\\SWD392.OutfitBox.Domain\\SWD392.OutfitBox.Domain.csproj": {
-                "projectPath": "C:\\Users\\Admin\\OneDrive\\Máy tính\\swd392-outfitbox-api\\SWD392.OutfitBox.Domain\\SWD392.OutfitBox.Domain.csproj"
+              "D:\\Semester 7\\SWD392\\api\\swd392-outfitbox-api\\SWD392.OutfitBox.Domain\\SWD392.OutfitBox.Domain.csproj": {
+                "projectPath": "D:\\Semester 7\\SWD392\\api\\swd392-outfitbox-api\\SWD392.OutfitBox.Domain\\SWD392.OutfitBox.Domain.csproj"
               }
             }
           }
@@ -281,6 +267,10 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "dependencies": {
+            "MailKit": {
+              "target": "Package",
+              "version": "[4.5.0, )"
+            },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
               "version": "[7.0.0, )"
@@ -300,6 +290,10 @@
               "suppressParent": "All",
               "target": "Package",
               "version": "[7.0.0, )"
+            },
+            "MimeKit": {
+              "target": "Package",
+              "version": "[4.5.0, )"
             }
           },
           "imports": [

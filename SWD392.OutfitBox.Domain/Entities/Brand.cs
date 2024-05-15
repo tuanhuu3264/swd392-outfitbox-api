@@ -19,5 +19,7 @@ namespace SWD392.OutfitBox.Domain.Entities
         public string Description { get; set; }
         public int Status {  get; set; }
         public string Link { get; set; }
+
+        public List<Product>? Products { get; set; }
     }
 }

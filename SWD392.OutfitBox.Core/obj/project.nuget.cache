@@ -1,8 +1,16 @@
 {
   "version": 2,
-  "dgSpecHash": "bxzE6PEEasRJx2Dj0VRe/Vc7uU7rAOAZ084Dp4cK3HxCxsEWxpyYkQ5PBIkG4FSN8Op13p0kpze1HSfmhOnq1A==",
+  "dgSpecHash": "q6spbtc6WIDsYRshX9Y25G1FT7GvQ64Pk/K2CbjlXltAfJRZO3iJ/6L5hWJ3RnleXD3b0Al5SXYAoU5g8wRtBQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Admin\\OneDrive\\Máy tính\\swd392-outfitbox-api\\SWD392.OutfitBox.Core\\SWD392.OutfitBox.Core.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "D:\\Semester 7\\SWD392\\api\\swd392-outfitbox-api\\SWD392.OutfitBox.Core\\SWD392.OutfitBox.Core.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\BIN\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",
+    "C:\\Users\\BIN\\.nuget\\packages\\microsoft.identitymodel.abstractions\\6.21.0\\microsoft.identitymodel.abstractions.6.21.0.nupkg.sha512",
+    "C:\\Users\\BIN\\.nuget\\packages\\microsoft.identitymodel.jsonwebtokens\\6.21.0\\microsoft.identitymodel.jsonwebtokens.6.21.0.nupkg.sha512",
+    "C:\\Users\\BIN\\.nuget\\packages\\microsoft.identitymodel.logging\\6.21.0\\microsoft.identitymodel.logging.6.21.0.nupkg.sha512",
+    "C:\\Users\\BIN\\.nuget\\packages\\microsoft.identitymodel.tokens\\6.21.0\\microsoft.identitymodel.tokens.6.21.0.nupkg.sha512",
+    "C:\\Users\\BIN\\.nuget\\packages\\system.identitymodel.tokens.jwt\\6.21.0\\system.identitymodel.tokens.jwt.6.21.0.nupkg.sha512",
+    "C:\\Users\\BIN\\.nuget\\packages\\system.security.cryptography.cng\\4.5.0\\system.security.cryptography.cng.4.5.0.nupkg.sha512"
+  ],
   "logs": []
 }
