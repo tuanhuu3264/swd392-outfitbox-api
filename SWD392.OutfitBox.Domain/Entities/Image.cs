@@ -17,6 +17,6 @@ namespace SWD392.OutfitBox.Domain.Entities
         public string Link { get; set; }
         public int IdProduct { get; set; }
         [ForeignKey("IdProduct")]
-        public Product Product { get; set; }
+        public Product? Product { get; set; }
     }
 }

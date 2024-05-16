@@ -4,7 +4,7 @@ using SWD392.OutfitBox.Domain;
 using SWD392.OutfitBox.Infrastructure.Databases.SQLServer;
 using System.Linq.Expressions;
 
-namespace FAMS.Api.Repositories
+namespace SWD392.OutfitBox.Infrastructure.Repositories
 {
     public class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : class
     {
@@ -20,18 +20,21 @@ namespace FAMS.Api.Repositories
         public async Task<TEntity> AddAsync(TEntity entity, CancellationToken cancellationToken = default)
         {
            var result = await _dbSet.AddAsync(entity);
+           await _context.SaveChangesAsync();
             return result.Entity;
         }
 
         public async Task AddRangeAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default)
         {
             await _dbSet.AddRangeAsync(entities);
-      
+            await _context.SaveChangesAsync();
+
         }
 
         public void Delete(params TEntity[] entities)
         {
             _dbSet.RemoveRange(entities);
+
 
         }
 

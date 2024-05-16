@@ -22,6 +22,7 @@ namespace SWD392.OutfitBox.Domain.Entities
         public string Description { get; set; }
         public string Status { get; set; }
         public string IsUsed {  get; set; }
+        public double Deposit { get; set; }
         public int IdCategory {  get; set; }
         [ForeignKey("IdCategory")]
         public Category Category { get; set; }
