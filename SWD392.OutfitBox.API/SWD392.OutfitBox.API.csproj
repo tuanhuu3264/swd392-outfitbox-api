@@ -28,21 +28,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="..\.dockerignore" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Remove="..\.dockerignore" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Remove="..\.dockerignore" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\SWD392.OutfitBox.Core\SWD392.OutfitBox.Core.csproj" />
     <ProjectReference Include="..\SWD392.OutfitBox.Domain\SWD392.OutfitBox.Domain.csproj" />
-    <ProjectReference Include="..\SWD392.OutfitBox.Infratures\SWD392.OutfitBox.Infrastructure.csproj" />
+    <ProjectReference Include="..\SWD392.OutfitBox.Infrastructure\SWD392.OutfitBox.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

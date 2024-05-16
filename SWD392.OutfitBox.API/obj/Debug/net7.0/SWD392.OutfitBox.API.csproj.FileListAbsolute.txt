@@ -251,3 +251,9 @@ D:\Semester 7\SWD392\api\swd392-outfitbox-api\SWD392.OutfitBox.API\bin\Debug\net
 D:\Semester 7\SWD392\api\swd392-outfitbox-api\SWD392.OutfitBox.API\bin\Debug\net7.0\System.Formats.Asn1.dll
 D:\Semester 7\SWD392\api\swd392-outfitbox-api\SWD392.OutfitBox.API\bin\Debug\net7.0\System.Security.Cryptography.Pkcs.dll
 D:\Semester 7\SWD392\api\swd392-outfitbox-api\SWD392.OutfitBox.API\bin\Debug\net7.0\runtimes\win\lib\net7.0\System.Security.Cryptography.Pkcs.dll
+D:\Semester 7\SWD392\api\swd392-outfitbox-api\SWD392.OutfitBox.API\bin\Debug\net7.0\System.Data.SqlClient.dll
+D:\Semester 7\SWD392\api\swd392-outfitbox-api\SWD392.OutfitBox.API\bin\Debug\net7.0\runtimes\win-arm64\native\sni.dll
+D:\Semester 7\SWD392\api\swd392-outfitbox-api\SWD392.OutfitBox.API\bin\Debug\net7.0\runtimes\win-x64\native\sni.dll
+D:\Semester 7\SWD392\api\swd392-outfitbox-api\SWD392.OutfitBox.API\bin\Debug\net7.0\runtimes\win-x86\native\sni.dll
+D:\Semester 7\SWD392\api\swd392-outfitbox-api\SWD392.OutfitBox.API\bin\Debug\net7.0\runtimes\unix\lib\netcoreapp2.1\System.Data.SqlClient.dll
+D:\Semester 7\SWD392\api\swd392-outfitbox-api\SWD392.OutfitBox.API\bin\Debug\net7.0\runtimes\win\lib\netcoreapp2.1\System.Data.SqlClient.dll

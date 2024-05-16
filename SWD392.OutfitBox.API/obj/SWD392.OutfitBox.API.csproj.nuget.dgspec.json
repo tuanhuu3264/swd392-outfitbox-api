@@ -34,8 +34,8 @@
               "D:\\Semester 7\\SWD392\\api\\swd392-outfitbox-api\\SWD392.OutfitBox.Domain\\SWD392.OutfitBox.Domain.csproj": {
                 "projectPath": "D:\\Semester 7\\SWD392\\api\\swd392-outfitbox-api\\SWD392.OutfitBox.Domain\\SWD392.OutfitBox.Domain.csproj"
               },
-              "D:\\Semester 7\\SWD392\\api\\swd392-outfitbox-api\\SWD392.OutfitBox.Infratures\\SWD392.OutfitBox.Infrastructure.csproj": {
-                "projectPath": "D:\\Semester 7\\SWD392\\api\\swd392-outfitbox-api\\SWD392.OutfitBox.Infratures\\SWD392.OutfitBox.Infrastructure.csproj"
+              "D:\\Semester 7\\SWD392\\api\\swd392-outfitbox-api\\SWD392.OutfitBox.Infrastructure\\SWD392.OutfitBox.Infrastructure.csproj": {
+                "projectPath": "D:\\Semester 7\\SWD392\\api\\swd392-outfitbox-api\\SWD392.OutfitBox.Infrastructure\\SWD392.OutfitBox.Infrastructure.csproj"
               }
             }
           }
@@ -228,14 +228,14 @@
         }
       }
     },
-    "D:\\Semester 7\\SWD392\\api\\swd392-outfitbox-api\\SWD392.OutfitBox.Infratures\\SWD392.OutfitBox.Infrastructure.csproj": {
+    "D:\\Semester 7\\SWD392\\api\\swd392-outfitbox-api\\SWD392.OutfitBox.Infrastructure\\SWD392.OutfitBox.Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Semester 7\\SWD392\\api\\swd392-outfitbox-api\\SWD392.OutfitBox.Infratures\\SWD392.OutfitBox.Infrastructure.csproj",
+        "projectUniqueName": "D:\\Semester 7\\SWD392\\api\\swd392-outfitbox-api\\SWD392.OutfitBox.Infrastructure\\SWD392.OutfitBox.Infrastructure.csproj",
         "projectName": "SWD392.OutfitBox.Infrastructure",
-        "projectPath": "D:\\Semester 7\\SWD392\\api\\swd392-outfitbox-api\\SWD392.OutfitBox.Infratures\\SWD392.OutfitBox.Infrastructure.csproj",
+        "projectPath": "D:\\Semester 7\\SWD392\\api\\swd392-outfitbox-api\\SWD392.OutfitBox.Infrastructure\\SWD392.OutfitBox.Infrastructure.csproj",
         "packagesPath": "C:\\Users\\BIN\\.nuget\\packages\\",
-        "outputPath": "D:\\Semester 7\\SWD392\\api\\swd392-outfitbox-api\\SWD392.OutfitBox.Infratures\\obj\\",
+        "outputPath": "D:\\Semester 7\\SWD392\\api\\swd392-outfitbox-api\\SWD392.OutfitBox.Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\BIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -275,6 +275,10 @@
               "target": "Package",
               "version": "[4.5.0, )"
             },
+            "Microsoft.Data.SqlClient.SNI.runtime": {
+              "target": "Package",
+              "version": "[5.2.0, )"
+            },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
               "version": "[7.0.0, )"
@@ -298,6 +302,10 @@
             "MimeKit": {
               "target": "Package",
               "version": "[4.5.0, )"
+            },
+            "System.Data.SqlClient": {
+              "target": "Package",
+              "version": "[4.8.6, )"
             }
           },
           "imports": [
