@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SWD392.OutfitBox.Core", ".\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SWD392.OutfitBox.Domain", ".\SWD392.OutfitBox.Domain\SWD392.OutfitBox.Domain.csproj", "{1D6AD790-C0D2-4A12-B07E-FB1171CBC07C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SWD392.OutfitBox.Infrastructure", ".\SWD392.OutfitBox.Infrastructures\SWD392.OutfitBox.Infrastructure.csproj", "{B3B11C48-4A96-416C-8616-BBFE22A9C4E1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SWD392.OutfitBox.Infrastructure", ".\SWD392.OutfitBox.Infrastructure\SWD392.OutfitBox.Infrastructure.csproj", "{B3B11C48-4A96-416C-8616-BBFE22A9C4E1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
