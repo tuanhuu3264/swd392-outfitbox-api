@@ -3,7 +3,7 @@ using SWD392.OutfitBox.Domain.Entities;
 using System.Numerics;
 using System.Reflection;
 using System.Xml.Linq;
-using Type = SWD392.OutfitBox.Domain.Entities.Type;
+using ProductType = SWD392.OutfitBox.Domain.Entities.ProductType;
 
 namespace FAMS.Core.Databases
 {
@@ -34,69 +34,69 @@ namespace FAMS.Core.Databases
                 {
                     ID = 1,
                     Name = "Shirt",
-                    Description = ""
+                    Description = "1"
                 },
                 new Category
                 {
                     ID = 2,
                     Name = "Short",
-                    Description = ""
+                    Description = "2"
                 },
                 new Category
                 {
                     ID = 3,
                     Name = "Long-Skirt",
-                    Description = ""
+                    Description = "3"
                 },
                 new Category
                 {
                     ID = 4,
                     Name = "Short-Skirt",
-                    Description = ""
+                    Description = "4"
                 },
                 new Category
                 {
                     ID = 5,
                     Name = "Dress",
-                    Description = ""
+                    Description = "5"
                 }
                 );
-            modelBuilder.Entity<Type>().HasData(
-               new Type
+            modelBuilder.Entity<ProductType>().HasData(
+               new ProductType
                {
                    ID = 1,
                    Name = "New",
-                   Description = ""
+                   Description = "1"
                },
-               new Type
+               new ProductType
                {
                    ID = 2,
                    Name = "IsUsed",
-                   Description = ""
+                   Description = "2"
                },
-               new Type
+               new ProductType
                {
                    ID = 3,
                    Name = "Expected",
-                   Description = ""
+                   Description = "3"
                },
-               new Type
+               new ProductType
                {
                    ID = 4,
                    Name = "Torn",
-                   Description = ""
+                   Description = "4"
                },
-               new Type
+               new ProductType
                {
                    ID = 5,
                    Name = "Active",
-                   Description = ""
+                   Description = "5"
                },
-               new Type
+               new ProductType
                {
                    ID = 6,
                    Name = "Inactive",
-                   Description = ""
+                   Description = "6"
                }
                );
         }

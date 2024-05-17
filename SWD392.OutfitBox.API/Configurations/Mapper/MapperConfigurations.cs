@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using SWD392.OutfitBox.Core.Models.Requests.Category;
 using SWD392.OutfitBox.Core.Models.Requests.Package;
+using SWD392.OutfitBox.Core.Models.Requests.Product;
 using SWD392.OutfitBox.Core.Models.Requests.User;
 using SWD392.OutfitBox.Core.Models.Requests.Wallet;
 using SWD392.OutfitBox.Core.Models.Responses.Category;
@@ -21,6 +22,7 @@ namespace SWD392.OutfitBox.API.Configurations.Mapper
             TransactionProfile();
             WalletProfile();
             UserProfile();
+            ProductProfile();
         
         }
         public void CategoryProfile()
@@ -58,6 +60,10 @@ namespace SWD392.OutfitBox.API.Configurations.Mapper
             CreateMap<User, Core.Models.Responses.User.CreateUserResponseDTO>().ReverseMap();
             CreateMap<User, Core.Models.Responses.User.UpdateUserResponseDTO>().ReverseMap();
             CreateMap<User, UserDTO>().ReverseMap();
+        }
+        public void ProductProfile()
+        {
+            CreateMap<Product,CreatedProductDto>().ReverseMap();
         }
     }
 }

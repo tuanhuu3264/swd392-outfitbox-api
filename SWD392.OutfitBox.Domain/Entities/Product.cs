@@ -31,6 +31,6 @@ namespace SWD392.OutfitBox.Domain.Entities
         public Brand Brand { get; set; }
         public int IdType { get; set; }
         [ForeignKey("IdType")]
-        public Type Type { get; set; }
+        public ProductType Type { get; set; }
     }
 }

@@ -10,5 +10,6 @@ namespace SWD392.OutfitBox.Core.RepoInterfaces
     public interface IProductRepository
     {
         Task<List<Product>> GetAll();
+        Task<Product> CreateProduct(Product product);
     }
 }
