@@ -39,8 +39,8 @@
               "C:\\Users\\Admin\\OneDrive\\Máy tính\\swd392-outfitbox-api\\SWD392.OutfitBox.Domain\\SWD392.OutfitBox.Domain.csproj": {
                 "projectPath": "C:\\Users\\Admin\\OneDrive\\Máy tính\\swd392-outfitbox-api\\SWD392.OutfitBox.Domain\\SWD392.OutfitBox.Domain.csproj"
               },
-              "C:\\Users\\Admin\\OneDrive\\Máy tính\\swd392-outfitbox-api\\SWD392.OutfitBox.Infratures\\SWD392.OutfitBox.Infrastructure.csproj": {
-                "projectPath": "C:\\Users\\Admin\\OneDrive\\Máy tính\\swd392-outfitbox-api\\SWD392.OutfitBox.Infratures\\SWD392.OutfitBox.Infrastructure.csproj"
+              "C:\\Users\\Admin\\OneDrive\\Máy tính\\swd392-outfitbox-api\\SWD392.OutfitBox.Infrastructure\\SWD392.OutfitBox.Infrastructure.csproj": {
+                "projectPath": "C:\\Users\\Admin\\OneDrive\\Máy tính\\swd392-outfitbox-api\\SWD392.OutfitBox.Infrastructure\\SWD392.OutfitBox.Infrastructure.csproj"
               }
             }
           }
@@ -243,14 +243,14 @@
         }
       }
     },
-    "C:\\Users\\Admin\\OneDrive\\Máy tính\\swd392-outfitbox-api\\SWD392.OutfitBox.Infratures\\SWD392.OutfitBox.Infrastructure.csproj": {
+    "C:\\Users\\Admin\\OneDrive\\Máy tính\\swd392-outfitbox-api\\SWD392.OutfitBox.Infrastructure\\SWD392.OutfitBox.Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Admin\\OneDrive\\Máy tính\\swd392-outfitbox-api\\SWD392.OutfitBox.Infratures\\SWD392.OutfitBox.Infrastructure.csproj",
+        "projectUniqueName": "C:\\Users\\Admin\\OneDrive\\Máy tính\\swd392-outfitbox-api\\SWD392.OutfitBox.Infrastructure\\SWD392.OutfitBox.Infrastructure.csproj",
         "projectName": "SWD392.OutfitBox.Infrastructure",
-        "projectPath": "C:\\Users\\Admin\\OneDrive\\Máy tính\\swd392-outfitbox-api\\SWD392.OutfitBox.Infratures\\SWD392.OutfitBox.Infrastructure.csproj",
+        "projectPath": "C:\\Users\\Admin\\OneDrive\\Máy tính\\swd392-outfitbox-api\\SWD392.OutfitBox.Infrastructure\\SWD392.OutfitBox.Infrastructure.csproj",
         "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Admin\\OneDrive\\Máy tính\\swd392-outfitbox-api\\SWD392.OutfitBox.Infratures\\obj\\",
+        "outputPath": "C:\\Users\\Admin\\OneDrive\\Máy tính\\swd392-outfitbox-api\\SWD392.OutfitBox.Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -295,6 +295,10 @@
               "target": "Package",
               "version": "[4.5.0, )"
             },
+            "Microsoft.Data.SqlClient.SNI.runtime": {
+              "target": "Package",
+              "version": "[5.2.0, )"
+            },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
               "version": "[7.0.0, )"
@@ -318,6 +322,10 @@
             "MimeKit": {
               "target": "Package",
               "version": "[4.5.0, )"
+            },
+            "System.Data.SqlClient": {
+              "target": "Package",
+              "version": "[4.8.6, )"
             }
           },
           "imports": [

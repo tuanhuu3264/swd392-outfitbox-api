@@ -251,9 +251,24 @@ D:\Semester 7\SWD392\api\swd392-outfitbox-api\SWD392.OutfitBox.API\bin\Debug\net
 D:\Semester 7\SWD392\api\swd392-outfitbox-api\SWD392.OutfitBox.API\bin\Debug\net7.0\System.Formats.Asn1.dll
 D:\Semester 7\SWD392\api\swd392-outfitbox-api\SWD392.OutfitBox.API\bin\Debug\net7.0\System.Security.Cryptography.Pkcs.dll
 D:\Semester 7\SWD392\api\swd392-outfitbox-api\SWD392.OutfitBox.API\bin\Debug\net7.0\runtimes\win\lib\net7.0\System.Security.Cryptography.Pkcs.dll
+<<<<<<< HEAD
 C:\Users\Admin\OneDrive\Máy tính\swd392-outfitbox-api\SWD392.OutfitBox.API\bin\Debug\net7.0\BouncyCastle.Cryptography.dll
 C:\Users\Admin\OneDrive\Máy tính\swd392-outfitbox-api\SWD392.OutfitBox.API\bin\Debug\net7.0\MailKit.dll
 C:\Users\Admin\OneDrive\Máy tính\swd392-outfitbox-api\SWD392.OutfitBox.API\bin\Debug\net7.0\MimeKit.dll
 C:\Users\Admin\OneDrive\Máy tính\swd392-outfitbox-api\SWD392.OutfitBox.API\bin\Debug\net7.0\System.Formats.Asn1.dll
 C:\Users\Admin\OneDrive\Máy tính\swd392-outfitbox-api\SWD392.OutfitBox.API\bin\Debug\net7.0\System.Security.Cryptography.Pkcs.dll
 C:\Users\Admin\OneDrive\Máy tính\swd392-outfitbox-api\SWD392.OutfitBox.API\bin\Debug\net7.0\runtimes\win\lib\net7.0\System.Security.Cryptography.Pkcs.dll
+=======
+D:\Semester 7\SWD392\api\swd392-outfitbox-api\SWD392.OutfitBox.API\bin\Debug\net7.0\System.Data.SqlClient.dll
+D:\Semester 7\SWD392\api\swd392-outfitbox-api\SWD392.OutfitBox.API\bin\Debug\net7.0\runtimes\win-arm64\native\sni.dll
+D:\Semester 7\SWD392\api\swd392-outfitbox-api\SWD392.OutfitBox.API\bin\Debug\net7.0\runtimes\win-x64\native\sni.dll
+D:\Semester 7\SWD392\api\swd392-outfitbox-api\SWD392.OutfitBox.API\bin\Debug\net7.0\runtimes\win-x86\native\sni.dll
+D:\Semester 7\SWD392\api\swd392-outfitbox-api\SWD392.OutfitBox.API\bin\Debug\net7.0\runtimes\unix\lib\netcoreapp2.1\System.Data.SqlClient.dll
+D:\Semester 7\SWD392\api\swd392-outfitbox-api\SWD392.OutfitBox.API\bin\Debug\net7.0\runtimes\win\lib\netcoreapp2.1\System.Data.SqlClient.dll
+>>>>>>> 64589d3c958d38ba978d35f52f014d794bca2cc2
+C:\Users\Admin\OneDrive\Máy tính\swd392-outfitbox-api\SWD392.OutfitBox.API\bin\Debug\net7.0\System.Data.SqlClient.dll
+C:\Users\Admin\OneDrive\Máy tính\swd392-outfitbox-api\SWD392.OutfitBox.API\bin\Debug\net7.0\runtimes\win-arm64\native\sni.dll
+C:\Users\Admin\OneDrive\Máy tính\swd392-outfitbox-api\SWD392.OutfitBox.API\bin\Debug\net7.0\runtimes\win-x64\native\sni.dll
+C:\Users\Admin\OneDrive\Máy tính\swd392-outfitbox-api\SWD392.OutfitBox.API\bin\Debug\net7.0\runtimes\win-x86\native\sni.dll
+C:\Users\Admin\OneDrive\Máy tính\swd392-outfitbox-api\SWD392.OutfitBox.API\bin\Debug\net7.0\runtimes\unix\lib\netcoreapp2.1\System.Data.SqlClient.dll
+C:\Users\Admin\OneDrive\Máy tính\swd392-outfitbox-api\SWD392.OutfitBox.API\bin\Debug\net7.0\runtimes\win\lib\netcoreapp2.1\System.Data.SqlClient.dll

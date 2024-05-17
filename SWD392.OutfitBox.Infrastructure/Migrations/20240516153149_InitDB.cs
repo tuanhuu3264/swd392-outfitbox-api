@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace SWD392.OutfitBox.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class InitDb : Migration
+    public partial class InitDB : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -36,7 +36,8 @@ namespace SWD392.OutfitBox.Infrastructure.Migrations
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -64,6 +65,7 @@ namespace SWD392.OutfitBox.Infrastructure.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Price = table.Column<double>(type: "float", nullable: false),
+                    AvailableRentDays = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false)
@@ -191,6 +193,7 @@ namespace SWD392.OutfitBox.Infrastructure.Migrations
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IsUsed = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Deposit = table.Column<double>(type: "float", nullable: false),
                     IdCategory = table.Column<int>(type: "int", nullable: false),
                     IdBrand = table.Column<int>(type: "int", nullable: false),
                     IdType = table.Column<int>(type: "int", nullable: false)
@@ -257,6 +260,7 @@ namespace SWD392.OutfitBox.Infrastructure.Migrations
                     WalletCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     WalletName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     WalletPassword = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false),
                     UserId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -422,6 +426,9 @@ namespace SWD392.OutfitBox.Infrastructure.Migrations
                     DateFrom = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DateTo = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Price = table.Column<double>(type: "float", nullable: false),
+                    ReceiverName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ReceiverPhone = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ReceiverAddress = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
                     TransactionId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -453,9 +460,7 @@ namespace SWD392.OutfitBox.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Deposit = table.Column<long>(type: "bigint", nullable: false),
-                    DateGive = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DateReceive = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Deposit = table.Column<double>(type: "float", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
                     ProductId = table.Column<int>(type: "int", nullable: false),
                     UserPackageId = table.Column<int>(type: "int", nullable: false)
@@ -516,14 +521,14 @@ namespace SWD392.OutfitBox.Infrastructure.Migrations
 
             migrationBuilder.InsertData(
                 table: "Category",
-                columns: new[] { "ID", "Description", "Name" },
+                columns: new[] { "ID", "Description", "Name", "Status" },
                 values: new object[,]
                 {
-                    { 1, "", "Shirt" },
-                    { 2, "", "Short" },
-                    { 3, "", "Long-Skirt" },
-                    { 4, "", "Short-Skirt" },
-                    { 5, "", "Dress" }
+                    { 1, "", "Shirt", 0 },
+                    { 2, "", "Short", 0 },
+                    { 3, "", "Long-Skirt", 0 },
+                    { 4, "", "Short-Skirt", 0 },
+                    { 5, "", "Dress", 0 }
                 });
 
             migrationBuilder.InsertData(
