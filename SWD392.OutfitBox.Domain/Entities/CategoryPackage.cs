@@ -18,6 +18,7 @@ namespace SWD392.OutfitBox.Domain.Entities
         
         public int CategoryId { get; set; }
         public int PackageId { get; set; }
+        public int Status {  get; set; }
         [ForeignKey(nameof(CategoryId))]
         public Category? Category { get; set; }
         [ForeignKey(nameof(PackageId))]

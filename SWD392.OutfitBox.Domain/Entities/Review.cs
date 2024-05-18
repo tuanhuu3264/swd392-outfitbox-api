@@ -18,7 +18,7 @@ namespace SWD392.OutfitBox.Domain.Entities
         public int NumberStars { get; set; }
         public int Status {  get; set; }
         public DateTime Date { get; set; }
-        public int UserId { get; set; }
+        public int CustomerId { get; set; }
         public int ProductId { get; set; }
         [ForeignKey("UserId")]
         public User? User { get; set; }

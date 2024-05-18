@@ -17,8 +17,8 @@ namespace SWD392.OutfitBox.Domain.Entities
         public string Address { get; set; } = string.Empty;
         public string Phone { get; set; } = string.Empty; 
         public string Email {  get; set; } = string.Empty;
-        public int LocationId { get; set; }
-        [ForeignKey(nameof(LocationId))]
-        public Location? Location { get; set; }
+        public int AreaId { get; set; }
+        [ForeignKey(nameof(AreaId))]
+        public Area? Area { get; set; }
     }
 }

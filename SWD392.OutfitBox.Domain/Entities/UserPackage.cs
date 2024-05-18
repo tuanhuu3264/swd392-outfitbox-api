@@ -8,14 +8,14 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace SWD392.OutfitBox.Domain.Entities
-{   
-    
-    public class UserPackage
+{
+    [Table("CustomerPacket")]
+    public class CustomerPackage
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        public int UserId { get; set; } 
+        public int CustomerId { get; set; } 
         public int PackageId { get; set; }
         public string PackageName { get; set; } = string.Empty;
         public DateTime DateFrom { get; set; }
@@ -25,8 +25,8 @@ namespace SWD392.OutfitBox.Domain.Entities
         public string ReceiverPhone {  get; set; } = string.Empty;
         public string ReceiverAddress { get; set; } = string.Empty; 
         public int Status { get; set; }
-        [ForeignKey("UserId")]
-        public User? User {  get; set; }
+        [ForeignKey("CustomerID")]
+        public Customer? Customer {  get; set; }
         [ForeignKey("PackageId")]
         public Package? Package { get; set; }
         public List<ItemInUserPackage>? Items { get; set; }

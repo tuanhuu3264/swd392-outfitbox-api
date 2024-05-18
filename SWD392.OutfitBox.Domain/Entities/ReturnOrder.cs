@@ -18,12 +18,12 @@ namespace SWD392.OutfitBox.Domain.Entities
         public string Address { get; set; } = string.Empty;
         public string Phone {  get; set; } = string.Empty;  
         public int Status { get; set; }
-        public int UserId { get; set; }
-        [ForeignKey(nameof(UserId))]
-        public User? User { get; set; }
+        public int CustomerId { get; set; }
+        [ForeignKey("CustomerId")]
+        public Customer? Customer { get; set; }
         public int PartnerId { get; set; }
         [ForeignKey(nameof(PartnerId))]
         public Partner? Partner { get; set; }
-        public List<ItemInUserPackageReturnOrder>? ItemInUserPackageReturnOrders { get; set; }
+        public List<ProductReturnOrder>? ProductReturnOrders { get; set; }
     }
 }
