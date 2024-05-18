@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "jT+fK/Jb5uDPC+hdpZDcQ8A22NtfqnxwIEalx34Zgsn41UVxm/Av9/PgtXoEddaUI1vpe4FVt/IX7lJ079c8Cw==",
+  "dgSpecHash": "uXlbpkbCvIh/YDghcg9h5FAhA08HQtqBzHThpvJC06jrRmvErP33M9Tdyyc2tRZ+meRN5OpvmngsSqM/GsVOAw==",
   "success": true,
-  "projectFilePath": "D:\\Semester 7\\SWD392\\api\\swd392-outfitbox-api\\SWD392.OutfitBox.API\\SWD392.OutfitBox.API.csproj",
+  "projectFilePath": "D:\\Semester 7\\SWD392-API\\swd392-outfitbox-api\\SWD392.OutfitBox.API\\SWD392.OutfitBox.API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\BIN\\.nuget\\packages\\automapper\\13.0.1\\automapper.13.0.1.nupkg.sha512",
     "C:\\Users\\BIN\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",

@@ -571,11 +571,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Semester 7\\SWD392\\api\\swd392-outfitbox-api\\SWD392.OutfitBox.Core\\SWD392.OutfitBox.Core.csproj",
+      "projectUniqueName": "D:\\Semester 7\\SWD392-API\\swd392-outfitbox-api\\SWD392.OutfitBox.Core\\SWD392.OutfitBox.Core.csproj",
       "projectName": "SWD392.OutfitBox.Core",
-      "projectPath": "D:\\Semester 7\\SWD392\\api\\swd392-outfitbox-api\\SWD392.OutfitBox.Core\\SWD392.OutfitBox.Core.csproj",
+      "projectPath": "D:\\Semester 7\\SWD392-API\\swd392-outfitbox-api\\SWD392.OutfitBox.Core\\SWD392.OutfitBox.Core.csproj",
       "packagesPath": "C:\\Users\\BIN\\.nuget\\packages\\",
-      "outputPath": "D:\\Semester 7\\SWD392\\api\\swd392-outfitbox-api\\SWD392.OutfitBox.Core\\obj\\",
+      "outputPath": "D:\\Semester 7\\SWD392-API\\swd392-outfitbox-api\\SWD392.OutfitBox.Core\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\BIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -592,8 +592,8 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "projectReferences": {
-            "D:\\Semester 7\\SWD392\\api\\swd392-outfitbox-api\\SWD392.OutfitBox.Domain\\SWD392.OutfitBox.Domain.csproj": {
-              "projectPath": "D:\\Semester 7\\SWD392\\api\\swd392-outfitbox-api\\SWD392.OutfitBox.Domain\\SWD392.OutfitBox.Domain.csproj"
+            "D:\\Semester 7\\SWD392-API\\swd392-outfitbox-api\\SWD392.OutfitBox.Domain\\SWD392.OutfitBox.Domain.csproj": {
+              "projectPath": "D:\\Semester 7\\SWD392-API\\swd392-outfitbox-api\\SWD392.OutfitBox.Domain\\SWD392.OutfitBox.Domain.csproj"
             }
           }
         }

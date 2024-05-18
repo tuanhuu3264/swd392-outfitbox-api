@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Cgdj21Pgo7KsQOU8k82h4t5Ee/XRn2RsJ0egAcpJZeEcepOwM3+u+Y31MBoJQTgNkDY5EXC/KAP0ZosX3wkRKQ==",
+  "dgSpecHash": "iyGQXzNNw6IY0A3Tt1TYVrq5T5jZ+aA/tYu991nJ4AidzJgQ7Uph/pb8mN8WXqlHjga0zUIAxFbg8d/yRV8p0Q==",
   "success": true,
-  "projectFilePath": "D:\\Semester 7\\SWD392\\api\\swd392-outfitbox-api\\SWD392.OutfitBox.Core\\SWD392.OutfitBox.Core.csproj",
+  "projectFilePath": "D:\\Semester 7\\SWD392-API\\swd392-outfitbox-api\\SWD392.OutfitBox.Core\\SWD392.OutfitBox.Core.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\BIN\\.nuget\\packages\\automapper\\13.0.1\\automapper.13.0.1.nupkg.sha512",
     "C:\\Users\\BIN\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",

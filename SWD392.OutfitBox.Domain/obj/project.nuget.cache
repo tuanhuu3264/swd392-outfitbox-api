@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "LPYeaFGivurv4fB66ue3m1DWbMiagvWt/+O3zBQ4fIFYtlHbBrvpWRcYYb/J7qQ33AHPmcABTpuV24T+xaLFcQ==",
+  "dgSpecHash": "Yil8BIl64h2LUhLMgIebILJ7LK8HSjRtiGM8Mpnysb4jVcH2qqGO4DK0HgTWQ7apzJ0H+/6HJs7yKKV3rFrLqw==",
   "success": true,
-  "projectFilePath": "D:\\Semester 7\\SWD392\\api\\swd392-outfitbox-api\\SWD392.OutfitBox.Domain\\SWD392.OutfitBox.Domain.csproj",
+  "projectFilePath": "D:\\Semester 7\\SWD392-API\\swd392-outfitbox-api\\SWD392.OutfitBox.Domain\\SWD392.OutfitBox.Domain.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

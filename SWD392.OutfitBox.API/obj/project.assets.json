@@ -4544,11 +4544,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Semester 7\\SWD392\\api\\swd392-outfitbox-api\\SWD392.OutfitBox.API\\SWD392.OutfitBox.API.csproj",
+      "projectUniqueName": "D:\\Semester 7\\SWD392-API\\swd392-outfitbox-api\\SWD392.OutfitBox.API\\SWD392.OutfitBox.API.csproj",
       "projectName": "SWD392.OutfitBox.API",
-      "projectPath": "D:\\Semester 7\\SWD392\\api\\swd392-outfitbox-api\\SWD392.OutfitBox.API\\SWD392.OutfitBox.API.csproj",
+      "projectPath": "D:\\Semester 7\\SWD392-API\\swd392-outfitbox-api\\SWD392.OutfitBox.API\\SWD392.OutfitBox.API.csproj",
       "packagesPath": "C:\\Users\\BIN\\.nuget\\packages\\",
-      "outputPath": "D:\\Semester 7\\SWD392\\api\\swd392-outfitbox-api\\SWD392.OutfitBox.API\\obj\\",
+      "outputPath": "D:\\Semester 7\\SWD392-API\\swd392-outfitbox-api\\SWD392.OutfitBox.API\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\BIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -4565,14 +4565,14 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "projectReferences": {
-            "D:\\Semester 7\\SWD392\\api\\swd392-outfitbox-api\\SWD392.OutfitBox.Core\\SWD392.OutfitBox.Core.csproj": {
-              "projectPath": "D:\\Semester 7\\SWD392\\api\\swd392-outfitbox-api\\SWD392.OutfitBox.Core\\SWD392.OutfitBox.Core.csproj"
+            "D:\\Semester 7\\SWD392-API\\swd392-outfitbox-api\\SWD392.OutfitBox.Core\\SWD392.OutfitBox.Core.csproj": {
+              "projectPath": "D:\\Semester 7\\SWD392-API\\swd392-outfitbox-api\\SWD392.OutfitBox.Core\\SWD392.OutfitBox.Core.csproj"
             },
-            "D:\\Semester 7\\SWD392\\api\\swd392-outfitbox-api\\SWD392.OutfitBox.Domain\\SWD392.OutfitBox.Domain.csproj": {
-              "projectPath": "D:\\Semester 7\\SWD392\\api\\swd392-outfitbox-api\\SWD392.OutfitBox.Domain\\SWD392.OutfitBox.Domain.csproj"
+            "D:\\Semester 7\\SWD392-API\\swd392-outfitbox-api\\SWD392.OutfitBox.Domain\\SWD392.OutfitBox.Domain.csproj": {
+              "projectPath": "D:\\Semester 7\\SWD392-API\\swd392-outfitbox-api\\SWD392.OutfitBox.Domain\\SWD392.OutfitBox.Domain.csproj"
             },
-            "D:\\Semester 7\\SWD392\\api\\swd392-outfitbox-api\\SWD392.OutfitBox.Infrastructure\\SWD392.OutfitBox.Infrastructure.csproj": {
-              "projectPath": "D:\\Semester 7\\SWD392\\api\\swd392-outfitbox-api\\SWD392.OutfitBox.Infrastructure\\SWD392.OutfitBox.Infrastructure.csproj"
+            "D:\\Semester 7\\SWD392-API\\swd392-outfitbox-api\\SWD392.OutfitBox.Infrastructure\\SWD392.OutfitBox.Infrastructure.csproj": {
+              "projectPath": "D:\\Semester 7\\SWD392-API\\swd392-outfitbox-api\\SWD392.OutfitBox.Infrastructure\\SWD392.OutfitBox.Infrastructure.csproj"
             }
           }
         }

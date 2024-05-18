@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Semester 7\\SWD392\\api\\swd392-outfitbox-api\\SWD392.OutfitBox.Domain\\SWD392.OutfitBox.Domain.csproj": {}
+    "D:\\Semester 7\\SWD392-API\\swd392-outfitbox-api\\SWD392.OutfitBox.Domain\\SWD392.OutfitBox.Domain.csproj": {}
   },
   "projects": {
-    "D:\\Semester 7\\SWD392\\api\\swd392-outfitbox-api\\SWD392.OutfitBox.Domain\\SWD392.OutfitBox.Domain.csproj": {
+    "D:\\Semester 7\\SWD392-API\\swd392-outfitbox-api\\SWD392.OutfitBox.Domain\\SWD392.OutfitBox.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Semester 7\\SWD392\\api\\swd392-outfitbox-api\\SWD392.OutfitBox.Domain\\SWD392.OutfitBox.Domain.csproj",
+        "projectUniqueName": "D:\\Semester 7\\SWD392-API\\swd392-outfitbox-api\\SWD392.OutfitBox.Domain\\SWD392.OutfitBox.Domain.csproj",
         "projectName": "SWD392.OutfitBox.Domain",
-        "projectPath": "D:\\Semester 7\\SWD392\\api\\swd392-outfitbox-api\\SWD392.OutfitBox.Domain\\SWD392.OutfitBox.Domain.csproj",
+        "projectPath": "D:\\Semester 7\\SWD392-API\\swd392-outfitbox-api\\SWD392.OutfitBox.Domain\\SWD392.OutfitBox.Domain.csproj",
         "packagesPath": "C:\\Users\\BIN\\.nuget\\packages\\",
-        "outputPath": "D:\\Semester 7\\SWD392\\api\\swd392-outfitbox-api\\SWD392.OutfitBox.Domain\\obj\\",
+        "outputPath": "D:\\Semester 7\\SWD392-API\\swd392-outfitbox-api\\SWD392.OutfitBox.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\BIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
