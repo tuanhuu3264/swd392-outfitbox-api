@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
 using SWD392.OutfitBox.Core.Models.Requests.Category;
 using SWD392.OutfitBox.Core.Models.Requests.Package;
+using SWD392.OutfitBox.Core.Models.Requests.Role;
 using SWD392.OutfitBox.Core.Models.Requests.User;
 using SWD392.OutfitBox.Core.Models.Requests.Wallet;
 using SWD392.OutfitBox.Core.Models.Responses.Category;
 using SWD392.OutfitBox.Core.Models.Responses.Package;
+using SWD392.OutfitBox.Core.Models.Responses.Role;
 using SWD392.OutfitBox.Core.Models.Responses.Transaction;
 using SWD392.OutfitBox.Core.Models.Responses.User;
 using SWD392.OutfitBox.Core.Models.Responses.Wallet;
@@ -21,6 +23,7 @@ namespace SWD392.OutfitBox.API.Configurations.Mapper
             TransactionProfile();
             WalletProfile();
             UserProfile();
+            RoleProfile();
         
         }
         public void CategoryProfile()
@@ -58,6 +61,12 @@ namespace SWD392.OutfitBox.API.Configurations.Mapper
             CreateMap<User, Core.Models.Responses.User.CreateUserResponseDTO>().ReverseMap();
             CreateMap<User, Core.Models.Responses.User.UpdateUserResponseDTO>().ReverseMap();
             CreateMap<User, UserDTO>().ReverseMap();
+        }
+        public void RoleProfile()
+        {
+            CreateMap<CreateRoleRequestDTO,Role>().ReverseMap();
+            CreateMap<Role,CreateRoleResponseDTO>().ReverseMap();  
+            CreateMap<Role,RoleDTO>().ReverseMap(); 
         }
     }
 }

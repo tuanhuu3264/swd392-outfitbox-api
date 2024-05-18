@@ -10,6 +10,6 @@ namespace SWD392.OutfitBox.API.Controllers.Endpoints
         public const string GetCategoryById = "/categories/{id}";
         public const string CreateCategory = "/categories";
         public const string UpdateCategory = "/categories";
-        public const string ActiveOrDeactiveCategory = "/categories/active-deactive";
+        public const string ActiveOrDeactiveCategory = "/categories/active-or-deactive/{id}";
     }
 }

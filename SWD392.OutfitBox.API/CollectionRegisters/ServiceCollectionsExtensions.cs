@@ -4,6 +4,7 @@ using SWD392.OutfitBox.Core.RepoInterfaces;
 using SWD392.OutfitBox.Core.Services.CategoryService;
 using SWD392.OutfitBox.Core.Services.PackageService;
 using SWD392.OutfitBox.Core.Services.ProductService;
+using SWD392.OutfitBox.Core.Services.RoleService;
 using SWD392.OutfitBox.Core.Services.TransactionService;
 using SWD392.OutfitBox.Core.Services.UserService;
 using SWD392.OutfitBox.Core.Services.WalletService;
@@ -26,6 +27,7 @@ namespace SWD392.OutfitBox.API.CollectionRegisters
             services.AddScoped<IWalletRepository, WalletRepository>();
             services.AddScoped<IUserPackageRepository, UserPackageRepository>();    
             services.AddScoped<IItemsInUserPackage, ItemInUserPackageRepository>();
+            services.AddScoped<IRoleRepository, RoleRepository>();
 
             services.AddControllers();
             services.AddEndpointsApiExplorer();
@@ -41,6 +43,7 @@ namespace SWD392.OutfitBox.API.CollectionRegisters
             services.AddScoped<ITransactionService, TransactionService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IWalletService,WalletService>(); 
+            services.AddScoped<IRoleService,RoleService>();
         }
 
     }
