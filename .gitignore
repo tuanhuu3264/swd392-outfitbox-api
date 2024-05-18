@@ -35,3 +35,6 @@ msbuild.wrn
 SWD392.OutfitBox.API/bin/
 SWD392.OutfitBox.Core/bin/
 SWD392.OutfitBox.Domain/bin/
+SWD392.OutfitBox/v17/.suo
+SWD392.OutfitBox.API/obj/Debug/net7.0/SWD392.OutfitBox.API.csproj.AssemblyReference.cache
+SWD392.OutfitBox.Core/obj/Debug/net7.0/SWD392.OutfitBox.Core.csproj.AssemblyReference.cache
