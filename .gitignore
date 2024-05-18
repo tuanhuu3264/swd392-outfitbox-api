@@ -32,3 +32,6 @@ msbuild.wrn
 
 # Visual Studio 2015
 .vs/
+SWD392.OutfitBox.API/bin/
+SWD392.OutfitBox.Core/bin/
+SWD392.OutfitBox.Domain/bin/
