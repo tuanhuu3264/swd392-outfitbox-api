@@ -8,16 +8,15 @@ using System.Threading.Tasks;
 
 namespace SWD392.OutfitBox.Domain.Entities
 {
-    public class ItemInUserPackageReturnOrder
+    public class ProductReturnOrder
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public int Status { get; set; }
-        public string Message { get; set; } = string.Empty;
-        public int ItemInUserPackageId { get; set; }
-        [ForeignKey(nameof(ItemInUserPackageId))]   
-        public ItemInUserPackage? ItemInUserPackage { get; set; }
+        public int ProductId { get; set; }        
+        [ForeignKey("ProductId")]
+        public Product? Product { get; set; }     
         public int ReturnOrderId { get; set; }
         [ForeignKey("ReturnOrderId")]
         public ReturnOrder? ReturnOrder { get; set; }

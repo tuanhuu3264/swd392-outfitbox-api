@@ -9,15 +9,16 @@ using System.Threading.Tasks;
 
 namespace SWD392.OutfitBox.Domain.Entities
 {
-    public class Favourite
+    [Table("FavouriteProduct")]
+    public class FavouriteProduct
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public int UserId { get; set; }
         public int ProductId { get; set; }
-        [ForeignKey("UserId")]
-        public User? User { get; set; }
+        [ForeignKey("Customer")]
+        public Customer? Customer  { get; set; }
         [ForeignKey("ProductId")]
         public Product? Product { get; set; }
 

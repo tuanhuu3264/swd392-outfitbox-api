@@ -8,7 +8,8 @@ using System.Threading.Tasks;
 
 namespace SWD392.OutfitBox.Domain.Entities
 {
-    public class Location
+    [Table("Area")]
+    public class Area
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

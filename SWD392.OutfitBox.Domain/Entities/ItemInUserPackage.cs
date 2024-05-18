@@ -17,9 +17,12 @@ namespace SWD392.OutfitBox.Domain.Entities
         public int Status {  get; set; }
         public int ProductId { get; set; }
         public int UserPackageId { get; set; }
+        public DateTime? DateGive { get; set; }
+        public DateTime? DateReceive { get; set; }
+        public double TornMoney {  get; set; }
         [ForeignKey("ProductId")]
         public Product? Product { get; set; }
         [ForeignKey("UserPackageId")]
-        public UserPackage? UserPackage { get; set; }
+        public CustomerPackage? UserPackage { get; set; }
     }
 }
