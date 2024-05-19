@@ -47,6 +47,7 @@ namespace SWD392.OutfitBox.API.CollectionRegisters
             services.AddScoped<ICategoryPackageService, CategoryPackageService>();
             services.AddScoped<IReviewService, ReviewService>();  
             services.AddScoped<IFavouriteProductService, FavouriteProductService>();
+            services.AddScoped<IProductService,ProductService>();
         }
         public static void RepositoriesRegister(this IServiceCollection services)
         {
@@ -67,6 +68,8 @@ namespace SWD392.OutfitBox.API.CollectionRegisters
             services.AddScoped<IWalletService,WalletService>(); 
             services.AddScoped<IRoleService,RoleService>();
             services.AddScoped<ICategoryPackageService,CategoryPackageService>();
+            services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IBrandRepository, BrandRepository>();
         }
 
     }
