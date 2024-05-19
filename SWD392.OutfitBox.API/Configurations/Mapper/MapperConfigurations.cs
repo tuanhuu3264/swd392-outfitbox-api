@@ -2,15 +2,17 @@
 using SWD392.OutfitBox.Core.Models.Requests.Category;
 using SWD392.OutfitBox.Core.Models.Requests.Package;
 using SWD392.OutfitBox.Core.Models.Requests.Role;
-using SWD392.OutfitBox.Core.Models.Requests.User;
+using SWD392.OutfitBox.Core.Models.Requests.Customer;
 using SWD392.OutfitBox.Core.Models.Requests.Wallet;
 using SWD392.OutfitBox.Core.Models.Responses.Category;
 using SWD392.OutfitBox.Core.Models.Responses.Package;
 using SWD392.OutfitBox.Core.Models.Responses.Role;
 using SWD392.OutfitBox.Core.Models.Responses.Transaction;
-using SWD392.OutfitBox.Core.Models.Responses.User;
+using SWD392.OutfitBox.Core.Models.Responses.Customer;
 using SWD392.OutfitBox.Core.Models.Responses.Wallet;
 using SWD392.OutfitBox.Domain.Entities;
+using SWD392.OutfitBox.Core.Models.Requests.CategoryPackage;
+using SWD392.OutfitBox.Core.Models.Responses.CategoryPackage;
 
 namespace SWD392.OutfitBox.API.Configurations.Mapper
 {
@@ -22,8 +24,9 @@ namespace SWD392.OutfitBox.API.Configurations.Mapper
             PackagePofile();
             TransactionProfile();
             WalletProfile();
-            UserProfile();
+            CustomerProfile();
             RoleProfile();
+            CategoryPackageProfile();
         
         }
         public void CategoryProfile()
@@ -41,6 +44,15 @@ namespace SWD392.OutfitBox.API.Configurations.Mapper
             CreateMap<Package, CreatePackageResponseDTO>().ReverseMap();
             CreateMap<Package, UpdatePackageResponseDTO>().ReverseMap();
             CreateMap<Package, PackageDTO>().ReverseMap();
+            
+        }
+        public void CategoryPackageProfile()
+        {
+            CreateMap<CategoryPackageDTO, CategoryPackage>().ReverseMap();
+            CreateMap<CreateCategoryPackageRequestDTO,CategoryPackage>().ReverseMap();
+            CreateMap<CreateCategoryResponseDTO,CategoryPackage>().ReverseMap();
+            CreateMap<UpdateCategoryPackageRequestDTO,  CategoryPackage>().ReverseMap();    
+            CreateMap<UpdateCategoryPackageResponseDTO,CategoryPackage>().ReverseMap(); 
         }
         public void TransactionProfile()
         {
@@ -54,13 +66,13 @@ namespace SWD392.OutfitBox.API.Configurations.Mapper
             CreateMap<Wallet, UpdateWalletResponseDTO>().ReverseMap();
             CreateMap<Wallet, WalletDTO>().ReverseMap();
         }
-        public void UserProfile()
+        public void CustomerProfile()
         {
-            CreateMap<CreateUserRequestDTO, User>().ReverseMap();
-            CreateMap<UpdateUserRequestDTO, User>().ReverseMap();
-            CreateMap<User, Core.Models.Responses.User.CreateUserResponseDTO>().ReverseMap();
-            CreateMap<User, Core.Models.Responses.User.UpdateUserResponseDTO>().ReverseMap();
-            CreateMap<User, UserDTO>().ReverseMap();
+            CreateMap<CreateCustomerRequestDTO, Customer>().ReverseMap();
+            CreateMap<UpdateCustomerRequestDTO, Customer>().ReverseMap();
+            CreateMap<Customer, CreateCustomerResponseDTO>().ReverseMap();
+            CreateMap<Customer, UpdateCustomerResponseDTO>().ReverseMap();
+            CreateMap<Customer, CustomerDTO>().ReverseMap();
         }
         public void RoleProfile()
         {

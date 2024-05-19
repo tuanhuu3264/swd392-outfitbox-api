@@ -10,13 +10,13 @@ using System.Threading.Tasks;
 
 namespace SWD392.OutfitBox.Infrastructure.Repositories
 {
-    public class UserPackageRepository : BaseRepository<UserPackage>, IUserPackageRepository
+    public class CustomerPackageRepository : BaseRepository<CustomerPackage>, ICustomerPackageRepository
     {
-        public UserPackageRepository(Context context) : base(context)
+        public CustomerPackageRepository(Context context) : base(context)
         {
         }
 
-        public async Task<UserPackage> CreateUserPackage(UserPackage userPackage)
+        public async Task<CustomerPackage> CreateUserPackage(CustomerPackage userPackage)
         {
             var result = await this.AddAsync(userPackage);
             await this.SaveChangesAsync();

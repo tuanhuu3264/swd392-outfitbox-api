@@ -4,7 +4,7 @@ using SWD392.OutfitBox.Core.Helpers;
 using SWD392.OutfitBox.Core.Models.Requests;
 using SWD392.OutfitBox.Core.Models.Requests.Auth;
 using SWD392.OutfitBox.Core.Models.Responses.Auth;
-using SWD392.OutfitBox.Core.Models.Responses.User;
+using SWD392.OutfitBox.Core.Models.Responses.Customer;
 using SWD392.OutfitBox.Core.RepoInterfaces;
 using SWD392.OutfitBox.Domain.Entities;
 using System;
@@ -19,26 +19,31 @@ namespace SWD392.OutfitBox.Core.Services.AuthService
     public class AuthService : IAuthService
     {
         public IMapper _mapper;
-        public IUserRepository _userRepository { get; set; }
-        public AuthService(IMapper mapper, IUserRepository userRepository)
+        public ICustomerRepository _customerRepository { get; set; }
+        public AuthService(IMapper mapper, ICustomerRepository customerRepository)
         {
-            _userRepository = userRepository;
+            _customerRepository = customerRepository;
             _mapper = mapper;
         }
         public async Task<ForgetPasswordResponseDTO> ForgetPassword(ForgetPasswordRequestDTO forgetPasswordRequestDTO)
         {
-            var user = await _userRepository.GetUserByPhoneOrEmail(forgetPasswordRequestDTO.Email);
-            user.OTP = long.Parse(DateTime.Now.ToString("HHmmss"));
-            await _userRepository.UpdateUser(user);
-            return new ForgetPasswordResponseDTO() { };
+            var customer = await _customerRepository.GetCustomerByPhoneOrEmail(forgetPasswordRequestDTO.Email);
+            customer.OTP = long.Parse(DateTime.Now.ToString("HHmmss"));
+            await _customerRepository.UpdateCustomer(customer);
+            return new ForgetPasswordResponseDTO() { UserId = customer.Id, Message= "OTP is generated and sent to customer's mail." };
         }
 
         public async Task<LoginResponseDTO> Login(LoginRequestDTO loginRequestDTO)
         {
-            var user = await _userRepository.GetUserByPhoneOrEmail(loginRequestDTO.EmailOrPhone);
-            if (user != null && loginRequestDTO.Password == user.Password)
+            var customer = await _customerRepository.GetCustomerByPhoneOrEmail(loginRequestDTO.EmailOrPhone);
+            if (customer != null && customer.Status == 0)
+                return new LoginResponseDTO()
+                {
+                    Message = "User is banned or not verified."
+                };
+            if (customer != null && loginRequestDTO.Password == customer.Password)
             {
-                var tokenSecurity = AuthHelper.GetToken(user);
+                var tokenSecurity = AuthHelper.GetToken(customer);
                 var token = new JwtSecurityTokenHandler().WriteToken(tokenSecurity);
                 var expiration = tokenSecurity.ValidTo;
 
@@ -49,11 +54,6 @@ namespace SWD392.OutfitBox.Core.Services.AuthService
                     Message = "Login successfully."
                 };
             }
-            if (user != null && user.Status == 0)
-                return new LoginResponseDTO()
-                {
-                    Message = "User is banned or not verified."
-                };
             return new LoginResponseDTO()
             {
                 Token = "",
@@ -64,45 +64,58 @@ namespace SWD392.OutfitBox.Core.Services.AuthService
 
         public async Task<RegisterUserResponseDTO> Register(RegisterUserRequestDTO registerRequestDTO)
         {
-            var user = new User()
+            var customer = new Customer()
             {
                 Email = registerRequestDTO.Email,
                 Phone = registerRequestDTO.Phone,
                 Password = registerRequestDTO.Password,
-                RoldeId = 1,
                 Name = registerRequestDTO.UserName,
                 Address = registerRequestDTO.Address,
                 Status = 1,
                 OTP = long.Parse(DateTime.Now.ToString("HHmmss"))
             };
-            var createdUser = await _userRepository.Create(user);
+            var createdUser = await _customerRepository.Create(customer);
             return new RegisterUserResponseDTO()
             {
                 Message = "Create Successfully. Need to verify.",
-                UserId = user.Id
+                UserId = customer.Id
 
             };
         }
 
         public async Task<VerifyOTPResponseDTO> VerifyOTP(VerifyOTPRequestDTO verifyOTPRequestDTO)
         {
-            var user = await _userRepository.GetUserById(verifyOTPRequestDTO.UserId);
-            if (user == null) return new VerifyOTPResponseDTO()
+            var customer = await _customerRepository.GetCustomerById(verifyOTPRequestDTO.UserId);
+            if (customer == null) return new VerifyOTPResponseDTO()
             {
-                Message = "Error to find user to verify OTP"
+                Message = "Error to find customer to verify OTP"
             };
-            if (user.OTP == verifyOTPRequestDTO.OTP)
+            if (customer.OTP == verifyOTPRequestDTO.OTP)
             {   
                 return new VerifyOTPResponseDTO()
                 {
                     Message = "Verify account successfully!",
-                    UserProfile = _mapper.Map<UserDTO>(user)
+                    UserProfile = _mapper.Map<CustomerDTO>(customer)
                 };
             }
+            customer.OTP = -1;
+            await _customerRepository.UpdateCustomer(customer);
             return new VerifyOTPResponseDTO()
             {
                 Message = AuthExceptions.EMS03
+                            
+            };
+        }
 
+        public async Task<ResetPasswordResponseDTO> ResetPassword(ResetPasswordRequestDTO resetPasswordRequestDTO)
+        {
+            var customer = await _customerRepository.GetCustomerById(resetPasswordRequestDTO.Id);
+            customer.Password = resetPasswordRequestDTO.NewPassword;
+            await _customerRepository.UpdateCustomer(customer);
+            return new ResetPasswordResponseDTO()
+            {
+                CustomerId = customer.Id,
+                Message = "Reset Password Successfully"
             };
         }
     }

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace SWD392.OutfitBox.Domain.Entities
 {
-    [Table("CustomerPacket")]
+    [Table("CustomerPackege")]
     public class CustomerPackage
     {
         [Key]
@@ -25,7 +25,7 @@ namespace SWD392.OutfitBox.Domain.Entities
         public string ReceiverPhone {  get; set; } = string.Empty;
         public string ReceiverAddress { get; set; } = string.Empty; 
         public int Status { get; set; }
-        [ForeignKey("CustomerID")]
+        [ForeignKey(nameof(CustomerId))]
         public Customer? Customer {  get; set; }
         [ForeignKey("PackageId")]
         public Package? Package { get; set; }

@@ -16,7 +16,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Services\CategoryPackageService\" />
     <Folder Include="Services\ItemInUserPackage\" />
     <Folder Include="Services\UserPackageService\" />
   </ItemGroup>

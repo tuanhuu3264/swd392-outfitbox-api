@@ -18,7 +18,7 @@ namespace SWD392.OutfitBox.Domain.Entities
         public string Name { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
         public int Status { get; set; }
-        public List<UserPackage>? UserPackages { get; set; }
+        public List<CustomerPackage>? CustomerPackages { get; set; }
         public List<CategoryPackage>? CategoryPackages { get; set; }
     }
 }

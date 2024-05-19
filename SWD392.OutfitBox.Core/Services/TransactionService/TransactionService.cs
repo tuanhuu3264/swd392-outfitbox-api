@@ -16,11 +16,11 @@ namespace SWD392.OutfitBox.Core.Services.TransactionService
     {
         ITransactionRepository _transactionRepository; 
         IPackageRepository _packageRepository;
-        IUserPackageRepository _userPackageRepository;
+        ICustomerPackageRepository _userPackageRepository;
         IItemsInUserPackage _itemsInUserPackage;
         IProductRepository _productRepository;
         IMapper _mapper;
-        public TransactionService(IMapper mapper, IProductRepository productRepository, IUserPackageRepository userPackageRepository,
+        public TransactionService(IMapper mapper, IProductRepository productRepository, ICustomerPackageRepository userPackageRepository,
             IItemsInUserPackage itemsInUserPackage,IPackageRepository packageRepository, ITransactionRepository transactionRepository)
         {
             _transactionRepository = transactionRepository;
@@ -39,7 +39,7 @@ namespace SWD392.OutfitBox.Core.Services.TransactionService
             };
             var createdTransaction = await _transactionRepository.CreateTransaction(transaction);
             var package = await _packageRepository.GetPackageById(checkoutTransactionRequestDTO.PackageId);
-            var userPackage = new UserPackage()
+            var userPackage = new CustomerPackage()
             {
                 PackageId = checkoutTransactionRequestDTO.PackageId,
                 DateFrom = DateTime.Now,
@@ -50,7 +50,7 @@ namespace SWD392.OutfitBox.Core.Services.TransactionService
                 ReceiverName = checkoutTransactionRequestDTO.ReceiverName,
                 ReceiverPhone = checkoutTransactionRequestDTO.ReceiverPhone,
                 TransactionId = transaction.Id,
-                UserId = checkoutTransactionRequestDTO.UserId,
+                CustomerId = checkoutTransactionRequestDTO.UserId,
             };
             userPackage.Status = 1;
             var createdUserPackage = _userPackageRepository.CreateUserPackage(userPackage);

@@ -15,9 +15,9 @@ namespace SWD392.OutfitBox.Domain.Entities
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        public int UserId { get; set; }
+        public int CustomerId { get; set; }
         public int ProductId { get; set; }
-        [ForeignKey("Customer")]
+        [ForeignKey("CustomerId")]
         public Customer? Customer  { get; set; }
         [ForeignKey("ProductId")]
         public Product? Product { get; set; }

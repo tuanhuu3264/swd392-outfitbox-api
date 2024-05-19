@@ -29,7 +29,7 @@ namespace SWD392.OutfitBox.Domain.Entities
         public int IdBrand {  get; set; }
         [ForeignKey("IdBrand")]
         public Brand Brand { get; set; }
-        public string Type { get; set; 
-        public List<Image> images { get; set; }
+        public string Type { get; set; }
+        public List<Image>? Images { get; set; }
     }
 }

@@ -1,6 +1,8 @@
 ﻿
 using Microsoft.Identity.Client;
 using SWD392.OutfitBox.Core.RepoInterfaces;
+using SWD392.OutfitBox.Core.Services.AuthService;
+using SWD392.OutfitBox.Core.Services.CategoryPackageService;
 using SWD392.OutfitBox.Core.Services.CategoryService;
 using SWD392.OutfitBox.Core.Services.PackageService;
 using SWD392.OutfitBox.Core.Services.ProductService;
@@ -23,11 +25,12 @@ namespace SWD392.OutfitBox.API.CollectionRegisters
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IPackageRepository, PackageRepository>();
             services.AddScoped<ITransactionRepository, TransactionRepository>();
-            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<ICustomerRepository, CustomerRepository>();
             services.AddScoped<IWalletRepository, WalletRepository>();
-            services.AddScoped<IUserPackageRepository, UserPackageRepository>();    
+            services.AddScoped<ICustomerPackageRepository, CustomerPackageRepository>();    
             services.AddScoped<IItemsInUserPackage, ItemInUserPackageRepository>();
             services.AddScoped<IRoleRepository, RoleRepository>();
+            services.AddScoped<ICategoryPackageRepository, CategoryPackageRepository>();
 
             services.AddControllers();
             services.AddEndpointsApiExplorer();
@@ -36,14 +39,15 @@ namespace SWD392.OutfitBox.API.CollectionRegisters
                 options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
             });
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-
+            services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IPackageService, PackageService>();  
             services.AddScoped<ITransactionService, TransactionService>();
-            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<ICustomerService, CustomerService>();
             services.AddScoped<IWalletService,WalletService>(); 
             services.AddScoped<IRoleService,RoleService>();
+            services.AddScoped<ICategoryPackageService,CategoryPackageService>();
         }
 
     }

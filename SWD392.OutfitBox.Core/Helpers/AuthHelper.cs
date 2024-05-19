@@ -13,13 +13,13 @@ namespace SWD392.OutfitBox.Core.Helpers
     public class AuthHelper
     {
 
-        public static JwtSecurityToken GetToken(User user)
+        public static JwtSecurityToken GetToken(Customer user)
         {
             List<Claim> authClaims = new List<Claim>
             {
                  new Claim(ClaimTypes.Name, user.Name),
                  new Claim(ClaimTypes.Email, user.Email),
-                 new Claim(ClaimTypes.Role, user.Role.Name),
+                 new Claim(ClaimTypes.Role, "Customer"),
             };
 
             var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("JWTAuthenticationHIGHsecuredPasswordVVVp1OH7Xzyr"));
