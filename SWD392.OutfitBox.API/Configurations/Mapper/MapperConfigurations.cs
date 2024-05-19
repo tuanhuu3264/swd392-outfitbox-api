@@ -16,6 +16,8 @@ using SWD392.OutfitBox.Core.Models.Responses.CategoryPackage;
 using SWD392.OutfitBox.Core.Models.Requests.Review;
 using SWD392.OutfitBox.Core.Models.Responses.Review;
 using SWD392.OutfitBox.Core.Models.Responses.FavouriteProduct;
+using SWD392.OutfitBox.Core.Models.Requests.Product;
+using SWD392.OutfitBox.Core.Models.Responses.Product;
 
 namespace SWD392.OutfitBox.API.Configurations.Mapper
 {
@@ -32,8 +34,8 @@ namespace SWD392.OutfitBox.API.Configurations.Mapper
             CategoryPackageProfile();
             ReviewProfile();
             FavouriteProductProfile();
-
-
+            ProductProfile();
+        
         }
         public void CategoryProfile()
         {
@@ -86,6 +88,7 @@ namespace SWD392.OutfitBox.API.Configurations.Mapper
             CreateMap<Role,CreateRoleResponseDTO>().ReverseMap();  
             CreateMap<Role,RoleDTO>().ReverseMap(); 
         }
+
         public void ReviewProfile()
         {
             CreateMap<CreateReviewRequestDTO, Review>().ForMember(x=>x.ReviewImages, opt=>opt.MapFrom(src=>src.ReviewImages.Select(y=> new ReviewImage()
@@ -101,6 +104,17 @@ namespace SWD392.OutfitBox.API.Configurations.Mapper
         public void FavouriteProductProfile()
         {
             CreateMap<FavouriteProduct, CreateFavouriteProductResponseDTO>();
+        }
+        public void ProductProfile()
+        {
+            CreateMap<Product, CreatedProductDto>().ForMember(x=>x.ImageUrls, pro => pro.MapFrom(x=>x.Images)).ReverseMap();
+            CreateMap<string, Image>().ForMember(x => x.Link, img => img.MapFrom(x => x));
+            CreateMap<Product, ProductDetailDto>().ForMember(x => x.Brand, pro => pro.MapFrom(x => x.Brand))
+                .ForMember(x => x.Category, pro => pro.MapFrom(x => x.Category.Name))
+                .ForMember(x=> x.Images,pro=>pro.MapFrom(x=>x.Images)).ReverseMap();
+            CreateMap<Brand, BrandDto>().ReverseMap();
+            CreateMap<Category, CategoryDTO>().ReverseMap();
+            CreateMap<Image,ImageDto>().ReverseMap();
         }
     }
 }

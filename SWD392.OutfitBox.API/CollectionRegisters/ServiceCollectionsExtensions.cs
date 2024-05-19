@@ -1,5 +1,4 @@
 ﻿
-using Microsoft.Identity.Client;
 using SWD392.OutfitBox.Core.RepoInterfaces;
 using SWD392.OutfitBox.Core.Services.AuthService;
 using SWD392.OutfitBox.Core.Services.CategoryPackageService;
@@ -22,6 +21,7 @@ namespace SWD392.OutfitBox.API.CollectionRegisters
     {
         public  static  void RegisterService(this IServiceCollection services)
         {
+
             services.RepositoriesRegister();
 
             services.AddControllers();
@@ -64,6 +64,9 @@ namespace SWD392.OutfitBox.API.CollectionRegisters
             services.AddScoped<IReviewRepository, ReviewRepository>();  
             services.AddScoped<IReviewImageRepository, ReviewImageRepository>();
             services.AddScoped<IFavouriteProductRepository, FavouriteProductRepository>();
+            services.AddScoped<IWalletService,WalletService>(); 
+            services.AddScoped<IRoleService,RoleService>();
+            services.AddScoped<ICategoryPackageService,CategoryPackageService>();
         }
 
     }
