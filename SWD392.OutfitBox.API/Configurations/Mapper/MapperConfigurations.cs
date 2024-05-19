@@ -14,6 +14,7 @@ using SWD392.OutfitBox.Domain.Entities;
 using SWD392.OutfitBox.Core.Models.Requests.CategoryPackage;
 using SWD392.OutfitBox.Core.Models.Responses.CategoryPackage;
 using SWD392.OutfitBox.Core.Models.Requests.Product;
+using SWD392.OutfitBox.Core.Models.Responses.Product;
 
 namespace SWD392.OutfitBox.API.Configurations.Mapper
 {
@@ -86,6 +87,12 @@ namespace SWD392.OutfitBox.API.Configurations.Mapper
         {
             CreateMap<Product, CreatedProductDto>().ForMember(x=>x.ImageUrls, pro => pro.MapFrom(x=>x.Images)).ReverseMap();
             CreateMap<string, Image>().ForMember(x => x.Link, img => img.MapFrom(x => x));
+            CreateMap<Product, ProductDetailDto>().ForMember(x => x.Brand, pro => pro.MapFrom(x => x.Brand))
+                .ForMember(x => x.Category, pro => pro.MapFrom(x => x.Category.Name))
+                .ForMember(x=> x.Images,pro=>pro.MapFrom(x=>x.Images)).ReverseMap();
+            CreateMap<Brand, BrandDto>().ReverseMap();
+            CreateMap<Category, CategoryDTO>().ReverseMap();
+            CreateMap<Image,ImageDto>().ReverseMap();
         }
     }
 }

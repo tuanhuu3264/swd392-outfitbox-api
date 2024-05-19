@@ -10,6 +10,7 @@ using SWD392.OutfitBox.Core.Services.TransactionService;
 using SWD392.OutfitBox.Core.Services.UserService;
 using SWD392.OutfitBox.Core.Services.WalletService;
 using SWD392.OutfitBox.Domain;
+using SWD392.OutfitBox.Infrastructure.Repositories;
 using System.Text.Json.Serialization;
 
 namespace SWD392.OutfitBox.API.CollectionRegisters
@@ -29,7 +30,7 @@ namespace SWD392.OutfitBox.API.CollectionRegisters
             services.AddScoped<IItemsInUserPackage, ItemInUserPackageRepository>();
             services.AddScoped<IRoleRepository, RoleRepository>();
             services.AddScoped<ICategoryPackageRepository, CategoryPackageRepository>();
-
+            services.AddScoped<IBrandRepository, BrandRepository>();
             services.AddControllers();
             services.AddEndpointsApiExplorer();
             services.AddControllers().AddJsonOptions(options =>
@@ -46,6 +47,11 @@ namespace SWD392.OutfitBox.API.CollectionRegisters
             services.AddScoped<IWalletService,WalletService>(); 
             services.AddScoped<IRoleService,RoleService>();
             services.AddScoped<ICategoryPackageService,CategoryPackageService>();
+            services.AddControllers()
+           .AddJsonOptions(options =>
+           {
+               options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+           });
         }
 
     }
