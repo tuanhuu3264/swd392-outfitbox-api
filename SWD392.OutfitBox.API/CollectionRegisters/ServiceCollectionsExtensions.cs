@@ -1,5 +1,4 @@
 ﻿
-using Microsoft.Identity.Client;
 using SWD392.OutfitBox.Core.RepoInterfaces;
 using SWD392.OutfitBox.Core.Services.AuthService;
 using SWD392.OutfitBox.Core.Services.CategoryPackageService;
@@ -11,7 +10,6 @@ using SWD392.OutfitBox.Core.Services.TransactionService;
 using SWD392.OutfitBox.Core.Services.UserService;
 using SWD392.OutfitBox.Core.Services.WalletService;
 using SWD392.OutfitBox.Domain;
-using SWD392.OutfitBox.Infrastructure.Repositories;
 using System.Text.Json.Serialization;
 
 namespace SWD392.OutfitBox.API.CollectionRegisters

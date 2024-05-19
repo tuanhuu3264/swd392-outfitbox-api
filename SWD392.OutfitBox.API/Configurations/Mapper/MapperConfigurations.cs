@@ -13,6 +13,7 @@ using SWD392.OutfitBox.Core.Models.Responses.Wallet;
 using SWD392.OutfitBox.Domain.Entities;
 using SWD392.OutfitBox.Core.Models.Requests.CategoryPackage;
 using SWD392.OutfitBox.Core.Models.Responses.CategoryPackage;
+using SWD392.OutfitBox.Core.Models.Requests.Product;
 
 namespace SWD392.OutfitBox.API.Configurations.Mapper
 {
@@ -27,6 +28,7 @@ namespace SWD392.OutfitBox.API.Configurations.Mapper
             CustomerProfile();
             RoleProfile();
             CategoryPackageProfile();
+            ProductProfile();
         
         }
         public void CategoryProfile()
@@ -79,6 +81,11 @@ namespace SWD392.OutfitBox.API.Configurations.Mapper
             CreateMap<CreateRoleRequestDTO,Role>().ReverseMap();
             CreateMap<Role,CreateRoleResponseDTO>().ReverseMap();  
             CreateMap<Role,RoleDTO>().ReverseMap(); 
+        }
+        public void ProductProfile()
+        {
+            CreateMap<Product, CreatedProductDto>().ForMember(x=>x.ImageUrls, pro => pro.MapFrom(x=>x.Images)).ReverseMap();
+            CreateMap<string, Image>().ForMember(x => x.Link, img => img.MapFrom(x => x));
         }
     }
 }
