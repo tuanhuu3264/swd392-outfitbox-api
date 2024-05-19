@@ -1,5 +1,4 @@
 ﻿
-using Microsoft.Identity.Client;
 using SWD392.OutfitBox.Core.RepoInterfaces;
 using SWD392.OutfitBox.Core.Services.AuthService;
 using SWD392.OutfitBox.Core.Services.CategoryPackageService;
@@ -31,7 +30,7 @@ namespace SWD392.OutfitBox.API.CollectionRegisters
             services.AddScoped<IItemsInUserPackage, ItemInUserPackageRepository>();
             services.AddScoped<IRoleRepository, RoleRepository>();
             services.AddScoped<ICategoryPackageRepository, CategoryPackageRepository>();
-
+            services.AddScoped<IBrandRepository, BrandRepository>();
             services.AddControllers();
             services.AddEndpointsApiExplorer();
             services.AddControllers().AddJsonOptions(options =>
@@ -48,6 +47,11 @@ namespace SWD392.OutfitBox.API.CollectionRegisters
             services.AddScoped<IWalletService,WalletService>(); 
             services.AddScoped<IRoleService,RoleService>();
             services.AddScoped<ICategoryPackageService,CategoryPackageService>();
+            services.AddControllers()
+           .AddJsonOptions(options =>
+           {
+               options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+           });
         }
 
     }
