@@ -13,6 +13,9 @@ using SWD392.OutfitBox.Core.Models.Responses.Wallet;
 using SWD392.OutfitBox.Domain.Entities;
 using SWD392.OutfitBox.Core.Models.Requests.CategoryPackage;
 using SWD392.OutfitBox.Core.Models.Responses.CategoryPackage;
+using SWD392.OutfitBox.Core.Models.Requests.Review;
+using SWD392.OutfitBox.Core.Models.Responses.Review;
+using SWD392.OutfitBox.Core.Models.Responses.FavouriteProduct;
 using SWD392.OutfitBox.Core.Models.Requests.Product;
 using SWD392.OutfitBox.Core.Models.Responses.Product;
 
@@ -29,6 +32,8 @@ namespace SWD392.OutfitBox.API.Configurations.Mapper
             CustomerProfile();
             RoleProfile();
             CategoryPackageProfile();
+            ReviewProfile();
+            FavouriteProductProfile();
             ProductProfile();
         
         }
@@ -53,7 +58,7 @@ namespace SWD392.OutfitBox.API.Configurations.Mapper
         {
             CreateMap<CategoryPackageDTO, CategoryPackage>().ReverseMap();
             CreateMap<CreateCategoryPackageRequestDTO,CategoryPackage>().ReverseMap();
-            CreateMap<CreateCategoryResponseDTO,CategoryPackage>().ReverseMap();
+            CreateMap<CreateCategoryPackageResponseDTO,CategoryPackage>().ReverseMap();
             CreateMap<UpdateCategoryPackageRequestDTO,  CategoryPackage>().ReverseMap();    
             CreateMap<UpdateCategoryPackageResponseDTO,CategoryPackage>().ReverseMap(); 
         }
@@ -82,6 +87,23 @@ namespace SWD392.OutfitBox.API.Configurations.Mapper
             CreateMap<CreateRoleRequestDTO,Role>().ReverseMap();
             CreateMap<Role,CreateRoleResponseDTO>().ReverseMap();  
             CreateMap<Role,RoleDTO>().ReverseMap(); 
+        }
+
+        public void ReviewProfile()
+        {
+            CreateMap<CreateReviewRequestDTO, Review>().ForMember(x=>x.ReviewImages, opt=>opt.MapFrom(src=>src.ReviewImages.Select(y=> new ReviewImage()
+            {
+                Url=y
+            })));
+            CreateMap<Review, CreateReviewResponseDTO>()
+            .ForMember(x => x.ReviewImages, opt => opt.MapFrom(src => src.ReviewImages != null ? src.ReviewImages.Select(x => x.Url) : new List<string>() ));
+
+            CreateMap<Review, ReviewDTO>()
+            .ForMember(x => x.ReviewImages, opt => opt.MapFrom(src => src.ReviewImages != null ? src.ReviewImages.Select(x => x.Url) : new List<string>()));
+        }
+        public void FavouriteProductProfile()
+        {
+            CreateMap<FavouriteProduct, CreateFavouriteProductResponseDTO>();
         }
         public void ProductProfile()
         {
