@@ -20,7 +20,7 @@ namespace SWD392.OutfitBox.Infrastructure.Repositories
         public async Task<Product> Create(Product product)
         {
             var result = await this.AddAsync(product);
-            this.SaveChangesAsync();
+            await this.SaveChangesAsync();
             return result;
         }
     }

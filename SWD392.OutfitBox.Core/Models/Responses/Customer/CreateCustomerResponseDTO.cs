@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SWD392.OutfitBox.Core.Models.Requests.User
+namespace SWD392.OutfitBox.Core.Models.Responses.Customer
 {
-    public class CreateUserRequestDTO
-    {
+    public class CreateCustomerResponseDTO
+    {   
+        public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;
         public string Password { get; set; } = string.Empty;

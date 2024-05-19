@@ -19,12 +19,9 @@ namespace SWD392.OutfitBox.Domain.Entities
         [ForeignKey(nameof(WalletId))]
         public Wallet? Wallet { get; set; }
 
-        public int CustomerPackageId { get; set; }
-        [ForeignKey(nameof(CustomerPackageId))]
-        public CustomerPackage CustomerPackage { get; set; }
-
         public int DepositId {  get; set; }
         [ForeignKey(nameof(DepositId))]
-        public Deposit Deposit { get; set;}
+        public Deposit? Deposit { get; set;}
+        public List<CustomerPackage>? CustomerPackages { get; set; } 
     }
 }

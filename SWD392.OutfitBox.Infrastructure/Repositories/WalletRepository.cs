@@ -36,7 +36,7 @@ namespace SWD392.OutfitBox.Infrastructure.Repositories
 
         public async Task<List<Wallet>> GetAllWalletsByUserId(int userId)
         {
-            var wallets = await this.Get().Include(x => x.User).Where(x => x.User != null && x.UserId == userId).ToListAsync();
+            var wallets = await this.Get().Include(x => x.Customer).Where(x => x.Customer != null && x.CustomerId == userId).ToListAsync();
             return wallets;
         }
 

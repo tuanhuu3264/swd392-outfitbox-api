@@ -40,15 +40,19 @@ namespace SWD392.OutfitBox.Core.Services.PackageService
         public async Task<CreatePackageResponseDTO> CreatePackage(CreatePackageRequestDTO package)
         {
             var mappingPackage = _mapper.Map<Package>(package);
+
             var createdCategoriesInPackage = package.CategoryPackages?.Select(x => new CategoryPackage()
             {
                 CategoryId=x.CategoryId,
-
                 MaxAvailableQuantity=x.MaxAvailableQuantity,
             });
+
             mappingPackage.CategoryPackages = createdCategoriesInPackage?.ToList();
+
             var createdPackage = await _packageRepository.CreatePackage(mappingPackage);
+
             var newPackage = (await _packageRepository.GetAllPackage()).OrderBy(x => x.Id).Last();
+
             var returnedPackage= _mapper.Map<CreatePackageResponseDTO>(newPackage);
             return returnedPackage;
         }
@@ -67,10 +71,25 @@ namespace SWD392.OutfitBox.Core.Services.PackageService
             return returnedPackages;
         }
 
-        public async Task<UpdatePackageResponseDTO> UpdatePackage(UpdatePackageRequestDTO package)
-        {
-            var mappingPackage = _mapper.Map<Package>(package);
-            var updatedPackage = await _packageRepository.UpdatePackage(mappingPackage);
+        public async Task<UpdatePackageResponseDTO> UpdatePackage(UpdatePackageRequestDTO packageDTO)
+        {   
+            var mappingPackage = _mapper.Map<Package>(packageDTO);
+            var package = await _packageRepository.GetPackageById(mappingPackage.Id);
+            package.Status = packageDTO.Status;
+            package.Price= packageDTO.Price;
+            package.Description= packageDTO.Description;
+            package.AvailableRentDays = packageDTO.AvailableRentDays;
+            package.Name = packageDTO.Name;
+            if (package.CategoryPackages != null)
+                foreach(CategoryPackage categoryPackage in package.CategoryPackages)
+                {
+                    if(packageDTO.CategoryPackages!=null && packageDTO.CategoryPackages.Select(x=>x.CategoryId).Contains(categoryPackage.CategoryId)) 
+                    { 
+                        var updatedCategoryPackage = packageDTO.CategoryPackages.First(x=>x.CategoryId == categoryPackage.CategoryId);
+                        categoryPackage.MaxAvailableQuantity = updatedCategoryPackage.MaxAvailableQuantity;
+                    }
+                }
+            var updatedPackage = await _packageRepository.UpdatePackage(package);
             return _mapper.Map<UpdatePackageResponseDTO>(updatedPackage);
         }
     }

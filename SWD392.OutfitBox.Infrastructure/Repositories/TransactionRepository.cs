@@ -27,7 +27,7 @@ namespace SWD392.OutfitBox.Infrastructure.Repositories
 
         public Task<List<Domain.Entities.Transaction>> GetAllTransactionsByUserId(int userId)
         {
-            return this.Get().Include(x => x.Wallet).ThenInclude(x => x.User).Where(x => x.Wallet != null && x.Wallet.User != null && x.Wallet.User.Id == userId).ToListAsync();
+            return this.Get().Include(x => x.Wallet).ThenInclude(x => x.Customer).Where(x => x.Wallet != null && x.Wallet.Customer != null && x.Wallet.Customer.Id == userId).ToListAsync();
         }
     }
 }

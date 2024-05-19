@@ -16,5 +16,7 @@ namespace SWD392.OutfitBox.Core.Services.AuthService
         public Task<VerifyOTPResponseDTO> VerifyOTP(VerifyOTPRequestDTO verifyOTPRequestDTO);
 
         public Task<ForgetPasswordResponseDTO> ForgetPassword(ForgetPasswordRequestDTO forgetPasswordRequestDTO);
+
+        public Task<ResetPasswordResponseDTO> ResetPassword(ResetPasswordRequestDTO resetPasswordRequestDTO);
     }
 }

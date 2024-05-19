@@ -32,7 +32,7 @@ namespace SWD392.OutfitBox.Core.Services.WalletService
         public async Task<CreateWalletResponseDTO> AddWalletWithUserId(int userId, CreateWalletRequestDTO wallet)
         {
             var result = _mapper.Map<Wallet>(wallet);
-            result.UserId = userId; 
+            result.CustomerId = userId; 
             var addedWallet = await _walletRepository.CreateWallet(userId, result);
             return _mapper.Map<CreateWalletResponseDTO>(addedWallet);
         }
@@ -55,7 +55,7 @@ namespace SWD392.OutfitBox.Core.Services.WalletService
         public async Task<UpdateWalletResponseDTO> UpdateWalletWithUserId(int userId, UpdateWalletRequestDTO wallet)
         {   
             var result = _mapper.Map<Wallet>(wallet);
-            result.UserId = userId;
+            result.CustomerId = userId;
             var updatedWallet = await _walletRepository.UpdateWallet(result);
             return _mapper.Map<UpdateWalletResponseDTO>(updatedWallet);
 

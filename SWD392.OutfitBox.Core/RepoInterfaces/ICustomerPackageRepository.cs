@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace SWD392.OutfitBox.Core.RepoInterfaces
 {
-    public interface IUserPackageRepository
+    public interface ICustomerPackageRepository
     {
-        Task<UserPackage> CreateUserPackage(UserPackage userPackage);
+        Task<CustomerPackage> CreateUserPackage(CustomerPackage userPackage);
     }
 }
