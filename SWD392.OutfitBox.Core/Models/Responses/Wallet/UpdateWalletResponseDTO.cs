@@ -12,6 +12,6 @@ namespace SWD392.OutfitBox.Core.Models.Responses.Wallet
         public string WalletName { get; set; } = string.Empty;
         public string WalletPassword { get; set; } = string.Empty;
         public int Status { get; set; }
-        public int UserId { get; set; }
+        public int CustomerId { get; set; }
     }
 }

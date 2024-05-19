@@ -10,10 +10,10 @@ using SWD392.OutfitBox.Core.Services.AuthService;
 namespace SWD392.OutfitBox.API.Controllers
 {
     [ApiController]
-    public class AuthController : ControllerBase
+    public class AuthCustomerController : ControllerBase
     {
         public IAuthService _authService { get; set; }
-        public AuthController(IAuthService authService)
+        public AuthCustomerController(IAuthService authService)
         {
             _authService = authService;
         }
