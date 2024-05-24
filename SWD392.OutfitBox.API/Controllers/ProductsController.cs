@@ -25,5 +25,12 @@ namespace SWD392.OutfitBox.API.Controllers
             var result = await _productService.CreateProduct(productDto);
             return StatusCode((int)result.StatusCode, result.Message);
         }
+
+        [HttpGet(Endpoints.ProductsController.productDetail)]
+        public async Task<IActionResult> GetProductbyId([FromRoute] int id)
+        {
+            var result = await _productService.GetById(id);
+            return StatusCode((int)result.StatusCode, result.Data != null ? result.Data : result.Message);
+        }
     }
 }

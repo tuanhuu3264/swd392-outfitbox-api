@@ -70,6 +70,7 @@ namespace SWD392.OutfitBox.API.CollectionRegisters
             services.AddScoped<ICategoryPackageService,CategoryPackageService>();
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IBrandRepository, BrandRepository>();
+            services.AddScoped<IImageRepository, ImageRepository>();
         }
 
     }

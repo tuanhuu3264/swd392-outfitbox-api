@@ -12,6 +12,8 @@ namespace SWD392.OutfitBox.Core.RepoInterfaces
         Task<bool> UpdateImage(List<Image> images);
      
         Task<Image> GetImageById(int id);
+
+        Task<bool> UpdateListImage(int productId, List<Image> list); 
         
     }
 

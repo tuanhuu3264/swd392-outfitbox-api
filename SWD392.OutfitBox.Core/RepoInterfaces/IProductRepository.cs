@@ -12,6 +12,6 @@ namespace SWD392.OutfitBox.Core.RepoInterfaces
         Task<List<Product>> GetAll();
         Task<Product> CreateProduct(Product product);
         Task<Product> GetById(int id);
-        Task<Product> UpdateProduct(Product product);
+        Task<bool> UpdateProduct(Product product);
     }
 }
