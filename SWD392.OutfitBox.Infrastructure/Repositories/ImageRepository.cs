@@ -39,5 +39,19 @@ namespace SWD392.OutfitBox.Infrastructure.Repositories
             }
             return result;
         }
+
+        public async Task<bool> UpdateListImage(int productid, List<Image> list)
+        {
+            try {
+                var listimg = await this.Get().Where(x => x.IdProduct == productid).ToArrayAsync();
+                this.Delete(listimg);
+                await this.AddRangeAsync(listimg);
+                return true;
+            }
+            catch {
+                return false;
+            }
+           
+        }
     }
 }

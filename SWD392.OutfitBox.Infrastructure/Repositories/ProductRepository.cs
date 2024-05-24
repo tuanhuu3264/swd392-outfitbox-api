@@ -10,9 +10,12 @@ namespace SWD392.OutfitBox.Infrastructure.Repositories
 {
     public class ProductRepository : BaseRepository<Product>, IProductRepository
     {
-        public ProductRepository(Context context) : base(context)
+        internal Context _context;
+        internal IImageRepository _imageRepository;
+        public ProductRepository(Context context, IImageRepository imageRepository) : base(context)
         {
-        
+            _context = context;
+            _imageRepository = imageRepository;
         }
 
         public async Task<List<Product>> GetAll()
@@ -34,10 +37,33 @@ namespace SWD392.OutfitBox.Infrastructure.Repositories
             return result;
         }
 
-        public async Task<Product> UpdateProduct(Product product)
+        public async Task<bool> UpdateProduct(Product product)
         {
-            var result = await this.GetById(product.ID);
-            return result;
+            using (var transaction = await _context.Database.BeginTransactionAsync())
+            {
+
+                var existingProduct = await this.GetById(product.ID);
+                if (existingProduct == null)
+                {
+                    await transaction.RollbackAsync();
+                    return false;
+                }
+                var removedImages = existingProduct.Images
+               .Where(img => !product.Images.Any(updatedImg => updatedImg.ID == img.ID))
+               .ToList();
+                foreach (var removedImage in removedImages)
+                {
+                    existingProduct.Images.Remove(removedImage);
+                }
+                var newImages = product.Images
+               .Where(updatedImg => !existingProduct.Images.Any(img => img.ID == updatedImg.ID))
+               .ToList();
+                foreach (var newImage in newImages)
+                {
+                    existingProduct.Images.Add(newImage);
+                }
+                return true;
+            }
         }
-    }
+       }
 }
