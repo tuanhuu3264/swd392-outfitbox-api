@@ -11,8 +11,10 @@ using SWD392.OutfitBox.Core.Services.RoleService;
 using SWD392.OutfitBox.Core.Services.TransactionService;
 using SWD392.OutfitBox.Core.Services.UserService;
 using SWD392.OutfitBox.Core.Services.WalletService;
+using SWD392.OutfitBox.Core.UnitOfWork;
 using SWD392.OutfitBox.Domain;
 using SWD392.OutfitBox.Infrastructure.Repositories;
+using SWD392.OutfitBox.Infrastructure.UnitOfWork;
 using System.Text.Json.Serialization;
 
 namespace SWD392.OutfitBox.API.CollectionRegisters
@@ -32,6 +34,7 @@ namespace SWD392.OutfitBox.API.CollectionRegisters
             });
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.ServiesRegister();
+            services.AddScoped<IUnitOfWork,UnitOfWork>();   
         }
         public static void ServiesRegister(this IServiceCollection services)
         {
