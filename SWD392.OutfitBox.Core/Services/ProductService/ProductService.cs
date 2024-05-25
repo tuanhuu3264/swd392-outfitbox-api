@@ -3,6 +3,7 @@ using SWD392.OutfitBox.Core.Constants;
 using SWD392.OutfitBox.Core.Models.Requests.Product;
 using SWD392.OutfitBox.Core.Models.Responses.Product;
 using SWD392.OutfitBox.Core.RepoInterfaces;
+using SWD392.OutfitBox.Core.UnitOfWork;
 using SWD392.OutfitBox.Domain.Entities;
 using SWD392.OutfitBox.Infrastructure.Repositories;
 using System.Net;
@@ -17,19 +18,21 @@ namespace SWD392.OutfitBox.Core.Services.ProductService
         readonly IMapper _mapper;
         readonly ICategoryRepository _categoryRepository;
         readonly IBrandRepository _brandRepository;
+        readonly IUnitOfWork _unitOfWork;
         public ProductService(IProductRepository repository, IMapper mapper, ICategoryRepository categoryRepository,
-            IBrandRepository brandRepository)
+            IBrandRepository brandRepository,IUnitOfWork unitOfWork)
         {
             _repository = repository;
             _mapper = mapper;
             _categoryRepository = categoryRepository;
             _brandRepository = brandRepository;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<StatusCodeResponse<List<ProductGeneral>>> GetAll()
         {
             var result = new StatusCodeResponse<List<ProductGeneral>>();
-            var products = await _repository.GetAll();
+            var products = await _unitOfWork.GetProductRepository().Result.GetAll();
             var data = _mapper.Map<List<ProductGeneral>>(products);
             result.Data = data;
             result.StatusCode = HttpStatusCode.OK;
@@ -41,7 +44,7 @@ namespace SWD392.OutfitBox.Core.Services.ProductService
             try
             {
                 var product = _mapper.Map<Product>(createdProduct);
-                product.Brand = await _brandRepository.GetById(product.IdBrand);
+                product.Brand = await _unitOfWork.GetBrandRepository().Result.GetById(createdProduct.IdBrand);
                 if (product.Brand == null) { throw new Exception("Can not find Brand"); }
                 product.Category = await _categoryRepository.GetById(product.IdCategory);
                 if (product.Category == null) { throw new Exception("Can not find Category"); }
