@@ -20,5 +20,6 @@ namespace SWD392.OutfitBox.Domain.Entities
         public int ReturnOrderId { get; set; }
         [ForeignKey("ReturnOrderId")]
         public ReturnOrder? ReturnOrder { get; set; }
+        public int Quantity { get; set; }
     }
 }

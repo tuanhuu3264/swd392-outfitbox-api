@@ -1,7 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SWD392.OutfitBox.Core.RepoInterfaces;
 using SWD392.OutfitBox.Core.UnitOfWork;
+using SWD392.OutfitBox.Domain.Entities;
 using SWD392.OutfitBox.Infrastructure.Databases.SQLServer;
+using SWD392.OutfitBox.Infrastructure.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,11 +17,21 @@ namespace SWD392.OutfitBox.Infrastructure.UnitOfWork
         private Context _dbContext; 
         private ICustomerRepository _customerRepository;
         private IProductRepository _productRepository;
-        public UnitOfWork(Context dbContext, ICustomerRepository customerRepository, IProductRepository productRepository)
+        private IImageRepository _imageRepository;
+        private IBrandRepository _brandRepository;
+        private ICategoryRepository _categoryRepository;
+        private IItemsInUserPackageRepository _itemsInUserPackageRepository;
+
+        public UnitOfWork(Context dbContext, ICustomerRepository customerRepository, IProductRepository productRepository,
+            IBrandRepository brandRepository, ICategoryRepository categoryRepository, IItemsInUserPackageRepository itemsInUserPackageRepository
+            )
         {
             _dbContext = dbContext;
             _customerRepository = customerRepository;
             _productRepository = productRepository;
+            _brandRepository = brandRepository;
+            _categoryRepository = categoryRepository;
+            _itemsInUserPackageRepository = itemsInUserPackageRepository;
         }
 
         public async Task BenginTransaction()
@@ -36,15 +48,30 @@ namespace SWD392.OutfitBox.Infrastructure.UnitOfWork
             return _customerRepository;
         }
 
+        public async Task<IImageRepository> GetImageRepository()
+        {
+            return _imageRepository;
+        }
+
         public async Task<IProductRepository> GetProductRepository()
         {
             return _productRepository;
         }
-
-
         public async Task RollbackTransaction()
         {
             await _dbContext.Database.RollbackTransactionAsync();
+        }
+        public async Task<IBrandRepository> GetBrandRepository()
+        {
+            return _brandRepository;
+        }
+        public async Task<ICategoryRepository> GetCategoryRepository()
+        {
+            return _categoryRepository;
+        }
+        public async Task<IItemsInUserPackageRepository> GetItemsInUserPackageRepository()
+        {
+            return _itemsInUserPackageRepository;
         }
     }
 }

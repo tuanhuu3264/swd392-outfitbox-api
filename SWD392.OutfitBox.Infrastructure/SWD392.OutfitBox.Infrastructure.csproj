@@ -14,6 +14,7 @@
   <ItemGroup>
     <Folder Include="Databases\Redis\" />
     <Folder Include="Libraries\" />
+    <Folder Include="Migrations\" />
   </ItemGroup>
 
   <ItemGroup>

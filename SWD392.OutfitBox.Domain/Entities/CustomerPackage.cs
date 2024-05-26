@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace SWD392.OutfitBox.Domain.Entities
 {
-    [Table("CustomerPackege")]
+    [Table("CustomerPackage")]
     public class CustomerPackage
     {
         [Key]

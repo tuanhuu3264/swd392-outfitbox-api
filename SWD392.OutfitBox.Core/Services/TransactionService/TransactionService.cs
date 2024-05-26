@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using AutoMapper.Configuration.Annotations;
+using SWD392.OutfitBox.Core.Models.Requests.ItemInUserPackage;
 using SWD392.OutfitBox.Core.Models.Requests.Transaction;
 using SWD392.OutfitBox.Core.Models.Responses.Transaction;
 using SWD392.OutfitBox.Core.RepoInterfaces;
@@ -17,11 +18,11 @@ namespace SWD392.OutfitBox.Core.Services.TransactionService
         ITransactionRepository _transactionRepository; 
         IPackageRepository _packageRepository;
         ICustomerPackageRepository _userPackageRepository;
-        IItemsInUserPackage _itemsInUserPackage;
+        IItemsInUserPackageRepository _itemsInUserPackage;
         IProductRepository _productRepository;
         IMapper _mapper;
         public TransactionService(IMapper mapper, IProductRepository productRepository, ICustomerPackageRepository userPackageRepository,
-            IItemsInUserPackage itemsInUserPackage,IPackageRepository packageRepository, ITransactionRepository transactionRepository)
+            IItemsInUserPackageRepository itemsInUserPackage,IPackageRepository packageRepository, ITransactionRepository transactionRepository)
         {
             _transactionRepository = transactionRepository;
             _packageRepository = packageRepository;
@@ -55,7 +56,7 @@ namespace SWD392.OutfitBox.Core.Services.TransactionService
             userPackage.Status = 1;
             var createdUserPackage = _userPackageRepository.CreateUserPackage(userPackage);
             var itemsInUserPackage = checkoutTransactionRequestDTO.Items?.Select(async x => {
-                var returnedItem = new ItemInUserPackage()
+                var returnedItem = new SWD392.OutfitBox.Domain.Entities.ItemInUserPackage()
                 {
                     ProductId = x.ProductId,
                     UserPackageId = createdUserPackage.Id,

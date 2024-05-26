@@ -34,8 +34,6 @@ namespace SWD392.OutfitBox.Infrastructure.Repositories
         public void Delete(params TEntity[] entities)
         {
             _dbSet.RemoveRange(entities);
-
-
         }
 
         public void Delete(TEntity entity)
@@ -108,9 +106,10 @@ namespace SWD392.OutfitBox.Infrastructure.Repositories
             _dbSet.UpdateRange(entities);
         }
 
-        public void Update(TEntity entity)
+        public TEntity Update(TEntity entity)
         {
-            _dbSet.Update(entity);
+            var entityEntry = _dbSet.Update(entity);
+            return entityEntry.Entity;
         }
         public async Task<bool> AddHashKey(TEntity entity, CancellationToken cancellationToken = default)
         {

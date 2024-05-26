@@ -26,44 +26,20 @@ namespace SWD392.OutfitBox.Infrastructure.Repositories
         public async Task<Product> CreateProduct(Product product)
         {
             var result = await this.AddAsync(product);
-            await this.SaveChangesAsync();
             return result;
         }
 
         public async Task<Product> GetById(int id)
         {
-            var result = await this.Get().Include(x => x.Images).FirstOrDefaultAsync(x => x.ID == id);
-            if (result == null) return new Product();
+            var result = await this.Get().Include(x => x.Images).Include(x => x.Brand).Include(x => x.Category).FirstOrDefaultAsync(x => x.ID == id);
+            if (result == null) return null;
             return result;
         }
 
         public async Task<bool> UpdateProduct(Product product)
         {
-            using (var transaction = await _context.Database.BeginTransactionAsync())
-            {
-
-                var existingProduct = await this.GetById(product.ID);
-                if (existingProduct == null)
-                {
-                    await transaction.RollbackAsync();
-                    return false;
-                }
-                var removedImages = existingProduct.Images
-               .Where(img => !product.Images.Any(updatedImg => updatedImg.ID == img.ID))
-               .ToList();
-                foreach (var removedImage in removedImages)
-                {
-                    existingProduct.Images.Remove(removedImage);
-                }
-                var newImages = product.Images
-               .Where(updatedImg => !existingProduct.Images.Any(img => img.ID == updatedImg.ID))
-               .ToList();
-                foreach (var newImage in newImages)
-                {
-                    existingProduct.Images.Add(newImage);
-                }
-                return true;
-            }
+            var obj = this.Update(product);
+            return obj == null?false:true ;
         }
        }
 }

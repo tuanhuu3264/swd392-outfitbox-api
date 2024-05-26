@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Services\ItemInUserPackage\" />
+    <Folder Include="Models\Responses\ItemInUserPackage\" />
     <Folder Include="Services\UserPackageService\" />
   </ItemGroup>
 

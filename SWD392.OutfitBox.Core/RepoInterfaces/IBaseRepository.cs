@@ -18,7 +18,7 @@ namespace SWD392.OutfitBox.Domain
 
         void Delete(TEntity entity);
 
-        void Update(TEntity entity);
+        TEntity Update(TEntity entity);
 
         Task SaveChangesAsync(CancellationToken cancellationToken = default);
 

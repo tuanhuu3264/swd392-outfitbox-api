@@ -1,4 +1,5 @@
 ﻿using SWD392.OutfitBox.Core.RepoInterfaces;
+using SWD392.OutfitBox.Infrastructure.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,12 +10,13 @@ namespace SWD392.OutfitBox.Core.UnitOfWork
 {
     public interface IUnitOfWork
     {
-        public Task BenginTransaction();
-        public Task CommitTransaction();
-        public Task RollbackTransaction();
-        public Task<IProductRepository> GetProductRepository();
-
-        public Task<ICustomerRepository> GetCustomerRepository();
-
+        Task BenginTransaction();
+        Task CommitTransaction();
+        Task RollbackTransaction();
+        Task<IProductRepository> GetProductRepository();
+        Task<IImageRepository> GetImageRepository();
+        Task<ICustomerRepository> GetCustomerRepository();
+        Task<IBrandRepository> GetBrandRepository();
+        Task<IItemsInUserPackageRepository> GetItemsInUserPackageRepository();
     }
 }
