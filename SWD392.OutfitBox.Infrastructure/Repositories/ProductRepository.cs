@@ -31,7 +31,7 @@ namespace SWD392.OutfitBox.Infrastructure.Repositories
 
         public async Task<Product> GetById(int id)
         {
-            var result = await this.Get().Include(x => x.Images).FirstOrDefaultAsync(x => x.ID == id);
+            var result = await this.Get().Include(x => x.Images).Include(x => x.Brand).Include(x => x.Category).FirstOrDefaultAsync(x => x.ID == id);
             if (result == null) return null;
             return result;
         }

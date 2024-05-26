@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace SWD392.OutfitBox.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class InitDB : Migration
+    public partial class updatedatabase : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -109,20 +109,6 @@ namespace SWD392.OutfitBox.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Type",
-                columns: table => new
-                {
-                    ID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Type", x => x.ID);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Partners",
                 columns: table => new
                 {
@@ -142,6 +128,43 @@ namespace SWD392.OutfitBox.Infrastructure.Migrations
                         column: x => x.AreaId,
                         principalTable: "Area",
                         principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Product",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Price = table.Column<float>(type: "real", nullable: false),
+                    Size = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Color = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IsUsed = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Deposit = table.Column<double>(type: "float", nullable: false),
+                    IdCategory = table.Column<int>(type: "int", nullable: false),
+                    Quantity = table.Column<int>(type: "int", nullable: false),
+                    AvailableQuantity = table.Column<int>(type: "int", nullable: false),
+                    IdBrand = table.Column<int>(type: "int", nullable: false),
+                    Type = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Product", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_Product_Brand_IdBrand",
+                        column: x => x.IdBrand,
+                        principalTable: "Brand",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Product_Category_IdCategory",
+                        column: x => x.IdCategory,
+                        principalTable: "Category",
+                        principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -246,47 +269,6 @@ namespace SWD392.OutfitBox.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Product",
-                columns: table => new
-                {
-                    ID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Price = table.Column<float>(type: "real", nullable: false),
-                    Size = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Color = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    IsUsed = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Deposit = table.Column<double>(type: "float", nullable: false),
-                    IdCategory = table.Column<int>(type: "int", nullable: false),
-                    IdBrand = table.Column<int>(type: "int", nullable: false),
-                    Type = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    TypeID = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Product", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_Product_Brand_IdBrand",
-                        column: x => x.IdBrand,
-                        principalTable: "Brand",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Product_Category_IdCategory",
-                        column: x => x.IdCategory,
-                        principalTable: "Category",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Product_Type_TypeID",
-                        column: x => x.TypeID,
-                        principalTable: "Type",
-                        principalColumn: "ID");
-                });
-
-            migrationBuilder.CreateTable(
                 name: "ReturnOrders",
                 columns: table => new
                 {
@@ -312,32 +294,6 @@ namespace SWD392.OutfitBox.Infrastructure.Migrations
                         name: "FK_ReturnOrders_Partners_PartnerId",
                         column: x => x.PartnerId,
                         principalTable: "Partners",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Transactions",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    DateTransaction = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    WalletId = table.Column<int>(type: "int", nullable: false),
-                    DepositId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Transactions", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Transactions_Deposits_DepositId",
-                        column: x => x.DepositId,
-                        principalTable: "Deposits",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Transactions_Wallets_WalletId",
-                        column: x => x.WalletId,
-                        principalTable: "Wallets",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -389,6 +345,32 @@ namespace SWD392.OutfitBox.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Transactions",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    DateTransaction = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    WalletId = table.Column<int>(type: "int", nullable: false),
+                    DepositId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Transactions", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Transactions_Deposits_DepositId",
+                        column: x => x.DepositId,
+                        principalTable: "Deposits",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Transactions_Wallets_WalletId",
+                        column: x => x.WalletId,
+                        principalTable: "Wallets",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Reviews",
                 columns: table => new
                 {
@@ -427,7 +409,8 @@ namespace SWD392.OutfitBox.Infrastructure.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Status = table.Column<int>(type: "int", nullable: false),
                     ProductId = table.Column<int>(type: "int", nullable: false),
-                    ReturnOrderId = table.Column<int>(type: "int", nullable: false)
+                    ReturnOrderId = table.Column<int>(type: "int", nullable: false),
+                    Quantity = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -447,7 +430,7 @@ namespace SWD392.OutfitBox.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "CustomerPackege",
+                name: "CustomerPackage",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -466,20 +449,20 @@ namespace SWD392.OutfitBox.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CustomerPackege", x => x.Id);
+                    table.PrimaryKey("PK_CustomerPackage", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_CustomerPackege_Customer_CustomerId",
+                        name: "FK_CustomerPackage_Customer_CustomerId",
                         column: x => x.CustomerId,
                         principalTable: "Customer",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_CustomerPackege_Packages_PackageId",
+                        name: "FK_CustomerPackage_Packages_PackageId",
                         column: x => x.PackageId,
                         principalTable: "Packages",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_CustomerPackege_Transactions_TransactionId",
+                        name: "FK_CustomerPackage_Transactions_TransactionId",
                         column: x => x.TransactionId,
                         principalTable: "Transactions",
                         principalColumn: "Id");
@@ -517,15 +500,16 @@ namespace SWD392.OutfitBox.Infrastructure.Migrations
                     UserPackageId = table.Column<int>(type: "int", nullable: false),
                     DateGive = table.Column<DateTime>(type: "datetime2", nullable: true),
                     DateReceive = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    TornMoney = table.Column<double>(type: "float", nullable: false)
+                    TornMoney = table.Column<double>(type: "float", nullable: false),
+                    Quantity = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ItemInUserPackages", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ItemInUserPackages_CustomerPackege_UserPackageId",
+                        name: "FK_ItemInUserPackages_CustomerPackage_UserPackageId",
                         column: x => x.UserPackageId,
-                        principalTable: "CustomerPackege",
+                        principalTable: "CustomerPackage",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -557,19 +541,6 @@ namespace SWD392.OutfitBox.Infrastructure.Migrations
                     { 5, "", "Dress", 0 }
                 });
 
-            migrationBuilder.InsertData(
-                table: "Type",
-                columns: new[] { "ID", "Description", "Name" },
-                values: new object[,]
-                {
-                    { 1, "", "New" },
-                    { 2, "", "IsUsed" },
-                    { 3, "", "Expected" },
-                    { 4, "", "Torn" },
-                    { 5, "", "Active" },
-                    { 6, "", "Inactive" }
-                });
-
             migrationBuilder.CreateIndex(
                 name: "IX_CategoryPackages_CategoryId",
                 table: "CategoryPackages",
@@ -581,18 +552,18 @@ namespace SWD392.OutfitBox.Infrastructure.Migrations
                 column: "PackageId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CustomerPackege_CustomerId",
-                table: "CustomerPackege",
+                name: "IX_CustomerPackage_CustomerId",
+                table: "CustomerPackage",
                 column: "CustomerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CustomerPackege_PackageId",
-                table: "CustomerPackege",
+                name: "IX_CustomerPackage_PackageId",
+                table: "CustomerPackage",
                 column: "PackageId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CustomerPackege_TransactionId",
-                table: "CustomerPackege",
+                name: "IX_CustomerPackage_TransactionId",
+                table: "CustomerPackage",
                 column: "TransactionId");
 
             migrationBuilder.CreateIndex(
@@ -639,11 +610,6 @@ namespace SWD392.OutfitBox.Infrastructure.Migrations
                 name: "IX_Product_IdCategory",
                 table: "Product",
                 column: "IdCategory");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Product_TypeID",
-                table: "Product",
-                column: "TypeID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ProductReturnOrders_ProductId",
@@ -723,7 +689,7 @@ namespace SWD392.OutfitBox.Infrastructure.Migrations
                 name: "ReviewImages");
 
             migrationBuilder.DropTable(
-                name: "CustomerPackege");
+                name: "CustomerPackage");
 
             migrationBuilder.DropTable(
                 name: "ReturnOrders");
@@ -760,9 +726,6 @@ namespace SWD392.OutfitBox.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "Category");
-
-            migrationBuilder.DropTable(
-                name: "Type");
 
             migrationBuilder.DropTable(
                 name: "Roles");

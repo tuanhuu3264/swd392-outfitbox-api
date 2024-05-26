@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Type = SWD392.OutfitBox.Domain.Entities.Type;
 
 namespace SWD392.OutfitBox.Infrastructure.Databases.SQLServer
 {
@@ -20,7 +19,6 @@ namespace SWD392.OutfitBox.Infrastructure.Databases.SQLServer
         #region DbSet
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
-        public DbSet<Domain.Entities.Type> Types { get; set; }
         public DbSet<Brand> Brands { get; set; }
         public DbSet<Image> Images { get; set; }
         public DbSet<User> Users { get; set; }

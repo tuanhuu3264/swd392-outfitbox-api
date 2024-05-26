@@ -1,4 +1,6 @@
-﻿using SWD392.OutfitBox.Core.RepoInterfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using SWD392.OutfitBox.Core.Models.Requests.ItemInUserPackage;
+using SWD392.OutfitBox.Core.RepoInterfaces;
 using SWD392.OutfitBox.Domain.Entities;
 using SWD392.OutfitBox.Infrastructure.Databases.SQLServer;
 using System;
@@ -9,15 +11,44 @@ using System.Threading.Tasks;
 
 namespace SWD392.OutfitBox.Infrastructure.Repositories
 {
-    public class ItemInUserPackageRepository : BaseRepository<ItemInUserPackage>, IItemsInUserPackage
+    public class ItemInUserPackageRepository : BaseRepository<ItemInUserPackage>, IItemsInUserPackageRepository
     {
         public ItemInUserPackageRepository(Context context) : base(context)
         {
         }
 
-        public Task<List<ItemInUserPackage>> CreateItemsInUserPackage(ItemInUserPackage[] itemsInUserPackage)
+        public async Task<ItemInUserPackage> CreateItemInUserPackage(ItemInUserPackage item)
+        {
+            return await this.AddAsync(item);
+        }
+
+        public Task<ItemInUserPackage[]> CreateItemsInUserPackage(ItemInUserPackage[] itemInUserPackages)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<List<ItemInUserPackage>> GetAllItemInPacket()
+        {
+            return await this.Get().ToListAsync();
+        }
+
+        public async Task<ItemInUserPackage> GetById(int id)
+        {
+            return await this.Get().FirstOrDefaultAsync(x=> x.Id==id);
+        }
+
+        public async Task<bool> UnactiveStatus(ItemInUserPackage item)
+        {
+            item.Status = -1;
+            var obj=  this.Update(item); 
+            return obj == null ? false : true;
+        }
+
+        public async Task<bool> UpdateItem(ItemInUserPackage item)
+        {
+            var result = this.Update(item);
+            await this.SaveChangesAsync();
+            return result == null ? false : true;
         }
     }
 }

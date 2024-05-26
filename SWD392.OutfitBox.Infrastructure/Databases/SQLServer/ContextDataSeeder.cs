@@ -3,8 +3,6 @@ using SWD392.OutfitBox.Domain.Entities;
 using System.Numerics;
 using System.Reflection;
 using System.Xml.Linq;
-using Type = SWD392.OutfitBox.Domain.Entities.Type;
-
 namespace FAMS.Core.Databases
 {
     public static class ContextDataSeeder
@@ -61,44 +59,6 @@ namespace FAMS.Core.Databases
                     Description = ""
                 }
                 );
-            modelBuilder.Entity<Type>().HasData(
-               new Type
-               {
-                   ID = 1,
-                   Name = "New",
-                   Description = ""
-               },
-               new Type
-               {
-                   ID = 2,
-                   Name = "IsUsed",
-                   Description = ""
-               },
-               new Type
-               {
-                   ID = 3,
-                   Name = "Expected",
-                   Description = ""
-               },
-               new Type
-               {
-                   ID = 4,
-                   Name = "Torn",
-                   Description = ""
-               },
-               new Type
-               {
-                   ID = 5,
-                   Name = "Active",
-                   Description = ""
-               },
-               new Type
-               {
-                   ID = 6,
-                   Name = "Inactive",
-                   Description = ""
-               }
-               );
         }
 
     }

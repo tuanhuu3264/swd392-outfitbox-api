@@ -10,12 +10,13 @@ namespace SWD392.OutfitBox.Core.UnitOfWork
 {
     public interface IUnitOfWork
     {
-        public Task BenginTransaction();
-        public Task CommitTransaction();
-        public Task RollbackTransaction();
-        public Task<IProductRepository> GetProductRepository();
-        public Task<IImageRepository> GetImageRepository();
-        public Task<ICustomerRepository> GetCustomerRepository();
-        public Task<IBrandRepository> GetBrandRepository();
+        Task BenginTransaction();
+        Task CommitTransaction();
+        Task RollbackTransaction();
+        Task<IProductRepository> GetProductRepository();
+        Task<IImageRepository> GetImageRepository();
+        Task<ICustomerRepository> GetCustomerRepository();
+        Task<IBrandRepository> GetBrandRepository();
+        Task<IItemsInUserPackageRepository> GetItemsInUserPackageRepository();
     }
 }

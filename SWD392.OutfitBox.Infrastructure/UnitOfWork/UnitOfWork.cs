@@ -20,15 +20,18 @@ namespace SWD392.OutfitBox.Infrastructure.UnitOfWork
         private IImageRepository _imageRepository;
         private IBrandRepository _brandRepository;
         private ICategoryRepository _categoryRepository;
+        private IItemsInUserPackageRepository _itemsInUserPackageRepository;
 
         public UnitOfWork(Context dbContext, ICustomerRepository customerRepository, IProductRepository productRepository,
-            IBrandRepository brandRepository, ICategoryRepository categoryRepository)
+            IBrandRepository brandRepository, ICategoryRepository categoryRepository, IItemsInUserPackageRepository itemsInUserPackageRepository
+            )
         {
             _dbContext = dbContext;
             _customerRepository = customerRepository;
             _productRepository = productRepository;
             _brandRepository = brandRepository;
             _categoryRepository = categoryRepository;
+            _itemsInUserPackageRepository = itemsInUserPackageRepository;
         }
 
         public async Task BenginTransaction()
@@ -54,8 +57,6 @@ namespace SWD392.OutfitBox.Infrastructure.UnitOfWork
         {
             return _productRepository;
         }
-
-
         public async Task RollbackTransaction()
         {
             await _dbContext.Database.RollbackTransactionAsync();
@@ -67,6 +68,10 @@ namespace SWD392.OutfitBox.Infrastructure.UnitOfWork
         public async Task<ICategoryRepository> GetCategoryRepository()
         {
             return _categoryRepository;
+        }
+        public async Task<IItemsInUserPackageRepository> GetItemsInUserPackageRepository()
+        {
+            return _itemsInUserPackageRepository;
         }
     }
 }

@@ -4,6 +4,7 @@ using SWD392.OutfitBox.Core.Services.AuthService;
 using SWD392.OutfitBox.Core.Services.CategoryPackageService;
 using SWD392.OutfitBox.Core.Services.CategoryService;
 using SWD392.OutfitBox.Core.Services.FavouriteProduct;
+using SWD392.OutfitBox.Core.Services.ItemInUserPackage;
 using SWD392.OutfitBox.Core.Services.PackageService;
 using SWD392.OutfitBox.Core.Services.ProductService;
 using SWD392.OutfitBox.Core.Services.ReviewService;
@@ -51,6 +52,7 @@ namespace SWD392.OutfitBox.API.CollectionRegisters
             services.AddScoped<IReviewService, ReviewService>();  
             services.AddScoped<IFavouriteProductService, FavouriteProductService>();
             services.AddScoped<IProductService,ProductService>();
+            services.AddScoped<IItemsInUserPackageService, ItemsInUserPackageService>();
         }
         public static void RepositoriesRegister(this IServiceCollection services)
         {
@@ -62,7 +64,7 @@ namespace SWD392.OutfitBox.API.CollectionRegisters
             services.AddScoped<ICustomerRepository, CustomerRepository>();
             services.AddScoped<IWalletRepository, WalletRepository>();
             services.AddScoped<ICustomerPackageRepository, CustomerPackageRepository>();
-            services.AddScoped<IItemsInUserPackage, ItemInUserPackageRepository>();
+            services.AddScoped<IItemsInUserPackageRepository, ItemInUserPackageRepository>();
             services.AddScoped<IRoleRepository, RoleRepository>();
             services.AddScoped<ICategoryPackageRepository, CategoryPackageRepository>();
             services.AddScoped<IReviewRepository, ReviewRepository>();  

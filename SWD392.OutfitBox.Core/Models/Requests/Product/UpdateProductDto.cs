@@ -24,6 +24,7 @@ namespace SWD392.OutfitBox.Core.Models.Requests.Product
         public int IdCategory { get; set; }
         public int IdBrand { get; set; }
         public string Type { get; set; }
-        public List<ImageDto>? Images { get; set; }
+        public int Quantity {  get; set; }
+      //  public List<ImageDto>? Images { get; set; }
     }
 }

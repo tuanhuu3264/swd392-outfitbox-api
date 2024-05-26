@@ -17,10 +17,17 @@ namespace SWD392.OutfitBox.Core.Models.Responses.Product
         public string Description { get; set; }
         public string Status { get; set; }
         public string IsUsed { get; set; }
-        public string Category { get; set; }
+        public CategoryDto Category{ get; set; }
         public BrandDto Brand { get; set; }
+        public int Quantity {  get; set; }
+        public int AvailableQuantity { get; set; }
         public string Type { get; set; }
         public List<ImageDto> Images { get; set; }
+    }
+    public class CategoryDto
+    {
+        public int Id { set; get; }
+        public string Name { set; get; }
     }
     public class BrandDto
     { 

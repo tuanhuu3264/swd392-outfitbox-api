@@ -18,6 +18,7 @@ using SWD392.OutfitBox.Core.Models.Responses.Review;
 using SWD392.OutfitBox.Core.Models.Responses.FavouriteProduct;
 using SWD392.OutfitBox.Core.Models.Requests.Product;
 using SWD392.OutfitBox.Core.Models.Responses.Product;
+using SWD392.OutfitBox.Core.Models.Requests.ItemInUserPackage;
 
 namespace SWD392.OutfitBox.API.Configurations.Mapper
 {
@@ -109,18 +110,26 @@ namespace SWD392.OutfitBox.API.Configurations.Mapper
         {
             CreateMap<Product, CreatedProductDto>().ForMember(x=>x.ImageUrls, pro => pro.MapFrom(x=>x.Images)).ReverseMap();
             CreateMap<string, Image>().ForMember(x => x.Link, img => img.MapFrom(x => x));
-            CreateMap<Product, ProductDetailDto>().ForMember(x => x.Brand, pro => pro.MapFrom(x => x.Brand))
-                .ForMember(x => x.Category, pro => pro.MapFrom(x => x.Category.Name))
-                .ForMember(x=> x.Images,pro=>pro.MapFrom(x=>x.Images)).ReverseMap();
+            CreateMap<Product, ProductDetailDto>()
+                .ForMember(dest => dest.Category, opt => opt.MapFrom(src => src.Category))
+                .ForMember(dest => dest.Brand, opt => opt.MapFrom(src => src.Brand))
+                .ForMember(x=> x.Images,pro=>pro.MapFrom(x=>x.Images))
+                .ReverseMap();
             CreateMap<Brand, BrandDto>().ReverseMap();
-            CreateMap<Category, CategoryDTO>().ReverseMap();
+            CreateMap<Category, CategoryDto>().ReverseMap();
             CreateMap<Image,ImageDto>().ReverseMap();
             CreateMap<Product, ProductGeneral>()
-             .ForMember(dest => dest.Category, opt => opt.MapFrom(src => src.Category.Name))
-             .ForMember(dest => dest.Brand, opt => opt.MapFrom(src => src.Brand.Name))
-             .ForMember(dest => dest.ImgUrl, opt => opt.MapFrom(src => src.Images != null && src.Images.Any() ? src.Images.First().Link : string.Empty))
-             .ReverseMap();
-            CreateMap<Product, UpdateProductDto>().ForMember(x => x.Images, pro => pro.MapFrom(x => x.Images)).ReverseMap();
+                .ForMember(dest => dest.Category, opt => opt.MapFrom(src => src.Category.Name))
+                .ForMember(dest => dest.Brand, opt => opt.MapFrom(src => src.Brand.Name))
+                .ForMember(dest => dest.ImgUrl, opt => opt.MapFrom(src => src.Images != null && src.Images.Any() ? src.Images.First().Link : string.Empty))
+                .ReverseMap();
+            CreateMap<Product, UpdateProductDto>().
+                //ForMember(x => x.Images, pro => pro.MapFrom(x => x.Images)).
+                ReverseMap();
+        }
+        public void ItemInUserPackageProfile()
+        {
+            CreateMap<ItemInUserPackageDto, ItemInUserPackage>();
         }
     }
 }

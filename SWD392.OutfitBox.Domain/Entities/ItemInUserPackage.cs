@@ -24,5 +24,6 @@ namespace SWD392.OutfitBox.Domain.Entities
         public Product? Product { get; set; }
         [ForeignKey("UserPackageId")]
         public CustomerPackage? UserPackage { get; set; }
+        public int Quantity { get; set; }
     }
 }

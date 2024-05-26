@@ -12,8 +12,8 @@ using SWD392.OutfitBox.Infrastructure.Databases.SQLServer;
 namespace SWD392.OutfitBox.Infrastructure.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20240518134611_InitDB")]
-    partial class InitDB
+    [Migration("20240526082533_updatedatabase")]
+    partial class updatedatabase
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -277,7 +277,7 @@ namespace SWD392.OutfitBox.Infrastructure.Migrations
 
                     b.HasIndex("TransactionId");
 
-                    b.ToTable("CustomerPackege");
+                    b.ToTable("CustomerPackage");
                 });
 
             modelBuilder.Entity("SWD392.OutfitBox.Domain.Entities.Deposit", b =>
@@ -373,6 +373,9 @@ namespace SWD392.OutfitBox.Infrastructure.Migrations
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
 
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
@@ -463,6 +466,9 @@ namespace SWD392.OutfitBox.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
+                    b.Property<int>("AvailableQuantity")
+                        .HasColumnType("int");
+
                     b.Property<string>("Color")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -491,6 +497,9 @@ namespace SWD392.OutfitBox.Infrastructure.Migrations
                     b.Property<float>("Price")
                         .HasColumnType("real");
 
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
                     b.Property<string>("Size")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -503,16 +512,11 @@ namespace SWD392.OutfitBox.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("TypeID")
-                        .HasColumnType("int");
-
                     b.HasKey("ID");
 
                     b.HasIndex("IdBrand");
 
                     b.HasIndex("IdCategory");
-
-                    b.HasIndex("TypeID");
 
                     b.ToTable("Product");
                 });
@@ -526,6 +530,9 @@ namespace SWD392.OutfitBox.Infrastructure.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
                         .HasColumnType("int");
 
                     b.Property<int>("ReturnOrderId")
@@ -690,65 +697,6 @@ namespace SWD392.OutfitBox.Infrastructure.Migrations
                     b.HasIndex("WalletId");
 
                     b.ToTable("Transactions");
-                });
-
-            modelBuilder.Entity("SWD392.OutfitBox.Domain.Entities.Type", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("Type");
-
-                    b.HasData(
-                        new
-                        {
-                            ID = 1,
-                            Description = "",
-                            Name = "New"
-                        },
-                        new
-                        {
-                            ID = 2,
-                            Description = "",
-                            Name = "IsUsed"
-                        },
-                        new
-                        {
-                            ID = 3,
-                            Description = "",
-                            Name = "Expected"
-                        },
-                        new
-                        {
-                            ID = 4,
-                            Description = "",
-                            Name = "Torn"
-                        },
-                        new
-                        {
-                            ID = 5,
-                            Description = "",
-                            Name = "Active"
-                        },
-                        new
-                        {
-                            ID = 6,
-                            Description = "",
-                            Name = "Inactive"
-                        });
                 });
 
             modelBuilder.Entity("SWD392.OutfitBox.Domain.Entities.User", b =>
@@ -965,10 +913,6 @@ namespace SWD392.OutfitBox.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SWD392.OutfitBox.Domain.Entities.Type", null)
-                        .WithMany("Products")
-                        .HasForeignKey("TypeID");
-
                     b.Navigation("Brand");
 
                     b.Navigation("Category");
@@ -1145,11 +1089,6 @@ namespace SWD392.OutfitBox.Infrastructure.Migrations
             modelBuilder.Entity("SWD392.OutfitBox.Domain.Entities.Transaction", b =>
                 {
                     b.Navigation("CustomerPackages");
-                });
-
-            modelBuilder.Entity("SWD392.OutfitBox.Domain.Entities.Type", b =>
-                {
-                    b.Navigation("Products");
                 });
 
             modelBuilder.Entity("SWD392.OutfitBox.Domain.Entities.Wallet", b =>
