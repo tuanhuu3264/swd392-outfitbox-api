@@ -14,7 +14,9 @@ namespace SWD392.OutfitBox.Domain.Entities
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public DateTime DateTransaction { get; set; }
-        
+        public double Amount { get; set; }
+        public int Status { get; set; }
+        public string Paymethod { get; set; } = string.Empty;
         public int WalletId { get; set; }
         [ForeignKey(nameof(WalletId))]
         public Wallet? Wallet { get; set; }

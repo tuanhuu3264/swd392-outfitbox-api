@@ -20,6 +20,6 @@ namespace SWD392.OutfitBox.Domain.Entities
         public int Status { get; set; }
 
         public List<Product>? Products { get; set; }
-        public List<CategoryPackage> categoryPackages { get; set; }
+        public List<CategoryPackage>? categoryPackages { get; set; }
     }
 }

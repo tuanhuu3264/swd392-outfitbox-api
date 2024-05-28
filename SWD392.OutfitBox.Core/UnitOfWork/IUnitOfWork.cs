@@ -18,5 +18,7 @@ namespace SWD392.OutfitBox.Core.UnitOfWork
         Task<ICustomerRepository> GetCustomerRepository();
         Task<IBrandRepository> GetBrandRepository();
         Task<IItemsInUserPackageRepository> GetItemsInUserPackageRepository();
+        Task<IAreaRepository> GetAreaRepository();
+        IPartnerRepository GetPartnerRepository();
     }
 }
