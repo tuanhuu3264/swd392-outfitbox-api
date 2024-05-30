@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SWD392.OutfitBox.API.Controllers.Endpoints;
-using SWD392.OutfitBox.Core.Services.ItemInUserPackage;
+using SWD392.OutfitBox.Core.Services.ItemInUserPackageService;
 
 namespace SWD392.OutfitBox.API.Controllers
 {
