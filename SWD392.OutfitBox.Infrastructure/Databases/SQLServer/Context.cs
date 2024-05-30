@@ -1,5 +1,4 @@
-﻿using FAMS.Core.Databases;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using SWD392.OutfitBox.Domain.Entities;
 using System;
 using System.Collections.Generic;

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SWD392.OutfitBox.Infrastructure.Databases.SQLServer;
 
@@ -11,9 +12,11 @@ using SWD392.OutfitBox.Infrastructure.Databases.SQLServer;
 namespace SWD392.OutfitBox.Infrastructure.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20240530080500_SeedDataProductAndCategory")]
+    partial class SeedDataProductAndCategory
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -34,27 +37,13 @@ namespace SWD392.OutfitBox.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("District")
+                    b.Property<string>("Distrinct")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.ToTable("Area");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            City = "Ho Chi Minh",
-                            District = "Thu Duc"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            City = "Binh Duong",
-                            District = "Di An"
-                        });
                 });
 
             modelBuilder.Entity("SWD392.OutfitBox.Domain.Entities.Brand", b =>
@@ -362,56 +351,6 @@ namespace SWD392.OutfitBox.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Customer");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Address = "Dong Nai",
-                            Email = "Khanhvhdse173550@fpt.edu.vn",
-                            MoneyInWallet = 1000L,
-                            Name = "Khanh Sky",
-                            OTP = 111111L,
-                            Password = "123456",
-                            Phone = "0325739910",
-                            Status = 1
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Address = "HCM",
-                            Email = "User2@gmail.com",
-                            MoneyInWallet = 100L,
-                            Name = "User2",
-                            OTP = 222222L,
-                            Password = "123456",
-                            Phone = "123",
-                            Status = 1
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Address = "HCM",
-                            Email = "User3@gmail.com",
-                            MoneyInWallet = 100L,
-                            Name = "User3",
-                            OTP = 333333L,
-                            Password = "123456",
-                            Phone = "123",
-                            Status = 1
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Address = "HCM",
-                            Email = "User4gmail.com",
-                            MoneyInWallet = 100L,
-                            Name = "User4",
-                            OTP = 444444L,
-                            Password = "123456",
-                            Phone = "123",
-                            Status = 1
-                        });
                 });
 
             modelBuilder.Entity("SWD392.OutfitBox.Domain.Entities.CustomerPackage", b =>
@@ -468,23 +407,6 @@ namespace SWD392.OutfitBox.Infrastructure.Migrations
                     b.HasIndex("TransactionId");
 
                     b.ToTable("CustomerPackage");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CustomerId = 1,
-                            DateFrom = new DateTime(2024, 5, 30, 16, 2, 12, 893, DateTimeKind.Local).AddTicks(3566),
-                            DateTo = new DateTime(2024, 6, 29, 16, 2, 12, 893, DateTimeKind.Local).AddTicks(3582),
-                            PackageId = 1,
-                            PackageName = "Newcomer Trial",
-                            Price = 200.0,
-                            ReceiverAddress = "Nha Van Hoa Sinh Vien",
-                            ReceiverName = "Khanh Sky",
-                            ReceiverPhone = "0325739910",
-                            Status = 1,
-                            TransactionId = 1
-                        });
                 });
 
             modelBuilder.Entity("SWD392.OutfitBox.Domain.Entities.Deposit", b =>
@@ -513,16 +435,6 @@ namespace SWD392.OutfitBox.Infrastructure.Migrations
                     b.HasIndex("CustomerId");
 
                     b.ToTable("Deposits");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            AmountMoney = 20L,
-                            CustomerId = 1,
-                            Date = new DateTime(2024, 5, 30, 16, 2, 12, 893, DateTimeKind.Local).AddTicks(3641),
-                            Type = "Khuyen Mai"
-                        });
                 });
 
             modelBuilder.Entity("SWD392.OutfitBox.Domain.Entities.FavouriteProduct", b =>
@@ -722,26 +634,6 @@ namespace SWD392.OutfitBox.Infrastructure.Migrations
                     b.HasIndex("AreaId");
 
                     b.ToTable("Partners");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Address = "https://www.grab.com/vn/express/",
-                            AreaId = 1,
-                            Email = "Grap@gmail.com",
-                            Name = "Grap",
-                            Phone = "123456"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Address = "https://be.com.vn/",
-                            AreaId = 1,
-                            Email = "Grap@gmail.com",
-                            Name = "Bee",
-                            Phone = "123456"
-                        });
                 });
 
             modelBuilder.Entity("SWD392.OutfitBox.Domain.Entities.Product", b =>
@@ -1104,15 +996,6 @@ namespace SWD392.OutfitBox.Infrastructure.Migrations
                     b.HasIndex("WalletId");
 
                     b.ToTable("Transactions");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            DateTransaction = new DateTime(2024, 5, 30, 16, 2, 12, 893, DateTimeKind.Local).AddTicks(3614),
-                            DepositId = 1,
-                            WalletId = 1
-                        });
                 });
 
             modelBuilder.Entity("SWD392.OutfitBox.Domain.Entities.User", b =>
@@ -1196,17 +1079,6 @@ namespace SWD392.OutfitBox.Infrastructure.Migrations
                     b.HasIndex("CustomerId");
 
                     b.ToTable("Wallets");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CustomerId = 1,
-                            Status = 1,
-                            WalletCode = "123",
-                            WalletName = "Momo",
-                            WalletPassword = "123"
-                        });
                 });
 
             modelBuilder.Entity("SWD392.OutfitBox.Domain.Entities.CategoryPackage", b =>

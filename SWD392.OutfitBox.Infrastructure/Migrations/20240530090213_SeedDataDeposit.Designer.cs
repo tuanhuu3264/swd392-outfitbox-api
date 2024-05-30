@@ -12,8 +12,8 @@ using SWD392.OutfitBox.Infrastructure.Databases.SQLServer;
 namespace SWD392.OutfitBox.Infrastructure.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20240526082533_updatedatabase")]
-    partial class updatedatabase
+    [Migration("20240530090213_SeedDataDeposit")]
+    partial class SeedDataDeposit
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -37,13 +37,27 @@ namespace SWD392.OutfitBox.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Distrinct")
+                    b.Property<string>("District")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.ToTable("Area");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            City = "Ho Chi Minh",
+                            District = "Thu Duc"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            City = "Binh Duong",
+                            District = "Di An"
+                        });
                 });
 
             modelBuilder.Entity("SWD392.OutfitBox.Domain.Entities.Brand", b =>
@@ -77,7 +91,7 @@ namespace SWD392.OutfitBox.Infrastructure.Migrations
                         new
                         {
                             ID = 1,
-                            Description = "Bùng nổ trong cộng đồng giới trẻ yêu thích thời trang Việt Nam vào năm 2013 với những item basic nhưng vẫn cực kì thời trang, đi đầu là những chiếc áo croptop trơn đặc trưng, Nosbyn sau 3 năm phát triển vẫn luôn chiếm giữ giữ một vị trí vững chắc trong lòng mỗi tín đồ thời trang Việt. Phong cách tối giản trong kiểu dáng cùng những đường cut out sắc nét, gam màu pastel nhẹ nhàng thanh lịch là những chất liệu tạo nên một Nosbyn đầy tinh tế của ngày hôm nay. Hơn hết, song hành cùng chất lượng là giá thành vô cùng phải chăng mà thương hiệu này mang lại",
+                            Description = " Explosive within the Vietnamese fashion community in 2013, Nosbyn captured the hearts of young fashion enthusiasts with its stylish yet basic items. Leading the way were its signature solid-colored crop tops, which remained a prominent fixture even after three years of development. Today, Nosbyn continues to hold a strong position in the hearts of Vietnamese fashionistas.",
                             Link = "https://nosbyn.com/",
                             Name = "NOSBYN",
                             Status = 1
@@ -85,9 +99,17 @@ namespace SWD392.OutfitBox.Infrastructure.Migrations
                         new
                         {
                             ID = 2,
-                            Description = "Ra đời năm 2012, The BlueTshirt ban đầu mang đến thị trường Việt Nam các thiết kế áo thun đơn giản đi kèm những câu slogan đầy cảm hứng. Những thiết kế của The BlueTshirt là sự xen lẫn giữa nét thanh lịch và phóng khoáng, giữa sự nhẹ nhàng mà cá tính như chính người sáng lập ra nó. Dù là cô gái nhẹ nhàng yểu điệu hay cá tính, người ta vẫn có thể chọn cho mình một sản phẩm ưng ý ở The BlueTshirt.",
+                            Description = "The BlueTshirt, established in 2012, initially introduced simple t-shirt designs with inspiring slogans to the Vietnamese market. The brand's designs strike a perfect balance between elegance and a free-spirited nature, reflecting the personality of its founder. Whether you are a gentle and graceful woman or someone with a strong individualistic style, The BlueTshirt offers a wide range of products to cater to your preferences.",
                             Link = "https://thebluetshirt.com/",
                             Name = "THE BLUE T-SHIRT",
+                            Status = 1
+                        },
+                        new
+                        {
+                            ID = 3,
+                            Description = "With an unwavering commitment to quality craftsmanship, ethical practices, and timeless design, O4R is poised to become the go-to destination for fashion-conscious individuals seeking both substance and style",
+                            Link = "https://thebluetshirt.com/",
+                            Name = "OUTFIT4RENT",
                             Status = 1
                         });
                 });
@@ -119,36 +141,43 @@ namespace SWD392.OutfitBox.Infrastructure.Migrations
                         new
                         {
                             ID = 1,
-                            Description = "",
+                            Description = "T-Shirt,Vest,Polo,Smock,...",
                             Name = "Shirt",
                             Status = 0
                         },
                         new
                         {
                             ID = 2,
-                            Description = "",
+                            Description = "Gauchos,Jeans,Trousers,...",
                             Name = "Short",
                             Status = 0
                         },
                         new
                         {
                             ID = 3,
-                            Description = "",
-                            Name = "Long-Skirt",
+                            Description = "Skater,Circle,Aline,Maxi,Sarong,...",
+                            Name = "Skirt",
                             Status = 0
                         },
                         new
                         {
                             ID = 4,
-                            Description = "",
-                            Name = "Short-Skirt",
+                            Description = "A-line,Empire,Tent,Princess,Shift,...",
+                            Name = "Dress",
                             Status = 0
                         },
                         new
                         {
                             ID = 5,
-                            Description = "",
-                            Name = "Dress",
+                            Description = "Ao dai,Traditional clothers,...",
+                            Name = "Costumes",
+                            Status = 0
+                        },
+                        new
+                        {
+                            ID = 6,
+                            Description = "Sunglasses,Tie,Watch,Bow,...",
+                            Name = "Accessories",
                             Status = 0
                         });
                 });
@@ -180,6 +209,120 @@ namespace SWD392.OutfitBox.Infrastructure.Migrations
                     b.HasIndex("PackageId");
 
                     b.ToTable("CategoryPackages");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 5,
+                            CategoryId = 1,
+                            MaxAvailableQuantity = 3,
+                            PackageId = 2,
+                            Status = 1
+                        },
+                        new
+                        {
+                            Id = 6,
+                            CategoryId = 2,
+                            MaxAvailableQuantity = 3,
+                            PackageId = 2,
+                            Status = 1
+                        },
+                        new
+                        {
+                            Id = 7,
+                            CategoryId = 3,
+                            MaxAvailableQuantity = 3,
+                            PackageId = 2,
+                            Status = 1
+                        },
+                        new
+                        {
+                            Id = 8,
+                            CategoryId = 4,
+                            MaxAvailableQuantity = 3,
+                            PackageId = 2,
+                            Status = 1
+                        },
+                        new
+                        {
+                            Id = 9,
+                            CategoryId = 6,
+                            MaxAvailableQuantity = 3,
+                            PackageId = 2,
+                            Status = 1
+                        },
+                        new
+                        {
+                            Id = 1,
+                            CategoryId = 1,
+                            MaxAvailableQuantity = 2,
+                            PackageId = 1,
+                            Status = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CategoryId = 2,
+                            MaxAvailableQuantity = 2,
+                            PackageId = 1,
+                            Status = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CategoryId = 3,
+                            MaxAvailableQuantity = 2,
+                            PackageId = 1,
+                            Status = 1
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CategoryId = 4,
+                            MaxAvailableQuantity = 2,
+                            PackageId = 1,
+                            Status = 1
+                        },
+                        new
+                        {
+                            Id = 10,
+                            CategoryId = 1,
+                            MaxAvailableQuantity = 4,
+                            PackageId = 3,
+                            Status = 1
+                        },
+                        new
+                        {
+                            Id = 11,
+                            CategoryId = 2,
+                            MaxAvailableQuantity = 4,
+                            PackageId = 3,
+                            Status = 1
+                        },
+                        new
+                        {
+                            Id = 12,
+                            CategoryId = 3,
+                            MaxAvailableQuantity = 4,
+                            PackageId = 3,
+                            Status = 1
+                        },
+                        new
+                        {
+                            Id = 13,
+                            CategoryId = 4,
+                            MaxAvailableQuantity = 4,
+                            PackageId = 3,
+                            Status = 1
+                        },
+                        new
+                        {
+                            Id = 14,
+                            CategoryId = 6,
+                            MaxAvailableQuantity = 4,
+                            PackageId = 3,
+                            Status = 1
+                        });
                 });
 
             modelBuilder.Entity("SWD392.OutfitBox.Domain.Entities.Customer", b =>
@@ -222,6 +365,56 @@ namespace SWD392.OutfitBox.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Customer");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Address = "Dong Nai",
+                            Email = "Khanhvhdse173550@fpt.edu.vn",
+                            MoneyInWallet = 1000L,
+                            Name = "Khanh Sky",
+                            OTP = 111111L,
+                            Password = "123456",
+                            Phone = "0325739910",
+                            Status = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Address = "HCM",
+                            Email = "User2@gmail.com",
+                            MoneyInWallet = 100L,
+                            Name = "User2",
+                            OTP = 222222L,
+                            Password = "123456",
+                            Phone = "123",
+                            Status = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Address = "HCM",
+                            Email = "User3@gmail.com",
+                            MoneyInWallet = 100L,
+                            Name = "User3",
+                            OTP = 333333L,
+                            Password = "123456",
+                            Phone = "123",
+                            Status = 1
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Address = "HCM",
+                            Email = "User4gmail.com",
+                            MoneyInWallet = 100L,
+                            Name = "User4",
+                            OTP = 444444L,
+                            Password = "123456",
+                            Phone = "123",
+                            Status = 1
+                        });
                 });
 
             modelBuilder.Entity("SWD392.OutfitBox.Domain.Entities.CustomerPackage", b =>
@@ -278,6 +471,23 @@ namespace SWD392.OutfitBox.Infrastructure.Migrations
                     b.HasIndex("TransactionId");
 
                     b.ToTable("CustomerPackage");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CustomerId = 1,
+                            DateFrom = new DateTime(2024, 5, 30, 16, 2, 12, 893, DateTimeKind.Local).AddTicks(3566),
+                            DateTo = new DateTime(2024, 6, 29, 16, 2, 12, 893, DateTimeKind.Local).AddTicks(3582),
+                            PackageId = 1,
+                            PackageName = "Newcomer Trial",
+                            Price = 200.0,
+                            ReceiverAddress = "Nha Van Hoa Sinh Vien",
+                            ReceiverName = "Khanh Sky",
+                            ReceiverPhone = "0325739910",
+                            Status = 1,
+                            TransactionId = 1
+                        });
                 });
 
             modelBuilder.Entity("SWD392.OutfitBox.Domain.Entities.Deposit", b =>
@@ -306,6 +516,16 @@ namespace SWD392.OutfitBox.Infrastructure.Migrations
                     b.HasIndex("CustomerId");
 
                     b.ToTable("Deposits");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AmountMoney = 20L,
+                            CustomerId = 1,
+                            Date = new DateTime(2024, 5, 30, 16, 2, 12, 893, DateTimeKind.Local).AddTicks(3641),
+                            Type = "Khuyen Mai"
+                        });
                 });
 
             modelBuilder.Entity("SWD392.OutfitBox.Domain.Entities.FavouriteProduct", b =>
@@ -351,6 +571,20 @@ namespace SWD392.OutfitBox.Infrastructure.Migrations
                     b.HasIndex("IdProduct");
 
                     b.ToTable("Image");
+
+                    b.HasData(
+                        new
+                        {
+                            ID = 1,
+                            IdProduct = 1,
+                            Link = "https://down-vn.img.susercontent.com/file/vn-11134201-7r98o-lvmx2enml619c4"
+                        },
+                        new
+                        {
+                            ID = 2,
+                            IdProduct = 1,
+                            Link = "https://down-vn.img.susercontent.com/file/vn-11134201-7r98o-lvmx2hoo6zzv29"
+                        });
                 });
 
             modelBuilder.Entity("SWD392.OutfitBox.Domain.Entities.ItemInUserPackage", b =>
@@ -413,6 +647,9 @@ namespace SWD392.OutfitBox.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("NumOfProduct")
+                        .HasColumnType("int");
+
                     b.Property<double>("Price")
                         .HasColumnType("float");
 
@@ -422,6 +659,38 @@ namespace SWD392.OutfitBox.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Packages");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AvailableRentDays = 30,
+                            Description = "The new customer can use to experience, with total 4 product in 4 category: Shirt,Short,Skirt,Dress. Max product in each category is 2",
+                            Name = "Newcomer Trial",
+                            NumOfProduct = 4,
+                            Price = 200.0,
+                            Status = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            AvailableRentDays = 30,
+                            Description = "Customers will feel comfortable and appreciate the size and quality of the outfit, The package will provide 8 products in 5 parkage:Shirt,Short,Skirt,Dress,Accessories.  Max product in each category is 3",
+                            Name = "Basic Package",
+                            NumOfProduct = 8,
+                            Price = 600.0,
+                            Status = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            AvailableRentDays = 30,
+                            Description = "Customers will feel comfortable and appreciate the size and quality of the outfit, The package will provide 12 products in 6 parkage:Shirt,Short,Skirt,Dress,Accessories,Costumes.Max product in each category is 4",
+                            Name = "VIP Package",
+                            NumOfProduct = 12,
+                            Price = 800.0,
+                            Status = 1
+                        });
                 });
 
             modelBuilder.Entity("SWD392.OutfitBox.Domain.Entities.Partner", b =>
@@ -456,6 +725,26 @@ namespace SWD392.OutfitBox.Infrastructure.Migrations
                     b.HasIndex("AreaId");
 
                     b.ToTable("Partners");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Address = "https://www.grab.com/vn/express/",
+                            AreaId = 1,
+                            Email = "Grap@gmail.com",
+                            Name = "Grap",
+                            Phone = "123456"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Address = "https://be.com.vn/",
+                            AreaId = 1,
+                            Email = "Grap@gmail.com",
+                            Name = "Bee",
+                            Phone = "123456"
+                        });
                 });
 
             modelBuilder.Entity("SWD392.OutfitBox.Domain.Entities.Product", b =>
@@ -519,6 +808,127 @@ namespace SWD392.OutfitBox.Infrastructure.Migrations
                     b.HasIndex("IdCategory");
 
                     b.ToTable("Product");
+
+                    b.HasData(
+                        new
+                        {
+                            ID = 1,
+                            AvailableQuantity = 20,
+                            Color = "Blue",
+                            Deposit = 100.0,
+                            Description = "Men's and Women's Short Sleeve Shirt Loose Letter Couple Ins Shirt Multifunctional Vintage Half Sleeve UFO Shirt",
+                            IdBrand = 1,
+                            IdCategory = 1,
+                            IsUsed = "False",
+                            Name = "Cosmic Planet",
+                            Price = 100f,
+                            Quantity = 20,
+                            Size = "M",
+                            Status = "1",
+                            Type = "New"
+                        },
+                        new
+                        {
+                            ID = 2,
+                            AvailableQuantity = 20,
+                            Color = "Grey",
+                            Deposit = 110.0,
+                            Description = "The ZHUXIA loose-fitting, short-sleeved shirt with a retro Japanese vintage style is a great choice for women's summer fashion.",
+                            IdBrand = 2,
+                            IdCategory = 1,
+                            IsUsed = "False",
+                            Name = "ZHUXIA-Shirt",
+                            Price = 110f,
+                            Quantity = 20,
+                            Size = "X",
+                            Status = "1",
+                            Type = "New"
+                        },
+                        new
+                        {
+                            ID = 3,
+                            AvailableQuantity = 20,
+                            Color = "Black",
+                            Deposit = 160.0,
+                            Description = "Men's and Women's Short Sleeve Shirt Loose Letter Couple Ins Shirt Multifunctional Vintage Half Sleeve UFO Shirt",
+                            IdBrand = 3,
+                            IdCategory = 3,
+                            IsUsed = "False",
+                            Name = "Wide-leg retro-style Korean",
+                            Price = 160f,
+                            Quantity = 20,
+                            Size = "X",
+                            Status = "1",
+                            Type = "New"
+                        },
+                        new
+                        {
+                            ID = 4,
+                            AvailableQuantity = 20,
+                            Color = "White",
+                            Deposit = 100.0,
+                            Description = "[HOT MODEL 2023] made of cool linen fabric, high-waisted with elastic waistband and drawstring for adjustable fit.",
+                            IdBrand = 3,
+                            IdCategory = 1,
+                            IsUsed = "False",
+                            Name = "Wide-leg women's pants",
+                            Price = 150f,
+                            Quantity = 20,
+                            Size = "M",
+                            Status = "1",
+                            Type = "New"
+                        },
+                        new
+                        {
+                            ID = 5,
+                            AvailableQuantity = 20,
+                            Color = "Black",
+                            Deposit = 100.0,
+                            Description = "Gonz Wide-Fit Round Neck T-Shirt for Men and Women with Silk Screen Print, made of PC Cotton material.",
+                            IdBrand = 3,
+                            IdCategory = 1,
+                            IsUsed = "False",
+                            Name = "Gonz Wide-Fit Round Neck T-Shirt",
+                            Price = 130f,
+                            Quantity = 20,
+                            Size = "M",
+                            Status = "1",
+                            Type = "New"
+                        },
+                        new
+                        {
+                            ID = 6,
+                            AvailableQuantity = 20,
+                            Color = "Pink",
+                            Deposit = 100.0,
+                            Description = "This vintage floral dress features a flattering A-line silhouette with a delicate floral print. Perfect for a summer day out or a casual evening event.",
+                            IdBrand = 1,
+                            IdCategory = 1,
+                            IsUsed = "False",
+                            Name = "Vintage Floral Dress",
+                            Price = 200f,
+                            Quantity = 20,
+                            Size = "M",
+                            Status = "1",
+                            Type = "New"
+                        },
+                        new
+                        {
+                            ID = 7,
+                            AvailableQuantity = 0,
+                            Color = "White",
+                            Deposit = 170.0,
+                            Description = "Make a statement with this stunning floral maxi skirt. Its flowing design and beautiful floral pattern will turn heads wherever you go.",
+                            IdBrand = 3,
+                            IdCategory = 4,
+                            IsUsed = "False",
+                            Name = "Floral Maxi Skirt",
+                            Price = 170f,
+                            Quantity = 0,
+                            Size = "XS",
+                            Status = "1",
+                            Type = "New"
+                        });
                 });
 
             modelBuilder.Entity("SWD392.OutfitBox.Domain.Entities.ProductReturnOrder", b =>
@@ -697,6 +1107,15 @@ namespace SWD392.OutfitBox.Infrastructure.Migrations
                     b.HasIndex("WalletId");
 
                     b.ToTable("Transactions");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            DateTransaction = new DateTime(2024, 5, 30, 16, 2, 12, 893, DateTimeKind.Local).AddTicks(3614),
+                            DepositId = 1,
+                            WalletId = 1
+                        });
                 });
 
             modelBuilder.Entity("SWD392.OutfitBox.Domain.Entities.User", b =>
@@ -780,6 +1199,17 @@ namespace SWD392.OutfitBox.Infrastructure.Migrations
                     b.HasIndex("CustomerId");
 
                     b.ToTable("Wallets");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CustomerId = 1,
+                            Status = 1,
+                            WalletCode = "123",
+                            WalletName = "Momo",
+                            WalletPassword = "123"
+                        });
                 });
 
             modelBuilder.Entity("SWD392.OutfitBox.Domain.Entities.CategoryPackage", b =>
