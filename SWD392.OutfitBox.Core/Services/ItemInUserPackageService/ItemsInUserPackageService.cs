@@ -16,10 +16,11 @@ namespace SWD392.OutfitBox.Core.Services.ItemInUserPackageService
     {
         readonly IUnitOfWork _unitOfWork;
         readonly IMapper _mapper;
-        public ItemsInUserPackageService(IUnitOfWork unitOfWork)
+        public ItemsInUserPackageService(IUnitOfWork unitOfWork, IMapper mapper)
         {
             {
                 _unitOfWork = unitOfWork;
+                _mapper = mapper;
             }
         }
         public async Task<StatusCodeResponse<List<ItemInUserPackageDto>>> GetAll()

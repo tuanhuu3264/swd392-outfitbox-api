@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="StackExchange.Redis" Version="2.7.33" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SWD392.OutfitBox.Domain\SWD392.OutfitBox.Domain.csproj" />
+    <ProjectReference Include="..\SWD392.OutfitBox.Infrastructure\SWD392.OutfitBox.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>
