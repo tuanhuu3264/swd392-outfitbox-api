@@ -9,23 +9,15 @@ public class Config
 
     }
     public static ProducerConfig GetProducerConfig() => new ProducerConfig
-    {
-        BootstrapServers = "<your-IP-port-pairs>",
-        SecurityProtocol = SecurityProtocol.SaslPlaintext,
-        SaslMechanism = SaslMechanism.ScramSha256,
-        SaslUsername = "ickafka",
-        SaslPassword = "yourpassword"
+    {  
+        BootstrapServers = "34.123.203.83:9092",
     };
 
-    public static ConsumerConfig GetConsumerConfig() => new ConsumerConfig
+    public static ConsumerConfig  GetConsumerConfig() => new ConsumerConfig
     {
-        GroupId = "test-consumer-group",
-        BootstrapServers = "<your-IP-port-pairs>",
-        SslCaLocation = "/PathTO/cluster-ca-certificate.pem",
-        SecurityProtocol = SecurityProtocol.SaslSsl,
-        SaslMechanism = SaslMechanism.ScramSha256,
-        SaslUsername = "ickafka",
-        SaslPassword = "yourpassword",
-        AutoOffsetReset = AutoOffsetReset.Latest,
+        EnableAutoCommit = false,
+        AutoOffsetReset = AutoOffsetReset.Earliest,
+        GroupId = "Oce",
+        BootstrapServers = "34.123.203.83:9092",
     };
 }

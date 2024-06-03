@@ -4,7 +4,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using static Confluent.Kafka.ConfigPropertyNames;
+using static Org.BouncyCastle.Math.EC.ECCurve;
 
 namespace SWD392.OutfitBox.Infrastructure.Streaming.CosumerMessage
 {
@@ -13,36 +16,40 @@ namespace SWD392.OutfitBox.Infrastructure.Streaming.CosumerMessage
         public CosumerMessage() { }
         public async Task ProccessProductMessage()
         {
-            using (var c = new ConsumerBuilder<Ignore, Product>(Config.GetConsumerConfig()).Build())
+            using (var c = new ConsumerBuilder<Ignore, string>(Config.GetConsumerConfig()).Build())
             {
-                c.Subscribe(nameof(Product)+"s");
+                c.Subscribe("Products");
 
                 CancellationTokenSource cts = new CancellationTokenSource();
                 Console.CancelKeyPress += (_, e) =>
                 {
-                    e.Cancel = true; 
+                    e.Cancel = true; // Prevent the process from terminating.
                     cts.Cancel();
                 };
+
                 try
                 {
-                    while (true)
+                    // Seek to the end of the partition(s)
+                    c.Assign(c.Assignment);
+                    foreach (var partition in c.Assignment)
                     {
-                        try
-                        {
-                            var cr = c.Consume(cts.Token);
+                        c.Seek(new TopicPartitionOffset(partition.Topic, partition.Partition, Offset.End));
+                    }
 
-                            Console.WriteLine($"Consumed message '{cr.Value}' at: '{cr.TopicPartitionOffset}'.");
-                        }
-                        catch (ConsumeException e)
-                        {
-                            Console.WriteLine($"Error occurred: {e.Error.Reason}");
-
-                        }
+                    // Consume the last message
+                    try
+                    {
+                        var cr = c.Consume(cts.Token);
+                        Console.WriteLine($"Consumed message '{cr.Value}' at: '{cr.TopicPartitionOffset}'.");
+                    }
+                    catch (ConsumeException e)
+                    {
+                        Console.WriteLine($"Error occurred: {e.Error.Reason}");
                     }
                 }
                 catch (OperationCanceledException)
                 {
-                    // Ensure the consumer leaves the group cleanly and final offsets are committed.
+                    // Ensure the c leaves the group cleanly and final offsets are committed.
                     c.Close();
                 }
             }
