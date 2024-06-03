@@ -16,7 +16,13 @@ namespace SWD392.OutfitBox.API.Configurations.Databases
 
         public static void AddRedis(this IServiceCollection services, IConfiguration configuration)
         {
+            services.AddStackExchangeRedisCache(
+             opt =>
+                   {
+                       opt.Configuration = "localhost:6379";
+                       opt.InstanceName = "RedisDemo_";
 
+                   });
         }
     }
 }

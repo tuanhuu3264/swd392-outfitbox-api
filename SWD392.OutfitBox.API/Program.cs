@@ -15,10 +15,12 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddSwagger(builder.Configuration);
 builder.Services.AddJwtAuthorization(builder.Configuration);
 builder.Services.AddSQLServerDatabase(builder.Configuration);
+builder.Services.AddRedis(builder.Configuration);
 builder.Services.RegisterService();
 
 var app = builder.Build();
 
+app.UseCors(cors => cors.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

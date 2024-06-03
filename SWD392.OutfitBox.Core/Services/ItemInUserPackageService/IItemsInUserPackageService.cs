@@ -6,10 +6,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SWD392.OutfitBox.Core.Services.ItemInUserPackage
+namespace SWD392.OutfitBox.Core.Services.ItemInUserPackageService
 {
     public interface IItemsInUserPackageService
     {
         Task<StatusCodeResponse<List<ItemInUserPackageDto>>> GetAll();
+        Task<StatusCodeResponse<ItemInUserPackageDto>> CreateItem(CreatedItemInPackage itemInPackage);
     }
 }

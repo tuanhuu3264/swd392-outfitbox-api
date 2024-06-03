@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace SWD392.OutfitBox.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class updatedatabase : Migration
+    public partial class SeedDataProductAndCategory : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -88,7 +88,8 @@ namespace SWD392.OutfitBox.Infrastructure.Migrations
                     AvailableRentDays = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Status = table.Column<int>(type: "int", nullable: false)
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    NumOfProduct = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -525,8 +526,9 @@ namespace SWD392.OutfitBox.Infrastructure.Migrations
                 columns: new[] { "ID", "Description", "Link", "Name", "Status" },
                 values: new object[,]
                 {
-                    { 1, "Bùng nổ trong cộng đồng giới trẻ yêu thích thời trang Việt Nam vào năm 2013 với những item basic nhưng vẫn cực kì thời trang, đi đầu là những chiếc áo croptop trơn đặc trưng, Nosbyn sau 3 năm phát triển vẫn luôn chiếm giữ giữ một vị trí vững chắc trong lòng mỗi tín đồ thời trang Việt. Phong cách tối giản trong kiểu dáng cùng những đường cut out sắc nét, gam màu pastel nhẹ nhàng thanh lịch là những chất liệu tạo nên một Nosbyn đầy tinh tế của ngày hôm nay. Hơn hết, song hành cùng chất lượng là giá thành vô cùng phải chăng mà thương hiệu này mang lại", "https://nosbyn.com/", "NOSBYN", 1 },
-                    { 2, "Ra đời năm 2012, The BlueTshirt ban đầu mang đến thị trường Việt Nam các thiết kế áo thun đơn giản đi kèm những câu slogan đầy cảm hứng. Những thiết kế của The BlueTshirt là sự xen lẫn giữa nét thanh lịch và phóng khoáng, giữa sự nhẹ nhàng mà cá tính như chính người sáng lập ra nó. Dù là cô gái nhẹ nhàng yểu điệu hay cá tính, người ta vẫn có thể chọn cho mình một sản phẩm ưng ý ở The BlueTshirt.", "https://thebluetshirt.com/", "THE BLUE T-SHIRT", 1 }
+                    { 1, " Explosive within the Vietnamese fashion community in 2013, Nosbyn captured the hearts of young fashion enthusiasts with its stylish yet basic items. Leading the way were its signature solid-colored crop tops, which remained a prominent fixture even after three years of development. Today, Nosbyn continues to hold a strong position in the hearts of Vietnamese fashionistas.", "https://nosbyn.com/", "NOSBYN", 1 },
+                    { 2, "The BlueTshirt, established in 2012, initially introduced simple t-shirt designs with inspiring slogans to the Vietnamese market. The brand's designs strike a perfect balance between elegance and a free-spirited nature, reflecting the personality of its founder. Whether you are a gentle and graceful woman or someone with a strong individualistic style, The BlueTshirt offers a wide range of products to cater to your preferences.", "https://thebluetshirt.com/", "THE BLUE T-SHIRT", 1 },
+                    { 3, "With an unwavering commitment to quality craftsmanship, ethical practices, and timeless design, O4R is poised to become the go-to destination for fashion-conscious individuals seeking both substance and style", "https://thebluetshirt.com/", "OUTFIT4RENT", 1 }
                 });
 
             migrationBuilder.InsertData(
@@ -534,11 +536,66 @@ namespace SWD392.OutfitBox.Infrastructure.Migrations
                 columns: new[] { "ID", "Description", "Name", "Status" },
                 values: new object[,]
                 {
-                    { 1, "", "Shirt", 0 },
-                    { 2, "", "Short", 0 },
-                    { 3, "", "Long-Skirt", 0 },
-                    { 4, "", "Short-Skirt", 0 },
-                    { 5, "", "Dress", 0 }
+                    { 1, "T-Shirt,Vest,Polo,Smock,...", "Shirt", 0 },
+                    { 2, "Gauchos,Jeans,Trousers,...", "Short", 0 },
+                    { 3, "Skater,Circle,Aline,Maxi,Sarong,...", "Skirt", 0 },
+                    { 4, "A-line,Empire,Tent,Princess,Shift,...", "Dress", 0 },
+                    { 5, "Ao dai,Traditional clothers,...", "Costumes", 0 },
+                    { 6, "Sunglasses,Tie,Watch,Bow,...", "Accessories", 0 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Packages",
+                columns: new[] { "Id", "AvailableRentDays", "Description", "Name", "NumOfProduct", "Price", "Status" },
+                values: new object[,]
+                {
+                    { 1, 30, "The new customer can use to experience, with total 4 product in 4 category: Shirt,Short,Skirt,Dress. Max product in each category is 2", "Newcomer Trial", 4, 200.0, 1 },
+                    { 2, 30, "Customers will feel comfortable and appreciate the size and quality of the outfit, The package will provide 8 products in 5 parkage:Shirt,Short,Skirt,Dress,Accessories.  Max product in each category is 3", "Basic Package", 8, 600.0, 1 },
+                    { 3, 30, "Customers will feel comfortable and appreciate the size and quality of the outfit, The package will provide 12 products in 6 parkage:Shirt,Short,Skirt,Dress,Accessories,Costumes.Max product in each category is 4", "VIP Package", 12, 800.0, 1 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "CategoryPackages",
+                columns: new[] { "Id", "CategoryId", "MaxAvailableQuantity", "PackageId", "Status" },
+                values: new object[,]
+                {
+                    { 1, 1, 2, 1, 1 },
+                    { 2, 2, 2, 1, 1 },
+                    { 3, 3, 2, 1, 1 },
+                    { 4, 4, 2, 1, 1 },
+                    { 5, 1, 3, 2, 1 },
+                    { 6, 2, 3, 2, 1 },
+                    { 7, 3, 3, 2, 1 },
+                    { 8, 4, 3, 2, 1 },
+                    { 9, 6, 3, 2, 1 },
+                    { 10, 1, 4, 3, 1 },
+                    { 11, 2, 4, 3, 1 },
+                    { 12, 3, 4, 3, 1 },
+                    { 13, 4, 4, 3, 1 },
+                    { 14, 6, 4, 3, 1 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Product",
+                columns: new[] { "ID", "AvailableQuantity", "Color", "Deposit", "Description", "IdBrand", "IdCategory", "IsUsed", "Name", "Price", "Quantity", "Size", "Status", "Type" },
+                values: new object[,]
+                {
+                    { 1, 20, "Blue", 100.0, "Men's and Women's Short Sleeve Shirt Loose Letter Couple Ins Shirt Multifunctional Vintage Half Sleeve UFO Shirt", 1, 1, "False", "Cosmic Planet", 100f, 20, "M", "1", "New" },
+                    { 2, 20, "Grey", 110.0, "The ZHUXIA loose-fitting, short-sleeved shirt with a retro Japanese vintage style is a great choice for women's summer fashion.", 2, 1, "False", "ZHUXIA-Shirt", 110f, 20, "X", "1", "New" },
+                    { 3, 20, "Black", 160.0, "Men's and Women's Short Sleeve Shirt Loose Letter Couple Ins Shirt Multifunctional Vintage Half Sleeve UFO Shirt", 3, 3, "False", "Wide-leg retro-style Korean", 160f, 20, "X", "1", "New" },
+                    { 4, 20, "White", 100.0, "[HOT MODEL 2023] made of cool linen fabric, high-waisted with elastic waistband and drawstring for adjustable fit.", 3, 1, "False", "Wide-leg women's pants", 150f, 20, "M", "1", "New" },
+                    { 5, 20, "Black", 100.0, "Gonz Wide-Fit Round Neck T-Shirt for Men and Women with Silk Screen Print, made of PC Cotton material.", 3, 1, "False", "Gonz Wide-Fit Round Neck T-Shirt", 130f, 20, "M", "1", "New" },
+                    { 6, 20, "Pink", 100.0, "This vintage floral dress features a flattering A-line silhouette with a delicate floral print. Perfect for a summer day out or a casual evening event.", 1, 1, "False", "Vintage Floral Dress", 200f, 20, "M", "1", "New" },
+                    { 7, 0, "White", 170.0, "Make a statement with this stunning floral maxi skirt. Its flowing design and beautiful floral pattern will turn heads wherever you go.", 3, 4, "False", "Floral Maxi Skirt", 170f, 0, "XS", "1", "New" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Image",
+                columns: new[] { "ID", "IdProduct", "Link" },
+                values: new object[,]
+                {
+                    { 1, 1, "https://down-vn.img.susercontent.com/file/vn-11134201-7r98o-lvmx2enml619c4" },
+                    { 2, 1, "https://down-vn.img.susercontent.com/file/vn-11134201-7r98o-lvmx2hoo6zzv29" }
                 });
 
             migrationBuilder.CreateIndex(

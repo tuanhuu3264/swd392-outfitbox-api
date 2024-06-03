@@ -15,7 +15,7 @@ namespace SWD392.OutfitBox.Domain.Entities
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public string Ward = string.Empty;
-        public string Distrinct { get; set; } = string.Empty;
+        public string District { get; set; } = string.Empty;
         public string City { get; set; } = string.Empty;
         public List<Partner>? Partners { get; set; } 
     }

@@ -4,7 +4,7 @@ using SWD392.OutfitBox.Core.Services.AuthService;
 using SWD392.OutfitBox.Core.Services.CategoryPackageService;
 using SWD392.OutfitBox.Core.Services.CategoryService;
 using SWD392.OutfitBox.Core.Services.FavouriteProduct;
-using SWD392.OutfitBox.Core.Services.ItemInUserPackage;
+using SWD392.OutfitBox.Core.Services.ItemInUserPackageService;
 using SWD392.OutfitBox.Core.Services.PackageService;
 using SWD392.OutfitBox.Core.Services.ProductService;
 using SWD392.OutfitBox.Core.Services.ReviewService;

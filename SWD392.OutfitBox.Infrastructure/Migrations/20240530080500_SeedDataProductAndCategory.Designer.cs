@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SWD392.OutfitBox.Infrastructure.Databases.SQLServer;
 
@@ -11,9 +12,11 @@ using SWD392.OutfitBox.Infrastructure.Databases.SQLServer;
 namespace SWD392.OutfitBox.Infrastructure.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20240530080500_SeedDataProductAndCategory")]
+    partial class SeedDataProductAndCategory
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -34,27 +37,13 @@ namespace SWD392.OutfitBox.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("District")
+                    b.Property<string>("Distrinct")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.ToTable("Area");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            City = "Ho Chi Minh",
-                            District = "Thu Duc"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            City = "Binh Duong",
-                            District = "Di An"
-                        });
                 });
 
             modelBuilder.Entity("SWD392.OutfitBox.Domain.Entities.Brand", b =>
@@ -362,56 +351,6 @@ namespace SWD392.OutfitBox.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Customer");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Address = "Dong Nai",
-                            Email = "Khanhvhdse173550@fpt.edu.vn",
-                            MoneyInWallet = 1000L,
-                            Name = "Khanh Sky",
-                            OTP = 111111L,
-                            Password = "123456",
-                            Phone = "0325739910",
-                            Status = 1
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Address = "HCM",
-                            Email = "User2@gmail.com",
-                            MoneyInWallet = 100L,
-                            Name = "User2",
-                            OTP = 222222L,
-                            Password = "123456",
-                            Phone = "123",
-                            Status = 1
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Address = "HCM",
-                            Email = "User3@gmail.com",
-                            MoneyInWallet = 100L,
-                            Name = "User3",
-                            OTP = 333333L,
-                            Password = "123456",
-                            Phone = "123",
-                            Status = 1
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Address = "HCM",
-                            Email = "User4gmail.com",
-                            MoneyInWallet = 100L,
-                            Name = "User4",
-                            OTP = 444444L,
-                            Password = "123456",
-                            Phone = "123",
-                            Status = 1
-                        });
                 });
 
             modelBuilder.Entity("SWD392.OutfitBox.Domain.Entities.CustomerPackage", b =>
@@ -468,23 +407,6 @@ namespace SWD392.OutfitBox.Infrastructure.Migrations
                     b.HasIndex("TransactionId");
 
                     b.ToTable("CustomerPackage");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CustomerId = 1,
-                            DateFrom = new DateTime(2024, 5, 30, 16, 2, 12, 893, DateTimeKind.Local).AddTicks(3566),
-                            DateTo = new DateTime(2024, 6, 29, 16, 2, 12, 893, DateTimeKind.Local).AddTicks(3582),
-                            PackageId = 1,
-                            PackageName = "Newcomer Trial",
-                            Price = 200.0,
-                            ReceiverAddress = "Nha Van Hoa Sinh Vien",
-                            ReceiverName = "Khanh Sky",
-                            ReceiverPhone = "0325739910",
-                            Status = 1,
-                            TransactionId = 1
-                        });
                 });
 
             modelBuilder.Entity("SWD392.OutfitBox.Domain.Entities.Deposit", b =>
@@ -495,8 +417,8 @@ namespace SWD392.OutfitBox.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<double>("AmountMoney")
-                        .HasColumnType("float");
+                    b.Property<long>("AmountMoney")
+                        .HasColumnType("bigint");
 
                     b.Property<int>("CustomerId")
                         .HasColumnType("int");
@@ -513,16 +435,6 @@ namespace SWD392.OutfitBox.Infrastructure.Migrations
                     b.HasIndex("CustomerId");
 
                     b.ToTable("Deposits");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            AmountMoney = 20L,
-                            CustomerId = 1,
-                            Date = new DateTime(2024, 5, 30, 16, 2, 12, 893, DateTimeKind.Local).AddTicks(3641),
-                            Type = "Khuyen Mai"
-                        });
                 });
 
             modelBuilder.Entity("SWD392.OutfitBox.Domain.Entities.FavouriteProduct", b =>
@@ -713,14 +625,6 @@ namespace SWD392.OutfitBox.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("OTP")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Phone")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -730,26 +634,6 @@ namespace SWD392.OutfitBox.Infrastructure.Migrations
                     b.HasIndex("AreaId");
 
                     b.ToTable("Partners");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Address = "https://www.grab.com/vn/express/",
-                            AreaId = 1,
-                            Email = "Grap@gmail.com",
-                            Name = "Grap",
-                            Phone = "123456"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Address = "https://be.com.vn/",
-                            AreaId = 1,
-                            Email = "Grap@gmail.com",
-                            Name = "Bee",
-                            Phone = "123456"
-                        });
                 });
 
             modelBuilder.Entity("SWD392.OutfitBox.Domain.Entities.Product", b =>
@@ -1037,11 +921,14 @@ namespace SWD392.OutfitBox.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("CustomerId");
-
                     b.HasIndex("ProductId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Reviews");
                 });
@@ -1093,20 +980,10 @@ namespace SWD392.OutfitBox.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<double>("Amount")
-                        .HasColumnType("float");
-
                     b.Property<DateTime>("DateTransaction")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("DepositId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Paymethod")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Status")
                         .HasColumnType("int");
 
                     b.Property<int>("WalletId")
@@ -1119,15 +996,6 @@ namespace SWD392.OutfitBox.Infrastructure.Migrations
                     b.HasIndex("WalletId");
 
                     b.ToTable("Transactions");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            DateTransaction = new DateTime(2024, 5, 30, 16, 2, 12, 893, DateTimeKind.Local).AddTicks(3614),
-                            DepositId = 1,
-                            WalletId = 1
-                        });
                 });
 
             modelBuilder.Entity("SWD392.OutfitBox.Domain.Entities.User", b =>
@@ -1138,9 +1006,23 @@ namespace SWD392.OutfitBox.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("MoneyInWallet")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("OTP")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Password")
                         .IsRequired()
@@ -1177,9 +1059,6 @@ namespace SWD392.OutfitBox.Infrastructure.Migrations
                     b.Property<int>("CustomerId")
                         .HasColumnType("int");
 
-                    b.Property<long>("OTP")
-                        .HasColumnType("bigint");
-
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
@@ -1200,17 +1079,6 @@ namespace SWD392.OutfitBox.Infrastructure.Migrations
                     b.HasIndex("CustomerId");
 
                     b.ToTable("Wallets");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CustomerId = 1,
-                            Status = 1,
-                            WalletCode = "123",
-                            WalletName = "Momo",
-                            WalletPassword = "123"
-                        });
                 });
 
             modelBuilder.Entity("SWD392.OutfitBox.Domain.Entities.CategoryPackage", b =>
@@ -1389,17 +1257,15 @@ namespace SWD392.OutfitBox.Infrastructure.Migrations
 
             modelBuilder.Entity("SWD392.OutfitBox.Domain.Entities.Review", b =>
                 {
-                    b.HasOne("SWD392.OutfitBox.Domain.Entities.Customer", "User")
-                        .WithMany("Reviews")
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("SWD392.OutfitBox.Domain.Entities.Product", "Product")
                         .WithMany()
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("SWD392.OutfitBox.Domain.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
 
                     b.Navigation("Product");
 
@@ -1476,8 +1342,6 @@ namespace SWD392.OutfitBox.Infrastructure.Migrations
             modelBuilder.Entity("SWD392.OutfitBox.Domain.Entities.Customer", b =>
                 {
                     b.Navigation("ReturnOrders");
-
-                    b.Navigation("Reviews");
 
                     b.Navigation("UserPackages");
 
