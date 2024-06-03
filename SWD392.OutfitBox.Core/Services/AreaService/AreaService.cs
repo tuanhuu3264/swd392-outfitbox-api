@@ -40,7 +40,7 @@ namespace SWD392.OutfitBox.Core.Services.AreaService
             var checkingArea =await (await _unitOfWork.GetAreaRepository()).GetById(updateAreaRequestDTO.Id);
             if (checkingArea == null) throw new Exception("There is not found the area that has id: " + updateAreaRequestDTO.Id);
             checkingArea.Ward = updateAreaRequestDTO.Ward;
-            checkingArea.Distrinct=updateAreaRequestDTO.Distrinct;
+            checkingArea.District=updateAreaRequestDTO.District;
             checkingArea.City=updateAreaRequestDTO.City;
             var result = await (await _unitOfWork.GetAreaRepository()).UpdateArea(checkingArea);
             return _mapper.Map<UpdateAreaResponseDTO>(result);
