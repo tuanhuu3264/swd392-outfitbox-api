@@ -29,5 +29,6 @@ namespace SWD392.OutfitBox.Domain.Entities
         public List<ReturnOrder>? ReturnOrders { get; set; }
 
         public List<Wallet>? Wallets { get; set; }
+        public List<Review>? Reviews { get; set; }
     }
 }

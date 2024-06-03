@@ -21,10 +21,12 @@ namespace SWD392.OutfitBox.Infrastructure.UnitOfWork
         private IBrandRepository _brandRepository;
         private ICategoryRepository _categoryRepository;
         private IItemsInUserPackageRepository _itemsInUserPackageRepository;
+        private IAreaRepository _areaRepository;
+        private IPartnerRepository _partnerRepository;
 
         public UnitOfWork(Context dbContext, ICustomerRepository customerRepository, IProductRepository productRepository,
-            IBrandRepository brandRepository, ICategoryRepository categoryRepository, IItemsInUserPackageRepository itemsInUserPackageRepository
-            )
+            IBrandRepository brandRepository, ICategoryRepository categoryRepository, IItemsInUserPackageRepository itemsInUserPackageRepository,
+            IAreaRepository areaRepository, IPartnerRepository partnerRepository)
         {
             _dbContext = dbContext;
             _customerRepository = customerRepository;
@@ -32,6 +34,8 @@ namespace SWD392.OutfitBox.Infrastructure.UnitOfWork
             _brandRepository = brandRepository;
             _categoryRepository = categoryRepository;
             _itemsInUserPackageRepository = itemsInUserPackageRepository;
+            _areaRepository = areaRepository;
+            _partnerRepository = partnerRepository;
         }
 
         public async Task BenginTransaction()
@@ -73,5 +77,9 @@ namespace SWD392.OutfitBox.Infrastructure.UnitOfWork
         {
             return _itemsInUserPackageRepository;
         }
+
+        public async Task<IAreaRepository> GetAreaRepository() => _areaRepository;
+
+        public IPartnerRepository GetPartnerRepository() => _partnerRepository;
     }
 }

@@ -13,20 +13,18 @@ namespace SWD392.OutfitBox.Infrastructure.Repositories
     {
         internal Context _context;
         internal IImageRepository _imageRepository;
-        internal ICacheUnit<Product> _cacheUnit;
-        public ProductRepository(Context context, IImageRepository imageRepository, ICacheUnit<Product> cacheUnit) : base(context)
+
+        public ProductRepository(Context context, IImageRepository imageRepository) : base(context)
         {
             _context = context;
             _imageRepository = imageRepository;
-            _cacheUnit = cacheUnit;
         }
 
         public async Task<List<Product>> GetAll()
         {   
-            var productsInCaching = await _cacheUnit.GetAll();
-            if(productsInCaching == null)
+           
             return await this.Get().Include(x => x.Images).Include(x => x.Brand).Include(x => x.Category).ToListAsync();
-            return productsInCaching;
+
         }
 
         public async Task<Product> CreateProduct(Product product)
@@ -37,14 +35,10 @@ namespace SWD392.OutfitBox.Infrastructure.Repositories
 
         public async Task<Product> GetById(int id)
         {   
-            var productInCaching = await _cacheUnit.Get(typeof(Product), id);
-            if (productInCaching == null)
-            {
+            
                 var result = await this.Get().Include(x => x.Images).Include(x => x.Brand).Include(x => x.Category).FirstOrDefaultAsync(x => x.ID == id);
                 if (result == null) return null;
                 return result;
-            }
-            return productInCaching;
         }
 
         public async Task<bool> UpdateProduct(Product product)

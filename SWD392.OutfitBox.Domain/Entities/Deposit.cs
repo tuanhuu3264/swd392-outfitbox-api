@@ -17,7 +17,7 @@ namespace SWD392.OutfitBox.Domain.Entities
         public List<Transaction>? Transactions { get; set; }
         
         public DateTime Date { get; set; }
-        public long AmountMoney { get; set; }
+        public double AmountMoney { get; set; }
         public string Type {  get; set; } = string.Empty;
         
         public int CustomerId {  get; set; }

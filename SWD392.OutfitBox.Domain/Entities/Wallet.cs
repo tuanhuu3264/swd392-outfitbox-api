@@ -16,7 +16,8 @@ namespace SWD392.OutfitBox.Domain.Entities
         public int Id { get; set; }
         public string WalletCode { get; set; } = string.Empty;  
         public string WalletName { get; set; } = string.Empty;
-        public string WalletPassword { get; set; } = string.Empty; 
+        public string WalletPassword { get; set; } = string.Empty;
+        public long OTP { get; set; } 
         public int Status { get; set; }
         public int CustomerId { get; set; }
         [ForeignKey(nameof(CustomerId))] 

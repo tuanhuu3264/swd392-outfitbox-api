@@ -18,6 +18,8 @@
 
   <ItemGroup>
     <Folder Include="Models\Responses\ItemInUserPackage\" />
+    <Folder Include="Services\AdminService\" />
+    <Folder Include="Services\CustomerPackage\" />
     <Folder Include="Services\UserPackageService\" />
   </ItemGroup>
 
