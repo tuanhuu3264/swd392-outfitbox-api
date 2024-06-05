@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SWD392.OutfitBox.API.Controllers.Endpoints;
-using SWD392.OutfitBox.Core.Models.Requests.Wallet;
+using SWD392.OutfitBox.BusinessLayer.Models.Requests.Wallet;
 using SWD392.OutfitBox.Core.Models.Responses.Wallet;
 using SWD392.OutfitBox.Core.Services.WalletService;
 
