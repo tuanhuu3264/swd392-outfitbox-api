@@ -2,9 +2,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Identity.Client;
 using SWD392.OutfitBox.API.Controllers.Endpoints;
-using SWD392.OutfitBox.Core.Models.Requests;
-using SWD392.OutfitBox.Core.Models.Requests.Auth;
-using SWD392.OutfitBox.Core.Models.Responses.Auth;
+using SWD392.OutfitBox.BusinessLayer.Models.Requests;
+using SWD392.OutfitBox.BusinessLayer.Models.Requests.Auth;
+using SWD392.OutfitBox.BusinessLayer.Models.Responses.Auth;
 using SWD392.OutfitBox.Core.Services.AuthService;
 
 namespace SWD392.OutfitBox.API.Controllers
