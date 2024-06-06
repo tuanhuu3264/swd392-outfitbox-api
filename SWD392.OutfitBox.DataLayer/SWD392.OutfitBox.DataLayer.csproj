@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SWD392.OutfitBox.Core\SWD392.OutfitBox.BusinessLayer.csproj" />
   </ItemGroup>
 
   <ItemGroup>

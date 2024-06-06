@@ -31,9 +31,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SWD392.OutfitBox.BusinessLayer\SWD392.OutfitBox.BusinessLayer.csproj" />
-    <ProjectReference Include="..\SWD392.OutfitBox.Core\SWD392.OutfitBox.Core.csproj" />
     <ProjectReference Include="..\SWD392.OutfitBox.DataLayer\SWD392.OutfitBox.DataLayer.csproj" />
-    <ProjectReference Include="..\SWD392.OutfitBox.Infrastructure\SWD392.OutfitBox.DataLayer.csproj" />
   </ItemGroup>
 
 </Project>

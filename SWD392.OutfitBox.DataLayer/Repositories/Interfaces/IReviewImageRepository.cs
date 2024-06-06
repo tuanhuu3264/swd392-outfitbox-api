@@ -1,5 +1,4 @@
-﻿using AutoMapper.Configuration.Conventions;
-using SWD392.OutfitBox.DataLayer.Entities;
+﻿using SWD392.OutfitBox.DataLayer.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
