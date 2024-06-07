@@ -10,7 +10,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SWD392.OutfitBox.Core.Services.ProductService
+namespace SWD392.OutfitBox.BusinessLayer.Services.ProductService
 {
     public class ProductService : IProductService
     {

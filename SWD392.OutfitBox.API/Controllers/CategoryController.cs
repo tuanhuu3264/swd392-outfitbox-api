@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using SWD392.OutfitBox.API.Controllers.Endpoints;
 using SWD392.OutfitBox.BusinessLayer.Models.Requests.Category;
 using SWD392.OutfitBox.BusinessLayer.Models.Responses.Category;
-using SWD392.OutfitBox.Core.Services.CategoryService;
+using SWD392.OutfitBox.BusinessLayer.Services.CategoryService;
 
 namespace SWD392.OutfitBox.API.Controllers
 {

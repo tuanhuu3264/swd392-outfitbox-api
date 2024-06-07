@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SWD392.OutfitBox.Core.Services.RoleService
+namespace SWD392.OutfitBox.BusinessLayer.Services.RoleService
 {
     public interface IRoleService
     {

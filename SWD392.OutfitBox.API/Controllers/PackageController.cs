@@ -3,8 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using SWD392.OutfitBox.API.Controllers.Endpoints;
 using SWD392.OutfitBox.BusinessLayer.Models.Requests.Package;
 using SWD392.OutfitBox.BusinessLayer.Models.Responses.Package;
+using SWD392.OutfitBox.BusinessLayer.Services.PackageService;
 using SWD392.OutfitBox.Core.Models.Responses.Package;
-using SWD392.OutfitBox.Core.Services.PackageService;
 
 namespace SWD392.OutfitBox.API.Controllers
 {

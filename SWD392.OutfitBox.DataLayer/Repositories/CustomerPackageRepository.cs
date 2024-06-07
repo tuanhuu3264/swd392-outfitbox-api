@@ -23,5 +23,9 @@ namespace SWD392.OutfitBox.DataLayer.Repositories
             await this.SaveChangesAsync();
             return await this.Get().FirstAsync(x=>x.Id==userPackage.Id);
         }
+        public async Task<CustomerPackage> GetCustomerPackageById(int id)
+        {
+            return await this.Get().FirstOrDefaultAsync(x=>x.Id==id);
+        }
     }
 }

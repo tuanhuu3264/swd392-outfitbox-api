@@ -20,5 +20,6 @@ namespace SWD392.OutfitBox.DataLayer.UnitOfWork
         Task<IItemsInUserPackageRepository> GetItemsInUserPackageRepository();
         Task<IAreaRepository> GetAreaRepository();
         IPartnerRepository GetPartnerRepository();
+        ICustomerPackageRepository GetCustomerPackageRepository();
     }
 }

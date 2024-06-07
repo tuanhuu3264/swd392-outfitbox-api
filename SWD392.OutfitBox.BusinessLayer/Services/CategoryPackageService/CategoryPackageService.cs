@@ -13,7 +13,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SWD392.OutfitBox.Core.Services.CategoryPackageService
+namespace SWD392.OutfitBox.BusinessLayer.Services.CategoryPackageService
 {
     public class CategoryPackageService : ICategoryPackageService
     {

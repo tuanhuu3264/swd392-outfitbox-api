@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SWD392.OutfitBox.Core.Services.WalletService
+namespace SWD392.OutfitBox.BusinessLayer.Services.WalletService
 {
     public interface IWalletService
     {
