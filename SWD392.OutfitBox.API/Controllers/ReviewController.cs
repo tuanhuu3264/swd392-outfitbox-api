@@ -2,8 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using MimeKit.Tnef;
 using SWD392.OutfitBox.API.Controllers.Endpoints;
-using SWD392.OutfitBox.Core.Models.Requests.Review;
-using SWD392.OutfitBox.Core.Models.Responses.Review;
+using SWD392.OutfitBox.BusinessLayer.Models.Requests.Review;
+using SWD392.OutfitBox.BusinessLayer.Models.Responses.Review;
 using SWD392.OutfitBox.Core.Services.ReviewService;
 
 namespace SWD392.OutfitBox.API.Controllers

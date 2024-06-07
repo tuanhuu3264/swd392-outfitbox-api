@@ -1,8 +1,7 @@
 ﻿using StackExchange.Redis;
-using SWD392.OutfitBox.Domain.Entities;
-using SWD392.OutfitBox.Infrastructure.Databases.Redis;
-using SWD392.OutfitBox.Infrastructure.Streaming.CosumerMessage;
-using SWD392.OutfitBox.Infrastructure.Streaming.ProducerMessage;
+using SWD392.OutfitBox.DataLayer.Entities;
+using SWD392.OutfitBox.DataLayer.Streaming.CosumerMessage;
+using SWD392.OutfitBox.DataLayer.Streaming.ProducerMessage;
 using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
 

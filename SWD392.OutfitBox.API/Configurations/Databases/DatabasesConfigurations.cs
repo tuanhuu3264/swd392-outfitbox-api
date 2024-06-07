@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SWD392.OutfitBox.Infrastructure.Databases.SQLServer;
+using SWD392.OutfitBox.DataLayer.Databases.Redis;
 
 namespace SWD392.OutfitBox.API.Configurations.Databases
 {

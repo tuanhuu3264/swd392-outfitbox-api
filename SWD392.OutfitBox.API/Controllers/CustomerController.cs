@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SWD392.OutfitBox.API.Controllers.Endpoints;
-using SWD392.OutfitBox.Core.Models.Requests.Customer;
-using SWD392.OutfitBox.Core.Models.Responses.Customer;
+using SWD392.OutfitBox.BusinessLayer.Models.Requests.Customer;
+using SWD392.OutfitBox.BusinessLayer.Models.Responses.Customer;
 using SWD392.OutfitBox.Core.Services.UserService;
 
 namespace SWD392.OutfitBox.API.Controllers

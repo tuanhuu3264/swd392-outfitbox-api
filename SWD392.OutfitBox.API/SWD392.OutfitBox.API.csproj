@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
@@ -30,9 +30,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SWD392.OutfitBox.Core\SWD392.OutfitBox.Core.csproj" />
-    <ProjectReference Include="..\SWD392.OutfitBox.Domain\SWD392.OutfitBox.Domain.csproj" />
-    <ProjectReference Include="..\SWD392.OutfitBox.Infrastructure\SWD392.OutfitBox.Infrastructure.csproj" />
+    <ProjectReference Include="..\SWD392.OutfitBox.BusinessLayer\SWD392.OutfitBox.BusinessLayer.csproj" />
+    <ProjectReference Include="..\SWD392.OutfitBox.DataLayer\SWD392.OutfitBox.DataLayer.csproj" />
   </ItemGroup>
 
 </Project>
