@@ -1,22 +1,23 @@
 ﻿
+using BusinessLayer.Services;
+using SWD392.OutfitBox.BusinessLayer.Services.AuthService;
+using SWD392.OutfitBox.BusinessLayer.Services.CategoryPackageService;
 using SWD392.OutfitBox.BusinessLayer.Services.CategoryService;
+using SWD392.OutfitBox.BusinessLayer.Services.FavouriteProduct;
+using SWD392.OutfitBox.BusinessLayer.Services.ItemInUserPackageService;
+using SWD392.OutfitBox.BusinessLayer.Services.PackageService;
+using SWD392.OutfitBox.BusinessLayer.Services.ProductService;
+using SWD392.OutfitBox.BusinessLayer.Services.ReviewService;
+using SWD392.OutfitBox.BusinessLayer.Services.RoleService;
+using SWD392.OutfitBox.BusinessLayer.Services.TransactionService;
+using SWD392.OutfitBox.BusinessLayer.Services.UserService;
+using SWD392.OutfitBox.BusinessLayer.Services.WalletService;
 using SWD392.OutfitBox.Core.RepoInterfaces;
-using SWD392.OutfitBox.Core.Services.AuthService;
-using SWD392.OutfitBox.Core.Services.CategoryPackageService;
-using SWD392.OutfitBox.Core.Services.CategoryService;
-using SWD392.OutfitBox.Core.Services.FavouriteProduct;
-using SWD392.OutfitBox.Core.Services.ItemInUserPackageService;
-using SWD392.OutfitBox.Core.Services.PackageService;
-using SWD392.OutfitBox.Core.Services.ProductService;
-using SWD392.OutfitBox.Core.Services.ReviewService;
-using SWD392.OutfitBox.Core.Services.RoleService;
-using SWD392.OutfitBox.Core.Services.TransactionService;
-using SWD392.OutfitBox.Core.Services.UserService;
-using SWD392.OutfitBox.Core.Services.WalletService;
 using SWD392.OutfitBox.DataLayer.Interfaces;
 using SWD392.OutfitBox.DataLayer.Repositories;
 using SWD392.OutfitBox.DataLayer.UnitOfWork;
 using System.Text.Json.Serialization;
+using IPaymentService = BusinessLayer.Services.IPaymentService;
 
 namespace SWD392.OutfitBox.API.CollectionRegisters
 {
@@ -35,7 +36,8 @@ namespace SWD392.OutfitBox.API.CollectionRegisters
             });
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.ServiesRegister();
-            services.AddScoped<IUnitOfWork,UnitOfWork>();   
+            services.AddScoped<IUnitOfWork,UnitOfWork>();
+         
         }
         public static void ServiesRegister(this IServiceCollection services)
         {
@@ -53,6 +55,7 @@ namespace SWD392.OutfitBox.API.CollectionRegisters
             services.AddScoped<IFavouriteProductService, FavouriteProductService>();
             services.AddScoped<IProductService,ProductService>();
             services.AddScoped<IItemsInUserPackageService, ItemsInUserPackageService>();
+            services.AddScoped<IPaymentService, PaymentService>();
         }
         public static void RepositoriesRegister(this IServiceCollection services)
         {

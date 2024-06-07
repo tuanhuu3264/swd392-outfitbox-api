@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SWD392.OutfitBox.BusinessLayer.Services.ReturnOrderService
+namespace SWD392.OutfitBox.BusinessLayer.Services.PaymentService
 {
-    public interface IReturnOrderService
+    public interface IPaymentService
     {
+
     }
 }

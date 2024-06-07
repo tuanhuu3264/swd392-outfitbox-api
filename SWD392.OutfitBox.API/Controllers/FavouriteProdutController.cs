@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using SWD392.OutfitBox.API.Controllers.Endpoints;
 using SWD392.OutfitBox.BusinessLayer.Models.Responses.FavouriteProduct;
-using SWD392.OutfitBox.Core.Services.FavouriteProduct;
+using SWD392.OutfitBox.BusinessLayer.Services.FavouriteProduct;
 
 namespace SWD392.OutfitBox.API.Controllers
 {

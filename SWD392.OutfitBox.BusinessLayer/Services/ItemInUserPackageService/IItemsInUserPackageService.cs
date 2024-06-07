@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SWD392.OutfitBox.Core.Services.ItemInUserPackageService
+namespace SWD392.OutfitBox.BusinessLayer.Services.ItemInUserPackageService
 {
     public interface IItemsInUserPackageService
     {

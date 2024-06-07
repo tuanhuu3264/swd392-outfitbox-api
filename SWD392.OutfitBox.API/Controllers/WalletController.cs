@@ -2,8 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using SWD392.OutfitBox.API.Controllers.Endpoints;
 using SWD392.OutfitBox.BusinessLayer.Models.Requests.Wallet;
+using SWD392.OutfitBox.BusinessLayer.Services.WalletService;
 using SWD392.OutfitBox.Core.Models.Responses.Wallet;
-using SWD392.OutfitBox.Core.Services.WalletService;
 
 namespace SWD392.OutfitBox.API.Controllers
 {

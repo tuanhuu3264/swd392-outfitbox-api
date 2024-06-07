@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SWD392.OutfitBox.Core.Services.PackageService
+namespace SWD392.OutfitBox.BusinessLayer.Services.PackageService
 {
     public interface IPackageService
     {

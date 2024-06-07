@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SWD392.OutfitBox.Core.Services.FavouriteProduct
+namespace SWD392.OutfitBox.BusinessLayer.Services.FavouriteProduct
 {
     public class FavouriteProductService : IFavouriteProductService
     {

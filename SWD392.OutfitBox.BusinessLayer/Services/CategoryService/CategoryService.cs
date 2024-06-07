@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using SWD392.OutfitBox.BusinessLayer.Models.Requests.Category;
 using SWD392.OutfitBox.BusinessLayer.Models.Responses.Category;
-using SWD392.OutfitBox.Core.Services.CategoryService;
 using SWD392.OutfitBox.DataLayer.Entities;
 using SWD392.OutfitBox.DataLayer.Interfaces;
 using System;

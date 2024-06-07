@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using SWD392.OutfitBox.API.Controllers.Endpoints;
 using SWD392.OutfitBox.BusinessLayer.Models.Requests.Transaction;
 using SWD392.OutfitBox.BusinessLayer.Models.Responses.Transaction;
-using SWD392.OutfitBox.Core.Services.TransactionService;
+using SWD392.OutfitBox.BusinessLayer.Services.TransactionService;
 
 namespace SWD392.OutfitBox.API.Controllers
 {

@@ -21,10 +21,10 @@ namespace SWD392.OutfitBox.DataLayer.UnitOfWork
         private IItemsInUserPackageRepository _itemsInUserPackageRepository;
         private IAreaRepository _areaRepository;
         private IPartnerRepository _partnerRepository;
-
+        private ICustomerPackageRepository _customerPackageRepository;
         public UnitOfWork(Context dbContext, ICustomerRepository customerRepository, IProductRepository productRepository,
             IBrandRepository brandRepository, ICategoryRepository categoryRepository, IItemsInUserPackageRepository itemsInUserPackageRepository,
-            IAreaRepository areaRepository, IPartnerRepository partnerRepository)
+            IAreaRepository areaRepository, IPartnerRepository partnerRepository, ICustomerPackageRepository customerPackageRepository)
         {
             _dbContext = dbContext;
             _customerRepository = customerRepository;
@@ -34,6 +34,7 @@ namespace SWD392.OutfitBox.DataLayer.UnitOfWork
             _itemsInUserPackageRepository = itemsInUserPackageRepository;
             _areaRepository = areaRepository;
             _partnerRepository = partnerRepository;
+            _customerPackageRepository = customerPackageRepository;
         }
 
         public async Task BenginTransaction()
@@ -79,5 +80,6 @@ namespace SWD392.OutfitBox.DataLayer.UnitOfWork
         public async Task<IAreaRepository> GetAreaRepository() => _areaRepository;
 
         public IPartnerRepository GetPartnerRepository() => _partnerRepository;
+        public ICustomerPackageRepository GetCustomerPackageRepository() => _customerPackageRepository;
     }
 }
