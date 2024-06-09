@@ -42,5 +42,6 @@ namespace SWD392.OutfitBox.API.Controllers
         {
            return Ok(await _customerService.ActiveAndDeactiveCustomer(id));
         }
+       
     }
 }

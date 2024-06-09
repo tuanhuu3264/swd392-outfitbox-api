@@ -10,7 +10,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AspNetCore.Firebase.Authentication" Version="2.0.1" />
     <PackageReference Include="AutoMapper" Version="13.0.1" />
+    <PackageReference Include="FirebaseAdmin" Version="3.0.0" />
+    <PackageReference Include="FirebaseAuthentication.net" Version="4.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.12" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.0">
@@ -32,6 +35,12 @@
   <ItemGroup>
     <ProjectReference Include="..\SWD392.OutfitBox.BusinessLayer\SWD392.OutfitBox.BusinessLayer.csproj" />
     <ProjectReference Include="..\SWD392.OutfitBox.DataLayer\SWD392.OutfitBox.DataLayer.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="outfit4rent-c7575-firebase-adminsdk-i1m0b-65ecec1826.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>

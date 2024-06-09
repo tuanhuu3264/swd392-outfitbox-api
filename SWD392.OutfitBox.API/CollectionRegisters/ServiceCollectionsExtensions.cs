@@ -1,5 +1,6 @@
 ﻿
 using SWD392.OutfitBox.BusinessLayer.Services.CategoryService;
+using SWD392.OutfitBox.BusinessLayer.Services.FirebaseService;
 using SWD392.OutfitBox.Core.RepoInterfaces;
 using SWD392.OutfitBox.Core.Services.AuthService;
 using SWD392.OutfitBox.Core.Services.CategoryPackageService;
@@ -53,6 +54,7 @@ namespace SWD392.OutfitBox.API.CollectionRegisters
             services.AddScoped<IFavouriteProductService, FavouriteProductService>();
             services.AddScoped<IProductService,ProductService>();
             services.AddScoped<IItemsInUserPackageService, ItemsInUserPackageService>();
+            services.AddScoped<IFirebaseService, FirebaseService>();
         }
         public static void RepositoriesRegister(this IServiceCollection services)
         {

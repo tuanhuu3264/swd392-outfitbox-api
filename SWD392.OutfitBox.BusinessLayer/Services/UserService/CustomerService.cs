@@ -34,14 +34,14 @@ namespace SWD392.OutfitBox.Core.Services.UserService
         public async Task<CreateCustomerResponseDTO> CreateCustomer(CreateCustomerRequestDTO customer)
         {
             var mappingCustomer = _mapper.Map<Customer>(customer);
-            if(await IsDuplicatedEmailNormal(customer.Email))
+           /* if(await IsDuplicatedEmailNormal(customer.Email))
             {
                 throw new Exception("Email is duplicated.");
             }
             if(await IsDuplicatedPhoneNormal(customer.Phone))
             {
                 throw new Exception("Phone is duplicated.");
-            }
+            }*/
 
             var result = await _customerRepository.Create(mappingCustomer);
             return _mapper.Map<CreateCustomerResponseDTO>(result);

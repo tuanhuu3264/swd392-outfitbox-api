@@ -1,3 +1,6 @@
+using FirebaseAdmin;
+using Google.Apis.Auth.OAuth2;
+using Microsoft.AspNetCore.Server.Kestrel.Internal.System.IO.Pipelines.Testing;
 using SWD392.OutfitBox.API.CollectionRegisters;
 using SWD392.OutfitBox.API.Configurations.Authorizations;
 using SWD392.OutfitBox.API.Configurations.Databases;
@@ -17,7 +20,12 @@ builder.Services.AddJwtAuthorization(builder.Configuration);
 builder.Services.AddSQLServerDatabase(builder.Configuration);
 builder.Services.AddRedis(builder.Configuration);
 builder.Services.RegisterService();
-
+FirebaseApp.Create(new AppOptions
+{
+    Credential = GoogleCredential.FromFile("./outfit4rent-c7575-firebase-adminsdk-i1m0b-65ecec1826.json"),
+    ProjectId = "outfit4rent-c7575"
+    // Add more options as needed
+});
 var app = builder.Build();
 
 app.UseCors(cors => cors.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());

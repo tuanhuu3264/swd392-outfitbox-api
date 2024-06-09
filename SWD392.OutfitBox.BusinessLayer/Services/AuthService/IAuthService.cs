@@ -12,6 +12,7 @@ namespace SWD392.OutfitBox.Core.Services.AuthService
 {
     public interface IAuthService
     {
+        public Task<LoginResponseDTO> LoginFirebase(string accessToken);
         public Task<LoginResponseDTO> Login(LoginRequestDTO loginRequestDTO);
         public Task<RegisterUserResponseDTO> Register(RegisterUserRequestDTO registerRequestDTO);
         public Task<VerifyOTPResponseDTO> VerifyOTP(VerifyOTPRequestDTO verifyOTPRequestDTO);
