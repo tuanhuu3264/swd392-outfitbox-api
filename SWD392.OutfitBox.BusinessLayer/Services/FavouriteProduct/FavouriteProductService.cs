@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using SWD392.OutfitBox.BusinessLayer.Models.Responses.FavouriteProduct;
-using SWD392.OutfitBox.Core.RepoInterfaces;
+using SWD392.OutfitBox.DataLayer.RepoInterfaces;
 using SWD392.OutfitBox.DataLayer.Interfaces;
 using System;
 using System.Collections.Generic;

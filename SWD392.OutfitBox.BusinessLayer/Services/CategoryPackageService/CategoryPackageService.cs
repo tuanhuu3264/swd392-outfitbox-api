@@ -2,8 +2,7 @@
 using SWD392.OutfitBox.BusinessLayer.Models.Requests.CategoryPackage;
 using SWD392.OutfitBox.BusinessLayer.Models.Requests.Package;
 using SWD392.OutfitBox.BusinessLayer.Models.Responses.CategoryPackage;
-using SWD392.OutfitBox.Core.Models.Responses.Package;
-using SWD392.OutfitBox.Core.RepoInterfaces;
+using SWD392.OutfitBox.DataLayer.RepoInterfaces;
 using SWD392.OutfitBox.DataLayer.Entities;
 using System;
 using System.Collections.Generic;

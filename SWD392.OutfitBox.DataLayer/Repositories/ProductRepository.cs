@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
-using SWD392.OutfitBox.Core.RepoInterfaces;
+using SWD392.OutfitBox.DataLayer.RepoInterfaces;
 using SWD392.OutfitBox.DataLayer.Entities;
 using System.Threading.Tasks;
 using System.Collections.Generic;

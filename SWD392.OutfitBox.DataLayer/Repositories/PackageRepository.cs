@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Client;
-using SWD392.OutfitBox.Core.RepoInterfaces;
+using SWD392.OutfitBox.DataLayer.RepoInterfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;

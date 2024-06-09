@@ -34,8 +34,8 @@ msbuild.wrn
 # Visual Studio 2015
 .vs/
 SWD392.OutfitBox.API/bin/
-SWD392.OutfitBox.Core/bin/
-SWD392.OutfitBox.Domain/bin/
+SWD392.OutfitBox.BusinessLayer/bin/
+SWD392.OutfitBox.DataLayer/bin/
 SWD392.OutfitBox/v17/.suo
 /.vs/SWD392.OutfitBox/v17/.suo
 /.vs/SWD392.OutfitBox/v17/.suo

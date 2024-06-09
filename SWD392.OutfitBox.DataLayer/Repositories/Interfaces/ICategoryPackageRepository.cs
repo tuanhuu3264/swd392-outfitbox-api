@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SWD392.OutfitBox.Core.RepoInterfaces
+namespace SWD392.OutfitBox.DataLayer.RepoInterfaces
 {
     public interface ICategoryPackageRepository
     {

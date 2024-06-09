@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using SWD392.OutfitBox.BusinessLayer.Models.Requests.Review;
 using SWD392.OutfitBox.BusinessLayer.Models.Responses.Review;
-using SWD392.OutfitBox.Core.RepoInterfaces;
+using SWD392.OutfitBox.DataLayer.RepoInterfaces;
 using SWD392.OutfitBox.DataLayer.Entities;
 using SWD392.OutfitBox.DataLayer.Interfaces;
 using System;

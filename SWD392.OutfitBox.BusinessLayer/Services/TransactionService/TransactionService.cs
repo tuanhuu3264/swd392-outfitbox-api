@@ -2,7 +2,7 @@
 using AutoMapper.Configuration.Annotations;
 using SWD392.OutfitBox.BusinessLayer.Models.Requests.Transaction;
 using SWD392.OutfitBox.BusinessLayer.Models.Responses.Transaction;
-using SWD392.OutfitBox.Core.RepoInterfaces;
+using SWD392.OutfitBox.DataLayer.RepoInterfaces;
 using SWD392.OutfitBox.DataLayer.Entities;
 using SWD392.OutfitBox.DataLayer.Interfaces;
 using System;

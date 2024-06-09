@@ -18,6 +18,7 @@ using SWD392.OutfitBox.DataLayer.Repositories;
 using SWD392.OutfitBox.DataLayer.UnitOfWork;
 using System.Text.Json.Serialization;
 using IPaymentService = BusinessLayer.Services.IPaymentService;
+using SWD392.OutfitBox.DataLayer.RepoInterfaces;
 
 namespace SWD392.OutfitBox.API.CollectionRegisters
 {
