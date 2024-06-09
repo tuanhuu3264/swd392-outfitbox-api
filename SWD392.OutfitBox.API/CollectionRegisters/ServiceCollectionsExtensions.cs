@@ -3,6 +3,7 @@ using BusinessLayer.Services;
 using SWD392.OutfitBox.BusinessLayer.Services.AuthService;
 using SWD392.OutfitBox.BusinessLayer.Services.CategoryPackageService;
 using SWD392.OutfitBox.BusinessLayer.Services.CategoryService;
+using SWD392.OutfitBox.BusinessLayer.Services.FirebaseService;
 using SWD392.OutfitBox.BusinessLayer.Services.FavouriteProduct;
 using SWD392.OutfitBox.BusinessLayer.Services.ItemInUserPackageService;
 using SWD392.OutfitBox.BusinessLayer.Services.PackageService;
@@ -12,7 +13,6 @@ using SWD392.OutfitBox.BusinessLayer.Services.RoleService;
 using SWD392.OutfitBox.BusinessLayer.Services.TransactionService;
 using SWD392.OutfitBox.BusinessLayer.Services.UserService;
 using SWD392.OutfitBox.BusinessLayer.Services.WalletService;
-using SWD392.OutfitBox.Core.RepoInterfaces;
 using SWD392.OutfitBox.DataLayer.Interfaces;
 using SWD392.OutfitBox.DataLayer.Repositories;
 using SWD392.OutfitBox.DataLayer.UnitOfWork;
@@ -55,6 +55,7 @@ namespace SWD392.OutfitBox.API.CollectionRegisters
             services.AddScoped<IFavouriteProductService, FavouriteProductService>();
             services.AddScoped<IProductService,ProductService>();
             services.AddScoped<IItemsInUserPackageService, ItemsInUserPackageService>();
+            services.AddScoped<IFirebaseService, FirebaseService>();
             services.AddScoped<IPaymentService, PaymentService>();
         }
         public static void RepositoriesRegister(this IServiceCollection services)

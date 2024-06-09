@@ -47,7 +47,7 @@ namespace SWD392.OutfitBox.DataLayer.Repositories
         public async Task<Customer> GetCustomerByPhoneOrEmail(string phoneOrEmail)
         {
             var result = await this.Get().FirstOrDefaultAsync(x=>x.Email.ToLower().Equals(phoneOrEmail.ToLower()) || x.Phone.Equals(phoneOrEmail));
-            if (result == null) return new Customer();
+            
             return result;
         }
 

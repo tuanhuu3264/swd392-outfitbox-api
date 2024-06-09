@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using FirebaseAdmin.Auth;
 using SWD392.OutfitBox.BusinessLayer.Exceptions.Auth;
 using SWD392.OutfitBox.BusinessLayer.Helpers;
 using SWD392.OutfitBox.BusinessLayer.Models.Requests;
@@ -12,9 +13,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
-namespace SWD392.OutfitBox.BusinessLayer.Services.AuthService
-{
+namespace SWD392.OutfitBox.BusinessLayer.Services.AuthService{
     public class AuthService : IAuthService
     {
         public IMapper _mapper;
@@ -117,5 +116,12 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.AuthService
                 Message = "Reset Password Successfully"
             };
         }
+
+        public Task<LoginResponseDTO> LoginFirebase(string accessToken)
+        {
+            throw new NotImplementedException();
+        }
+
+       
     }
 }

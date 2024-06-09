@@ -1,4 +1,5 @@
 ﻿using Microsoft.IdentityModel.Tokens;
+using RTools_NTS.Util;
 using SWD392.OutfitBox.DataLayer.Entities;
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Helpers
             {
                  new Claim(ClaimTypes.Name, user.Name),
                  new Claim(ClaimTypes.Email, user.Email),
+                 new Claim(ClaimTypes.NameIdentifier, user.Name),
                  new Claim(ClaimTypes.Role, "Customer"),
             };
 
@@ -44,6 +46,37 @@ namespace SWD392.OutfitBox.BusinessLayer.Helpers
             try
             {
                 tokenHandler.ValidateToken(token, new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidIssuer = "http://localhost:5028",
+                    ValidAudience = "http://localhost:5028",
+                    ClockSkew = TimeSpan.Zero
+                }, out SecurityToken validatedToken);
+
+                var jwtToken = (JwtSecurityToken)validatedToken;
+                var claimsIdentity = new ClaimsIdentity(jwtToken.Claims);
+
+                return new ClaimsPrincipal(claimsIdentity);
+            }
+            catch (Exception ex)
+            {
+                // Xử lý trường hợp token không hợp lệ
+                Console.WriteLine($"Token validation failed: {ex.Message}");
+                return null;
+            }
+        }
+
+        public static ClaimsPrincipal DecodeTokenFromFirebase(string firebaseToken)
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.ASCII.GetBytes("JWTAuthenticationHIGHsecuredPasswordVVVp1OH7Xzyr");
+
+            try
+            {
+                tokenHandler.ValidateToken(firebaseToken, new TokenValidationParameters
                 {
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKey = new SymmetricSecurityKey(key),

@@ -10,5 +10,8 @@ namespace SWD392.OutfitBox.BusinessLayer.Models.Responses.Auth
     {
         public string Message { get; set; } = string.Empty;
         public int UserId { get; set; } 
+        public string Token {  get; set; } =string.Empty;
+        public string GUID { get; set; } = string.Empty;
+        public DateTime Expiration {  get; set; }
     }
 }
