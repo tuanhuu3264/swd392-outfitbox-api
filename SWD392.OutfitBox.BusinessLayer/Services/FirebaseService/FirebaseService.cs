@@ -5,7 +5,7 @@ using Google.Api.Gax;
 using SWD392.OutfitBox.BusinessLayer.Helpers;
 using SWD392.OutfitBox.BusinessLayer.Models.Requests;
 using SWD392.OutfitBox.BusinessLayer.Models.Responses.Auth;
-using SWD392.OutfitBox.Core.Helpers;
+using SWD392.OutfitBox.BusinessLayer.Helpers;
 using SWD392.OutfitBox.DataLayer.Entities;
 using SWD392.OutfitBox.DataLayer.Interfaces;
 using System;
