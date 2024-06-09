@@ -11,7 +11,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SWD392.OutfitBox.Core.Services.UserService
+namespace SWD392.OutfitBox.BusinessLayer.Services.UserService
 {
     public class CustomerService : ICustomerService
     {

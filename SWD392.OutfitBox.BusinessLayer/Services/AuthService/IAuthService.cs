@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SWD392.OutfitBox.Core.Services.AuthService
+namespace SWD392.OutfitBox.BusinessLayer.Services.AuthService
 {
     public interface IAuthService
     {

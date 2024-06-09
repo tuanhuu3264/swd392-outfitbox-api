@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SWD392.OutfitBox.Core.Services.CategoryPackageService
+namespace SWD392.OutfitBox.BusinessLayer.Services.CategoryPackageService
 {
     public interface ICategoryPackageService
     {

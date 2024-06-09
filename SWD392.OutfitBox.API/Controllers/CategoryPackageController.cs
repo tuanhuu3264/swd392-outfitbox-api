@@ -4,7 +4,7 @@ using SWD392.OutfitBox.API.Controllers.Endpoints;
 using SWD392.OutfitBox.BusinessLayer.Models.Requests.CategoryPackage;
 using SWD392.OutfitBox.BusinessLayer.Models.Requests.Package;
 using SWD392.OutfitBox.BusinessLayer.Models.Responses.CategoryPackage;
-using SWD392.OutfitBox.Core.Services.CategoryPackageService;
+using SWD392.OutfitBox.BusinessLayer.Services.CategoryPackageService;
 
 namespace SWD392.OutfitBox.API.Controllers
 {

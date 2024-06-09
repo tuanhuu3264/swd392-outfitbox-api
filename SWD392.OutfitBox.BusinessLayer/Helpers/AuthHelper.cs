@@ -9,7 +9,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SWD392.OutfitBox.Core.Helpers
+namespace SWD392.OutfitBox.BusinessLayer.Helpers
 {
     public class AuthHelper
     {

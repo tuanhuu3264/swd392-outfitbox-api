@@ -7,8 +7,7 @@ using SWD392.OutfitBox.BusinessLayer.Models.Requests;
 using SWD392.OutfitBox.BusinessLayer.Models.Requests.Auth;
 using SWD392.OutfitBox.BusinessLayer.Models.Responses.Auth;
 using SWD392.OutfitBox.BusinessLayer.Services.FirebaseService;
-using SWD392.OutfitBox.Core.Services.AuthService;
-
+using SWD392.OutfitBox.BusinessLayer.Services.AuthService;
 namespace SWD392.OutfitBox.API.Controllers
 {
     [ApiController]

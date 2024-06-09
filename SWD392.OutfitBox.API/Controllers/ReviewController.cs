@@ -4,7 +4,7 @@ using MimeKit.Tnef;
 using SWD392.OutfitBox.API.Controllers.Endpoints;
 using SWD392.OutfitBox.BusinessLayer.Models.Requests.Review;
 using SWD392.OutfitBox.BusinessLayer.Models.Responses.Review;
-using SWD392.OutfitBox.Core.Services.ReviewService;
+using SWD392.OutfitBox.BusinessLayer.Services.ReviewService;
 
 namespace SWD392.OutfitBox.API.Controllers
 {

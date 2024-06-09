@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SWD392.OutfitBox.Core.Services.AreaService
+namespace SWD392.OutfitBox.BusinessLayer.Services.AreaService
 {
     public interface IAreaService
     {

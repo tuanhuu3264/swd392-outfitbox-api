@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using SWD392.OutfitBox.API.Controllers.Endpoints;
 using SWD392.OutfitBox.BusinessLayer.Models.Requests.Product;
-using SWD392.OutfitBox.Core.Services.ProductService;
+using SWD392.OutfitBox.BusinessLayer.Services.ProductService;
 
 namespace SWD392.OutfitBox.API.Controllers
 {

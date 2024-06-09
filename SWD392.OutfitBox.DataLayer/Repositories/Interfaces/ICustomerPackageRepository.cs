@@ -10,5 +10,6 @@ namespace SWD392.OutfitBox.DataLayer.Interfaces
     public interface ICustomerPackageRepository
     {
         Task<CustomerPackage> CreateUserPackage(CustomerPackage userPackage);
+        Task<CustomerPackage> GetCustomerPackageById(int id);
     }
 }
