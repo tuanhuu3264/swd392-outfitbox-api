@@ -1,9 +1,12 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using SWD392.OutfitBox.API.Configurations.HTTPResponse;
 using SWD392.OutfitBox.API.Controllers.Endpoints;
 using SWD392.OutfitBox.BusinessLayer.Models.Requests.Transaction;
 using SWD392.OutfitBox.BusinessLayer.Models.Responses.Transaction;
 using SWD392.OutfitBox.BusinessLayer.Services.TransactionService;
+using SWD392.OutfitBox.DataLayer.Entities;
+using System.Net;
 
 namespace SWD392.OutfitBox.API.Controllers
 {
@@ -17,20 +20,48 @@ namespace SWD392.OutfitBox.API.Controllers
         }
 
         [HttpGet(TransactionEndpoints.GetAllTransactionsByUserId)]
-        public async Task<ActionResult<List<TransactionDTO>>> GetAllTransactionByUserId([FromRoute] int userId)
+        public async Task<ActionResult<BaseResponse<List<TransactionDTO>>>> GetAllTransactionByUserId([FromRoute] int userId)
         {
-            return Ok(await _transactionService.GetAllTransactionsByUserId(userId));
+            BaseResponse<List<TransactionDTO>> response;
+            try
+            {
+                var data = await _transactionService.GetAllTransactionsByUserId(userId);
+                response = new BaseResponse<List<TransactionDTO>>("Get transactions successfully.", HttpStatusCode.OK, data);
+            }catch(Exception ex) 
+            {
+                response = new BaseResponse<List<TransactionDTO>>(ex.Message, HttpStatusCode.InternalServerError, null);
+            }
+            return StatusCode((int)response.StatusCode, response);
         }
         [HttpGet(TransactionEndpoints.GetAllTransactionsByWalletId)]
-        public async Task<ActionResult<List<TransactionDTO>>> GetAllTransactionByWalletId([FromRoute] int walletId, [FromRoute] int userId)
+        public async Task<ActionResult<BaseResponse<List<TransactionDTO>>>> GetAllTransactionByWalletId([FromRoute] int walletId, [FromRoute] int userId)
         {
-            return Ok(await _transactionService.GetAllTransactionsByWalletId(walletId,userId));
+            BaseResponse<List<TransactionDTO>> response;
+            try
+            {
+                var data = await _transactionService.GetAllTransactionsByWalletId(walletId,userId);
+                response = new BaseResponse<List<TransactionDTO>>("Get transactions successfully.", HttpStatusCode.OK, data);
+            }
+            catch (Exception ex)
+            {
+                response = new BaseResponse<List<TransactionDTO>>(ex.Message, HttpStatusCode.InternalServerError, null);
+            }
+            return StatusCode((int)response.StatusCode, response);
         }
         [HttpPost(TransactionEndpoints.Checkout)]
         public async Task<ActionResult<string>> Checkout([FromBody] CheckoutTransactionRequestDTO checkoutTransactionRequestDTO)
         {
-            var result = await _transactionService.Checkout(checkoutTransactionRequestDTO);
-            return Ok(result);
+            BaseResponse<string> response;
+            try
+            {
+                var data = await _transactionService.Checkout(checkoutTransactionRequestDTO);
+                response = new BaseResponse<string>("Get transactions successfully.", HttpStatusCode.OK, "string");
+            }
+            catch (Exception ex)
+            {
+                response = new BaseResponse<string>(ex.Message, HttpStatusCode.InternalServerError, null);
+            }
+            return StatusCode((int)response.StatusCode, response);
         }
     }
 }

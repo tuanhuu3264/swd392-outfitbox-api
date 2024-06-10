@@ -1,9 +1,14 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using SWD392.OutfitBox.API.Configurations.HTTPResponse;
 using SWD392.OutfitBox.API.Controllers.Endpoints;
 using SWD392.OutfitBox.BusinessLayer.Models.Requests.Customer;
 using SWD392.OutfitBox.BusinessLayer.Models.Responses.Customer;
 using SWD392.OutfitBox.BusinessLayer.Services.UserService;
+using System.Collections.Generic;
+using System.Net;
+using System.Net.WebSockets;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace SWD392.OutfitBox.API.Controllers
 {
@@ -16,32 +21,102 @@ namespace SWD392.OutfitBox.API.Controllers
             _customerService = customerService;
         }
         [HttpGet(CustomerEndpoints.GetAllCustomers)]
-        public async Task<ActionResult<List<CustomerDTO>>> GetAllUsers()
+        public async Task<ActionResult<BaseResponse<List<CustomerDTO>>>> GetAllUsers()
         {
-            return Ok(await _customerService.GetAllCustomers());
+            BaseResponse<List<CustomerDTO>> response;
+            try
+            {
+                var data = await _customerService.GetAllCustomers(); 
+                response = new BaseResponse<List<CustomerDTO>>("Get customers successfully.", HttpStatusCode.OK ,data);
+
+            }
+            catch (Exception ex)
+            {
+                response = new BaseResponse<List<CustomerDTO>>(ex.Message, HttpStatusCode.InternalServerError, null);
+            }
+            return StatusCode((int)response.StatusCode, response);
         }
         [HttpGet(CustomerEndpoints.GetCustomerById)]
-        public async Task<ActionResult<CustomerDTO>> GetCustomerById([FromRoute] int id)
+        public async Task<ActionResult<BaseResponse<CustomerDTO>>> GetCustomerById([FromRoute] int id)
         {
-            return Ok(await _customerService.GetCustomerById(id));
+            BaseResponse<CustomerDTO> response;
+            try
+            {
+                var data = await _customerService.GetCustomerById(id);
+                response = new BaseResponse<CustomerDTO>("Get customers successfully.", HttpStatusCode.OK, data);
+
+            }
+            catch (ArgumentNullException ex)
+            {
+
+                response = new BaseResponse<CustomerDTO>(ex.Message, HttpStatusCode.NotFound, null);
+            }
+            catch (Exception ex)
+            {
+                response = new BaseResponse<CustomerDTO>(ex.Message, HttpStatusCode.InternalServerError, null);
+            }
+            
+            return StatusCode((int)response.StatusCode, response);
         }
         [HttpPost(CustomerEndpoints.CreateCustomer)]
-        public async Task<ActionResult<CreateCustomerResponseDTO>> CreateCustomer([FromBody] CreateCustomerRequestDTO createCustomerRequestDTO)
+        public async Task<ActionResult<BaseResponse<CreateCustomerResponseDTO>>> CreateCustomer([FromBody] CreateCustomerRequestDTO createCustomerRequestDTO)
         {
-            var result = await _customerService.CreateCustomer(createCustomerRequestDTO);
-            return Ok(result);
+            BaseResponse<CreateCustomerResponseDTO> response;
+            try
+            {
+                var data = await _customerService.CreateCustomer(createCustomerRequestDTO);
+                response = new BaseResponse<CreateCustomerResponseDTO>("Create customer successfully.", HttpStatusCode.OK, data);
+
+            }
+            catch (Exception ex)
+            {
+                response = new BaseResponse<CreateCustomerResponseDTO>(ex.Message, HttpStatusCode.InternalServerError, null);
+            }
+
+            return StatusCode((int)response.StatusCode, response);
         }
         [HttpPut(CustomerEndpoints.UpdateCustomer)]
         public async Task<ActionResult<UpdateCustomerResponseDTO>> UpdateCustomer([FromBody] UpdateCustomerRequestDTO updateCustomerRequestDTO)
         {
-            var result = await _customerService.UpdateCustomer(updateCustomerRequestDTO);
-            return Ok(result);
+            BaseResponse<UpdateCustomerResponseDTO> response;
+            try
+            {
+                var data = await _customerService.UpdateCustomer(updateCustomerRequestDTO);
+                response = new BaseResponse<UpdateCustomerResponseDTO>("Update customer successfully.", HttpStatusCode.OK, data);
+
+            }
+            catch (ArgumentNullException ex)
+            {
+                response = new BaseResponse<UpdateCustomerResponseDTO>(ex.Message, HttpStatusCode.NotFound, null);
+            }
+            catch (Exception ex)
+            {
+                response = new BaseResponse<UpdateCustomerResponseDTO>(ex.Message, HttpStatusCode.InternalServerError, null);
+            }
+
+            return StatusCode((int)response.StatusCode, response);
         }
         [HttpPut(CustomerEndpoints.ActiveOrDeactiveCustomer)]
         public async Task<ActionResult<CustomerDTO>> ActiveOrDeactiveCustomer([FromRoute] int id)
         {
-           return Ok(await _customerService.ActiveAndDeactiveCustomer(id));
+            BaseResponse<CustomerDTO> response;
+            try
+            {
+                var data = await _customerService.ActiveAndDeactiveCustomer(id);
+                response = new BaseResponse<CustomerDTO>("Update customer successfully.", HttpStatusCode.OK, data);
+
+            }
+            catch (ArgumentNullException ex)
+            {
+                response = new BaseResponse<CustomerDTO>(ex.Message, HttpStatusCode.NotFound, null);
+            }
+            catch (Exception ex)
+            {
+                response = new BaseResponse<CustomerDTO>(ex.Message, HttpStatusCode.InternalServerError, null);
+            }
+
+            return StatusCode((int)response.StatusCode, response);
         }
-       
+
     }
 }
