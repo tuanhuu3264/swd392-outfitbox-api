@@ -40,15 +40,17 @@ namespace SWD392.OutfitBox.DataLayer.Repositories
         public async Task<bool> UnactiveStatus(ItemInUserPackage item)
         {
             item.Status = -1;
-            var obj=  this.Update(item); 
-            return obj == null ? false : true;
+            this.Update(item);
+            
+            return true;
         }
 
         public async Task<bool> UpdateItem(ItemInUserPackage item)
         {
-            var result = this.Update(item);
+            this.Update(item);
             await this.SaveChangesAsync();
-            return result == null ? false : true;
+  
+            return true;
         }
     }
 }

@@ -32,7 +32,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.ProductService
         public async Task<StatusCodeResponse<List<ProductGeneral>>> GetAll()
         {
             var result = new StatusCodeResponse<List<ProductGeneral>>();
-            var products = await _unitOfWork.GetProductRepository().Result.GetAll();
+            var products = await _unitOfWork._productRepository.GetAll();
             var data = _mapper.Map<List<ProductGeneral>>(products);
             result.Data = data;
             result.StatusCode = HttpStatusCode.OK;
@@ -44,7 +44,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.ProductService
             try
             {
                 var product = _mapper.Map<Product>(createdProduct);
-                product.Brand = await _unitOfWork.GetBrandRepository().Result.GetById(createdProduct.IdBrand);
+                product.Brand = await _unitOfWork._brandRepository.GetById(createdProduct.IdBrand);
                 if (product.Brand == null) { throw new Exception("Can not find Brand"); }
                 product.Category = await _categoryRepository.GetById(product.IdCategory);
                 if (product.Category == null) { throw new Exception("Can not find Category"); }

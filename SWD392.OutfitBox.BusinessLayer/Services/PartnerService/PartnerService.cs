@@ -23,10 +23,10 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.PartnerService
 
         public async Task<PartnerDTO> ChangeStatus(int partnerId, int status)
         {
-            var checkingPartner = await _unitOfWork.GetPartnerRepository().GetPartnerById(partnerId);
+            var checkingPartner = await _unitOfWork._partnerRepository.GetPartnerById(partnerId);
             if (checkingPartner == null) throw new Exception("There is not found the partner that has id: " + partnerId);
             checkingPartner.Status = status;
-            var result = await _unitOfWork.GetPartnerRepository().UpdatePartner(checkingPartner);
+            var result = await _unitOfWork._partnerRepository.UpdatePartner(checkingPartner);
             return _mapper.Map<PartnerDTO>(result);
         }
 
@@ -34,26 +34,26 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.PartnerService
         {
             var crearedPartner = _mapper.Map<Partner>(createPartnerRequestDTO);
             crearedPartner.Status = 1;
-            var result = await _unitOfWork.GetPartnerRepository().CreatePartner(crearedPartner);
+            var result = await _unitOfWork._partnerRepository.CreatePartner(crearedPartner);
             return _mapper.Map<CreatePartnerResponseDTO>(result);
         }
 
         public async Task<List<PartnerDTO>> GetAllPartners()
         {
-            var partners = await _unitOfWork.GetPartnerRepository().GetAllPartners();   
+            var partners = await _unitOfWork._partnerRepository.GetAllPartners();   
             return partners.Select(x=>_mapper.Map<PartnerDTO>(x)).ToList();
         }
 
         public async Task<PartnerDTO> GetPartnerById(int id)
         {
-            var checkingPartner = await _unitOfWork.GetPartnerRepository().GetPartnerById(id);
+            var checkingPartner = await _unitOfWork._partnerRepository.GetPartnerById(id);
             if (checkingPartner == null) throw new Exception("There is not found the partner that has id: " + id);
             return _mapper.Map<PartnerDTO>(checkingPartner);
         }
 
         public async Task<UpdatePartnerResponseDTO> UpdatePartner(UpdatePartnerRequestDTO updatePartnerRequestDTO)
         {
-            var checkingPartner = await _unitOfWork.GetPartnerRepository().GetPartnerById(updatePartnerRequestDTO.Id);
+            var checkingPartner = await _unitOfWork._partnerRepository.GetPartnerById(updatePartnerRequestDTO.Id);
             if (checkingPartner == null) throw new Exception("There is not found the partner that has id: " + updatePartnerRequestDTO.Id);
             checkingPartner.Name = updatePartnerRequestDTO.Name;
             checkingPartner.Phone = updatePartnerRequestDTO.Phone;
@@ -61,7 +61,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.PartnerService
             checkingPartner.Address= updatePartnerRequestDTO.Address;
             checkingPartner.AreaId = updatePartnerRequestDTO.AreaId;
             checkingPartner.Password = checkingPartner.Password;
-            var result = await _unitOfWork.GetPartnerRepository().UpdatePartner(checkingPartner);
+            var result = await _unitOfWork._partnerRepository.UpdatePartner(checkingPartner);
             return _mapper.Map<UpdatePartnerResponseDTO>(result);
         }
     }

@@ -23,67 +23,25 @@ namespace SWD392.OutfitBox.DataLayer.Repositories
         {
            var result = await _dbSet.AddAsync(entity);
            await _context.SaveChangesAsync();
-            return result.Entity;
+           return result.Entity;
         }
 
         public async Task AddRangeAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default)
         {
             await _dbSet.AddRangeAsync(entities);
             await _context.SaveChangesAsync();
-
         }
 
-        public void Delete(params TEntity[] entities)
+        public async void DeleteRange(params TEntity[] entities)
         {
             _dbSet.RemoveRange(entities);
+            await _context.SaveChangesAsync();
         }
 
-        public void Delete(TEntity entity)
+        public async void Delete(TEntity entity)
         {
             _dbSet.Remove(entity);
-        }
-
-        public async Task<IEnumerable<TEntity>?> Find(Expression<Func<TEntity, bool>>? filter = null,
-            string includeProperties = "", Func<IQueryable<TEntity>,
-                IOrderedQueryable<TEntity>>? orderBy = null)
-        {
-            IQueryable<TEntity> query = _dbSet;
-
-            if (filter != null)
-            {
-                query = query.Where(filter);
-            }
-
-            foreach (var includeProperty in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
-            {
-                query = query.Include(includeProperty);
-            }
-
-            if (orderBy != null)
-            {
-                return await orderBy(query).ToListAsync();
-            }
-            else
-            {
-                return await query.ToListAsync();
-            }
-        }
-
-        public async Task<TEntity?> FindOne(Expression<Func<TEntity, bool>>? filter = null,
-            string includeProperties = "")
-        {
-            IQueryable<TEntity> query = _dbSet;
-            if (filter != null)
-            {
-                query = query.Where(filter);
-            }
-            foreach (var includeProperty in includeProperties.Split
-                         (new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
-            {
-                query = query.Include(includeProperty);
-            }
-            return await query.FirstOrDefaultAsync();
-
+            await _context.SaveChangesAsync();
         }
 
         public IQueryable<TEntity> Get()
@@ -103,44 +61,62 @@ namespace SWD392.OutfitBox.DataLayer.Repositories
             
         }
 
-        public void Update(params TEntity[] entities)
+        public async void UpdateRange(params TEntity[] entities)
         {
             _dbSet.UpdateRange(entities);
+            await _context.SaveChangesAsync();
         }
 
-        public TEntity Update(TEntity entity)
+        public async void Update(TEntity entity)
         {
-            var entityEntry = _dbSet.Update(entity);
-            return entityEntry.Entity;
+            _dbSet.Update(entity);
+            await _context.SaveChangesAsync();
         }
-        public async Task<bool> AddHashKey(TEntity entity, CancellationToken cancellationToken = default)
+
+        public async Task<IEnumerable<TEntity>> Get(Expression<Func<TEntity, bool>> filter = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, string includeProperties = "", int? pageIndex = null, int? pageSize = null)
         {
-            try
+            IQueryable<TEntity> query = _dbSet;
+
+            if (filter != null)
             {
-                var existingEntry = _context.ChangeTracker.Entries<TEntity>()
-           .SingleOrDefault(e =>
-               e.Entity.GetType() == entity.GetType() &&
-               e.Properties.Any(p => p.Metadata.IsKey() && Equals(p.CurrentValue, entity.GetType().GetProperty(p.Metadata.Name)?.GetValue(entity))));
-
-                if (existingEntry != null)
-                {
-                    // Entity with the same key values is being tracked, update its properties
-                    existingEntry.CurrentValues.SetValues(entity);
-                }
-                else
-                {
-                    // Entity is not being tracked, add it
-                    await _dbSet.AddAsync(entity, cancellationToken);
-                }
-
-                await _context.SaveChangesAsync(cancellationToken);
-
-                return true;
+                query = query.Where(filter);
             }
-            catch (Exception ex)
+
+            foreach (var includeProperty in includeProperties.Split
+                (new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
             {
-                throw new Exception(ex.ToString());
+                query = query.Include(includeProperty);
             }
+
+            if (orderBy != null)
+            {
+                query = orderBy(query);
+            }
+
+            // Implementing pagination
+            if (pageIndex.HasValue && pageSize.HasValue)
+            {
+                // Ensure the pageIndex and pageSize are valid
+                int validPageIndex = pageIndex.Value > 0 ? pageIndex.Value - 1 : 0;
+                int validPageSize = pageSize.Value > 0 ? pageSize.Value : 10; // Assuming a default pageSize of 10 if an invalid value is passed
+
+                query = query.Skip(validPageIndex * validPageSize).Take(validPageSize);
+            }
+
+            return await query.ToListAsync();
         }
+
+        public async Task<int> Count(Expression<Func<TEntity, bool>> filter = null)
+        {
+            IQueryable<TEntity> query = _dbSet;
+
+            if (filter != null)
+            {
+                query = query.Where(filter);
+            }
+            return await query.CountAsync();
+        }
+
+
     }
 }

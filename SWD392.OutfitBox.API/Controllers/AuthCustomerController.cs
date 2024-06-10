@@ -50,7 +50,7 @@ namespace SWD392.OutfitBox.API.Controllers
             return Ok(result);
         }
         [HttpGet(AuthEndpoints.VerifyThirdPartyInFirebaseToken)]
-        public async Task<ActionResult<FirebaseAuthModels>> VerifyGoogleAccount([FromQuery] string accessToken)
+        public async Task<ActionResult<LoginResponseDTO>> VerifyGoogleAccount([FromQuery] string accessToken)
         {
             var result = await _firebase.VerifyFirebaseThirdPartToken(accessToken);
             return Ok(result);

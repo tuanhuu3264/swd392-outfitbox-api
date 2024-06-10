@@ -7,27 +7,26 @@ namespace SWD392.OutfitBox.DataLayer.Interfaces
         IQueryable<TEntity> Get();
 
         Task<TEntity?> GetById(object id, CancellationToken cancellationToken = default);
+        Task<TEntity> AddAsync(TEntity entity, CancellationToken cancellationToken = default);
 
         Task AddRangeAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default);
 
-        Task<TEntity> AddAsync(TEntity entity, CancellationToken cancellationToken = default);
 
-        void Delete(params TEntity[] entities);
+        void Update(TEntity entity);
 
-        void Update(params TEntity[] entities);
+        void UpdateRange(params TEntity[] entities);
 
         void Delete(TEntity entity);
+        void DeleteRange(params TEntity[] entities);
 
-        TEntity Update(TEntity entity);
-
-        Task SaveChangesAsync(CancellationToken cancellationToken = default);
-
-        public Task<IEnumerable<TEntity>?> Find(Expression<Func<TEntity, bool>>? filter = null,
+        Task<IEnumerable<TEntity>> Get(
+            Expression<Func<TEntity, bool>> filter = null,
+            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
             string includeProperties = "",
-            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null);
-
-        public Task<TEntity?> FindOne(Expression<Func<TEntity, bool>>? filter = null, string includeProperties = "");
-
-        public Task<bool> AddHashKey(TEntity entity, CancellationToken cancellationToken = default);
+            int? pageIndex = null,
+            int? pageSize = null);
+        public Task<int> Count(Expression<Func<TEntity, bool>> filter = null);
+        Task SaveChangesAsync(CancellationToken cancellationToken = default);
+   
     }
 }

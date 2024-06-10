@@ -28,7 +28,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.ItemInUserPackageService
             var result = new StatusCodeResponse<List<ItemInUserPackageDto>>();
             try
             {
-                var list = await _unitOfWork.GetItemsInUserPackageRepository().Result.GetAllItemInPacket();
+                var list = await _unitOfWork._itemsInUserPackageRepository.GetAllItemInPacket();
                 if (list.Count == 0) throw new Exception("ListNull");
                 var listItem = _mapper.Map<List<ItemInUserPackageDto>>(list);
                 result.Data = listItem;
@@ -50,7 +50,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.ItemInUserPackageService
             try
             {
                 var item = _mapper.Map<ItemInUserPackage>(itemInPackage);
-                var obj = await _unitOfWork.GetItemsInUserPackageRepository().Result.CreateItemInUserPackage(item);
+                var obj = await _unitOfWork._itemsInUserPackageRepository.CreateItemInUserPackage(item);
                 var data = _mapper.Map<ItemInUserPackageDto>(obj);
                 result.Data = data;
                 result.Message = "Successful";

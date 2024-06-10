@@ -8,18 +8,22 @@ using System.Threading.Tasks;
 
 namespace SWD392.OutfitBox.DataLayer.UnitOfWork
 {
-    public interface IUnitOfWork
+    public interface IUnitOfWork : IDisposable
     {
+        public ICustomerRepository _customerRepository { get; set; }
+        public IProductRepository _productRepository { get; set; }
+        public IImageRepository _imageRepository { get; set; }
+        public IBrandRepository _brandRepository { get; set; }
+        public ICategoryRepository _categoryRepository { get; set; }
+        public IItemsInUserPackageRepository _itemsInUserPackageRepository { get; set; }
+        public IAreaRepository _areaRepository { get; set; }
+        public IPartnerRepository _partnerRepository { get; set; }
+        public ICustomerPackageRepository _customerPackageRepository { get; set; }
+        public IReturnOrderRepository _returnOrderRepository { get; set; }
         Task BenginTransaction();
         Task CommitTransaction();
         Task RollbackTransaction();
-        Task<IProductRepository> GetProductRepository();
-        Task<IImageRepository> GetImageRepository();
-        Task<ICustomerRepository> GetCustomerRepository();
-        Task<IBrandRepository> GetBrandRepository();
-        Task<IItemsInUserPackageRepository> GetItemsInUserPackageRepository();
-        Task<IAreaRepository> GetAreaRepository();
-        IPartnerRepository GetPartnerRepository();
-        ICustomerPackageRepository GetCustomerPackageRepository();
+        Task<int> SaveChangesAsync();
+        void Dispose();
     }
 }

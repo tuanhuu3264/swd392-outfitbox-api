@@ -80,7 +80,7 @@ namespace BusinessLayer.Services
                 };
                 if (vnp_ResponseCode == "00" && transactionStatus == "00")
                 {
-                var order = _unitOfWork.GetCustomerPackageRepository().GetCustomerPackageById(int.Parse(orderId));
+                var order = _unitOfWork._customerPackageRepository.GetCustomerPackageById(int.Parse(orderId));
                     if (order == null) throw new Exception("Error to payment: Can not find order to payment");
                    
                 }
@@ -107,7 +107,7 @@ namespace BusinessLayer.Services
                 {
                     throw new Exception("Merchant code or secret key is missing.");
                 }
-                var order = await _unitOfWork.GetCustomerPackageRepository().GetCustomerPackageById(orderId);
+                var order = await _unitOfWork._customerPackageRepository.GetCustomerPackageById(orderId);
                 if (order == null)
                 {
                     throw new Exception("There is no order that has: " + orderId);

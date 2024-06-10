@@ -1,19 +1,27 @@
 ﻿using AutoMapper;
+using SWD392.OutfitBox.BusinessLayer.Models.Requests.Area;
 using SWD392.OutfitBox.BusinessLayer.Models.Requests.Category;
 using SWD392.OutfitBox.BusinessLayer.Models.Requests.CategoryPackage;
 using SWD392.OutfitBox.BusinessLayer.Models.Requests.Customer;
 using SWD392.OutfitBox.BusinessLayer.Models.Requests.ItemInUserPackage;
 using SWD392.OutfitBox.BusinessLayer.Models.Requests.Package;
+using SWD392.OutfitBox.BusinessLayer.Models.Requests.Partner;
 using SWD392.OutfitBox.BusinessLayer.Models.Requests.Product;
+using SWD392.OutfitBox.BusinessLayer.Models.Requests.ProductReturnOrder;
+using SWD392.OutfitBox.BusinessLayer.Models.Requests.ReturnOrder;
 using SWD392.OutfitBox.BusinessLayer.Models.Requests.Review;
 using SWD392.OutfitBox.BusinessLayer.Models.Requests.Role;
 using SWD392.OutfitBox.BusinessLayer.Models.Requests.Wallet;
+using SWD392.OutfitBox.BusinessLayer.Models.Responses.Area;
 using SWD392.OutfitBox.BusinessLayer.Models.Responses.Category;
 using SWD392.OutfitBox.BusinessLayer.Models.Responses.CategoryPackage;
 using SWD392.OutfitBox.BusinessLayer.Models.Responses.Customer;
 using SWD392.OutfitBox.BusinessLayer.Models.Responses.FavouriteProduct;
 using SWD392.OutfitBox.BusinessLayer.Models.Responses.Package;
+using SWD392.OutfitBox.BusinessLayer.Models.Responses.Partner;
 using SWD392.OutfitBox.BusinessLayer.Models.Responses.Product;
+using SWD392.OutfitBox.BusinessLayer.Models.Responses.ProductReturnOrder;
+using SWD392.OutfitBox.BusinessLayer.Models.Responses.ReturnOrder;
 using SWD392.OutfitBox.BusinessLayer.Models.Responses.Review;
 using SWD392.OutfitBox.BusinessLayer.Models.Responses.Role;
 using SWD392.OutfitBox.BusinessLayer.Models.Responses.Transaction;
@@ -37,6 +45,10 @@ namespace SWD392.OutfitBox.API.Configurations.Mapper
             ReviewProfile();
             FavouriteProductProfile();
             ProductProfile();
+            ProductReturnOrderProfile();
+            ReturnOrderProfile();
+            PartnerProfile();
+            AreaProfile();
         
         }
         public void CategoryProfile()
@@ -131,6 +143,34 @@ namespace SWD392.OutfitBox.API.Configurations.Mapper
         public void ItemInUserPackageProfile()
         {
             CreateMap<ItemInUserPackageDto, ItemInUserPackage>();
+        }
+        public void ProductReturnOrderProfile()
+        {
+            CreateMap<ProductReturnOrder,CreateProductReturnOrderRequestDTO>().ReverseMap();
+            CreateMap<ProductReturnOrder, CreateProductOrderResponseDTO>().ReverseMap();
+            CreateMap<ProductReturnOrder, ProductReturnOrderDTO>().ReverseMap();
+        }
+        public void ReturnOrderProfile()
+        {
+            CreateMap<CreateReturnOrderRequestDTO, ReturnOrder>().ReverseMap();
+            CreateMap<ReturnOrder,CreateReturnOrderResponseDTO>().ReverseMap();
+            CreateMap<ReturnOrderDTO, ReturnOrder>().ReverseMap();  
+        }
+        public void PartnerProfile()
+        {
+            CreateMap<Partner,PartnerDTO>().ReverseMap();
+            CreateMap<CreatePartnerRequestDTO,Partner>().ReverseMap();
+            CreateMap<Partner, CreatePartnerResponseDTO>().ReverseMap();
+            CreateMap<UpdatePartnerRequestDTO, Partner>().ReverseMap();
+            CreateMap<Partner, UpdatePartnerResponseDTO>().ReverseMap();
+        }
+        public void AreaProfile()
+        {
+            CreateMap<Area, AreaDTO>().ReverseMap();
+            CreateMap<CreateAreaRequestDTO, Area>().ReverseMap();
+            CreateMap<Area, CreateAreaResponseDTO>().ReverseMap();
+            CreateMap<UpdateAreaRequestDTO, Area>().ReverseMap();
+            CreateMap<Area, UpdateAreaResponseDTO>().ReverseMap();
         }
     }
 }

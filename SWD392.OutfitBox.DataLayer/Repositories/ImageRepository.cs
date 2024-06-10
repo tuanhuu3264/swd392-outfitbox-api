@@ -45,7 +45,7 @@ namespace SWD392.OutfitBox.DataLayer.Repositories
         {
             try {
                 var listimg = await this.Get().Where(x => x.IdProduct == productid).ToArrayAsync();
-                this.Delete(listimg);
+                this.DeleteRange(listimg);
                 await this.AddRangeAsync(listimg);
                 return true;
             }

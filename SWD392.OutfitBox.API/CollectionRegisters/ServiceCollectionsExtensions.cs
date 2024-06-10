@@ -19,6 +19,9 @@ using SWD392.OutfitBox.DataLayer.UnitOfWork;
 using System.Text.Json.Serialization;
 using IPaymentService = BusinessLayer.Services.IPaymentService;
 using SWD392.OutfitBox.DataLayer.RepoInterfaces;
+using SWD392.OutfitBox.BusinessLayer.Services.AreaService;
+using SWD392.OutfitBox.BusinessLayer.Services.PartnerService;
+using SWD392.OutfitBox.BusinessLayer.Services.ReturnOrderService;
 
 namespace SWD392.OutfitBox.API.CollectionRegisters
 {
@@ -58,6 +61,11 @@ namespace SWD392.OutfitBox.API.CollectionRegisters
             services.AddScoped<IItemsInUserPackageService, ItemsInUserPackageService>();
             services.AddScoped<IFirebaseService, FirebaseService>();
             services.AddScoped<IPaymentService, PaymentService>();
+            services.AddScoped<IFirebaseService, FirebaseService>();
+            services.AddScoped<IAreaService, AreaService>();    
+            services.AddScoped<IPartnerService, PartnerService>();  
+            services.AddScoped<IReturnOrderService, ReturnOrderService>();
+            services.AddScoped <IProductReturnOrderRepository, ProductReturnOrderRepository>(); 
         }
         public static void RepositoriesRegister(this IServiceCollection services)
         {
@@ -83,7 +91,8 @@ namespace SWD392.OutfitBox.API.CollectionRegisters
             services.AddScoped<IImageRepository, ImageRepository>();
             services.AddScoped<IPartnerRepository,PartnerRepository>();
             services.AddScoped<IAreaRepository, AreaRepository>();  
-            services.AddScoped<IProductReturnOrderRepository, ProductReturnOrderRepository>();  
+            services.AddScoped<IProductReturnOrderRepository, ProductReturnOrderRepository>();
+            services.AddScoped<IReturnOrderRepository, ReturnOrderRepository>();
         }
 
     }

@@ -27,7 +27,7 @@ namespace SWD392.OutfitBox.DataLayer.Repositories
         public async Task<bool> DeleteReviewImageByReviewId(int reviewId)
         {
             var reviewImages  = await this.Get().Where(x=>x.ReviewId==reviewId).ToListAsync();
-            this.Delete(reviewImages.ToArray());
+            this.DeleteRange(reviewImages.ToArray());
             await this.SaveChangesAsync();
             return true;
         }

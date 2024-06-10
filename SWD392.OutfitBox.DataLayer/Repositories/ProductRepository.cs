@@ -12,12 +12,12 @@ namespace SWD392.OutfitBox.DataLayer.Repositories
     public class ProductRepository : BaseRepository<Product>, IProductRepository
     {
         internal Context _context;
-        internal IImageRepository _imageRepository;
+      
 
-        public ProductRepository(Context context, IImageRepository imageRepository) : base(context)
+        public ProductRepository(Context context) : base(context)
         {
             _context = context;
-            _imageRepository = imageRepository;
+
         }
 
         public async Task<List<Product>> GetAll()
@@ -43,9 +43,10 @@ namespace SWD392.OutfitBox.DataLayer.Repositories
 
         public async Task<bool> UpdateProduct(Product product)
         {
-            var obj = this.Update(product);
+            this.Update(product);
             await this.SaveChangesAsync();
-            return obj == null;
+
+            return true;
         }
        }
 }

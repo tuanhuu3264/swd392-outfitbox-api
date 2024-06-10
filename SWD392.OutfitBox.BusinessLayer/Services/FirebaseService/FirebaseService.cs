@@ -62,7 +62,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.FirebaseService
                     GUID=result.GUID,
                     Email = newCustomer.Email,
                     Name= newCustomer.Name,
-
+                    CustomerId= newCustomer.Id,
                     Picture = result.Picture
 
                 };
@@ -77,8 +77,8 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.FirebaseService
                 GUID = result.GUID,
                 Email = result.Email,
                 Name = result.Name,
-                Picture = result.Picture
-
+                Picture = result.Picture,
+                CustomerId = customer.Id,
             };
 
 

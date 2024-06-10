@@ -7,34 +7,37 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SWD392.OutfitBox.DataLayer.Entities;
+using SWD392.OutfitBox.DataLayer.Repositories;
 
 namespace SWD392.OutfitBox.DataLayer.UnitOfWork
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private Context _dbContext; 
-        private ICustomerRepository _customerRepository;
-        private IProductRepository _productRepository;
-        private IImageRepository _imageRepository;
-        private IBrandRepository _brandRepository;
-        private ICategoryRepository _categoryRepository;
-        private IItemsInUserPackageRepository _itemsInUserPackageRepository;
-        private IAreaRepository _areaRepository;
-        private IPartnerRepository _partnerRepository;
-        private ICustomerPackageRepository _customerPackageRepository;
-        public UnitOfWork(Context dbContext, ICustomerRepository customerRepository, IProductRepository productRepository,
-            IBrandRepository brandRepository, ICategoryRepository categoryRepository, IItemsInUserPackageRepository itemsInUserPackageRepository,
-            IAreaRepository areaRepository, IPartnerRepository partnerRepository, ICustomerPackageRepository customerPackageRepository)
+        private Context _dbContext { get; set; }
+        public ICustomerRepository _customerRepository { get; set; }
+        public IProductRepository _productRepository { get; set; }
+        public IImageRepository _imageRepository{ get; set; }
+        public IBrandRepository _brandRepository{ get; set; }
+        public ICategoryRepository _categoryRepository{ get; set; }
+        public IItemsInUserPackageRepository _itemsInUserPackageRepository{ get; set; }
+        public IAreaRepository _areaRepository{ get; set; }
+        public IPartnerRepository _partnerRepository{ get; set; }
+        public ICustomerPackageRepository _customerPackageRepository{ get; set; }
+        public IReturnOrderRepository _returnOrderRepository { get; set; }
+        public UnitOfWork(Context dbContext)
         {
             _dbContext = dbContext;
-            _customerRepository = customerRepository;
-            _productRepository = productRepository;
-            _brandRepository = brandRepository;
-            _categoryRepository = categoryRepository;
-            _itemsInUserPackageRepository = itemsInUserPackageRepository;
-            _areaRepository = areaRepository;
-            _partnerRepository = partnerRepository;
-            _customerPackageRepository = customerPackageRepository;
+            _customerRepository = new CustomerRepository(_dbContext);
+            _productRepository = new ProductRepository(_dbContext);
+            _brandRepository = new BrandRepository(_dbContext);
+            _categoryRepository = new CategoryRepository(_dbContext);
+            _itemsInUserPackageRepository = new ItemInUserPackageRepository(_dbContext);
+            _areaRepository = new AreaRepository(_dbContext);
+            _partnerRepository = new PartnerRepository(_dbContext);
+            _customerPackageRepository = new CustomerPackageRepository(_dbContext);
+            _imageRepository = new ImageRepository(_dbContext);
+            _returnOrderRepository = new ReturnOrderRepository(_dbContext);
         }
 
         public async Task BenginTransaction()
@@ -46,40 +49,37 @@ namespace SWD392.OutfitBox.DataLayer.UnitOfWork
         {
             await _dbContext.Database.CommitTransactionAsync();
         }
-        public async Task<ICustomerRepository> GetCustomerRepository()
+
+        public void Dispose()
         {
-            return _customerRepository;
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
 
-        public async Task<IImageRepository> GetImageRepository()
-        {
-            return _imageRepository;
-        }
-
-        public async Task<IProductRepository> GetProductRepository()
-        {
-            return _productRepository;
-        }
         public async Task RollbackTransaction()
         {
             await _dbContext.Database.RollbackTransactionAsync();
         }
-        public async Task<IBrandRepository> GetBrandRepository()
+
+        public async Task<int> SaveChangesAsync()
         {
-            return _brandRepository;
-        }
-        public async Task<ICategoryRepository> GetCategoryRepository()
-        {
-            return _categoryRepository;
-        }
-        public async Task<IItemsInUserPackageRepository> GetItemsInUserPackageRepository()
-        {
-            return _itemsInUserPackageRepository;
+            return await this._dbContext.SaveChangesAsync();
         }
 
-        public async Task<IAreaRepository> GetAreaRepository() => _areaRepository;
+        private bool disposed = false;
 
-        public IPartnerRepository GetPartnerRepository() => _partnerRepository;
-        public ICustomerPackageRepository GetCustomerPackageRepository() => _customerPackageRepository;
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!this.disposed)
+            {
+                if (disposing)
+                {
+                    _dbContext.Dispose();
+                }
+            }
+            this.disposed = true;
+        }
+
+      
     }
 }
