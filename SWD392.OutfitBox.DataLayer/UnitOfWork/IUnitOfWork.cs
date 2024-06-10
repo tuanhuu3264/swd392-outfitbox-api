@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SWD392.OutfitBox.DataLayer.UnitOfWork
 {
-    public interface IUnitOfWork : IDisposable
+    public interface IUnitOfWork
     {
         public ICustomerRepository _customerRepository { get; set; }
         public IProductRepository _productRepository { get; set; }
@@ -24,6 +24,6 @@ namespace SWD392.OutfitBox.DataLayer.UnitOfWork
         Task CommitTransaction();
         Task RollbackTransaction();
         Task<int> SaveChangesAsync();
-        void Dispose();
+
     }
 }

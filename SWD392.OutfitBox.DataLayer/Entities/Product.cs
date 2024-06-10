@@ -33,5 +33,6 @@ namespace SWD392.OutfitBox.DataLayer.Entities
         public Brand Brand { get; set; }
         public string Type { get; set; }
         public List<Image>? Images { get; set; }
+        public bool IsFeatured { get; set; }
     }
 }

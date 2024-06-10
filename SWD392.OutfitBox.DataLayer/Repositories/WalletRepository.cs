@@ -51,7 +51,7 @@ namespace SWD392.OutfitBox.DataLayer.Repositories
 
         public async Task<Wallet> UpdateWallet(Wallet wallet)
         {
-            this.Update(wallet);
+            await this.Update(wallet);
             await this.SaveChangesAsync();
             return await this.Get().FirstAsync(x=>x.Id==wallet.Id);
         }

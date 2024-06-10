@@ -50,7 +50,7 @@ namespace SWD392.OutfitBox.DataLayer.Repositories
 
         public async Task<CategoryPackage> UpdateCategoryPackage(CategoryPackage categoryPackage)
         {
-            this.Update(categoryPackage);
+            await this.Update(categoryPackage);
             await this.SaveChangesAsync();
             return await GetCategoryPackageById(categoryPackage.Id);
         }

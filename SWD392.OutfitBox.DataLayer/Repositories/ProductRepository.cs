@@ -43,7 +43,7 @@ namespace SWD392.OutfitBox.DataLayer.Repositories
 
         public async Task<bool> UpdateProduct(Product product)
         {
-            this.Update(product);
+           await this.Update(product);
             await this.SaveChangesAsync();
 
             return true;

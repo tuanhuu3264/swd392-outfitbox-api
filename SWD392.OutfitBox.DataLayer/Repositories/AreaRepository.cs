@@ -36,8 +36,8 @@ namespace SWD392.OutfitBox.DataLayer.Repositories
 
         public async Task<Area> UpdateArea(Area updatedArea)
         {
-            this.Update(updatedArea);
-            await this.SaveChangesAsync();
+            await this.Update(updatedArea);
+        
             return await this.Get().FirstAsync(x=>x.Id==updatedArea.Id);
         }
     }

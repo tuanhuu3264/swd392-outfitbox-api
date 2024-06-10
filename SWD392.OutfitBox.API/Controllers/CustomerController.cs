@@ -75,7 +75,7 @@ namespace SWD392.OutfitBox.API.Controllers
 
             return StatusCode((int)response.StatusCode, response);
         }
-        [HttpPut(CustomerEndpoints.UpdateCustomer)]
+        [HttpPut("customers")]
         public async Task<ActionResult<UpdateCustomerResponseDTO>> UpdateCustomer([FromBody] UpdateCustomerRequestDTO updateCustomerRequestDTO)
         {
             BaseResponse<UpdateCustomerResponseDTO> response;

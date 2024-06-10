@@ -16,28 +16,34 @@ namespace SWD392.OutfitBox.DataLayer.UnitOfWork
     {
         private Context _dbContext { get; set; }
         public ICustomerRepository _customerRepository { get; set; }
+
         public IProductRepository _productRepository { get; set; }
         public IImageRepository _imageRepository{ get; set; }
         public IBrandRepository _brandRepository{ get; set; }
         public ICategoryRepository _categoryRepository{ get; set; }
         public IItemsInUserPackageRepository _itemsInUserPackageRepository{ get; set; }
+        public ICategoryPackageRepository _categoryPackageRepository { get; set; }
         public IAreaRepository _areaRepository{ get; set; }
         public IPartnerRepository _partnerRepository{ get; set; }
         public ICustomerPackageRepository _customerPackageRepository{ get; set; }
         public IReturnOrderRepository _returnOrderRepository { get; set; }
-        public UnitOfWork(Context dbContext)
+        public UnitOfWork(Context dbContext, ICustomerRepository customerRepository, IProductRepository productRepository, IImageRepository imageRepository, IBrandRepository brandRepository, ICategoryPackageRepository categoryPackageRepository
+                          , ICategoryRepository categoryRepository, IItemsInUserPackageRepository itemsInUserPackageRepository, IAreaRepository areaRepository, IPartnerRepository partnerRepository, ICustomerPackageRepository customerPackageRepository, IReturnOrderRepository returnOrderRepository)
         {
-            _dbContext = dbContext;
-            _customerRepository = new CustomerRepository(_dbContext);
-            _productRepository = new ProductRepository(_dbContext);
-            _brandRepository = new BrandRepository(_dbContext);
-            _categoryRepository = new CategoryRepository(_dbContext);
-            _itemsInUserPackageRepository = new ItemInUserPackageRepository(_dbContext);
-            _areaRepository = new AreaRepository(_dbContext);
-            _partnerRepository = new PartnerRepository(_dbContext);
-            _customerPackageRepository = new CustomerPackageRepository(_dbContext);
-            _imageRepository = new ImageRepository(_dbContext);
-            _returnOrderRepository = new ReturnOrderRepository(_dbContext);
+            _dbContext= dbContext;
+            _customerRepository= customerRepository;
+            _productRepository= productRepository;
+            _imageRepository= imageRepository;
+            _brandRepository= brandRepository;
+            _categoryRepository= categoryRepository;
+            _customerPackageRepository= customerPackageRepository;
+            _returnOrderRepository= returnOrderRepository;
+            _categoryPackageRepository= categoryPackageRepository;
+            _partnerRepository= partnerRepository;
+            _customerPackageRepository = customerPackageRepository;
+            _returnOrderRepository= returnOrderRepository;
+            _areaRepository=areaRepository;
+            _itemsInUserPackageRepository= itemsInUserPackageRepository;
         }
 
         public async Task BenginTransaction()
@@ -50,12 +56,6 @@ namespace SWD392.OutfitBox.DataLayer.UnitOfWork
             await _dbContext.Database.CommitTransactionAsync();
         }
 
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
         public async Task RollbackTransaction()
         {
             await _dbContext.Database.RollbackTransactionAsync();
@@ -66,20 +66,8 @@ namespace SWD392.OutfitBox.DataLayer.UnitOfWork
             return await this._dbContext.SaveChangesAsync();
         }
 
-        private bool disposed = false;
 
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!this.disposed)
-            {
-                if (disposing)
-                {
-                    _dbContext.Dispose();
-                }
-            }
-            this.disposed = true;
-        }
-
+       
       
     }
 }

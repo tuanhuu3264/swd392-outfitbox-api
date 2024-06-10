@@ -22,6 +22,8 @@ using SWD392.OutfitBox.DataLayer.RepoInterfaces;
 using SWD392.OutfitBox.BusinessLayer.Services.AreaService;
 using SWD392.OutfitBox.BusinessLayer.Services.PartnerService;
 using SWD392.OutfitBox.BusinessLayer.Services.ReturnOrderService;
+using SWD392.OutfitBox.BusinessLayer.Services.BrandRepository;
+using SWD392.OutfitBox.DataLayer.Databases.Redis;
 
 namespace SWD392.OutfitBox.API.CollectionRegisters
 {
@@ -38,6 +40,7 @@ namespace SWD392.OutfitBox.API.CollectionRegisters
             {
                 options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
             });
+           
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.ServiesRegister();
             services.AddScoped<IUnitOfWork,UnitOfWork>();
@@ -65,7 +68,8 @@ namespace SWD392.OutfitBox.API.CollectionRegisters
             services.AddScoped<IAreaService, AreaService>();    
             services.AddScoped<IPartnerService, PartnerService>();  
             services.AddScoped<IReturnOrderService, ReturnOrderService>();
-            services.AddScoped <IProductReturnOrderRepository, ProductReturnOrderRepository>(); 
+            services.AddScoped <IProductReturnOrderRepository, ProductReturnOrderRepository>();
+            services.AddScoped<IBrandService, BrandService>();
         }
         public static void RepositoriesRegister(this IServiceCollection services)
         {

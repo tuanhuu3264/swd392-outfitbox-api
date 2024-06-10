@@ -25,7 +25,7 @@ namespace SWD392.OutfitBox.API.Controllers
             try 
             {
                 var data = await _roleService.GetAllRoles();
-                response = new BaseResponse<List<RoleDTO>>("Get all roles successfully.", HttpStatusCode.OK, data )
+                response = new BaseResponse<List<RoleDTO>>("Get all roles successfully.", HttpStatusCode.OK, data);
             } catch (Exception ex)
             {
                 response = new BaseResponse<List<RoleDTO>>(ex.Message, HttpStatusCode.InternalServerError, null);
@@ -40,7 +40,7 @@ namespace SWD392.OutfitBox.API.Controllers
             try
             {
                 var data = await _roleService.CreateRole(createRoleRequestDTO);
-                response = new BaseResponse<CreateRoleResponseDTO>("Get all roles successfully.", HttpStatusCode.OK, data)
+                response = new BaseResponse<CreateRoleResponseDTO>("Get all roles successfully.", HttpStatusCode.OK, data);
             }
             catch (Exception ex)
             {

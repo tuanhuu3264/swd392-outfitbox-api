@@ -39,8 +39,8 @@ namespace SWD392.OutfitBox.DataLayer.Repositories
 
         public async Task<Package> UpdatePackage(Package package)
         {
-             this.Update(package);
-            await this.SaveChangesAsync();
+            await this.Update(package);
+
             return await GetPackageById(package.Id);
         }
     }

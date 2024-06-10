@@ -22,7 +22,7 @@ namespace SWD392.OutfitBox.DataLayer.Databases.Redis
                     ID = 1,
                     Name = "NOSBYN",
                     Description = " Explosive within the Vietnamese fashion community in 2013, Nosbyn captured the hearts of young fashion enthusiasts with its stylish yet basic items. Leading the way were its signature solid-colored crop tops, which remained a prominent fixture even after three years of development. Today, Nosbyn continues to hold a strong position in the hearts of Vietnamese fashionistas.",
-                    Link = "https://nosbyn.com/",
+                    ImageUrl = "https://nosbyn.com/",
                     Status = 1
                 },
                 new Brand
@@ -30,7 +30,7 @@ namespace SWD392.OutfitBox.DataLayer.Databases.Redis
                     ID = 2,
                     Name = "THE BLUE T-SHIRT",
                     Description = "The BlueTshirt, established in 2012, initially introduced simple t-shirt designs with inspiring slogans to the Vietnamese market. The brand's designs strike a perfect balance between elegance and a free-spirited nature, reflecting the personality of its founder. Whether you are a gentle and graceful woman or someone with a strong individualistic style, The BlueTshirt offers a wide range of products to cater to your preferences.",
-                    Link = "https://thebluetshirt.com/",
+                    ImageUrl = "https://thebluetshirt.com/",
                     Status = 1
                 },
                 new Brand
@@ -38,7 +38,7 @@ namespace SWD392.OutfitBox.DataLayer.Databases.Redis
                     ID = 3,
                     Name = "OUTFIT4RENT",
                     Description = "With an unwavering commitment to quality craftsmanship, ethical practices, and timeless design, O4R is poised to become the go-to destination for fashion-conscious individuals seeking both substance and style",
-                    Link = "https://thebluetshirt.com/",
+                    ImageUrl = "https://thebluetshirt.com/",
                     Status = 1
                 }
         );

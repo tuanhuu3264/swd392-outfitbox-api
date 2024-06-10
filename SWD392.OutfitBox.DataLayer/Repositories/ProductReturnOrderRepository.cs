@@ -44,7 +44,7 @@ namespace SWD392.OutfitBox.DataLayer.Repositories
 
         public async Task<ProductReturnOrder> UpdatePoductReturnOrder(ProductReturnOrder productReturnOrder)
         {
-            this.Update(productReturnOrder);
+           await this.Update(productReturnOrder);
             await this.SaveChangesAsync();
             return await this.Get().FirstAsync(x=>x.Id== productReturnOrder.Id);
         }
