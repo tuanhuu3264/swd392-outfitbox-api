@@ -27,7 +27,7 @@ namespace SWD392.OutfitBox.API.Controllers
             try
             {
                 var data = await _productService.GetAll();
-                response = new BaseResponse<List<ProductGeneral>>("Get Product successfully.", HttpStatusCode.OK, data.Data);
+                response = new BaseResponse<List<ProductGeneral>>("Get Product successfully.", HttpStatusCode.OK, data);
             }
             catch (Exception ex)
             {
@@ -38,21 +38,53 @@ namespace SWD392.OutfitBox.API.Controllers
         [HttpPost(Endpoints.ProductsController.product)]
         public async Task<IActionResult> CreateProduct([FromBody] CreatedProductDto productDto)
         {
-            var result = await _productService.CreateProduct(productDto);
-            return StatusCode((int)result.StatusCode, result.Message);
+            BaseResponse<ProductDetailDto> response;
+            try
+            {
+                var result = await _productService.CreateProduct(productDto);
+                if (result.Id <= 0) response = new BaseResponse<ProductDetailDto>("Can not found", HttpStatusCode.NotFound, null);
+                else response = new BaseResponse<ProductDetailDto>("Product:", HttpStatusCode.OK, result);
+            }
+            catch (Exception ex)
+            {
+                response = new BaseResponse<ProductDetailDto>(ex.Message, HttpStatusCode.InternalServerError, null);
+            }
+            return StatusCode((int)response.StatusCode, response);
         }
 
         [HttpGet(Endpoints.ProductsController.productDetail)]
         public async Task<IActionResult> GetProductbyId([FromRoute] int id)
         {
-            var result = await _productService.GetById(id);
-            return StatusCode((int)result.StatusCode, result.Data != null ? result.Data : result.Message);
+            BaseResponse<ProductDetailDto> response;
+            try
+            {
+                var result = await _productService.GetById(id);
+                if (result.Id <= 0) response = new BaseResponse<ProductDetailDto>("Can not found",HttpStatusCode.NotFound,null);
+                else response = new BaseResponse<ProductDetailDto>("Product:",HttpStatusCode.OK,result);
+            }
+            catch(Exception ex) {
+                response = new BaseResponse<ProductDetailDto>(ex.Message, HttpStatusCode.InternalServerError, null);
+            }
+            return StatusCode((int)response.StatusCode, response);
         }
         [HttpPut(Endpoints.ProductsController.product)]
         public async Task<IActionResult> UpdateProduct([FromBody] UpdateProductDto product)
         {
-            var result = await _productService.UpdateProduct(product);
-            return StatusCode((int)result.StatusCode, result.Data ? result.Data : result.Message );
+            BaseResponse<ProductDetailDto> response;
+            try
+            {
+                var result = await _productService.UpdateProduct(product);
+                response = new BaseResponse<ProductDetailDto>("Product:", HttpStatusCode.OK, result);
+            }
+            catch(ArgumentNullException ex)
+            {
+                response = new BaseResponse<ProductDetailDto>(ex.Message, HttpStatusCode.NotFound, null);
+            }
+            catch (Exception ex)
+            {
+                response = new BaseResponse<ProductDetailDto>(ex.Message, HttpStatusCode.InternalServerError, null);
+            }
+            return StatusCode((int)response.StatusCode, response);
         }
     }
 }

@@ -14,15 +14,14 @@ namespace SWD392.OutfitBox.BusinessLayer.Models.Requests.Product
         public string Name { get; set; }
         public float Price { get; set; }
         public string Size { get; set; }
-        public string Color { get; set; }
         public string Description { get; set; }
-        public string Status { get; set; }
+        public int Status { get; set; }
         public string IsUsed { get; set; }
         public double Deposit { get; set; }
         public int IdCategory { get; set; }
         public int IdBrand { get; set; }
         public string Type { get; set; }
         public int Quantity {  get; set; }
-      //  public List<ImageDto>? Images { get; set; }
+        public List<string>? Images { get; set; }
     }
 }
