@@ -31,7 +31,7 @@ namespace SWD392.OutfitBox.DataLayer.Repositories
 
         public async Task<CustomerPackage> SaveAsyn(CustomerPackage customerPacket)
         {
-            this.Update(customerPacket);
+                await this.Update(customerPacket);
             await this.SaveChangesAsync();
             return await GetCustomerPackageById(customerPacket.Id);
         }

@@ -34,7 +34,7 @@ namespace SWD392.OutfitBox.DataLayer.Repositories
                 if (i == null) await this.AddAsync(image);
                 else
                 {
-                    this.Update(image);
+                    await this.Update(image);
                     if (this.SaveChangesAsync() == null) { return false; }
                 }        
             }

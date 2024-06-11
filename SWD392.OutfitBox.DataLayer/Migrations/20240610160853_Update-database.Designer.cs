@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SWD392.OutfitBox.DataLayer.Databases.Redis;
 
@@ -11,9 +12,11 @@ using SWD392.OutfitBox.DataLayer.Databases.Redis;
 namespace SWD392.OutfitBox.DataLayer.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20240610160853_Update-database")]
+    partial class Updatedatabase
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -374,10 +377,6 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Picture")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
@@ -394,7 +393,6 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                             MoneyInWallet = 1000L,
                             Name = "Khanh Sky",
                             Phone = "0325739910",
-                            Picture = "",
                             Status = 1
                         },
                         new
@@ -405,7 +403,6 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                             MoneyInWallet = 100L,
                             Name = "User2",
                             Phone = "123",
-                            Picture = "",
                             Status = 1
                         },
                         new
@@ -416,7 +413,6 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                             MoneyInWallet = 100L,
                             Name = "User3",
                             Phone = "123",
-                            Picture = "",
                             Status = 1
                         },
                         new
@@ -427,7 +423,6 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                             MoneyInWallet = 100L,
                             Name = "User4",
                             Phone = "123",
-                            Picture = "",
                             Status = 1
                         });
                 });
@@ -492,8 +487,8 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                         {
                             Id = 1,
                             CustomerId = 1,
-                            DateFrom = new DateTime(2024, 6, 11, 12, 42, 13, 611, DateTimeKind.Local).AddTicks(3286),
-                            DateTo = new DateTime(2024, 7, 11, 12, 42, 13, 611, DateTimeKind.Local).AddTicks(3298),
+                            DateFrom = new DateTime(2024, 6, 10, 23, 8, 53, 248, DateTimeKind.Local).AddTicks(527),
+                            DateTo = new DateTime(2024, 7, 10, 23, 8, 53, 248, DateTimeKind.Local).AddTicks(540),
                             PackageId = 1,
                             PackageName = "Newcomer Trial",
                             Price = 200.0,
@@ -538,7 +533,7 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                             Id = 1,
                             AmountMoney = 20.0,
                             CustomerId = 1,
-                            Date = new DateTime(2024, 6, 11, 12, 42, 13, 611, DateTimeKind.Local).AddTicks(3377),
+                            Date = new DateTime(2024, 6, 10, 23, 8, 53, 248, DateTimeKind.Local).AddTicks(621),
                             Type = "Khuyen Mai"
                         });
                 });
@@ -1175,7 +1170,7 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                         {
                             Id = 1,
                             Amount = 0.0,
-                            DateTransaction = new DateTime(2024, 6, 11, 12, 42, 13, 611, DateTimeKind.Local).AddTicks(3341),
+                            DateTransaction = new DateTime(2024, 6, 10, 23, 8, 53, 248, DateTimeKind.Local).AddTicks(581),
                             DepositId = 1,
                             Paymethod = "",
                             Status = 0,

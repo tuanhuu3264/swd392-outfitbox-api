@@ -61,10 +61,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.UserService
 
         public async Task<UpdateCustomerResponseDTO> UpdateCustomer(UpdateCustomerRequestDTO user)
         {
-            if (await IsDuplicatedEmailUpdateMode(user.Email, user.Id))
-            {
-                throw new Exception("Email is existed.");
-            }
+            
             if (await IsDuplicatedEmailUpdateMode(user.Phone, user.Id))
             {
                 throw new Exception("Phone is existed.");
