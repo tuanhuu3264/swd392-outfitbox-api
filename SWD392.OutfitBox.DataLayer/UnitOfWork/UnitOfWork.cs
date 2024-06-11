@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using SWD392.OutfitBox.DataLayer.Entities;
 using SWD392.OutfitBox.DataLayer.Repositories;
+using SWD392.OutfitBox.DataLayer.Repositories.Interfaces;
 
 namespace SWD392.OutfitBox.DataLayer.UnitOfWork
 {
@@ -27,8 +28,13 @@ namespace SWD392.OutfitBox.DataLayer.UnitOfWork
         public IPartnerRepository _partnerRepository{ get; set; }
         public ICustomerPackageRepository _customerPackageRepository{ get; set; }
         public IReturnOrderRepository _returnOrderRepository { get; set; }
+        public IDepositRepository _depositRepository { get; set; }
+        public IWalletRepository _walletRepository { get; set; }
+        public ITransactionRepository _transactionRepository { get; set; }
+
         public UnitOfWork(Context dbContext, ICustomerRepository customerRepository, IProductRepository productRepository, IImageRepository imageRepository, IBrandRepository brandRepository, ICategoryPackageRepository categoryPackageRepository
-                          , ICategoryRepository categoryRepository, IItemsInUserPackageRepository itemsInUserPackageRepository, IAreaRepository areaRepository, IPartnerRepository partnerRepository, ICustomerPackageRepository customerPackageRepository, IReturnOrderRepository returnOrderRepository)
+                          , ICategoryRepository categoryRepository, IItemsInUserPackageRepository itemsInUserPackageRepository, IAreaRepository areaRepository, IPartnerRepository partnerRepository, ICustomerPackageRepository customerPackageRepository, IReturnOrderRepository returnOrderRepository
+            , IWalletRepository walletRepository,IDepositRepository depositRepository,ITransactionRepository transactionRepository)
         {
             _dbContext= dbContext;
             _customerRepository= customerRepository;
@@ -44,6 +50,9 @@ namespace SWD392.OutfitBox.DataLayer.UnitOfWork
             _returnOrderRepository= returnOrderRepository;
             _areaRepository=areaRepository;
             _itemsInUserPackageRepository= itemsInUserPackageRepository;
+            _walletRepository= walletRepository;
+            _depositRepository= depositRepository;
+            _transactionRepository= transactionRepository;
         }
 
         public async Task BenginTransaction()

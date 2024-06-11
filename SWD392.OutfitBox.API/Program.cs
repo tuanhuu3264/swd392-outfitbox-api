@@ -20,12 +20,12 @@ builder.Services.AddJwtAuthorization(builder.Configuration);
 builder.Services.AddSQLServerDatabase(builder.Configuration);
 builder.Services.AddRedis(builder.Configuration);
 builder.Services.RegisterService();
-FirebaseApp.Create(new AppOptions
-{
-    Credential = GoogleCredential.FromFile("./outfit4rent-c7575-firebase-adminsdk-i1m0b-210c02b093.json"),
-    ProjectId = "outfit4rent-c7575"
-    // Add more options as needed
-});
+//FirebaseApp.Create(new AppOptions
+//{
+//    Credential = GoogleCredential.FromFile("./outfit4rent-c7575-firebase-adminsdk-i1m0b-210c02b093.json"),
+//    ProjectId = "outfit4rent-c7575"
+//    // Add more options as needed
+//});
 var app = builder.Build();
 
 app.UseCors(cors => cors.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());

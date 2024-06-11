@@ -15,5 +15,6 @@ namespace SWD392.OutfitBox.DataLayer.Interfaces
         public Task<Wallet> CreateWallet(int userId, Wallet wallet);
         public Task<Wallet> ActiveOrDeactiveWalletById(int walletId);
         public Task<Wallet> UpdateWallet (Wallet wallet);
+        public Task<Wallet> GetWalletByCode(string code);
     }
 }

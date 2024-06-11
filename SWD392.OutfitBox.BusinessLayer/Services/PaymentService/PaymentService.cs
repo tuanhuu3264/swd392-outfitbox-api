@@ -1,7 +1,10 @@
 ﻿using AutoMapper;
+using SWD392.OutfitBox.BusinessLayer.Enum;
+using SWD392.OutfitBox.BusinessLayer.Models.Requests.Transaction;
 using SWD392.OutfitBox.BusinessLayer.Models.Requests.VNPay;
 using SWD392.OutfitBox.BusinessLayer.Models.Responses.VNPay;
 using SWD392.OutfitBox.BusinessLayer.Services.PaymentService;
+using SWD392.OutfitBox.DataLayer.Entities;
 using SWD392.OutfitBox.DataLayer.UnitOfWork;
 using SWD392.OutfitBox.DataLayer.VNPay;
 using System;
@@ -10,6 +13,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.WebRequestMethods;
 
 namespace BusinessLayer.Services
 {
@@ -78,13 +82,49 @@ namespace BusinessLayer.Services
                     TransactionStatus = transactionStatus,
                     TxnRef = txnRef
                 };
-                if (vnp_ResponseCode == "00" && transactionStatus == "00")
+            if (vnp_ResponseCode == "00" && transactionStatus == "00")
+            {
+                var order = await _unitOfWork._customerPackageRepository.GetCustomerPackageById(int.Parse(orderId));
+                if (order == null) throw new Exception("Error to payment: Can not find order to payment");
+
+                var deposit = new Deposit()
                 {
-                var order = _unitOfWork._customerPackageRepository.GetCustomerPackageById(int.Parse(orderId));
-                    if (order == null) throw new Exception("Error to payment: Can not find order to payment");
-                   
+                    CustomerId = dto.userId,
+                    AmountMoney = vnp_Amount,
+                    Date = DateTime.Now,
+                    Type = "Payment"
+                };
+                var result = _unitOfWork._depositRepository.CreateDeposit(deposit);
+
+                var wallet = await _unitOfWork._walletRepository.GetWalletByCode(bankCode);
+                if (wallet.Id == 0)
+                {
+                    wallet = new Wallet
+                    {
+                        WalletCode = bankCode,
+                        WalletName = "Test",
+                        WalletPassword = "123456",
+                        OTP = 123456,
+                        Status = 1,
+                        CustomerId = dto.userId,
+
+                    };
+                    wallet = await _unitOfWork._walletRepository.CreateWallet(dto.userId, wallet);
                 }
 
+                var transaction = new Transaction()
+                {
+                    DateTransaction = DateTime.Now,
+                    Amount = vnp_Amount,
+                    Status = /*transactionStatus*/ 1,
+                    Paymethod = "Online",
+                    WalletId = wallet.Id,
+                    DepositId = deposit.Id
+                };
+                transaction = await _unitOfWork._transactionRepository.CreateTransaction(transaction);
+                order.Status = (int)CustomerPacketEnum.Payment;
+                await _unitOfWork._customerPackageRepository.SaveAsyn(order);
+                    }
                 ResponsePayment payment = new ResponsePayment()
                 {
                     ResponseCodeMessage = responseCodeMessage,
@@ -113,7 +153,7 @@ namespace BusinessLayer.Services
                     throw new Exception("There is no order that has: " + orderId);
                 }
                 
-                var amount = (order.Price * 100).ToString();
+                var amount = (order.Price * 100 * 1000).ToString();
                 var vnp_TxnRef = $"{userId}{order.CustomerId}{DateTime.Now.ToString("HHmmss")}";
                 var vnp_Amount = amount;
 
