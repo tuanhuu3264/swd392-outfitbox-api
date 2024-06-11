@@ -43,7 +43,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.FirebaseService
                     Name = result.Name == null ? $"User {DateTime.Now.ToString("HHmmyyyy")}" : result.Name,
                     Status = 1,
                     MoneyInWallet = 0,
-
+                    Picture = result.Picture,
                     Address = ""
                 } ;
                 var resultNewCustomer = await _customerRepository.Create(newCustomer);

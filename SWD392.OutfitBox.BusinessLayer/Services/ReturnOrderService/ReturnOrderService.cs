@@ -38,7 +38,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.ReturnOrderService
 
         public async Task<List<ReturnOrderDTO>> GetReturnOrders(int? pageNumber = null, int? pageSize = null, int? partnerid = null, int? customerId = null)
         {
-            return _unitOfWork._returnOrderRepository.GetReturnOrders(pageNumber, pageSize, partnerid, customerId).Result.Select(x=> _mapper.Map<ReturnOrderDTO>(x)).ToList();   
+            return (await _unitOfWork._returnOrderRepository.GetReturnOrders(pageNumber, pageSize, partnerid, customerId)).Select(x=> _mapper.Map<ReturnOrderDTO>(x)).ToList();   
         }
 
         public async Task<ReturnOrderDTO> GetReturnOrderById(int id)
