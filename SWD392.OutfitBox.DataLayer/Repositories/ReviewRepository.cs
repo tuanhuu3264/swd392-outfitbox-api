@@ -22,7 +22,7 @@ namespace SWD392.OutfitBox.DataLayer.Repositories
         {
             var result = await this.GetReviewById(id);
             result.Status = 1 - result.Status;
-            this.Update(result);
+            await this.Update(result);
             await this.SaveChangesAsync();
             return result;
 

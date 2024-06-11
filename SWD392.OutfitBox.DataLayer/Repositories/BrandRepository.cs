@@ -40,7 +40,7 @@ namespace SWD392.OutfitBox.DataLayer.Repositories
 
         public async Task<Brand> UpdateBrand(Brand brand)
         {
-            this.Update(brand);
+            await this.Update(brand);
             await this.SaveChangesAsync();
             var result = await this.Get().FirstAsync(x => x.ID == brand.ID);
             return result;

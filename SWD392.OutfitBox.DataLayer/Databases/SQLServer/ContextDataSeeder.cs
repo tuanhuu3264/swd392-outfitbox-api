@@ -365,24 +365,24 @@ namespace SWD392.OutfitBox.DataLayer.Databases.Redis
                         Id = 1,
                         Name = "Khanh Sky",
                         Email = "Khanhvhdse173550@fpt.edu.vn",
-                        Password = "123456",
+                    
                         Phone = "0325739910",
                         Address = "Dong Nai",
                         Status = 1,
                         MoneyInWallet = 1000,
-                        OTP = 111111
+           
                     },
                     new Customer
                     {
                         Id = 2,
                         Name = "User2",
                         Email = "User2@gmail.com",
-                        Password = "123456",
+                     
                         Phone = "123",
                         Address = "HCM",
                         Status = 1,
                         MoneyInWallet = 100,
-                        OTP = 222222
+       
                     },
                     new Customer
                     {
@@ -390,12 +390,12 @@ namespace SWD392.OutfitBox.DataLayer.Databases.Redis
                         Id = 3,
                         Name = "User3",
                         Email = "User3@gmail.com",
-                        Password = "123456",
+                     
                         Phone = "123",
                         Address = "HCM",
                         Status = 1,
                         MoneyInWallet = 100,
-                        OTP = 333333
+           
                     },
                     new Customer
                     {
@@ -403,12 +403,12 @@ namespace SWD392.OutfitBox.DataLayer.Databases.Redis
                         Id = 4,
                         Name = "User4",
                         Email = "User4gmail.com",
-                        Password = "123456",
+                      
                         Phone = "123",
                         Address = "HCM",
                         Status = 1,
                         MoneyInWallet = 100,
-                        OTP = 444444
+
                     }
                 );
             modelBuilder.Entity<Area>().HasData(

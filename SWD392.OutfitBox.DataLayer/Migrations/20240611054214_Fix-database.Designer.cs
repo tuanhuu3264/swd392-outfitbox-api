@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SWD392.OutfitBox.DataLayer.Databases.Redis;
 
@@ -11,9 +12,11 @@ using SWD392.OutfitBox.DataLayer.Databases.Redis;
 namespace SWD392.OutfitBox.DataLayer.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20240611054214_Fix-database")]
+    partial class Fixdatabase
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -492,8 +495,8 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                         {
                             Id = 1,
                             CustomerId = 1,
-                            DateFrom = new DateTime(2024, 6, 11, 13, 45, 54, 630, DateTimeKind.Local).AddTicks(9208),
-                            DateTo = new DateTime(2024, 7, 11, 13, 45, 54, 630, DateTimeKind.Local).AddTicks(9222),
+                            DateFrom = new DateTime(2024, 6, 11, 12, 42, 13, 611, DateTimeKind.Local).AddTicks(3286),
+                            DateTo = new DateTime(2024, 7, 11, 12, 42, 13, 611, DateTimeKind.Local).AddTicks(3298),
                             PackageId = 1,
                             PackageName = "Newcomer Trial",
                             Price = 200.0,
@@ -538,8 +541,8 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                             Id = 1,
                             AmountMoney = 20.0,
                             CustomerId = 1,
-                            Date = new DateTime(2024, 6, 11, 13, 45, 54, 630, DateTimeKind.Local).AddTicks(9320),
-                           Type = "Khuyen Mai"
+                            Date = new DateTime(2024, 6, 11, 12, 42, 13, 611, DateTimeKind.Local).AddTicks(3377),
+                            Type = "Khuyen Mai"
                         });
                 });
 
@@ -803,6 +806,10 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                     b.Property<int>("AvailableQuantity")
                         .HasColumnType("int");
 
+                    b.Property<string>("Color")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<double>("Deposit")
                         .HasColumnType("float");
 
@@ -837,8 +844,9 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Type")
                         .IsRequired()
@@ -857,6 +865,7 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                         {
                             ID = 1,
                             AvailableQuantity = 20,
+                            Color = "Blue",
                             Deposit = 100.0,
                             Description = "Men's and Women's Short Sleeve Shirt Loose Letter Couple Ins Shirt Multifunctional Vintage Half Sleeve UFO Shirt",
                             IdBrand = 1,
@@ -867,13 +876,14 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                             Price = 100f,
                             Quantity = 20,
                             Size = "M",
-                            Status = 1,
+                            Status = "1",
                             Type = "New"
                         },
                         new
                         {
                             ID = 2,
                             AvailableQuantity = 20,
+                            Color = "Grey",
                             Deposit = 110.0,
                             Description = "The ZHUXIA loose-fitting, short-sleeved shirt with a retro Japanese vintage style is a great choice for women's summer fashion.",
                             IdBrand = 2,
@@ -884,13 +894,14 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                             Price = 110f,
                             Quantity = 20,
                             Size = "X",
-                            Status = 1,
+                            Status = "1",
                             Type = "New"
                         },
                         new
                         {
                             ID = 3,
                             AvailableQuantity = 20,
+                            Color = "Black",
                             Deposit = 160.0,
                             Description = "Men's and Women's Short Sleeve Shirt Loose Letter Couple Ins Shirt Multifunctional Vintage Half Sleeve UFO Shirt",
                             IdBrand = 3,
@@ -901,13 +912,14 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                             Price = 160f,
                             Quantity = 20,
                             Size = "X",
-                            Status = 1,
+                            Status = "1",
                             Type = "New"
                         },
                         new
                         {
                             ID = 4,
                             AvailableQuantity = 20,
+                            Color = "White",
                             Deposit = 100.0,
                             Description = "[HOT MODEL 2023] made of cool linen fabric, high-waisted with elastic waistband and drawstring for adjustable fit.",
                             IdBrand = 3,
@@ -918,13 +930,14 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                             Price = 150f,
                             Quantity = 20,
                             Size = "M",
-                            Status = 1,
+                            Status = "1",
                             Type = "New"
                         },
                         new
                         {
                             ID = 5,
                             AvailableQuantity = 20,
+                            Color = "Black",
                             Deposit = 100.0,
                             Description = "Gonz Wide-Fit Round Neck T-Shirt for Men and Women with Silk Screen Print, made of PC Cotton material.",
                             IdBrand = 3,
@@ -935,13 +948,14 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                             Price = 130f,
                             Quantity = 20,
                             Size = "M",
-                            Status = 1,
+                            Status = "1",
                             Type = "New"
                         },
                         new
                         {
                             ID = 6,
                             AvailableQuantity = 20,
+                            Color = "Pink",
                             Deposit = 100.0,
                             Description = "This vintage floral dress features a flattering A-line silhouette with a delicate floral print. Perfect for a summer day out or a casual evening event.",
                             IdBrand = 1,
@@ -952,13 +966,14 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                             Price = 200f,
                             Quantity = 20,
                             Size = "M",
-                            Status = 1,
+                            Status = "1",
                             Type = "New"
                         },
                         new
                         {
                             ID = 7,
                             AvailableQuantity = 0,
+                            Color = "White",
                             Deposit = 170.0,
                             Description = "Make a statement with this stunning floral maxi skirt. Its flowing design and beautiful floral pattern will turn heads wherever you go.",
                             IdBrand = 3,
@@ -969,7 +984,7 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                             Price = 170f,
                             Quantity = 0,
                             Size = "XS",
-                            Status = 1,
+                            Status = "1",
                             Type = "New"
                         });
                 });
@@ -1163,7 +1178,7 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                         {
                             Id = 1,
                             Amount = 0.0,
-                            DateTransaction = new DateTime(2024, 6, 11, 13, 45, 54, 630, DateTimeKind.Local).AddTicks(9272),
+                            DateTransaction = new DateTime(2024, 6, 11, 12, 42, 13, 611, DateTimeKind.Local).AddTicks(3341),
                             DepositId = 1,
                             Paymethod = "",
                             Status = 0,
