@@ -14,6 +14,7 @@ namespace SWD392.OutfitBox.DataLayer.Entities
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public double Price { get; set; }
+        public string ImageUrl { get; set; } = string.Empty;
         public int AvailableRentDays { get; set; }
         public string Name { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
@@ -21,5 +22,6 @@ namespace SWD392.OutfitBox.DataLayer.Entities
         public List<CustomerPackage>? CustomerPackages { get; set; }
         public List<CategoryPackage>? CategoryPackages { get; set; }
         public int NumOfProduct {  get; set; }
+        public bool IsFeatured { get; set; }
     }
 }

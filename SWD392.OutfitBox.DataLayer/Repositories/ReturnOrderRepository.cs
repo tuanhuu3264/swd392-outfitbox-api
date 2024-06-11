@@ -47,7 +47,7 @@ namespace SWD392.OutfitBox.DataLayer.Repositories
 
         public async Task<ReturnOrder> UpdateReturnOrder(ReturnOrder returnOrder)
         {
-            this.Update(returnOrder);
+           await this.Update(returnOrder);
             await this.SaveChangesAsync();
             return await this.Get().FirstAsync(x=>x.Id==returnOrder.Id);
         }

@@ -36,8 +36,8 @@ namespace SWD392.OutfitBox.DataLayer.Repositories
 
         public async Task<Partner> UpdatePartner(Partner entity)
         {
-            this.Update(entity);
-            await this.SaveChangesAsync();
+           await this.Update(entity);
+       
             return await this.Get().FirstAsync(x => x.Id == entity.Id);
         }
     }

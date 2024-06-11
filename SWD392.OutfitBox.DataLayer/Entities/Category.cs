@@ -16,8 +16,10 @@ namespace SWD392.OutfitBox.DataLayer.Entities
         public int ID { get; set; }
         [Required]
         public string Name { get; set; } = string.Empty;
+        public string ImageUrl { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty; 
         public int Status { get; set; }
+        public bool IsFeatured { get; set; }
 
         public List<Product>? Products { get; set; }
         public List<CategoryPackage>? categoryPackages { get; set; }

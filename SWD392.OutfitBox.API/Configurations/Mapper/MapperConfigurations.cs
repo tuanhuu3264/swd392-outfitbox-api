@@ -13,6 +13,7 @@ using SWD392.OutfitBox.BusinessLayer.Models.Requests.Review;
 using SWD392.OutfitBox.BusinessLayer.Models.Requests.Role;
 using SWD392.OutfitBox.BusinessLayer.Models.Requests.Wallet;
 using SWD392.OutfitBox.BusinessLayer.Models.Responses.Area;
+using SWD392.OutfitBox.BusinessLayer.Models.Responses.Brand;
 using SWD392.OutfitBox.BusinessLayer.Models.Responses.Category;
 using SWD392.OutfitBox.BusinessLayer.Models.Responses.CategoryPackage;
 using SWD392.OutfitBox.BusinessLayer.Models.Responses.Customer;
@@ -49,7 +50,9 @@ namespace SWD392.OutfitBox.API.Configurations.Mapper
             ReturnOrderProfile();
             PartnerProfile();
             AreaProfile();
-        
+            BrandProfile();
+
+
         }
         public void CategoryProfile()
         {
@@ -134,7 +137,7 @@ namespace SWD392.OutfitBox.API.Configurations.Mapper
             CreateMap<Product, ProductGeneral>()
                 .ForMember(dest => dest.Category, opt => opt.MapFrom(src => src.Category.Name))
                 .ForMember(dest => dest.Brand, opt => opt.MapFrom(src => src.Brand.Name))
-                //.ForMember(dest => dest.ImgUrl, opt => opt.MapFrom(src => src.Images != null && src.Images.Any() ? src.Images.First().Link : string.Empty))
+                .ForMember(dest => dest.ImgUrl, opt => opt.MapFrom(src => src.Images != null && src.Images.Any() ? src.Images.First().Link : string.Empty))
                 .ReverseMap();
             CreateMap<Product, UpdateProductDto>().
                 //ForMember(x => x.Images, pro => pro.MapFrom(x => x.Images)).
@@ -171,6 +174,10 @@ namespace SWD392.OutfitBox.API.Configurations.Mapper
             CreateMap<Area, CreateAreaResponseDTO>().ReverseMap();
             CreateMap<UpdateAreaRequestDTO, Area>().ReverseMap();
             CreateMap<Area, UpdateAreaResponseDTO>().ReverseMap();
+        }
+        public void BrandProfile()
+        {
+            CreateMap<BrandDTO, Brand>().ReverseMap();
         }
     }
 }

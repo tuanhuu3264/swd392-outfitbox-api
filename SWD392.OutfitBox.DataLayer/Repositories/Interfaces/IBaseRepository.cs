@@ -12,7 +12,7 @@ namespace SWD392.OutfitBox.DataLayer.Interfaces
         Task AddRangeAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default);
 
 
-        void Update(TEntity entity);
+        Task Update(TEntity entity);
 
         void UpdateRange(params TEntity[] entities);
 

@@ -67,7 +67,7 @@ namespace SWD392.OutfitBox.DataLayer.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async void Update(TEntity entity)
+        public async Task Update(TEntity entity)
         {
             _dbSet.Update(entity);
             await _context.SaveChangesAsync();

@@ -57,9 +57,19 @@ namespace SWD392.OutfitBox.DataLayer.Repositories
         }
 
         public async Task<Customer> UpdateCustomer(Customer user)
-        {
-            this.Update(user);
-            await this.SaveChangesAsync();
+        {   
+            var updateCustomer = await this.Get().FirstOrDefaultAsync(x=>x.Id==user.Id);
+            if (updateCustomer == null) throw new ArgumentNullException("There is not found customer.");
+            updateCustomer.Name = user.Name;
+            updateCustomer.Email = user.Email;
+            updateCustomer.Address = user.Address;
+            updateCustomer.OTP = user.OTP;
+            updateCustomer.Status=user.Status;
+            updateCustomer.Phone = user.Phone;
+            updateCustomer.MoneyInWallet = user.MoneyInWallet;
+            updateCustomer.Password = updateCustomer.Password;
+           await this.Update(updateCustomer);
+
             return await GetCustomerById(user.Id);
         }
 

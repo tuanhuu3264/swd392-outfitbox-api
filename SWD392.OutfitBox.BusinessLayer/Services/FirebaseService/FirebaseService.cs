@@ -33,12 +33,6 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.FirebaseService
         public async Task<LoginResponseDTO> VerifyFirebaseThirdPartToken(string accessToken)
         {
             var result = await DecodeFirebaseToken(accessToken);
-
-            if (result.IsVerify == false)
-                return new LoginResponseDTO()
-                {
-                    Message = "The account is not verified."
-                };
             var customer = await _customerRepository.GetCustomerByPhoneOrEmail(result.Email.ToLower());
 
             if (customer == null)
@@ -53,6 +47,11 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.FirebaseService
                     Address = ""
                 } ;
                 var resultNewCustomer = await _customerRepository.Create(newCustomer);
+                if (result.IsVerify == false)
+                    return new LoginResponseDTO()
+                    {
+                        Message = "The account is not verified."
+                    };
                 var tokenHandler = AuthHelper.GetToken(resultNewCustomer);
                 return new LoginResponseDTO()
                 {
@@ -66,7 +65,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.FirebaseService
                     Picture = result.Picture
 
                 };
-
+                
             }
             var tokenHandler2 = AuthHelper.GetToken(customer);
             return new LoginResponseDTO()
