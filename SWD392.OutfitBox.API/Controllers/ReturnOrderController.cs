@@ -42,7 +42,7 @@ namespace SWD392.OutfitBox.API.Controllers
             } 
             catch (ArgumentNullException ex)
             {
-                response = new BaseResponse<ReturnOrderDTO>("There is not found the return order.", HttpStatusCode.NotFound, null);
+                response = new BaseResponse<ReturnOrderDTO>(ex.Message, HttpStatusCode.NotFound, null);
             } 
             catch (Exception ex)
             {

@@ -21,7 +21,7 @@ namespace SWD392.OutfitBox.DataLayer.Databases.Redis
         IBloomCommands bf { get; set; }
         ICuckooCommands cf { get; set; }
         ICmsCommands cms { get; set; }
-        IGraphCommands graph { get; set; }
+       
         ITopKCommands topk { get; set; }
         ITdigestCommands tdigest { get; set; }
         ISearchCommands ft { get; set; }
@@ -39,7 +39,7 @@ namespace SWD392.OutfitBox.DataLayer.Databases.Redis
             bf = db.BF();
             cf = db.CF();
             cms = db.CMS();
-            graph = db.GRAPH();
+    
             topk = db.TOPK();
             tdigest = db.TDIGEST();
             ft = db.FT();
