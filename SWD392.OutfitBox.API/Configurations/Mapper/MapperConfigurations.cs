@@ -134,7 +134,7 @@ namespace SWD392.OutfitBox.API.Configurations.Mapper
             CreateMap<Product, ProductGeneral>()
                 .ForMember(dest => dest.Category, opt => opt.MapFrom(src => src.Category.Name))
                 .ForMember(dest => dest.Brand, opt => opt.MapFrom(src => src.Brand.Name))
-                .ForMember(dest => dest.ImgUrl, opt => opt.MapFrom(src => src.Images != null && src.Images.Any() ? src.Images.First().Link : string.Empty))
+                //.ForMember(dest => dest.ImgUrl, opt => opt.MapFrom(src => src.Images != null && src.Images.Any() ? src.Images.First().Link : string.Empty))
                 .ReverseMap();
             CreateMap<Product, UpdateProductDto>().
                 //ForMember(x => x.Images, pro => pro.MapFrom(x => x.Images)).

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SWD392.OutfitBox.DataLayer.Repositories.Interfaces;
 
 namespace SWD392.OutfitBox.DataLayer.UnitOfWork
 {
@@ -20,6 +21,9 @@ namespace SWD392.OutfitBox.DataLayer.UnitOfWork
         public IPartnerRepository _partnerRepository { get; set; }
         public ICustomerPackageRepository _customerPackageRepository { get; set; }
         public IReturnOrderRepository _returnOrderRepository { get; set; }
+        public IDepositRepository _depositRepository { get; set; }
+        public IWalletRepository _walletRepository { get; set; }
+        public ITransactionRepository _transactionRepository { get; set; }
         Task BenginTransaction();
         Task CommitTransaction();
         Task RollbackTransaction();

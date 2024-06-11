@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using SWD392.OutfitBox.DataLayer.Entities;
 using SWD392.OutfitBox.DataLayer.Repositories;
+using SWD392.OutfitBox.DataLayer.Repositories.Interfaces;
 
 namespace SWD392.OutfitBox.DataLayer.UnitOfWork
 {
@@ -25,6 +26,9 @@ namespace SWD392.OutfitBox.DataLayer.UnitOfWork
         public IPartnerRepository _partnerRepository{ get; set; }
         public ICustomerPackageRepository _customerPackageRepository{ get; set; }
         public IReturnOrderRepository _returnOrderRepository { get; set; }
+        public IDepositRepository _depositRepository { get; set; }
+        public IWalletRepository _walletRepository { get; set; }
+        public ITransactionRepository _transactionRepository { get; set; }
         public UnitOfWork(Context dbContext)
         {
             _dbContext = dbContext;
@@ -38,6 +42,8 @@ namespace SWD392.OutfitBox.DataLayer.UnitOfWork
             _customerPackageRepository = new CustomerPackageRepository(_dbContext);
             _imageRepository = new ImageRepository(_dbContext);
             _returnOrderRepository = new ReturnOrderRepository(_dbContext);
+            _walletRepository = new WalletRepository(_dbContext);
+            _transactionRepository = new TransactionRepository(_dbContext);
         }
 
         public async Task BenginTransaction()

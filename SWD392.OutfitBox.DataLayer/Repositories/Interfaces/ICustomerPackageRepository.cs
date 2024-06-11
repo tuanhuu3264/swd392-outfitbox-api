@@ -11,5 +11,6 @@ namespace SWD392.OutfitBox.DataLayer.Interfaces
     {
         Task<CustomerPackage> CreateUserPackage(CustomerPackage userPackage);
         Task<CustomerPackage> GetCustomerPackageById(int id);
+        Task<CustomerPackage> SaveAsyn(CustomerPackage customerPacket);
     }
 }

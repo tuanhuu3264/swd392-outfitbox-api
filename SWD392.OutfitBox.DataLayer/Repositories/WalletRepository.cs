@@ -55,5 +55,11 @@ namespace SWD392.OutfitBox.DataLayer.Repositories
             await this.SaveChangesAsync();
             return await this.Get().FirstAsync(x=>x.Id==wallet.Id);
         }
+        public async Task<Wallet> GetWalletByCode(string code)
+        {
+            var wallet = await this.Get().FirstOrDefaultAsync(x => x.WalletCode == code);
+            if (wallet == null) return new Wallet();
+            return wallet;
+        }
     }
 }
