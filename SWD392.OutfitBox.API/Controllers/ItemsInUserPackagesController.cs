@@ -1,7 +1,11 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using SWD392.OutfitBox.API.Configurations.HTTPResponse;
 using SWD392.OutfitBox.API.Controllers.Endpoints;
+using SWD392.OutfitBox.BusinessLayer.Models.Requests.ItemInUserPackage;
+using SWD392.OutfitBox.BusinessLayer.Models.Responses.Product;
 using SWD392.OutfitBox.BusinessLayer.Services.ItemInUserPackageService;
+using System.Net;
 
 namespace SWD392.OutfitBox.API.Controllers
 {
@@ -17,8 +21,18 @@ namespace SWD392.OutfitBox.API.Controllers
         [HttpGet(ItemInUserPackageEndPoints.ItemInUserPackages)]
         public async Task<ActionResult> GetAll()
         {
-            var result = await _itemsInUserPackageService.GetAll();
-            return StatusCode((int)result.StatusCode, result.Data);
+            BaseResponse<List<ItemInUserPackageDto>> response;
+            try
+            {
+                var result = await _itemsInUserPackageService.GetAll();
+                if (result == null) { response = new BaseResponse<List<ItemInUserPackageDto>>("List Null",HttpStatusCode.InternalServerError, null); }
+                response = new BaseResponse<List<ItemInUserPackageDto>>("Items in user package", HttpStatusCode.OK, result);
+            }
+            catch (Exception ex)
+            {
+                response = new BaseResponse<List<ItemInUserPackageDto>>(ex.Message, HttpStatusCode.InternalServerError, null);
+            }
+            return StatusCode((int)response.StatusCode,response);
         }
     }
 }

@@ -14,7 +14,8 @@ namespace SWD392.OutfitBox.DataLayer.Interfaces
         Task<Image> GetImageById(int id);
 
         Task<bool> UpdateListImage(int productId, List<Image> list); 
-        
+
+        Task DeleteImageByProductId(int id);
     }
 
 }

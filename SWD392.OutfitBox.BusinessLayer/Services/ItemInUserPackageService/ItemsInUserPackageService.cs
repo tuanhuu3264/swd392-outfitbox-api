@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using SWD392.OutfitBox.BusinessLayer.Models.Requests.ItemInUserPackage;
-using SWD392.OutfitBox.DataLayer.Constants;
 using SWD392.OutfitBox.DataLayer.Entities;
 using SWD392.OutfitBox.DataLayer.UnitOfWork;
 using System;
@@ -23,47 +22,20 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.ItemInUserPackageService
                 _mapper = mapper;
             }
         }
-        public async Task<StatusCodeResponse<List<ItemInUserPackageDto>>> GetAll()
+        public async Task<List<ItemInUserPackageDto>> GetAll()
         {
-            var result = new StatusCodeResponse<List<ItemInUserPackageDto>>();
-            try
-            {
+                var result = new List<ItemInUserPackageDto>();
                 var list = await _unitOfWork._itemsInUserPackageRepository.GetAllItemInPacket();
                 if (list.Count == 0) throw new Exception("ListNull");
                 var listItem = _mapper.Map<List<ItemInUserPackageDto>>(list);
-                result.Data = listItem;
-                result.Message = "ListItem";
-                result.StatusCode = HttpStatusCode.OK;
-                return result;
-            }
-            catch (Exception ex)
-            {
-                result.Message = ex.Message;
-                result.StatusCode = HttpStatusCode.InternalServerError;
-                result.Data = null;
-                return result;
-            }
+                return listItem;        
         }
-        public async Task<StatusCodeResponse<ItemInUserPackageDto>> CreateItem(CreatedItemInPackage itemInPackage)
+        public async Task<ItemInUserPackageDto> CreateItem(CreatedItemInPackage itemInPackage)
         {
-            var result = new StatusCodeResponse<ItemInUserPackageDto>();
-            try
-            {
                 var item = _mapper.Map<ItemInUserPackage>(itemInPackage);
                 var obj = await _unitOfWork._itemsInUserPackageRepository.CreateItemInUserPackage(item);
                 var data = _mapper.Map<ItemInUserPackageDto>(obj);
-                result.Data = data;
-                result.Message = "Successful";
-                result.StatusCode = HttpStatusCode.OK;
-                return result;
-            }
-            catch (Exception ex)
-            {
-                result.Data = null;
-                result.Message = ex.Message;
-                result.StatusCode = HttpStatusCode.InternalServerError;
-                return result;
-            }
+                return data;
         }
     }
 }

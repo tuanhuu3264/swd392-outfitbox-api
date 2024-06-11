@@ -12,6 +12,8 @@ namespace SWD392.OutfitBox.DataLayer.Interfaces
         Task<List<Product>> GetAll();
         Task<Product> CreateProduct(Product product);
         Task<Product> GetById(int id);
-        Task<bool> UpdateProduct(Product product);
+        Task<Product> UpdateProduct(Product product);
+        Task<Product> DeleteProduct(int id);
+        Task<Product> GetDetail(int id);
     }
 }

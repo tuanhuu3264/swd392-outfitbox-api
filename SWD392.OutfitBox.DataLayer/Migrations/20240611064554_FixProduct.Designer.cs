@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SWD392.OutfitBox.DataLayer.Databases.Redis;
 
@@ -11,9 +12,11 @@ using SWD392.OutfitBox.DataLayer.Databases.Redis;
 namespace SWD392.OutfitBox.DataLayer.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20240611064554_FixProduct")]
+    partial class FixProduct
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -370,11 +373,14 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Phone")
+                    b.Property<long>("OTP")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Picture")
+                    b.Property<string>("Phone")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -393,8 +399,9 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                             Email = "Khanhvhdse173550@fpt.edu.vn",
                             MoneyInWallet = 1000L,
                             Name = "Khanh Sky",
+                            OTP = 111111L,
+                            Password = "123456",
                             Phone = "0325739910",
-                            Picture = "",
                             Status = 1
                         },
                         new
@@ -404,8 +411,9 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                             Email = "User2@gmail.com",
                             MoneyInWallet = 100L,
                             Name = "User2",
+                            OTP = 222222L,
+                            Password = "123456",
                             Phone = "123",
-                            Picture = "",
                             Status = 1
                         },
                         new
@@ -415,8 +423,9 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                             Email = "User3@gmail.com",
                             MoneyInWallet = 100L,
                             Name = "User3",
+                            OTP = 333333L,
+                            Password = "123456",
                             Phone = "123",
-                            Picture = "",
                             Status = 1
                         },
                         new
@@ -426,8 +435,9 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                             Email = "User4gmail.com",
                             MoneyInWallet = 100L,
                             Name = "User4",
+                            OTP = 444444L,
+                            Password = "123456",
                             Phone = "123",
-                            Picture = "",
                             Status = 1
                         });
                 });
@@ -539,7 +549,7 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                             AmountMoney = 20.0,
                             CustomerId = 1,
                             Date = new DateTime(2024, 6, 11, 13, 45, 54, 630, DateTimeKind.Local).AddTicks(9320),
-                           Type = "Khuyen Mai"
+                            Type = "Khuyen Mai"
                         });
                 });
 

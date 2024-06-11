@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using SWD392.OutfitBox.DataLayer.Databases.Redis;
 using SWD392.OutfitBox.DataLayer.Interfaces;
+using System.Reflection.Metadata.Ecma335;
 
 namespace SWD392.OutfitBox.DataLayer.Repositories
 {
@@ -41,12 +42,21 @@ namespace SWD392.OutfitBox.DataLayer.Repositories
                 return result;
         }
 
-        public async Task<bool> UpdateProduct(Product product)
+        public async Task<Product> UpdateProduct(Product product)
         {
            await this.Update(product);
-            await this.SaveChangesAsync();
-
-            return true;
+           await this.SaveChangesAsync();
+           return await this.GetById(product.ID);
         }
-       }
+
+        public async Task<Product> DeleteProduct(int id)
+        {
+            return null;
+        }
+
+        public async Task<Product> GetDetail(int id)
+        {
+          return await this.Get().Include(x=>x.Images).FirstOrDefaultAsync(x => x.ID == id);
+        }
+    }
 }
