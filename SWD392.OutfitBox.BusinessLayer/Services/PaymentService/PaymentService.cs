@@ -217,14 +217,6 @@ namespace BusinessLayer.Services
             }
         }
 
-        public async Task GetInformationByReturnUrl(string url)
-        {
 
-        }
-
-        public Task<string> CallAPIPayByUserId(int userId, string returnUrl, int orderId)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

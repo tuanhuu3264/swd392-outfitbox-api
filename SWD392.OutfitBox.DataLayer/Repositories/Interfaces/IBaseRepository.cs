@@ -1,4 +1,6 @@
-﻿using System.Linq.Expressions;
+﻿using Microsoft.EntityFrameworkCore.Query;
+using StackExchange.Redis;
+using System.Linq.Expressions;
 
 namespace SWD392.OutfitBox.DataLayer.Interfaces
 {
@@ -19,14 +21,11 @@ namespace SWD392.OutfitBox.DataLayer.Interfaces
         void Delete(TEntity entity);
         void DeleteRange(params TEntity[] entities);
 
-        Task<IEnumerable<TEntity>> Get(
-            Expression<Func<TEntity, bool>> filter = null,
-            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-            string includeProperties = "",
-            int? pageIndex = null,
-            int? pageSize = null);
+        public Task<IEnumerable<TEntity>> Get(Expression<Func<TEntity, bool>> filter = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, Func<IQueryable<TEntity>, IQueryable<TEntity>> include = null, int? pageIndex = null, int? pageSize = null);
         public Task<int> Count(Expression<Func<TEntity, bool>> filter = null);
         Task SaveChangesAsync(CancellationToken cancellationToken = default);
-   
+        public Task<IEnumerable<TEntity>> GetStartEnd(Expression<Func<TEntity, bool>> filter = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, Func<IQueryable<TEntity>, IQueryable<TEntity>> include = null, int? started = null, int? ended = null);
+
+
     }
 }

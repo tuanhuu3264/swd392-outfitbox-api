@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using SWD392.OutfitBox.BusinessLayer.Models.Requests.Brand;
 using SWD392.OutfitBox.BusinessLayer.Models.Responses.Brand;
 using SWD392.OutfitBox.DataLayer.Interfaces;
 using SWD392.OutfitBox.DataLayer.UnitOfWork;
@@ -30,6 +31,26 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.BrandRepository
              throw new Exception(ex.Message);
             }
 
+        }
+
+        public Task<CreateBrandResponseDTO> CreateBrand(CreateBrandRequestDTO brand)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<UpdateBrandResponseDTO> UpdateBrand(UpdateBrandRequestDTO brand)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<string> DeleteBrand(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<BrandDTO> UpdateStatus(int id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

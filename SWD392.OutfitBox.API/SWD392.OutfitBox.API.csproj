@@ -25,6 +25,7 @@
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.4" />
     <PackageReference Include="StackExchange.Redis" Version="2.7.33" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+    <PackageReference Include="System.Security.Permissions" Version="6.0.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -32,6 +33,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\SWD392.OutfitBox.BackgroundWorker\SWD392.OutfitBox.BackgroundWorker.csproj" />
     <ProjectReference Include="..\SWD392.OutfitBox.BusinessLayer\SWD392.OutfitBox.BusinessLayer.csproj" />
     <ProjectReference Include="..\SWD392.OutfitBox.DataLayer\SWD392.OutfitBox.DataLayer.csproj" />
   </ItemGroup>

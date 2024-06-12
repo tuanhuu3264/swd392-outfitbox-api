@@ -1,4 +1,5 @@
-﻿using SWD392.OutfitBox.BusinessLayer.Models.Responses.Brand;
+﻿using SWD392.OutfitBox.BusinessLayer.Models.Requests.Brand;
+using SWD392.OutfitBox.BusinessLayer.Models.Responses.Brand;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +11,9 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.BrandRepository
     public interface IBrandService
     {
         public Task<List<BrandDTO>> GetAllBrands();
+        public Task<CreateBrandResponseDTO> CreateBrand(CreateBrandRequestDTO brand);
+        public Task<UpdateBrandResponseDTO> UpdateBrand(UpdateBrandRequestDTO brand);
+        public Task<string> DeleteBrand(int id);
+        public Task<BrandDTO> UpdateStatus(int id);
     }
 }

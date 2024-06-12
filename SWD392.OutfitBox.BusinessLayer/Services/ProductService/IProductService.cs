@@ -12,9 +12,10 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.ProductService
 {
     public interface IProductService
     {
-        Task<List<ProductGeneral>> GetAll();
+        Task<List<ProductGeneral>> GetList(int? pageIndex = null, int? pageSize = null, string sorted = "", string orders = "", string name = "", List<int>? idBrand = null, List<int>? idCategory = null,int? status=null, double? maxMoney = null, double? minMoney = null);
         Task<ProductDetailDto> CreateProduct(CreatedProductDto createdProduct);
         Task<ProductDetailDto> GetById(int Id);
         Task<ProductDetailDto> UpdateProduct(UpdateProductDto updateProduct);
+        
     }
 }

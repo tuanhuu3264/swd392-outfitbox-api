@@ -1,5 +1,6 @@
 ﻿
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
 using SWD392.OutfitBox.DataLayer.Databases.Redis;
 using SWD392.OutfitBox.DataLayer.Interfaces;
 using System.Linq.Expressions;
@@ -73,7 +74,7 @@ namespace SWD392.OutfitBox.DataLayer.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<TEntity>> Get(Expression<Func<TEntity, bool>> filter = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, string includeProperties = "", int? pageIndex = null, int? pageSize = null)
+        public async Task<IEnumerable<TEntity>> Get(Expression<Func<TEntity, bool>> filter = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, Func<IQueryable<TEntity>, IQueryable<TEntity>> include = null, int? pageIndex = null, int? pageSize = null)
         {
             IQueryable<TEntity> query = _dbSet;
 
@@ -82,10 +83,9 @@ namespace SWD392.OutfitBox.DataLayer.Repositories
                 query = query.Where(filter);
             }
 
-            foreach (var includeProperty in includeProperties.Split
-                (new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+            if (include != null)
             {
-                query = query.Include(includeProperty);
+                query = include(query);
             }
 
             if (orderBy != null)
@@ -105,7 +105,33 @@ namespace SWD392.OutfitBox.DataLayer.Repositories
 
             return await query.ToListAsync();
         }
+        public async Task<IEnumerable<TEntity>> GetStartEnd(Expression<Func<TEntity, bool>> filter = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, Func<IQueryable<TEntity>, IQueryable<TEntity>> include = null, int? started = null, int? ended = null)
+        {
+            IQueryable<TEntity> query = _dbSet;
 
+            if (filter != null)
+            {
+                query = query.Where(filter);
+            }
+
+            if (include != null)
+            {
+                query = include(query);
+            }
+
+            if (orderBy != null)
+            {
+                query = orderBy(query);
+            }
+
+            // Implementing pagination
+            if (started.HasValue && ended.HasValue)
+            {
+                query = query.Skip(started.Value-1).Take(ended.Value - started.Value-1);
+            }
+
+            return await query.ToListAsync();
+        }
         public async Task<int> Count(Expression<Func<TEntity, bool>> filter = null)
         {
             IQueryable<TEntity> query = _dbSet;

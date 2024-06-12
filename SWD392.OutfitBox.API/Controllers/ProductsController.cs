@@ -6,6 +6,8 @@ using SWD392.OutfitBox.BusinessLayer.Models.Responses.Area;
 using SWD392.OutfitBox.BusinessLayer.Models.Responses.Partner;
 using SWD392.OutfitBox.BusinessLayer.Models.Responses.Product;
 using SWD392.OutfitBox.BusinessLayer.Services.ProductService;
+using SWD392.OutfitBox.DataLayer.Entities;
+using System.Globalization;
 using System.Net;
 
 namespace SWD392.OutfitBox.API.Controllers
@@ -18,15 +20,33 @@ namespace SWD392.OutfitBox.API.Controllers
         {
             _productService = productService;
         }
-        [HttpGet(Endpoints.ProductsController.getAllProducts)]
-        public async Task<IActionResult> GetAll()
+        [HttpGet("products/customers")]
+        public async Task<IActionResult> GetAll(
+                                                [FromQuery(Name ="_start")]
+                                                int? started = null,
+                                                [FromQuery(Name ="_end")]
+                                                int? ended = null,
+                                                [FromQuery(Name ="_sort")]
+                                                string sorted = "", 
+                                                [FromQuery(Name ="_order")]                                    
+                                                string orders = "",
+                                                [FromQuery(Name ="fullName_like")]
+                                                string name = "",
+                                                [FromQuery(Name ="brand.id")] 
+                                                List<int>? idBrand = null, 
+                                                [FromQuery(Name = "category.id")] 
+                                                List<int>? idCategory = null,
+                                                [FromQuery(Name ="_status")]
+                                                int? status = null,
+                                                [FromQuery(Name ="_deposit.max")]
+                                                double? maxMoney = null,
+                                                [FromQuery(Name ="_deposit.min")]
+                                                double? minMoney = null)
         {
-            //var result = await _productService.GetAll();
-            //return StatusCode((int)result.StatusCode, result.Data);
             BaseResponse<List<ProductGeneral>> response;
             try
             {
-                var data = await _productService.GetAll();
+                var data = await _productService.GetList(started,ended, sorted, orders, name, idBrand, idCategory,status, maxMoney, minMoney);
                 response = new BaseResponse<List<ProductGeneral>>("Get Product successfully.", HttpStatusCode.OK, data);
             }
             catch (Exception ex)

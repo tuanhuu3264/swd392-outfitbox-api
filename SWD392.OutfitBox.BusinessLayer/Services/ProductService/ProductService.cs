@@ -28,9 +28,9 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.ProductService
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<List<ProductGeneral>> GetAll()
+        public async Task<List<ProductGeneral>> GetList(int? pageIndex = null, int? pageSize = null, string sorted = "", string orders = "", string name = "", List<int>? idBrand = null, List<int>? idCategory = null,int? status =null, double? maxMoney = null, double? minMoney = null)
         {
-            var products = await _unitOfWork._productRepository.GetAll();
+            var products = await _unitOfWork._productRepository.GetStartEnd(pageIndex,pageSize,sorted,orders,name,idBrand,idCategory,status,maxMoney,minMoney);
             var data = _mapper.Map<List<ProductGeneral>>(products);
             return data;
         }

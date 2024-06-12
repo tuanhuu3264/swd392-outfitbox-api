@@ -27,10 +27,10 @@ namespace SWD392.OutfitBox.DataLayer.Entities
         public int Quantity { get; set; }
         public int AvailableQuantity { get; set; }
         [ForeignKey("IdCategory")]
-        public Category Category { get; set; }
+        public Category? Category { get; set; }
         public int IdBrand { get; set; }
         [ForeignKey("IdBrand")]
-        public Brand Brand { get; set; }
+        public Brand? Brand { get; set; }
         public string Type { get; set; }
         public List<Image>? Images { get; set; }
         public bool IsFeatured { get; set; }
