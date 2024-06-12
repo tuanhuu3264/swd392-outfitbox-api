@@ -3,7 +3,7 @@
     public static class ProductsController
     {
         public const string getAllProducts = "products/";
-        public const string product = "product";
-        public const string productDetail = "product/{id}";
+        public const string product = "products";
+        public const string productDetail = "products/{id}";
     }
 }
