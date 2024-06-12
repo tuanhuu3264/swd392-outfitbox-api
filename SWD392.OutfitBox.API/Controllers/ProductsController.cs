@@ -20,7 +20,7 @@ namespace SWD392.OutfitBox.API.Controllers
         {
             _productService = productService;
         }
-        [HttpGet("products/customers")]
+        [HttpGet("products")]
         public async Task<IActionResult> GetAll(
                                                 [FromQuery(Name ="_start")]
                                                 int? started = null,

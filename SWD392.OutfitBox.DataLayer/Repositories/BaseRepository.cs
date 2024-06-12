@@ -127,6 +127,7 @@ namespace SWD392.OutfitBox.DataLayer.Repositories
             // Implementing pagination
             if (started.HasValue && ended.HasValue)
             {
+                if (started == 0) started = 1;
                 query = query.Skip(started.Value-1).Take(ended.Value - started.Value-1);
             }
 
