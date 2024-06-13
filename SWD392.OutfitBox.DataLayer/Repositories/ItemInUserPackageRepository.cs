@@ -19,7 +19,8 @@ namespace SWD392.OutfitBox.DataLayer.Repositories
 
         public async Task<ItemInUserPackage> CreateItemInUserPackage(ItemInUserPackage item)
         {
-            return await this.AddAsync(item);
+            var result = await this.AddAsync(item);
+            return await this.GetById(result.Id);
         }
 
         public Task<ItemInUserPackage[]> CreateItemsInUserPackage(ItemInUserPackage[] itemInUserPackages)
@@ -29,28 +30,27 @@ namespace SWD392.OutfitBox.DataLayer.Repositories
 
         public async Task<List<ItemInUserPackage>> GetAllItemInPacket()
         {
-            return await this.Get().ToListAsync();
+            return await this.Get().Include(x=>x.Product).ToListAsync();
         }
 
         public async Task<ItemInUserPackage> GetById(int id)
         {
-            return await this.Get().FirstOrDefaultAsync(x=> x.Id==id);
+            return await this.Get().Include(x => x.Product).FirstOrDefaultAsync(x=> x.Id==id);
         }
 
         public async Task<bool> UnactiveStatus(ItemInUserPackage item)
         {
-            item.Status = -1;
+           item.Status = -1;
            await this.Update(item);
-            
-            return true;
+           return (await this.GetById(item.Id)).Status == -1;
+           
         }
 
-        public async Task<bool> UpdateItem(ItemInUserPackage item)
+        public async Task<ItemInUserPackage> UpdateItem(ItemInUserPackage item)
         {
             await this.Update(item);
             await this.SaveChangesAsync();
-  
-            return true;
+            return await this.GetById(item.Id); ;
         }
     }
 }

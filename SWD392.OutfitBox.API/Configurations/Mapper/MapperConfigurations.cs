@@ -18,6 +18,7 @@ using SWD392.OutfitBox.BusinessLayer.Models.Responses.Category;
 using SWD392.OutfitBox.BusinessLayer.Models.Responses.CategoryPackage;
 using SWD392.OutfitBox.BusinessLayer.Models.Responses.Customer;
 using SWD392.OutfitBox.BusinessLayer.Models.Responses.FavouriteProduct;
+using SWD392.OutfitBox.BusinessLayer.Models.Responses.ItemInUserPackage;
 using SWD392.OutfitBox.BusinessLayer.Models.Responses.Package;
 using SWD392.OutfitBox.BusinessLayer.Models.Responses.Partner;
 using SWD392.OutfitBox.BusinessLayer.Models.Responses.Product;
@@ -51,7 +52,7 @@ namespace SWD392.OutfitBox.API.Configurations.Mapper
             PartnerProfile();
             AreaProfile();
             BrandProfile();
-
+            ItemInUserPackageProfile();
 
         }
         public void CategoryProfile()
@@ -148,7 +149,11 @@ namespace SWD392.OutfitBox.API.Configurations.Mapper
         }
         public void ItemInUserPackageProfile()
         {
-            CreateMap<ItemInUserPackageDto, ItemInUserPackage>();
+            CreateMap<ItemInUserPackageDto, ItemInUserPackage>()
+                .ForPath(x=>x.Product.Name, opt => opt.MapFrom(src =>src.ProductName))
+                .ReverseMap();
+            CreateMap<ItemInUserPackage,CreatedItemInPackage>().ReverseMap();
+            CreateMap<UpdateItemInPackage, ItemInUserPackage>().ReverseMap();
         }
         public void ProductReturnOrderProfile()
         {

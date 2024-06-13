@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using SWD392.OutfitBox.API.Configurations.HTTPResponse;
 using SWD392.OutfitBox.API.Controllers.Endpoints;
 using SWD392.OutfitBox.BusinessLayer.Models.Requests.ItemInUserPackage;
+using SWD392.OutfitBox.BusinessLayer.Models.Responses.ItemInUserPackage;
 using SWD392.OutfitBox.BusinessLayer.Models.Responses.Product;
 using SWD392.OutfitBox.BusinessLayer.Services.ItemInUserPackageService;
 using System.Net;
@@ -34,5 +35,39 @@ namespace SWD392.OutfitBox.API.Controllers
             }
             return StatusCode((int)response.StatusCode,response);
         }
+        [HttpPost(ItemInUserPackageEndPoints.ItemInUserPackages)]
+        public async Task<ActionResult> CreateAnItemInUserPackage([FromBody] CreatedItemInPackage createdItemInPackage)
+        {
+            BaseResponse<ItemInUserPackageDto> response;
+            try
+            {
+                var result = await _itemsInUserPackageService.CreateItem(createdItemInPackage);
+                if (result == null) { response = new BaseResponse<ItemInUserPackageDto>("Fail", HttpStatusCode.InternalServerError, null); }
+                response = new BaseResponse<ItemInUserPackageDto>("Successful", HttpStatusCode.OK, result);
+            }
+            catch (Exception ex)
+            {
+                response = new BaseResponse<ItemInUserPackageDto>(ex.Message, HttpStatusCode.InternalServerError, null);
+            }
+            return StatusCode((int)response.StatusCode, response);
+        }
+        [HttpPut(ItemInUserPackageEndPoints.ItemInUserPackages)]
+        public async Task<ActionResult> UpdateAnItemInUserPackage([FromBody] UpdateItemInPackage updateItemInPackage)
+        {
+            BaseResponse<ItemInUserPackageDto> response;
+            try
+            {
+                var result = await _itemsInUserPackageService.UpdateItem(updateItemInPackage);
+                if (result == null) { response = new BaseResponse<ItemInUserPackageDto>("Fail", HttpStatusCode.InternalServerError, null); }
+                response = new BaseResponse<ItemInUserPackageDto>("Successful", HttpStatusCode.OK, result);
+            }
+            catch (Exception ex)
+            {
+                response = new BaseResponse<ItemInUserPackageDto>(ex.Message, HttpStatusCode.InternalServerError, null);
+            }
+            return StatusCode((int)response.StatusCode, response);
+        }
+
+
     }
 }
