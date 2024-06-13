@@ -9,5 +9,6 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.CustomerPackageService
 {
     public class CustomerPackageService:ICustomerPackageService
     {
+
     }
 }

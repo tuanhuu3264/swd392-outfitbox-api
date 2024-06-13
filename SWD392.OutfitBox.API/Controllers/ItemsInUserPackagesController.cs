@@ -19,7 +19,7 @@ namespace SWD392.OutfitBox.API.Controllers
         {
             _itemsInUserPackageService = itemsInUserPackageService;
         }
-        [HttpGet(ItemInUserPackageEndPoints.ItemInUserPackages)]
+        [HttpGet(ItemInUserPackageEndPoints.ItemsInUserPackages)]
         public async Task<ActionResult> GetAll()
         {
             BaseResponse<List<ItemInUserPackageDto>> response;
@@ -27,7 +27,7 @@ namespace SWD392.OutfitBox.API.Controllers
             {
                 var result = await _itemsInUserPackageService.GetAll();
                 if (result == null) { response = new BaseResponse<List<ItemInUserPackageDto>>("List Null",HttpStatusCode.InternalServerError, null); }
-                response = new BaseResponse<List<ItemInUserPackageDto>>("Items in user package", HttpStatusCode.OK, result);
+                response = new BaseResponse<List<ItemInUserPackageDto>>("Items in customer package", HttpStatusCode.OK, result);
             }
             catch (Exception ex)
             {
@@ -35,7 +35,7 @@ namespace SWD392.OutfitBox.API.Controllers
             }
             return StatusCode((int)response.StatusCode,response);
         }
-        [HttpPost(ItemInUserPackageEndPoints.ItemInUserPackages)]
+        [HttpPost(ItemInUserPackageEndPoints.ItemsInUserPackages)]
         public async Task<ActionResult> CreateAnItemInUserPackage([FromBody] CreatedItemInPackage createdItemInPackage)
         {
             BaseResponse<ItemInUserPackageDto> response;
@@ -51,7 +51,7 @@ namespace SWD392.OutfitBox.API.Controllers
             }
             return StatusCode((int)response.StatusCode, response);
         }
-        [HttpPut(ItemInUserPackageEndPoints.ItemInUserPackages)]
+        [HttpPatch(ItemInUserPackageEndPoints.ItemsInUserPackages)]
         public async Task<ActionResult> UpdateAnItemInUserPackage([FromBody] UpdateItemInPackage updateItemInPackage)
         {
             BaseResponse<ItemInUserPackageDto> response;
@@ -67,7 +67,25 @@ namespace SWD392.OutfitBox.API.Controllers
             }
             return StatusCode((int)response.StatusCode, response);
         }
-
-
+        [HttpDelete(ItemInUserPackageEndPoints.ItemInUserPackages)]
+        public async Task<ActionResult> DeleteAnItemInUserPackage([FromRoute] int id)
+        {
+            BaseResponse<bool> response;
+            try
+            {
+                var result = await _itemsInUserPackageService.DeleteItem(id);
+                if (result == null) { response = new BaseResponse<bool>("Fail", HttpStatusCode.InternalServerError,false ); }
+                response = new BaseResponse<bool>("Successful", HttpStatusCode.OK,true );
+            }
+            catch(ArgumentException ex)
+            {
+                response = new BaseResponse<bool>(ex.Message, HttpStatusCode.NotFound, false);
+            }
+            catch (Exception ex)
+            {
+                response = new BaseResponse<bool>(ex.Message, HttpStatusCode.InternalServerError, false);
+            }
+            return StatusCode((int)response.StatusCode, response);
+        }
     }
 }

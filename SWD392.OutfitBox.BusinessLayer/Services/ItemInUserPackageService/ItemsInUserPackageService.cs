@@ -50,9 +50,10 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.ItemInUserPackageService
         }
         public async Task<bool> DeleteItem(int itemid)
         {
-            var obj = await _unitOfWork._itemsInUserPackageRepository.GetById(itemid);
-            if(obj == null) return false;
-            return true;
+            var item = await _unitOfWork._itemsInUserPackageRepository.GetById(itemid);
+            if (item == null) throw new ArgumentException("Can not find this item");
+            var obj = await _unitOfWork._itemsInUserPackageRepository.DeleteItem(itemid);
+            return obj;
         }
     }
 }
