@@ -18,7 +18,8 @@ namespace SWD392.OutfitBox.DataLayer.Interfaces
 
         void UpdateRange(params TEntity[] entities);
 
-        void Delete(TEntity entity);
+
+        Task Delete(TEntity entity);
         void DeleteRange(params TEntity[] entities);
 
         public Task<IEnumerable<TEntity>> Get(Expression<Func<TEntity, bool>> filter = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, Func<IQueryable<TEntity>, IQueryable<TEntity>> include = null, int? pageIndex = null, int? pageSize = null);

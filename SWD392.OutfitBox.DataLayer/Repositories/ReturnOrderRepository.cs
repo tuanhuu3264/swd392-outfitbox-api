@@ -26,7 +26,7 @@ namespace SWD392.OutfitBox.DataLayer.Repositories
 
         public async Task DeleteReturnOrder(ReturnOrder returnOrder)
         {
-             this.Delete(returnOrder);
+             await this.Delete(returnOrder);
              await this.SaveChangesAsync();
         }
 

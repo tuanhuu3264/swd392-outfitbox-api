@@ -9,6 +9,7 @@ using SWD392.OutfitBox.DataLayer.Interfaces;
 using System.Reflection.Metadata.Ecma335;
 using System.Linq.Expressions;
 using Abp.Linq.Expressions;
+using System.Globalization;
 
 namespace SWD392.OutfitBox.DataLayer.Repositories
 {
@@ -65,7 +66,7 @@ namespace SWD392.OutfitBox.DataLayer.Repositories
         {
             var predicate = PredicateBuilder.New<Product>();
 
-            if (!string.IsNullOrEmpty(name))
+            if (!string.IsNullOrEmpty(name.Trim()))
             {
                 predicate = predicate.And(x => x.Name.ToLower().Contains(name.ToLower()));
             }
@@ -167,19 +168,20 @@ namespace SWD392.OutfitBox.DataLayer.Repositories
             {
                 predicate = predicate.And(x => true);
             }
+            TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
             Func<IQueryable<Product>, IOrderedQueryable<Product>> orderBy = null;
-            if (!string.IsNullOrEmpty(orders) && !string.IsNullOrEmpty(sorted))
+            if (!string.IsNullOrEmpty(orders.Trim()) && !string.IsNullOrEmpty(sorted.Trim()))
             {
                 orderBy = (query) =>
                 {
 
                     if (orders.ToLower().Equals("desc"))
                     {
-                        query = query.OrderByDescending(x => EF.Property<Product>(x, sorted));
+                        query = query.OrderByDescending(x => EF.Property<Product>(x, textInfo.ToTitleCase(sorted)));
                     }
                     else
                     {
-                        query = query.OrderBy(x => EF.Property<Product>(x, sorted));
+                        query = query.OrderBy(x => EF.Property<Product>(x, textInfo.ToTitleCase(sorted)));
                     }
                     return (IOrderedQueryable<Product>)query;
 

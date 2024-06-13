@@ -28,7 +28,7 @@ namespace SWD392.OutfitBox.DataLayer.Repositories
         public async Task<bool> DeleteFavouriteProductByCustomerIdAndProductId(int customerId, int productId)
         {
             var deletedFavouriteProduct = await this.Get().Where(x=>x.CustomerId==customerId && x.ProductId==productId).FirstAsync();
-            this.Delete(deletedFavouriteProduct);
+            await this.Delete(deletedFavouriteProduct);
             await this.SaveChangesAsync();
             return true;
         }

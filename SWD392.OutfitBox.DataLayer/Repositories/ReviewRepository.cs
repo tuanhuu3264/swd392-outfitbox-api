@@ -38,8 +38,7 @@ namespace SWD392.OutfitBox.DataLayer.Repositories
         public async Task<bool> DeleteReviewById(int id)
         {
             var result = await this.GetReviewById(id);
-            this.Delete(result);
-            await this.SaveChangesAsync();
+            await this.Delete(result);
             return true;
         }
 

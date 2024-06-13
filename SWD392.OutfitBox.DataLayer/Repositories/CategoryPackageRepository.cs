@@ -26,7 +26,7 @@ namespace SWD392.OutfitBox.DataLayer.Repositories
         {
             var result = await GetCategoryPackageById(id);
             if (result == null) throw new Exception("There is not found the categoryPackage that has id: "+id);
-            this.Delete(result);
+            await this.Delete(result);
             await this.SaveChangesAsync();
             return true;
         }

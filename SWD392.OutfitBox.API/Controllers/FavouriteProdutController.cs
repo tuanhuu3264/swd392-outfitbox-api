@@ -17,7 +17,7 @@ namespace SWD392.OutfitBox.API.Controllers
         {
             _favouriteProductService = favouriteProductService;
         }
-        [HttpPost(FavouriteProductEndpoints.CreateFavouriteProduct)]
+        [HttpPost("favourited-products/customers/{customerId}/products/{productId}")]
         public async Task<ActionResult<BaseResponse<CreateFavouriteProductResponseDTO>>> CreateFavouriteProduct(int customerId, int productId)
         {
             BaseResponse<CreateFavouriteProductResponseDTO> response; 
@@ -31,7 +31,7 @@ namespace SWD392.OutfitBox.API.Controllers
             }
             return response;
         }
-        [HttpDelete(FavouriteProductEndpoints.DeleteFavouriteProduct)]
+        [HttpDelete("favourited-products/customers/{customerId}/products/{productId}")]
         public async Task<ActionResult<BaseResponse<string>>> DeleteFavouriteProduct(int customerId, int productId)
         {
             BaseResponse<string> response;

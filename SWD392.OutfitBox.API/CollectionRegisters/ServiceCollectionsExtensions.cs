@@ -99,6 +99,7 @@ namespace SWD392.OutfitBox.API.CollectionRegisters
             services.AddScoped<IProductReturnOrderRepository, ProductReturnOrderRepository>();
             services.AddScoped<IReturnOrderRepository, ReturnOrderRepository>();
             services.AddScoped<IDepositRepository,DepositRepository>();
+            services.AddScoped<IUserRepository,UserRepository>();   
             
         }
 

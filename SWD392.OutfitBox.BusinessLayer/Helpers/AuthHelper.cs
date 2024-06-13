@@ -20,8 +20,52 @@ namespace SWD392.OutfitBox.BusinessLayer.Helpers
             {
                  new Claim(ClaimTypes.Name, user.Name),
                  new Claim(ClaimTypes.Email, user.Email),
-                 new Claim(ClaimTypes.NameIdentifier, user.Name),
+                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                  new Claim(ClaimTypes.Role, "Customer"),
+            };
+
+            var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("JWTAuthenticationHIGHsecuredPasswordVVVp1OH7Xzyr"));
+
+            var token = new JwtSecurityToken(
+
+                issuer: "outfit4rent.online",
+                audience: "outfit4rent.online",
+                claims: authClaims,
+                expires: DateTime.Now.AddDays(3),
+                signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
+            );
+
+            return token;
+        }
+        public static JwtSecurityToken GetUserToken(User user,string role)
+        {
+            List<Claim> authClaims = new List<Claim>
+            {
+                 new Claim(ClaimTypes.Email, user.Email),
+                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                 new Claim(ClaimTypes.Role, role),
+            };
+
+            var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("JWTAuthenticationHIGHsecuredPasswordVVVp1OH7Xzyr"));
+
+            var token = new JwtSecurityToken(
+
+                issuer: "outfit4rent.online",
+                audience: "outfit4rent.online",
+                claims: authClaims,
+                expires: DateTime.Now.AddDays(3),
+                signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
+            );
+
+            return token;
+        }
+        public static JwtSecurityToken GetPartnerToken(Partner partner)
+        {
+            List<Claim> authClaims = new List<Claim>
+            {
+                 new Claim(ClaimTypes.Email, partner.Email),
+                 new Claim(ClaimTypes.NameIdentifier, partner.Id.ToString()),
+                 new Claim(ClaimTypes.Role, "Partner"),
             };
 
             var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("JWTAuthenticationHIGHsecuredPasswordVVVp1OH7Xzyr"));
@@ -68,6 +112,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Helpers
                 return null;
             }
         }
+
 
     }
 }

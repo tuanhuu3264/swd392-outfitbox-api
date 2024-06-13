@@ -39,7 +39,7 @@ namespace SWD392.OutfitBox.DataLayer.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async void Delete(TEntity entity)
+        public async Task Delete(TEntity entity)
         {
             _dbSet.Remove(entity);
             await _context.SaveChangesAsync();

@@ -19,13 +19,13 @@ namespace SWD392.OutfitBox.API.Controllers
             _transactionService = transactionService;
         }
 
-        [HttpGet(TransactionEndpoints.GetAllTransactionsByUserId)]
-        public async Task<ActionResult<BaseResponse<List<TransactionDTO>>>> GetAllTransactionByUserId([FromRoute] int userId)
+        [HttpGet("transactions/customers/{customerId}")]
+        public async Task<ActionResult<BaseResponse<List<TransactionDTO>>>> GetAllTransactionByUserId([FromRoute] int customerId)
         {
             BaseResponse<List<TransactionDTO>> response;
             try
             {
-                var data = await _transactionService.GetAllTransactionsByUserId(userId);
+                var data = await _transactionService.GetAllTransactionsByUserId(customerId);
                 response = new BaseResponse<List<TransactionDTO>>("Get transactions successfully.", HttpStatusCode.OK, data);
             }catch(Exception ex) 
             {
@@ -33,7 +33,7 @@ namespace SWD392.OutfitBox.API.Controllers
             }
             return StatusCode((int)response.StatusCode, response);
         }
-        [HttpGet(TransactionEndpoints.GetAllTransactionsByWalletId)]
+        [HttpGet("transactions/customers/{customerId}/wallets/{walletId}")]
         public async Task<ActionResult<BaseResponse<List<TransactionDTO>>>> GetAllTransactionByWalletId([FromRoute] int walletId, [FromRoute] int userId)
         {
             BaseResponse<List<TransactionDTO>> response;
@@ -48,7 +48,7 @@ namespace SWD392.OutfitBox.API.Controllers
             }
             return StatusCode((int)response.StatusCode, response);
         }
-        [HttpPost(TransactionEndpoints.Checkout)]
+        [HttpPost("transactions/payments")]
         public async Task<ActionResult<string>> Checkout([FromBody] CheckoutTransactionRequestDTO checkoutTransactionRequestDTO)
         {
             BaseResponse<string> response;

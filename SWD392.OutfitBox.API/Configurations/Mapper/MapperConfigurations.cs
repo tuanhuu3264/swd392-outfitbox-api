@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using SWD392.OutfitBox.BusinessLayer.Models.Requests.Area;
+using SWD392.OutfitBox.BusinessLayer.Models.Requests.Brand;
 using SWD392.OutfitBox.BusinessLayer.Models.Requests.Category;
 using SWD392.OutfitBox.BusinessLayer.Models.Requests.CategoryPackage;
 using SWD392.OutfitBox.BusinessLayer.Models.Requests.Customer;
@@ -180,7 +181,11 @@ namespace SWD392.OutfitBox.API.Configurations.Mapper
         }
         public void BrandProfile()
         {
-            CreateMap<BrandDTO, Brand>().ReverseMap();
+            CreateMap<Brand, BrandDTO>().ReverseMap();
+            CreateMap<CreateBrandRequestDTO, Brand>().ReverseMap();
+            CreateMap<Brand, CreateBrandResponseDTO>().ReverseMap();
+            CreateMap<UpdateBrandRequestDTO, Brand>().ReverseMap();
+            CreateMap<Brand, UpdateBrandResponseDTO>().ReverseMap();
         }
     }
 }

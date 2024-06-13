@@ -21,7 +21,7 @@ namespace SWD392.OutfitBox.API.Controllers
         {
             _reviewService = reviewService;
         }
-        [HttpPut(ReviewEndpoints.GetAllEnabledReviews)]
+        [HttpPut("reviews/actived-reviews")]
         public async Task<ActionResult<BaseResponse<List<ReviewDTO>>>> GetAllEnabledReviews()
         {
             BaseResponse<List<ReviewDTO>> response; 
@@ -37,7 +37,7 @@ namespace SWD392.OutfitBox.API.Controllers
             
             return StatusCode((int)response.StatusCode,response);
         }
-        [HttpGet(ReviewEndpoints.GetAllEnabledReviewsByCustomerId)]
+        [HttpGet("reviews/actived-reviews/customers/{customerId}")]
         public async Task<ActionResult<BaseResponse<List<ReviewDTO>>>> GetAllEnabledReviewsByCustomerId([FromRoute]int customerId)
         {
             BaseResponse<List<ReviewDTO>> response;

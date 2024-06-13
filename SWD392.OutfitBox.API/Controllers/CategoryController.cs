@@ -80,7 +80,7 @@ namespace SWD392.OutfitBox.API.Controllers
             }
             return StatusCode((int)response.StatusCode, response);
         }
-        [HttpPut(CategoryEndpoints.ActiveOrDeactiveCategory)]
+        [HttpPut("categories/{id}/status/{status}")]
         public async Task<ActionResult<BaseResponse<CategoryDTO>>> ActiveOrDeactiveCategory([FromBody]int id)
         {
             BaseResponse<CategoryDTO> response;

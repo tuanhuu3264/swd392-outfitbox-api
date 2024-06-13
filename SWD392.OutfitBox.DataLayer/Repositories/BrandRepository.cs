@@ -33,8 +33,8 @@ namespace SWD392.OutfitBox.DataLayer.Repositories
 
         public async Task<Brand> GetById(int id)
         {
-            var result = await this.Get().FirstOrDefaultAsync(x => x.ID == id);
-            if (result == null) return new Brand();
+            var result = await this.Get().Include(x=>x.Products).FirstOrDefaultAsync(x => x.ID == id);
+            if (result == null) return null;
             return result;
         }
 
@@ -44,6 +44,11 @@ namespace SWD392.OutfitBox.DataLayer.Repositories
             await this.SaveChangesAsync();
             var result = await this.Get().FirstAsync(x => x.ID == brand.ID);
             return result;
+        }
+        public async Task<bool> DeleteBrand(Brand brand)
+        {
+            await this.Delete(brand);
+            return true;
         }
     }
 }

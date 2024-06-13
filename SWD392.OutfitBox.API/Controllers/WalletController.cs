@@ -18,13 +18,13 @@ namespace SWD392.OutfitBox.API.Controllers
         {
             _walletService = walletService;
         }
-        [HttpGet(WalletEndpoints.GetAllWalletsByUserId)]
-        public async Task<ActionResult<BaseResponse<List<WalletDTO>>>> GetAllWalletsByUserId([FromRoute]int userId)
+        [HttpGet("wallets/customers/{customerId}")]
+        public async Task<ActionResult<BaseResponse<List<WalletDTO>>>> GetAllWalletsByUserId([FromRoute]int customerId)
         {
             BaseResponse<List<WalletDTO>> response; 
             try
             {
-                var data = await _walletService.GetAllWalletWithUserId(userId);
+                var data = await _walletService.GetAllWalletWithUserId(customerId);
                 response = new BaseResponse<List<WalletDTO>>("Get wallets by user successfully.", HttpStatusCode.OK, data);
             }catch(Exception ex)
             {
@@ -32,13 +32,13 @@ namespace SWD392.OutfitBox.API.Controllers
             }
             return StatusCode((int)response.StatusCode,response);
         }
-        [HttpGet(WalletEndpoints.GetAllEnabledWalletsByUserId)]
-        public async Task<ActionResult<List<WalletDTO>>> GetAllEnabledWalletsByUserId([FromRoute]int userId)
+        [HttpGet("wallets/actived-wallets/customers/{customerId}")]
+        public async Task<ActionResult<List<WalletDTO>>> GetAllEnabledWalletsByUserId([FromRoute]int customerId)
         {
             BaseResponse<List<WalletDTO>> response;
             try
             {
-                var data = await _walletService.GetAllEnabledWalletWithUserId(userId);
+                var data = await _walletService.GetAllEnabledWalletWithUserId(customerId);
                 response = new BaseResponse<List<WalletDTO>>("Get wallets by user successfully.", HttpStatusCode.OK, data);
             }
             catch (Exception ex)
@@ -47,7 +47,7 @@ namespace SWD392.OutfitBox.API.Controllers
             }
             return StatusCode((int)response.StatusCode, response);
         }
-        [HttpPost(WalletEndpoints.AddWalletsByUserId)]
+        [HttpPost("wallets/customers/{customerId}")]
         public async Task<ActionResult<BaseResponse<CreateWalletResponseDTO>>> AddWalletByUserId([FromRoute] int id, [FromBody] CreateWalletRequestDTO createWalletRequestDTO)
         {
             BaseResponse<CreateWalletResponseDTO> response;
@@ -62,7 +62,7 @@ namespace SWD392.OutfitBox.API.Controllers
             }
             return StatusCode((int)response.StatusCode, response);
         }
-        [HttpPut(WalletEndpoints.UpdateWalletByUserId)]
+        [HttpPut("wallets/customers/{customerId}")]
         public async Task<ActionResult<BaseResponse<UpdateWalletResponseDTO>>> UpdateWalletByUserId([FromRoute] int id, [FromBody] UpdateWalletRequestDTO updateWalletRequestDTO)
         {
             BaseResponse<UpdateWalletResponseDTO> response;
@@ -77,7 +77,7 @@ namespace SWD392.OutfitBox.API.Controllers
             }
             return StatusCode((int)response.StatusCode, response);
         }
-        [HttpPut(WalletEndpoints.ActiveOrDeactiveWallet)]
+        [HttpPut("wallets/{id}/status/{status}")]
         public async Task<ActionResult<BaseResponse<WalletDTO>>> ActiveOrDeactiveWallet(int id)
         {
             BaseResponse<WalletDTO> response;

@@ -37,7 +37,7 @@ namespace SWD392.OutfitBox.DataLayer.Repositories
         public async Task<bool> RemoveProductReturnOrderById(int id)
         {
             var result = await this.GetById(id);
-            this.Delete(result);
+            await this.Delete(result);
             await this.SaveChangesAsync();
             return true;
         }

@@ -9,8 +9,8 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.FirebaseService
 {
     public interface IFirebaseService
     {
-        public Task<LoginResponseDTO> VerifyFirebaseThirdPartToken(string accessToken);
-        public Task<LoginResponseDTO> VerifyFirebaseNormalToken(string accessToken);
+        public Task<LoginFirebaseResponseDTO> VerifyFirebaseThirdPartToken(string accessToken);
+        public Task<LoginFirebaseResponseDTO> VerifyFirebaseNormalToken(string accessToken);
       
     }
 }

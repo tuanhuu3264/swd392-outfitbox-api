@@ -84,7 +84,7 @@ namespace SWD392.OutfitBox.API.Controllers
             }
             return StatusCode((int)response.StatusCode, response);
         }
-        [HttpPut(PartnerEndpoints.ChangeStatus)]
+        [HttpPut("partners/{id}/status/{status}")]
         public async Task<ActionResult<BaseResponse<PartnerDTO>>> ChangeStatus([FromRoute] int id, [FromRoute] int status)
         {
             BaseResponse<PartnerDTO> response;

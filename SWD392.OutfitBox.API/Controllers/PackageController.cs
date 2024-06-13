@@ -34,7 +34,7 @@ namespace SWD392.OutfitBox.API.Controllers
             return StatusCode((int)response.StatusCode,response);
         }
 
-        [HttpGet(PackageEndPoints.GetAllEnabledPackages)]
+        [HttpGet("packages/actived-packages")]
         public async Task<ActionResult<BaseResponse<PackageDTO>>> GetAllEnabledPackages()
         {
             BaseResponse<List<PackageDTO>> response;

@@ -29,7 +29,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.FirebaseService
             _customerRepository = customerRepository;
         }
 
-        public async Task<LoginResponseDTO> VerifyFirebaseThirdPartToken(string accessToken)
+        public async Task<LoginFirebaseResponseDTO> VerifyFirebaseThirdPartToken(string accessToken)
         {
             var result = await DecodeFirebaseToken(accessToken);
             var customer = await _customerRepository.GetCustomerByPhoneOrEmail(result.Email.ToLower());
@@ -47,12 +47,12 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.FirebaseService
                 } ;
                 var resultNewCustomer = await _customerRepository.Create(newCustomer);
                 if (result.IsVerify == false)
-                    return new LoginResponseDTO()
+                    return new LoginFirebaseResponseDTO()
                     {
                         Message = "The account is not verified."
                     };
                 var tokenHandler = AuthHelper.GetToken(resultNewCustomer);
-                return new LoginResponseDTO()
+                return new LoginFirebaseResponseDTO()
                 {
                     Message = "Success login!!",
                     Token = new JwtSecurityTokenHandler().WriteToken(tokenHandler),
@@ -67,7 +67,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.FirebaseService
                 
             }
             var tokenHandler2 = AuthHelper.GetToken(customer);
-            return new LoginResponseDTO()
+            return new LoginFirebaseResponseDTO()
             {
                 Message = "Success login!!",
                 Token = new JwtSecurityTokenHandler().WriteToken(tokenHandler2),
@@ -115,12 +115,12 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.FirebaseService
         }
 
 
-        public async Task<LoginResponseDTO> VerifyFirebaseNormalToken(string accessToken)
+        public async Task<LoginFirebaseResponseDTO> VerifyFirebaseNormalToken(string accessToken)
         {
             var result = await DecodeFirebaseToken(accessToken);
 
             if (result.IsVerify == false)
-                return new LoginResponseDTO()
+                return new LoginFirebaseResponseDTO()
                 {
                     Message = "The account is not verified."
                 };
@@ -139,7 +139,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.FirebaseService
                 };
                 var resultNewCustomer = await _customerRepository.Create(newCustomer);
                 var tokenHandler = AuthHelper.GetToken(resultNewCustomer);
-                return new LoginResponseDTO()
+                return new LoginFirebaseResponseDTO()
                 {
                     Message = "Success login!!",
                     Token = new JwtSecurityTokenHandler().WriteToken(tokenHandler),
@@ -154,7 +154,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.FirebaseService
 
             }
             var tokenHandler2 = AuthHelper.GetToken(customer);
-            return new LoginResponseDTO()
+            return new LoginFirebaseResponseDTO()
             {
                 Message = "Success login!!",
                 Token = new JwtSecurityTokenHandler().WriteToken(tokenHandler2),

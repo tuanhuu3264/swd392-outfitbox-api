@@ -13,14 +13,14 @@ namespace SWD392.OutfitBox.API.Controllers
             _paymentService = paymentService;
         }
 
-        [HttpGet("PayOnline/UserId={userid}/OrderId={orderid}")]
+        [HttpGet("online-payments/users/{userId}/orders/{orderid}")]
         public async Task<IActionResult> PayOrderOnline([FromRoute] int userid, [FromRoute] int orderid)
         {
             var result = await _paymentService.CallAPIPayByUserId(userid, orderid);
             return Ok(result);
         }
         [AllowAnonymous]
-        [HttpPost("PayOnline")]
+        [HttpPost("online-payments/checked-payment")]
         public async Task<IActionResult> ChangeStatusPayOrderOnline([FromBody] VNPayRequestDTO dto)
         {
             var result = await _paymentService.GetInformationPayment(dto);

@@ -8,5 +8,6 @@ namespace SWD392.OutfitBox.DataLayer.Interfaces
         Task<List<Brand>> GetAllBrands();
         Task<Brand> GetById(int id);
         Task<Brand> UpdateBrand(Brand brand);
+        public Task<bool> DeleteBrand(Brand brand);
     }
 }

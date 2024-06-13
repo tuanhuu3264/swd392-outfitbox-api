@@ -20,21 +20,21 @@ namespace SWD392.OutfitBox.API.Controllers
         {
             _productService = productService;
         }
-        [HttpGet("products")]
-        public async Task<IActionResult> GetAll(
+        [HttpGet("admin/products")]
+        public async Task<IActionResult> GetAllForAdmin(
                                                 [FromQuery(Name ="_start")]
                                                 int? started = null,
                                                 [FromQuery(Name ="_end")]
                                                 int? ended = null,
                                                 [FromQuery(Name ="_sort")]
-                                                string sorted = "", 
-                                                [FromQuery(Name ="_order")]                                    
+                                                string sorted = "",
+                                                [FromQuery(Name ="_order")]
                                                 string orders = "",
-                                                [FromQuery(Name ="fullName_like")]
+                                                [FromQuery(Name ="name_like")]
                                                 string name = "",
-                                                [FromQuery(Name ="brand.id")] 
-                                                List<int>? idBrand = null, 
-                                                [FromQuery(Name = "category.id")] 
+                                                [FromQuery(Name ="brand.id")]
+                                                List<int>? idBrand = null,
+                                                [FromQuery(Name = "category.id")]
                                                 List<int>? idCategory = null,
                                                 [FromQuery(Name ="_status")]
                                                 int? status = null,
@@ -46,7 +46,40 @@ namespace SWD392.OutfitBox.API.Controllers
             BaseResponse<List<ProductGeneral>> response;
             try
             {
-                var data = await _productService.GetList(started,ended, sorted, orders, name, idBrand, idCategory,status, maxMoney, minMoney);
+                var data = await _productService.GetList(started, ended, sorted, orders, name, idBrand, idCategory, status, maxMoney, minMoney);
+                response = new BaseResponse<List<ProductGeneral>>("Get Product successfully.", HttpStatusCode.OK, data);
+            }
+            catch (Exception ex)
+            {
+                response = new BaseResponse<List<ProductGeneral>>(ex.Message, HttpStatusCode.InternalServerError, null);
+            }
+            return StatusCode((int)response.StatusCode, response);
+        }
+        [HttpGet("products")]
+        public async Task<IActionResult> GetAllForCustomer(
+                                                [FromQuery(Name ="_start")]
+                                                int? started = null,
+                                                [FromQuery(Name ="_end")]
+                                                int? ended = null,
+                                                [FromQuery(Name ="_sort")]
+                                                string sorted = "", 
+                                                [FromQuery(Name ="_order")]                                    
+                                                string orders = "",
+                                                [FromQuery(Name ="name_like")]
+                                                string name = "",
+                                                [FromQuery(Name ="brand.id")] 
+                                                List<int>? idBrand = null, 
+                                                [FromQuery(Name = "category.id")] 
+                                                List<int>? idCategory = null,
+                                                [FromQuery(Name ="_deposit.max")]
+                                                double? maxMoney = null,
+                                                [FromQuery(Name ="_deposit.min")]
+                                                double? minMoney = null)
+        {
+            BaseResponse<List<ProductGeneral>> response;
+            try
+            {
+                var data = await _productService.GetList(started,ended, sorted, orders, name, idBrand, idCategory,1, maxMoney, minMoney);
                 response = new BaseResponse<List<ProductGeneral>>("Get Product successfully.", HttpStatusCode.OK, data);
             }
             catch (Exception ex)
