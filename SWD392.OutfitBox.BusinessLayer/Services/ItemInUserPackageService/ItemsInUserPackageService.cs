@@ -1,5 +1,8 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using NetTopologySuite.Index.HPRtree;
 using SWD392.OutfitBox.BusinessLayer.Models.Requests.ItemInUserPackage;
+using SWD392.OutfitBox.BusinessLayer.Models.Responses.ItemInUserPackage;
 using SWD392.OutfitBox.DataLayer.Entities;
 using SWD392.OutfitBox.DataLayer.UnitOfWork;
 using System;
@@ -24,7 +27,6 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.ItemInUserPackageService
         }
         public async Task<List<ItemInUserPackageDto>> GetAll()
         {
-                var result = new List<ItemInUserPackageDto>();
                 var list = await _unitOfWork._itemsInUserPackageRepository.GetAllItemInPacket();
                 if (list.Count == 0) throw new Exception("ListNull");
                 var listItem = _mapper.Map<List<ItemInUserPackageDto>>(list);
@@ -36,6 +38,21 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.ItemInUserPackageService
                 var obj = await _unitOfWork._itemsInUserPackageRepository.CreateItemInUserPackage(item);
                 var data = _mapper.Map<ItemInUserPackageDto>(obj);
                 return data;
+        }
+        public async Task<ItemInUserPackageDto> UpdateItem(UpdateItemInPackage updateItemInPackage)
+        {
+
+            var obj = await _unitOfWork._itemsInUserPackageRepository.GetById(updateItemInPackage.Id);
+            _mapper.Map(updateItemInPackage, obj);
+            var flag = await _unitOfWork._itemsInUserPackageRepository.UpdateItem(obj);
+            var data = _mapper.Map<ItemInUserPackageDto>(flag);
+            return data;
+        }
+        public async Task<bool> DeleteItem(int itemid)
+        {
+            var obj = await _unitOfWork._itemsInUserPackageRepository.GetById(itemid);
+            if(obj == null) return false;
+            return true;
         }
     }
 }
