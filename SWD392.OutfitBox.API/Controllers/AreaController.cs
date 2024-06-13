@@ -47,7 +47,7 @@ namespace SWD392.OutfitBox.API.Controllers
             }
             return StatusCode((int)response.StatusCode, response);
         }
-        [HttpPut("areas")]
+        [HttpPatch("areas")]
         public async Task<ActionResult<BaseResponse<UpdateAreaResponseDTO>>> UpdateAreas([FromBody] UpdateAreaRequestDTO updateAreaRequestDTO)
         {
             BaseResponse<UpdateAreaResponseDTO> response;

@@ -62,7 +62,7 @@ namespace SWD392.OutfitBox.API.Controllers
             }
             return StatusCode((int)response.StatusCode, response);
         }
-        [HttpPut("wallets/customers/{customerId}")]
+        [HttpPatch("wallets/customers/{customerId}")]
         public async Task<ActionResult<BaseResponse<UpdateWalletResponseDTO>>> UpdateWalletByUserId([FromRoute] int id, [FromBody] UpdateWalletRequestDTO updateWalletRequestDTO)
         {
             BaseResponse<UpdateWalletResponseDTO> response;
@@ -77,7 +77,7 @@ namespace SWD392.OutfitBox.API.Controllers
             }
             return StatusCode((int)response.StatusCode, response);
         }
-        [HttpPut("wallets/{id}/status/{status}")]
+        [HttpPatch("wallets/{id}/status/{status}")]
         public async Task<ActionResult<BaseResponse<WalletDTO>>> ActiveOrDeactiveWallet(int id)
         {
             BaseResponse<WalletDTO> response;

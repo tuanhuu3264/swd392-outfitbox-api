@@ -80,7 +80,7 @@ namespace SWD392.OutfitBox.API.Controllers
             }
             return StatusCode((int)response.StatusCode, response);
         }
-        [HttpPut("return-orders/{id}/status/{status}")]
+        [HttpPatch("return-orders/{id}/status/{status}")]
         public async Task<ActionResult<ReturnOrderDTO>> ChangeStatus([FromRoute] int id, [FromRoute] int status)
         {
             BaseResponse<ReturnOrderDTO> response;

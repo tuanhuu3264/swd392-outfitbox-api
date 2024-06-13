@@ -75,7 +75,7 @@ namespace SWD392.OutfitBox.API.Controllers
 
             return StatusCode((int)response.StatusCode, response);
         }
-        [HttpPut("customers")]
+        [HttpPatch("customers")]
         public async Task<ActionResult<UpdateCustomerResponseDTO>> UpdateCustomer([FromBody] UpdateCustomerRequestDTO updateCustomerRequestDTO)
         {
             BaseResponse<UpdateCustomerResponseDTO> response;
@@ -96,7 +96,7 @@ namespace SWD392.OutfitBox.API.Controllers
 
             return StatusCode((int)response.StatusCode, response);
         }
-        [HttpPut(CustomerEndpoints.ActiveOrDeactiveCustomer)]
+        [HttpPatch(CustomerEndpoints.ActiveOrDeactiveCustomer)]
         public async Task<ActionResult<CustomerDTO>> ActiveOrDeactiveCustomer([FromRoute] int id)
         {
             BaseResponse<CustomerDTO> response;

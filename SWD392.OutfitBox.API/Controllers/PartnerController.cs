@@ -65,7 +65,7 @@ namespace SWD392.OutfitBox.API.Controllers
             }
             return StatusCode((int)response.StatusCode, response);
         }
-        [HttpPut(PartnerEndpoints.UpdatePartner)]
+        [HttpPatch(PartnerEndpoints.UpdatePartner)]
         public async Task<ActionResult<UpdatePartnerResponseDTO>> UpdatePartner([FromBody] UpdatePartnerRequestDTO updatePartnerRequestDTO)
         {
             BaseResponse<UpdatePartnerResponseDTO> response;
@@ -84,7 +84,7 @@ namespace SWD392.OutfitBox.API.Controllers
             }
             return StatusCode((int)response.StatusCode, response);
         }
-        [HttpPut("partners/{id}/status/{status}")]
+        [HttpPatch("partners/{id}/status/{status}")]
         public async Task<ActionResult<BaseResponse<PartnerDTO>>> ChangeStatus([FromRoute] int id, [FromRoute] int status)
         {
             BaseResponse<PartnerDTO> response;

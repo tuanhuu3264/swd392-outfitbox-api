@@ -65,7 +65,7 @@ namespace SWD392.OutfitBox.API.Controllers
             }
             return StatusCode((int)response.StatusCode, response);
         }
-        [HttpPut(CategoryEndpoints.UpdateCategory)]
+        [HttpPatch(CategoryEndpoints.UpdateCategory)]
         public async Task<ActionResult<BaseResponse<UpdateCategoryResponseDTO>>> UpdateCategory([FromBody] UpdateCategoryRequestDTO updateCategoryRequestDTO)
         {
             BaseResponse<UpdateCategoryResponseDTO> response;
