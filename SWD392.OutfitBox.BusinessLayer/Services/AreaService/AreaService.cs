@@ -35,13 +35,11 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.AreaService
            return returnAreas;
         }
 
-        public async Task<UpdateAreaResponseDTO> UpdateArea(UpdateAreaRequestDTO updateAreaRequestDTO)
+        public async Task<UpdateAreaResponseDTO> UpdateArea(Area area)
         {
-            var checkingArea =await _unitOfWork._areaRepository.GetById(updateAreaRequestDTO.Id);
-            if (checkingArea == null) throw new ArgumentNullException("There is not found the area that has id: " + updateAreaRequestDTO.Id);
-            checkingArea.Ward = updateAreaRequestDTO.Ward;
-            checkingArea.District=updateAreaRequestDTO.District;
-            checkingArea.City=updateAreaRequestDTO.City;
+            var checkingArea =await _unitOfWork._areaRepository.GetById(area.Id);
+            if (checkingArea == null) throw new ArgumentNullException("There is not found the area that has id: " + area.Id);
+            checkingArea = _mapper.Map(area,checkingArea);
             var result = await _unitOfWork._areaRepository.UpdateArea(checkingArea);
             return _mapper.Map<UpdateAreaResponseDTO>(result);
         }

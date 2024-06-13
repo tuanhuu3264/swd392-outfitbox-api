@@ -1,3 +1,4 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using SWD392.OutfitBox.API.Configurations.HTTPResponse;
 using SWD392.OutfitBox.API.Controllers.Endpoints;
@@ -16,9 +17,11 @@ namespace SWD392.OutfitBox.API.Controllers
     public class ProductsController : ControllerBase
     {
         readonly IProductService _productService;
-        public ProductsController(IProductService productService)
+        readonly IMapper _mapper; 
+        public ProductsController(IProductService productService, IMapper mapper)
         {
             _productService = productService;
+            _mapper = mapper;
         }
         [HttpGet("admin/products")]
         public async Task<IActionResult> GetAllForAdmin(
@@ -120,13 +123,15 @@ namespace SWD392.OutfitBox.API.Controllers
             }
             return StatusCode((int)response.StatusCode, response);
         }
-        [HttpPatch(Endpoints.ProductsController.product)]
-        public async Task<IActionResult> UpdateProduct([FromBody] UpdateProductDto product)
+        [HttpPatch("products/{id}")]
+        public async Task<IActionResult> UpdateProduct([FromBody] UpdateProductDto product, [FromRoute] int id)
         {
             BaseResponse<ProductDetailDto> response;
             try
             {
-                var result = await _productService.UpdateProduct(product);
+                var mappingProduct = _mapper.Map<Product>(product);
+                mappingProduct.ID= id;
+                var result = await _productService.UpdateProduct(mappingProduct);
                 response = new BaseResponse<ProductDetailDto>("Product:", HttpStatusCode.OK, result);
             }
             catch(ArgumentNullException ex)

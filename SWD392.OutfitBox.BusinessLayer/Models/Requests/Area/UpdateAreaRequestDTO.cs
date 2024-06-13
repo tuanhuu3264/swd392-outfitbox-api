@@ -8,7 +8,6 @@ namespace SWD392.OutfitBox.BusinessLayer.Models.Requests.Area
 {
     public class UpdateAreaRequestDTO
     {
-        public int Id { get; set; }
         public string Ward = string.Empty;
         public string District { get; set; } = string.Empty;
         public string City { get; set; } = string.Empty;

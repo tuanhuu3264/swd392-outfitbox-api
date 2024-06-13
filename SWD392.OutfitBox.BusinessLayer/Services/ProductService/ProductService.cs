@@ -47,7 +47,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.ProductService
                 var data = _mapper.Map<ProductDetailDto>(productCreate);
                 return data;
         }
-        public async Task<ProductDetailDto> UpdateProduct(UpdateProductDto updateProduct)
+        public async Task<ProductDetailDto> UpdateProduct(Product updateProduct)
         {
                 await _unitOfWork._imageRepository.DeleteImageByProductId(updateProduct.ID);
                 var product = await _repository.GetDetail(updateProduct.ID);

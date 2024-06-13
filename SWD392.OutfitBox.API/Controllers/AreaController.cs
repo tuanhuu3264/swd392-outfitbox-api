@@ -12,15 +12,18 @@ using SWD392.OutfitBox.DataLayer.Repositories;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Azure;
 using static Google.Apis.Requests.BatchRequest;
+using AutoMapper;
 namespace SWD392.OutfitBox.API.Controllers
 {
     [ApiController]
     public class AreaController : ControllerBase
     {
         public IAreaService _areaService { get; set; }
-        public AreaController(IAreaService areaService)
+        public IMapper _mapper { get; set; }
+        public AreaController(IAreaService areaService, IMapper mapper)
         {
             _areaService = areaService;
+            _mapper = mapper;
         }
 
         [HttpGet("areas")]
@@ -47,13 +50,15 @@ namespace SWD392.OutfitBox.API.Controllers
             }
             return StatusCode((int)response.StatusCode, response);
         }
-        [HttpPatch("areas")]
-        public async Task<ActionResult<BaseResponse<UpdateAreaResponseDTO>>> UpdateAreas([FromBody] UpdateAreaRequestDTO updateAreaRequestDTO)
+        [HttpPatch("areas/{id}")]
+        public async Task<ActionResult<BaseResponse<UpdateAreaResponseDTO>>> UpdateAreas([FromBody] UpdateAreaRequestDTO updateAreaRequestDTO, [FromRoute] int id)
         {
             BaseResponse<UpdateAreaResponseDTO> response;
             try
             {
-                var data = await _areaService.UpdateArea(updateAreaRequestDTO);
+                var mappingArea = _mapper.Map<Area>(updateAreaRequestDTO);
+                mappingArea.Id = id;
+                var data = await _areaService.UpdateArea(mappingArea);
                  response = new BaseResponse<UpdateAreaResponseDTO>("Update area successfully.", HttpStatusCode.OK, data);
             }
             catch(ArgumentNullException ex)

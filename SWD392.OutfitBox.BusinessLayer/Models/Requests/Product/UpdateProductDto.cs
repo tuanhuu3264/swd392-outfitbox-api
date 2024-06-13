@@ -10,7 +10,6 @@ namespace SWD392.OutfitBox.BusinessLayer.Models.Requests.Product
 {
     public class UpdateProductDto
     {
-        public int ID { get; set; }
         public string Name { get; set; }
         public float Price { get; set; }
         public string Size { get; set; }
