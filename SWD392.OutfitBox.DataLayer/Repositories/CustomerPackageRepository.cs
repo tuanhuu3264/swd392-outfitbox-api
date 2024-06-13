@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using static Microsoft.ApplicationInsights.MetricDimensionNames.TelemetryContext;
+using SWD392.OutfitBox.DataLayer.Repositories.Interfaces;
 
 namespace SWD392.OutfitBox.DataLayer.Repositories
 {
@@ -28,12 +29,15 @@ namespace SWD392.OutfitBox.DataLayer.Repositories
         {
             return await this.Get().FirstOrDefaultAsync(x=>x.Id==id);
         }
-
         public async Task<CustomerPackage> SaveAsyn(CustomerPackage customerPacket)
         {
                 await this.Update(customerPacket);
             await this.SaveChangesAsync();
             return await GetCustomerPackageById(customerPacket.Id);
+        }
+        public async Task<CustomerPackage> GetCustomerPackgageAndItemsbyId(int id)
+        {
+            return await this.Get().Include(x=>x.Items).Include(x=>x.Package).FirstOrDefaultAsync(x => x.Id == id);
         }
     }
 }

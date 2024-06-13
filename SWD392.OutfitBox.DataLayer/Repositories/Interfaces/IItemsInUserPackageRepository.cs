@@ -12,8 +12,9 @@ namespace SWD392.OutfitBox.DataLayer.Interfaces
         Task<List<ItemInUserPackage>> GetAllItemInPacket();
         Task<ItemInUserPackage> GetById(int id);
         Task<ItemInUserPackage> CreateItemInUserPackage(ItemInUserPackage item);
-        Task<bool> UpdateItem(ItemInUserPackage item);
+        Task<ItemInUserPackage> UpdateItem(ItemInUserPackage item);
         Task<bool> UnactiveStatus(ItemInUserPackage item);
         Task<ItemInUserPackage[]> CreateItemsInUserPackage(ItemInUserPackage[] itemInUserPackages);
+        Task<bool> DeleteItem(int itemId);
     }
 }
