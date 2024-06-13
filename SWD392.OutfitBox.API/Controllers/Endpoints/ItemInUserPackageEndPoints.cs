@@ -2,6 +2,7 @@
 {
     public static class ItemInUserPackageEndPoints
     {
-        public const string ItemInUserPackages = "/item-in-user-packages";
+        public const string ItemsInUserPackages = "/products-in-customer-package";
+        public const string ItemInUserPackages = "/products-in-customer-package/{id}";
     }
 }

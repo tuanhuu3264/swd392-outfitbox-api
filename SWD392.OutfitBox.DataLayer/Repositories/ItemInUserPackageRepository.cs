@@ -52,6 +52,12 @@ namespace SWD392.OutfitBox.DataLayer.Repositories
             await this.SaveChangesAsync();
             return await this.GetById(item.Id); ;
         }
-        
+        public async Task<bool> DeleteItem(int itemId)
+        {
+            var obj =  await this.GetById(itemId);
+            await this.Delete(obj);
+            return true;
+
+        }
     }
 }
