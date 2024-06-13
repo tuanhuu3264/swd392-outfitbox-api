@@ -87,7 +87,7 @@ namespace SWD392.OutfitBox.API.Controllers
             }
             return StatusCode((int)response.StatusCode, response);
         }
-        [HttpPut(Endpoints.ProductsController.product)]
+        [HttpPatch(Endpoints.ProductsController.product)]
         public async Task<IActionResult> UpdateProduct([FromBody] UpdateProductDto product)
         {
             BaseResponse<ProductDetailDto> response;
