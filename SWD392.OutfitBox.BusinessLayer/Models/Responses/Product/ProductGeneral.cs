@@ -13,10 +13,12 @@ namespace SWD392.OutfitBox.BusinessLayer.Models.Responses.Product
         public float Price { get; set; }
         public string Size { get; set; } = string.Empty;
         public float Deposit { get; set; }
+        public int IdCategory { get; set; }
         public string Description { get; set; } = string.Empty;
         public string Status { get; set; }= string.Empty;
         public string Category { get; set; } = string.Empty;
         public string Brand { get; set; } =string.Empty;
+        public int IdBrand {  get; set; }
         public string Type { get; set; } = string.Empty;
         public string ImgUrl { get; set; } = string.Empty; 
     }
