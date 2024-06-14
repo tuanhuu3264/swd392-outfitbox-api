@@ -23,7 +23,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.ReturnOrderService
 
         public async Task<CreateReturnOrderResponseDTO> CreateReturnOrder(CreateReturnOrderRequestDTO requestDTO)
         {
-            var mappingReturnOrder = _mapper.Map<ReturnOrder>(requestDTO);
+            var mappingReturnOrder = _mapper.Map<ReturnOrderModel>(requestDTO);
             var result = await _unitOfWork._returnOrderRepository.CreateReturnOrder(mappingReturnOrder);
             return _mapper.Map<CreateReturnOrderResponseDTO>(result);
         }

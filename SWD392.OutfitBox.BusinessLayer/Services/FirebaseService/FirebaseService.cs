@@ -36,7 +36,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.FirebaseService
 
             if (customer == null)
             {
-                var newCustomer = new Customer
+                var newCustomer = new CustomerModel
                 {
                     Email = result.Email,
                     Name = result.Name == null ? $"User {DateTime.Now.ToString("HHmmyyyy")}" : result.Name,
@@ -128,7 +128,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.FirebaseService
 
             if (customer == null)
             {
-                var newCustomer = new Customer
+                var newCustomer = new CustomerModel
                 {
                     Email = result.Email,
                     Name = result.Name == null ? $"User {DateTime.Now.ToString("HHmmyyyy")}" : result.Name,

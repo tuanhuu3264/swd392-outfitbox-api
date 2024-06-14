@@ -36,7 +36,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.ProductService
         }
         public async Task<ProductDetailDto> CreateProduct(CreatedProductDto createdProduct)
         {
-                var product = _mapper.Map<Product>(createdProduct);
+                var product = _mapper.Map<ProductModel>(createdProduct);
                 product.Status = 0;
                 product.AvailableQuantity = product.Quantity;
                 product.Brand = await _unitOfWork._brandRepository.GetById(createdProduct.IdBrand);
@@ -47,7 +47,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.ProductService
                 var data = _mapper.Map<ProductDetailDto>(productCreate);
                 return data;
         }
-        public async Task<ProductDetailDto> UpdateProduct(Product updateProduct)
+        public async Task<ProductDetailDto> UpdateProduct(ProductModel updateProduct)
         {
                 await _unitOfWork._imageRepository.DeleteImageByProductId(updateProduct.ID);
                 var product = await _repository.GetDetail(updateProduct.ID);

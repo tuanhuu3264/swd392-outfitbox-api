@@ -87,7 +87,7 @@ namespace BusinessLayer.Services
                 var order = await _unitOfWork._customerPackageRepository.GetCustomerPackageById(int.Parse(orderId));
                 if (order == null) throw new Exception("Error to payment: Can not find order to payment");
 
-                var deposit = new Deposit()
+                var deposit = new DepositModel()
                 {
                     CustomerId = dto.userId,
                     AmountMoney = vnp_Amount,
@@ -99,7 +99,7 @@ namespace BusinessLayer.Services
                 var wallet = await _unitOfWork._walletRepository.GetWalletByCode(bankCode);
                 if (wallet.Id == 0)
                 {
-                    wallet = new Wallet
+                    wallet = new WalletModel
                     {
                         WalletCode = bankCode,
                         WalletName = "Test",
@@ -112,7 +112,7 @@ namespace BusinessLayer.Services
                     wallet = await _unitOfWork._walletRepository.CreateWallet(dto.userId, wallet);
                 }
 
-                var transaction = new Transaction()
+                var transaction = new TransactionModel()
                 {
                     DateTransaction = DateTime.Now,
                     Amount = vnp_Amount,

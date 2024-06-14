@@ -35,14 +35,14 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.TransactionService
         }
         public async Task<string> Checkout(CheckoutTransactionRequestDTO checkoutTransactionRequestDTO)
         {
-            var transaction = new Transaction()
+            var transaction = new TransactionModel()
             {
                 WalletId = checkoutTransactionRequestDTO.WalletId,
                 DateTransaction = DateTime.Now
             };
             var createdTransaction = await _transactionRepository.CreateTransaction(transaction);
             var package = await _packageRepository.GetPackageById(checkoutTransactionRequestDTO.PackageId);
-            var userPackage = new CustomerPackage()
+            var userPackage = new CustomerPackageModel()
             {
                 PackageId = checkoutTransactionRequestDTO.PackageId,
                 DateFrom = DateTime.Now,
@@ -58,7 +58,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.TransactionService
             userPackage.Status = 1;
             var createdUserPackage = _userPackageRepository.CreateUserPackage(userPackage);
             var itemsInUserPackage = checkoutTransactionRequestDTO.Items?.Select(async x => {
-                var returnedItem = new ItemInUserPackage()
+                var returnedItem = new ItemInUserPackageModel()
                 {
                     ProductId = x.ProductId,
                     UserPackageId = createdUserPackage.Id,

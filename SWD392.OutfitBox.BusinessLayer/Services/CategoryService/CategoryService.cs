@@ -32,7 +32,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.CategoryService
         public async Task<CreateCategoryResponseDTO> CreateCategory(CreateCategoryRequestDTO category)
         {
             category.Status = 1;
-            var mappingCategory = _mapper.Map<Category>(category);
+            var mappingCategory = _mapper.Map<CategoryModel>(category);
             var createdCategory = await _categoryRepository.CreateCategory(mappingCategory);
             return _mapper.Map<CreateCategoryResponseDTO>(createdCategory);
         }
@@ -47,7 +47,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.CategoryService
             return _mapper.Map<CategoryDTO>(await _categoryRepository.GetById(id)); 
         }
 
-        public async Task<UpdateCategoryResponseDTO> UpdateCategory(Category category)
+        public async Task<UpdateCategoryResponseDTO> UpdateCategory(CategoryModel category)
         {
             var checkingCategory = await _categoryRepository.GetById(category.ID);
 

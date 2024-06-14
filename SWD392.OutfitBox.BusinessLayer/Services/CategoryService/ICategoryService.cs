@@ -16,7 +16,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.CategoryService
         public Task<CategoryDTO> GetCategoryById(int id);
         
         public Task<CreateCategoryResponseDTO> CreateCategory(CreateCategoryRequestDTO category);
-        public Task<UpdateCategoryResponseDTO> UpdateCategory(Category category);
+        public Task<UpdateCategoryResponseDTO> UpdateCategory(CategoryModel category);
         public Task<CategoryDTO> ActiveOrDeactiveCategory(int id);
     }
 }

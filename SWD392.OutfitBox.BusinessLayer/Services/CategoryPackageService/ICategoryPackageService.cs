@@ -15,7 +15,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.CategoryPackageService
     {
         public Task<List<CategoryPackageDTO>> GetAllCategoryPackagesByPackageId(int packageId);
         public Task<CreateCategoryPackageResponseDTO> CreatePackage(CreateCategoryPackageRequestDTO request);
-        public Task<UpdateCategoryPackageResponseDTO> UpdatePackage(CategoryPackage request);
+        public Task<UpdateCategoryPackageResponseDTO> UpdatePackage(CategoryPackageModel request);
         public Task<DeleteCategoryPackageResponseDTO> DeletePackageById(int id); 
     }
 }

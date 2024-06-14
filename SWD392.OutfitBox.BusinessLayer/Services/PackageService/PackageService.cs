@@ -43,7 +43,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.PackageService
         {
             var mappingPackage = _mapper.Map<Package>(package);
 
-            var createdCategoriesInPackage = package.CategoryPackages?.Select(x => new CategoryPackage()
+            var createdCategoriesInPackage = package.CategoryPackages?.Select(x => new CategoryPackageModel()
             {
                 CategoryId=x.CategoryId,
                 MaxAvailableQuantity=x.MaxAvailableQuantity,
@@ -83,7 +83,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.PackageService
             package.AvailableRentDays = packageDTO.AvailableRentDays;
             package.Name = packageDTO.Name;
             if (package.CategoryPackages != null)
-                foreach(CategoryPackage categoryPackage in package.CategoryPackages)
+                foreach(CategoryPackageModel categoryPackage in package.CategoryPackages)
                 {
                     if(packageDTO.CategoryPackages!=null && packageDTO.CategoryPackages.Select(x=>x.CategoryId).Contains(categoryPackage.CategoryId)) 
                     { 

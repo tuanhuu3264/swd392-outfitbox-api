@@ -33,7 +33,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.UserService
 
         public async Task<CreateCustomerResponseDTO> CreateCustomer(CreateCustomerRequestDTO customer)
         {
-            var mappingCustomer = _mapper.Map<Customer>(customer);
+            var mappingCustomer = _mapper.Map<CustomerModel>(customer);
             if(await IsDuplicatedEmailNormal(customer.Email))
             {
                 throw new Exception("Email is duplicated.");
@@ -66,7 +66,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.UserService
             {
                 throw new Exception("Phone is existed.");
             }
-            var mappingCustomer = _mapper.Map<Customer>(user);
+            var mappingCustomer = _mapper.Map<CustomerModel>(user);
             var result = await _customerRepository.UpdateCustomer(mappingCustomer);
 
             return _mapper.Map<UpdateCustomerResponseDTO>(result);

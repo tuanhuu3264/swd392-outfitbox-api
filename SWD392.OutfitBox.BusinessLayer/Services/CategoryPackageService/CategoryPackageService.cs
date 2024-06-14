@@ -26,7 +26,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.CategoryPackageService
 
         public async Task<CreateCategoryPackageResponseDTO> CreatePackage(CreateCategoryPackageRequestDTO request)
         {
-            var mappingCategoryPackage = _mapper.Map<CategoryPackage>(request);
+            var mappingCategoryPackage = _mapper.Map<CategoryPackageModel>(request);
             mappingCategoryPackage.Status = 1;
             var createdCategoryPackage = await _categoryPackageRepository.CreateCategoryPackage(mappingCategoryPackage);
             return _mapper.Map<CreateCategoryPackageResponseDTO>(createdCategoryPackage);
@@ -49,7 +49,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.CategoryPackageService
             return (await _categoryPackageRepository.GetAllCategoryPackagesByPackageId(packageId)).Select(x => _mapper.Map<CategoryPackageDTO>(x)).ToList();
         }
 
-        public async Task<UpdateCategoryPackageResponseDTO> UpdatePackage(CategoryPackage request)
+        public async Task<UpdateCategoryPackageResponseDTO> UpdatePackage(CategoryPackageModel request)
         {
             var updatedCategoryPackage = await _categoryPackageRepository.GetCategoryPackageById(request.Id);
        

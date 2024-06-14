@@ -29,7 +29,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.ReviewService
 
         public async Task<CreateReviewResponseDTO> CreateReview(CreateReviewRequestDTO requestDTO)
         {
-            var review = _mapper.Map<Review>(requestDTO);
+            var review = _mapper.Map<ReviewModel>(requestDTO);
             review.Date = DateTime.Now;
             review.Status = 0;
             var result = await _reviewRepository.CreateReview(review);

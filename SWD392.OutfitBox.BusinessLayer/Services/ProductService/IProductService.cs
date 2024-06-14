@@ -16,7 +16,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.ProductService
         Task<List<ProductGeneral>> GetList(int? pageIndex = null, int? pageSize = null, string sorted = "", string orders = "", string name = "", List<int>? idBrand = null, List<int>? idCategory = null,int? status=null, double? maxMoney = null, double? minMoney = null);
         Task<ProductDetailDto> CreateProduct(CreatedProductDto createdProduct);
         Task<ProductDetailDto> GetById(int Id);
-        Task<ProductDetailDto> UpdateProduct(Product updateProduct);
+        Task<ProductDetailDto> UpdateProduct(ProductModel updateProduct);
         
     }
 }
