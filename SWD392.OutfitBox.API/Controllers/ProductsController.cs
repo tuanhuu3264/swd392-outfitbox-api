@@ -2,13 +2,9 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using SWD392.OutfitBox.API.Configurations.HTTPResponse;
 using SWD392.OutfitBox.API.Controllers.Endpoints;
-using SWD392.OutfitBox.BusinessLayer.Models.Requests.Product;
-using SWD392.OutfitBox.BusinessLayer.Models.Responses.Area;
-using SWD392.OutfitBox.BusinessLayer.Models.Responses.Partner;
-using SWD392.OutfitBox.BusinessLayer.Models.Responses.Product;
+using SWD392.OutfitBox.API.DTOs.Product;
+using SWD392.OutfitBox.BusinessLayer.BusinessModels;
 using SWD392.OutfitBox.BusinessLayer.Services.ProductService;
-using SWD392.OutfitBox.DataLayer.Entities;
-using System.Globalization;
 using System.Net;
 
 namespace SWD392.OutfitBox.API.Controllers
@@ -46,15 +42,15 @@ namespace SWD392.OutfitBox.API.Controllers
                                                 [FromQuery(Name ="_deposit.min")]
                                                 double? minMoney = null)
         {
-            BaseResponse<List<ProductGeneral>> response;
+            BaseResponse<List<ProductModel>> response;
             try
             {
                 var data = await _productService.GetList(started, ended, sorted, orders, name, idBrand, idCategory, status, maxMoney, minMoney);
-                response = new BaseResponse<List<ProductGeneral>>("Get Product successfully.", HttpStatusCode.OK, data);
+                response = new BaseResponse<List<ProductModel>>("Get Product successfully.", HttpStatusCode.OK, data);
             }
             catch (Exception ex)
             {
-                response = new BaseResponse<List<ProductGeneral>>(ex.Message, HttpStatusCode.InternalServerError, null);
+                response = new BaseResponse<List<ProductModel>>(ex.Message, HttpStatusCode.InternalServerError, null);
             }
             return StatusCode((int)response.StatusCode, response);
         }
@@ -79,31 +75,31 @@ namespace SWD392.OutfitBox.API.Controllers
                                                 [FromQuery(Name ="_deposit.min")]
                                                 double? minMoney = null)
         {
-            BaseResponse<List<ProductGeneral>> response;
+            BaseResponse<List<ProductModel>> response;
             try
             {
                 var data = await _productService.GetList(started,ended, sorted, orders, name, idBrand, idCategory,1, maxMoney, minMoney);
-                response = new BaseResponse<List<ProductGeneral>>("Get Product successfully.", HttpStatusCode.OK, data);
+                response = new BaseResponse<List<ProductModel>>("Get Product successfully.", HttpStatusCode.OK, data);
             }
             catch (Exception ex)
             {
-                response = new BaseResponse<List<ProductGeneral>>(ex.Message, HttpStatusCode.InternalServerError, null);
+                response = new BaseResponse<List<ProductModel>>(ex.Message, HttpStatusCode.InternalServerError, null);
             }
             return StatusCode((int)response.StatusCode, response);
         }
         [HttpPost(Endpoints.ProductsController.product)]
         public async Task<IActionResult> CreateProduct([FromBody] CreatedProductDto productDto)
         {
-            BaseResponse<ProductDetailDto> response;
+            BaseResponse<ProductModel> response;
             try
-            {
-                var result = await _productService.CreateProduct(productDto);
-                if (result.Id <= 0) response = new BaseResponse<ProductDetailDto>("Can not found", HttpStatusCode.NotFound, null);
-                else response = new BaseResponse<ProductDetailDto>("Product:", HttpStatusCode.OK, result);
+            {   
+                var mapping = _mapper.Map<ProductModel>(productDto);
+                var result = await _productService.CreateProduct(mapping);
+                response = new BaseResponse<ProductModel>("Product:", HttpStatusCode.OK, result);
             }
             catch (Exception ex)
             {
-                response = new BaseResponse<ProductDetailDto>(ex.Message, HttpStatusCode.InternalServerError, null);
+                response = new BaseResponse<ProductModel>(ex.Message, HttpStatusCode.InternalServerError, null);
             }
             return StatusCode((int)response.StatusCode, response);
         }
@@ -111,36 +107,37 @@ namespace SWD392.OutfitBox.API.Controllers
         [HttpGet(Endpoints.ProductsController.productDetail)]
         public async Task<IActionResult> GetProductbyId([FromRoute] int id)
         {
-            BaseResponse<ProductDetailDto> response;
+            BaseResponse<ProductModel> response;
             try
             {
                 var result = await _productService.GetById(id);
-                if (result.Id <= 0) response = new BaseResponse<ProductDetailDto>("Can not found",HttpStatusCode.NotFound,null);
-                else response = new BaseResponse<ProductDetailDto>("Product:",HttpStatusCode.OK,result);
+                if (result==null) response = new BaseResponse<ProductModel>("Can not found",HttpStatusCode.NotFound,null);
+                else response = new BaseResponse<ProductModel>("Product:",HttpStatusCode.OK,result);
             }
             catch(Exception ex) {
-                response = new BaseResponse<ProductDetailDto>(ex.Message, HttpStatusCode.InternalServerError, null);
+                response = new BaseResponse<ProductModel>(ex.Message, HttpStatusCode.InternalServerError, null);
             }
             return StatusCode((int)response.StatusCode, response);
         }
         [HttpPatch("products/{id}")]
         public async Task<IActionResult> UpdateProduct([FromBody] UpdateProductDto product, [FromRoute] int id)
         {
-            BaseResponse<ProductDetailDto> response;
+            BaseResponse<ProductModel> response;
             try
             {
-                var mappingProduct = _mapper.Map<Product>(product);
+                var mappingProduct = _mapper.Map<ProductModel>(product);
                 mappingProduct.ID= id;
+
                 var result = await _productService.UpdateProduct(mappingProduct);
-                response = new BaseResponse<ProductDetailDto>("Product:", HttpStatusCode.OK, result);
+                response = new BaseResponse<ProductModel>("Product:", HttpStatusCode.OK, result);
             }
             catch(ArgumentNullException ex)
             {
-                response = new BaseResponse<ProductDetailDto>(ex.Message, HttpStatusCode.NotFound, null);
+                response = new BaseResponse<ProductModel>(ex.Message, HttpStatusCode.NotFound, null);
             }
             catch (Exception ex)
             {
-                response = new BaseResponse<ProductDetailDto>(ex.Message, HttpStatusCode.InternalServerError, null);
+                response = new BaseResponse<ProductModel>(ex.Message, HttpStatusCode.InternalServerError, null);
             }
             return StatusCode((int)response.StatusCode, response);
         }

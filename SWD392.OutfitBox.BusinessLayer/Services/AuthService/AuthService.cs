@@ -2,12 +2,9 @@
 using FirebaseAdmin.Auth;
 using Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Infrastructure;
 using Microsoft.IdentityModel.Tokens;
+using SWD392.OutfitBox.BusinessLayer.BusinessModels;
 using SWD392.OutfitBox.BusinessLayer.Exceptions.Auth;
 using SWD392.OutfitBox.BusinessLayer.Helpers;
-using SWD392.OutfitBox.BusinessLayer.Models.Requests;
-using SWD392.OutfitBox.BusinessLayer.Models.Requests.Auth;
-using SWD392.OutfitBox.BusinessLayer.Models.Responses.Auth;
-using SWD392.OutfitBox.BusinessLayer.Models.Responses.Customer;
 using SWD392.OutfitBox.DataLayer.Entities;
 using SWD392.OutfitBox.DataLayer.Interfaces;
 using SWD392.OutfitBox.DataLayer.Repositories.Interfaces;
@@ -30,29 +27,27 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.AuthService{
             _partnerRepository = partnerRepository;
         }
 
-        public async Task<LoginSystemResponseDTO> LoginSystem(LoginSystemRequestDTO loginSystemRequestDTO)
+        public async Task<LoginModel> LoginSystem(string email, string password)
         {
-            var email = loginSystemRequestDTO.Email?.ToLower().Trim();
-            var password = loginSystemRequestDTO.Password;
-            var checking = await _userRepository.CheckLogin(email, password);
-            if (!checking) return new LoginSystemResponseDTO();
+       
+            var checking = await _userRepository.CheckLogin(email.ToLower().Trim(), password);
+            if (!checking) return new LoginModel();
             var user = await _userRepository.GetUserByEmail(email);
             var tokenHandler =  AuthHelper.GetUserToken(user,user.Role.Name);
-            return  new LoginSystemResponseDTO()
+            return  new LoginModel()
             { 
               Token= new JwtSecurityTokenHandler().WriteToken(tokenHandler),
               Expiration= tokenHandler.ValidTo
             };
         }
-        public async Task<LoginPartnerResponseDTO> LoginPartner(LoginPartnerRequestDTO loginPartnerRequestDTO)
+        public async Task<LoginModel> LoginPartner(string email, string password)
         {
-            var email = loginPartnerRequestDTO.Email?.ToLower().Trim();
-            var password = loginPartnerRequestDTO.Password;
-            var checking = await _partnerRepository.GetPartners(null,null,null,null, email);
-            if (checking.IsNullOrEmpty()) return new LoginPartnerResponseDTO();
+            var checking = await _partnerRepository.GetPartners(null,null,null,null, email.ToLower().Trim());
+            if (checking.IsNullOrEmpty()) return new LoginModel();
+            if(checking.First().Password!=password) return new LoginModel();
             var partner = checking.First();
             var tokenHandler = AuthHelper.GetPartnerToken(partner);
-            return new LoginPartnerResponseDTO()
+            return new LoginModel()
             {
                 Token = new JwtSecurityTokenHandler().WriteToken(tokenHandler),
                 Expiration = tokenHandler.ValidTo

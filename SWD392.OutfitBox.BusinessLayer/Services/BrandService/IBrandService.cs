@@ -1,5 +1,6 @@
-﻿using SWD392.OutfitBox.BusinessLayer.Models.Requests.Brand;
-using SWD392.OutfitBox.BusinessLayer.Models.Responses.Brand;
+﻿
+
+using SWD392.OutfitBox.BusinessLayer.BusinessModels;
 using SWD392.OutfitBox.DataLayer.Entities;
 using System;
 using System.Collections.Generic;
@@ -11,11 +12,11 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.BrandService
 {
     public interface IBrandService
     {
-        public Task<List<BrandDTO>> GetAllBrands();
-        public Task<CreateBrandResponseDTO> CreateBrand(CreateBrandRequestDTO brand);
-        public Task<UpdateBrandResponseDTO> UpdateBrand(Brand brand);
+        public Task<List<BrandModel>> GetAllBrands();
+        public Task<BrandModel> CreateBrand(BrandModel brand);
+        public Task<BrandModel> UpdateBrand(BrandModel brand);
         public Task<bool> DeleteBrand(int id);
-        public Task<BrandDTO> UpdateStatus(int id, int status);
-        public Task<BrandDTO> GetBrandById(int id);
+        public Task<BrandModel> UpdateStatus(int id, int status);
+        public Task<BrandModel> GetBrandById(int id);
     }
 }

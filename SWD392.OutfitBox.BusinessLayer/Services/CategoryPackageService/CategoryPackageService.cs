@@ -1,7 +1,4 @@
 ﻿using AutoMapper;
-using SWD392.OutfitBox.BusinessLayer.Models.Requests.CategoryPackage;
-using SWD392.OutfitBox.BusinessLayer.Models.Requests.Package;
-using SWD392.OutfitBox.BusinessLayer.Models.Responses.CategoryPackage;
 using SWD392.OutfitBox.DataLayer.RepoInterfaces;
 using SWD392.OutfitBox.DataLayer.Entities;
 using System;
@@ -11,6 +8,7 @@ using System.Runtime.InteropServices;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
+using SWD392.OutfitBox.BusinessLayer.BusinessModels;
 
 namespace SWD392.OutfitBox.BusinessLayer.Services.CategoryPackageService
 {
@@ -24,39 +22,34 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.CategoryPackageService
             _mapper = mapper;
         }
 
-        public async Task<CreateCategoryPackageResponseDTO> CreatePackage(CreateCategoryPackageRequestDTO request)
+        public async Task<CategoryPackageModel> CreatePackage(CategoryPackageModel request)
         {
             var mappingCategoryPackage = _mapper.Map<CategoryPackage>(request);
             mappingCategoryPackage.Status = 1;
             var createdCategoryPackage = await _categoryPackageRepository.CreateCategoryPackage(mappingCategoryPackage);
-            return _mapper.Map<CreateCategoryPackageResponseDTO>(createdCategoryPackage);
+            return _mapper.Map<CategoryPackageModel>(createdCategoryPackage);
         }
-        public async Task<DeleteCategoryPackageResponseDTO> DeletePackageById(int id)
+        public async Task<bool> DeletePackageById(int id)
         {
             var result = await _categoryPackageRepository.DeleateCategoryPackageById(id);
-            if (result == true) return new DeleteCategoryPackageResponseDTO()
-            {
-                Message = "Delete CategoryPackage successfully."
-            };
-            return new DeleteCategoryPackageResponseDTO()
-            {
-                Message = "Delete CategoryPackage fail."
-            };
+            if (result == true) return true;
+            return false;
         }
 
-        public async Task<List<CategoryPackageDTO>> GetAllCategoryPackagesByPackageId(int packageId)
+        public async Task<List<CategoryPackageModel>> GetAllCategoryPackagesByPackageId(int packageId)
         {
-            return (await _categoryPackageRepository.GetAllCategoryPackagesByPackageId(packageId)).Select(x => _mapper.Map<CategoryPackageDTO>(x)).ToList();
+            return (await _categoryPackageRepository.GetAllCategoryPackagesByPackageId(packageId)).Select(x => _mapper.Map<CategoryPackageModel>(x)).ToList();
         }
 
-        public async Task<UpdateCategoryPackageResponseDTO> UpdatePackage(CategoryPackage request)
+        public async Task<CategoryPackageModel> UpdatePackage(CategoryPackageModel request)
         {
-            var updatedCategoryPackage = await _categoryPackageRepository.GetCategoryPackageById(request.Id);
+            if (request.Id.HasValue == false) throw new Exception("There is no id in model.");
+            var updatedCategoryPackage = await _categoryPackageRepository.GetCategoryPackageById(request.Id.Value);
        
-            updatedCategoryPackage.MaxAvailableQuantity = request.MaxAvailableQuantity;
+            _mapper.Map(request, updatedCategoryPackage);
             var returnedCategoryPackage = await _categoryPackageRepository.UpdateCategoryPackage(updatedCategoryPackage);
             
-            return _mapper.Map<UpdateCategoryPackageResponseDTO>(returnedCategoryPackage);
+            return _mapper.Map<CategoryPackageModel>(returnedCategoryPackage);
             
         }
     }

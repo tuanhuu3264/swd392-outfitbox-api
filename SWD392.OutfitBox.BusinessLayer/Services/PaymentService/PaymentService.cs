@@ -1,8 +1,6 @@
-﻿using AutoMapper;
+﻿/*using AutoMapper;
 using SWD392.OutfitBox.BusinessLayer.Enum;
-using SWD392.OutfitBox.BusinessLayer.Models.Requests.Transaction;
-using SWD392.OutfitBox.BusinessLayer.Models.Requests.VNPay;
-using SWD392.OutfitBox.BusinessLayer.Models.Responses.VNPay;
+
 using SWD392.OutfitBox.BusinessLayer.Services.PaymentService;
 using SWD392.OutfitBox.DataLayer.Entities;
 using SWD392.OutfitBox.DataLayer.UnitOfWork;
@@ -87,7 +85,7 @@ namespace BusinessLayer.Services
                 var order = await _unitOfWork._customerPackageRepository.GetCustomerPackageById(int.Parse(orderId));
                 if (order == null) throw new Exception("Error to payment: Can not find order to payment");
 
-                var deposit = new Deposit()
+                var deposit = new DepositModel()
                 {
                     CustomerId = dto.userId,
                     AmountMoney = vnp_Amount,
@@ -112,11 +110,11 @@ namespace BusinessLayer.Services
                     wallet = await _unitOfWork._walletRepository.CreateWallet(dto.userId, wallet);
                 }
 
-                var transaction = new Transaction()
+                var transaction = new TransactionModel()
                 {
                     DateTransaction = DateTime.Now,
                     Amount = vnp_Amount,
-                    Status = /*transactionStatus*/ 1,
+                    Status = *//*transactionStatus*//* 1,
                     Paymethod = "Online",
                     WalletId = wallet.Id,
                     DepositId = deposit.Id
@@ -219,4 +217,4 @@ namespace BusinessLayer.Services
 
 
     }
-}
+}*/

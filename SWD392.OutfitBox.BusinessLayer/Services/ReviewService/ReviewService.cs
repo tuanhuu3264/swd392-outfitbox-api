@@ -1,6 +1,4 @@
 ﻿using AutoMapper;
-using SWD392.OutfitBox.BusinessLayer.Models.Requests.Review;
-using SWD392.OutfitBox.BusinessLayer.Models.Responses.Review;
 using SWD392.OutfitBox.DataLayer.RepoInterfaces;
 using SWD392.OutfitBox.DataLayer.Entities;
 using SWD392.OutfitBox.DataLayer.Interfaces;
@@ -9,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SWD392.OutfitBox.BusinessLayer.BusinessModels;
 
 namespace SWD392.OutfitBox.BusinessLayer.Services.ReviewService
 {
@@ -21,47 +20,41 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.ReviewService
             _reviewRepository = reviewRepository;
             _mapper = mapper;
         }
-        public async Task<ReviewDTO> ActiveOrDeactiveReviewById(int id)
+        public async Task<ReviewModel> ActiveOrDeactiveReviewById(int id)
         {
             var result = await _reviewRepository.ActiveOrDeactiveReview(id);
-            return _mapper.Map<ReviewDTO>(result);
+            return _mapper.Map<ReviewModel>(result);
         }
 
-        public async Task<CreateReviewResponseDTO> CreateReview(CreateReviewRequestDTO requestDTO)
+        public async Task<ReviewModel> CreateReview(ReviewModel requestDTO)
         {
             var review = _mapper.Map<Review>(requestDTO);
             review.Date = DateTime.Now;
             review.Status = 0;
             var result = await _reviewRepository.CreateReview(review);
-            return _mapper.Map<CreateReviewResponseDTO>(result);
+            return _mapper.Map<ReviewModel>(result);
         }
 
-        public async Task<DeleteReviewResponseDTO> DeleteReviewById(int id)
+        public async Task<bool> DeleteReviewById(int id)
         {
             var result = await _reviewRepository.DeleteReviewById(id);
-            if (result == true) return new DeleteReviewResponseDTO()
-            {
-                Message = "Delete Review Successfully."
-            };
-           return new DeleteReviewResponseDTO()
-           {
-               Message= "Delete Review Fail."
-           };
+            if (result == true) return true;
+           return false;
         }
 
-        public async Task<List<ReviewDTO>> GetAllEnabledReviews()
+        public async Task<List<ReviewModel>> GetAllEnabledReviews()
         {
-            return (await _reviewRepository.GetAllEnabledReviews()).Select(x => _mapper.Map<ReviewDTO>(x)).ToList();
+            return (await _reviewRepository.GetAllEnabledReviews()).Select(x => _mapper.Map<ReviewModel>(x)).ToList();
         }
 
-        public async Task<List<ReviewDTO>> GetAllEnabledReviewsByCustomerId(int customerId)
+        public async Task<List<ReviewModel>> GetAllEnabledReviewsByCustomerId(int customerId)
         {
-            return (await _reviewRepository.GetAllEnabledReviewsByCustomerId(customerId)).Select(x => _mapper.Map<ReviewDTO>(x)).ToList();
+            return (await _reviewRepository.GetAllEnabledReviewsByCustomerId(customerId)).Select(x => _mapper.Map<ReviewModel>(x)).ToList();
         }
 
-        public async Task<ReviewDTO> GetReviewById(int id)
+        public async Task<ReviewModel> GetReviewById(int id)
         {
-            return _mapper.Map<ReviewDTO>(await _reviewRepository.GetReviewById(id));
+            return _mapper.Map<ReviewModel>(await _reviewRepository.GetReviewById(id));
         }
     }
 }

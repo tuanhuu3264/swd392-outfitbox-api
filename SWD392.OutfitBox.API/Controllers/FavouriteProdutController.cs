@@ -2,8 +2,9 @@
 using Microsoft.AspNetCore.Mvc;
 using SWD392.OutfitBox.API.Configurations.HTTPResponse;
 using SWD392.OutfitBox.API.Controllers.Endpoints;
-using SWD392.OutfitBox.BusinessLayer.Models.Responses.FavouriteProduct;
+
 using SWD392.OutfitBox.BusinessLayer.Services.FavouriteProduct;
+using SWD392.OutfitBox.DataLayer.Entities;
 using System.Net;
 
 namespace SWD392.OutfitBox.API.Controllers
@@ -18,16 +19,16 @@ namespace SWD392.OutfitBox.API.Controllers
             _favouriteProductService = favouriteProductService;
         }
         [HttpPost("favourited-products/customers/{customerId}/products/{productId}")]
-        public async Task<ActionResult<BaseResponse<CreateFavouriteProductResponseDTO>>> CreateFavouriteProduct(int customerId, int productId)
+        public async Task<ActionResult<BaseResponse<FavouriteProductModel>>> CreateFavouriteProduct(int customerId, int productId)
         {
-            BaseResponse<CreateFavouriteProductResponseDTO> response; 
+            BaseResponse<FavouriteProductModel> response; 
             try
             {
                 var data = await _favouriteProductService.CreateFavouriteProduct(productId, customerId);
-                response = new BaseResponse<CreateFavouriteProductResponseDTO>("Create favourite product successfully.", HttpStatusCode.OK, data);
+                response = new BaseResponse<FavouriteProductModel>("Create favourite product successfully.", HttpStatusCode.OK, data);
             }catch(Exception ex)
             {
-                response = new BaseResponse<CreateFavouriteProductResponseDTO>(ex.Message, HttpStatusCode.InternalServerError, null);
+                response = new BaseResponse<FavouriteProductModel>(ex.Message, HttpStatusCode.InternalServerError, null);
             }
             return response;
         }

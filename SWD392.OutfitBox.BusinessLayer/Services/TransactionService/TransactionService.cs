@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+﻿/*using AutoMapper;
 using AutoMapper.Configuration.Annotations;
 using SWD392.OutfitBox.BusinessLayer.Models.Requests.Transaction;
 using SWD392.OutfitBox.BusinessLayer.Models.Responses.Transaction;
@@ -12,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SWD392.OutfitBox.DataLayer.Repositories.Interfaces;
+using SWD392.OutfitBox.BusinessLayer.BusinessModels;
 
 namespace SWD392.OutfitBox.BusinessLayer.Services.TransactionService
 {
@@ -35,14 +36,14 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.TransactionService
         }
         public async Task<string> Checkout(CheckoutTransactionRequestDTO checkoutTransactionRequestDTO)
         {
-            var transaction = new Transaction()
+            var transaction = new TransactionModel()
             {
                 WalletId = checkoutTransactionRequestDTO.WalletId,
                 DateTransaction = DateTime.Now
             };
             var createdTransaction = await _transactionRepository.CreateTransaction(transaction);
             var package = await _packageRepository.GetPackageById(checkoutTransactionRequestDTO.PackageId);
-            var userPackage = new CustomerPackage()
+            var userPackage = new CustomerPackageModel()
             {
                 PackageId = checkoutTransactionRequestDTO.PackageId,
                 DateFrom = DateTime.Now,
@@ -58,7 +59,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.TransactionService
             userPackage.Status = 1;
             var createdUserPackage = _userPackageRepository.CreateUserPackage(userPackage);
             var itemsInUserPackage = checkoutTransactionRequestDTO.Items?.Select(async x => {
-                var returnedItem = new ItemInUserPackage()
+                var returnedItem = new ItemInUserPackageModel()
                 {
                     ProductId = x.ProductId,
                     UserPackageId = createdUserPackage.Id,
@@ -81,3 +82,4 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.TransactionService
         }
     }
 }
+*/

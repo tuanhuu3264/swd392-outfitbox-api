@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
-using SWD392.OutfitBox.BusinessLayer.Models.Requests.Brand;
-using SWD392.OutfitBox.BusinessLayer.Models.Responses.Brand;
+using SWD392.OutfitBox.BusinessLayer.BusinessModels;
 using SWD392.OutfitBox.DataLayer.Entities;
 using SWD392.OutfitBox.DataLayer.Interfaces;
 using SWD392.OutfitBox.DataLayer.UnitOfWork;
@@ -21,24 +20,25 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.BrandService
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
-        public async Task<List<BrandDTO>> GetAllBrands()
+        public async Task<List<BrandModel>> GetAllBrands()
         {
             var data = await _unitOfWork._brandRepository.GetAllBrands();
-            return data.Select(x => _mapper.Map<BrandDTO>(x)).ToList();
+            return data.Select(x => _mapper.Map<BrandModel>(x)).ToList();
         }
 
-        public async Task<CreateBrandResponseDTO> CreateBrand(CreateBrandRequestDTO brand)
+        public async Task<BrandModel> CreateBrand(BrandModel brand)
         {
             var addedBrand = _mapper.Map<Brand>(brand);
             addedBrand.Status = 1;
             addedBrand.IsFeatured = true;
             var result = await _unitOfWork._brandRepository.CreateBrand(addedBrand);
-            return _mapper.Map<CreateBrandResponseDTO>(result);
+            return _mapper.Map<BrandModel>(result);
         }
 
-        public async Task<UpdateBrandResponseDTO> UpdateBrand(Brand brand)
+        public async Task<BrandModel> UpdateBrand(BrandModel brand)
         {
-            var checking = await _unitOfWork._brandRepository.GetById(brand.ID);
+            if (brand.ID.HasValue == false) throw new Exception("There is no id in model.");
+            var checking = await _unitOfWork._brandRepository.GetById(brand.ID.Value);
             if (checking == null) throw new ArgumentNullException("There is not found brand.");
 
             if(brand.ImageUrl != null) checking.ImageUrl=brand.ImageUrl;
@@ -46,7 +46,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.BrandService
             if(brand.Description!=null) checking.Description=brand.Description;
 
             var result = await _unitOfWork._brandRepository.UpdateBrand(checking);
-            return _mapper.Map<UpdateBrandResponseDTO>(result);
+            return _mapper.Map<BrandModel>(result);
         }
 
         public async Task<bool> DeleteBrand(int id)
@@ -59,20 +59,20 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.BrandService
             return result;
         }
 
-        public async Task<BrandDTO> UpdateStatus(int id, int status)
+        public async Task<BrandModel> UpdateStatus(int id, int status)
         {
             var data = await _unitOfWork._brandRepository.GetById(id);
             if (data == null) throw new ArgumentNullException("There is not found brand.");
             data.Status = status;
             var result = await _unitOfWork._brandRepository.UpdateBrand(data);
-            return _mapper.Map<BrandDTO>(result);
+            return _mapper.Map<BrandModel>(result);
         }
 
-        public async Task<BrandDTO> GetBrandById(int id)
+        public async Task<BrandModel> GetBrandById(int id)
         {
             var result = await _unitOfWork._brandRepository.GetById(id);
             if (result == null) throw new ArgumentNullException("There is not found brand.");
-            return _mapper.Map<BrandDTO>(result);
+            return _mapper.Map<BrandModel>(result);
         }
     }
 }
