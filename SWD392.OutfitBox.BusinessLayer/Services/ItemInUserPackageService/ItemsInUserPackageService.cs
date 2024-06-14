@@ -33,7 +33,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.ItemInUserPackageService
         }
         public async Task<ItemInUserPackageModel> CreateItem(ItemInUserPackageModel itemInPackage)
         {
-                var item = _mapper.Map<ItemInUserPackage>(itemInPackage);
+                var item = _mapper.Map<ItemInUserPackageModel>(itemInPackage);
                 var obj = await _unitOfWork._itemsInUserPackageRepository.CreateItemInUserPackage(item);
                 var data = _mapper.Map<ItemInUserPackageModel>(obj);
                 return data;

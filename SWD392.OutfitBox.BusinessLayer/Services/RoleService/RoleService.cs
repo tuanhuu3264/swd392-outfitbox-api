@@ -23,7 +23,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.RoleService
         }    
         public async Task<RoleModel> CreateRole(RoleModel createRoleRequestDTO)
         {
-            var addedRole= _mapper.Map<Role>(createRoleRequestDTO);
+            var addedRole= _mapper.Map<RoleModel>(createRoleRequestDTO);
             var result =await _roleRepository.CreateRole(addedRole);
             var returnedRole = _mapper.Map<RoleModel>(result);
             return returnedRole;

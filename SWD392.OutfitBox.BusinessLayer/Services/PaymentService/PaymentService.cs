@@ -97,7 +97,7 @@ namespace BusinessLayer.Services
                 var wallet = await _unitOfWork._walletRepository.GetWalletByCode(bankCode);
                 if (wallet.Id == 0)
                 {
-                    wallet = new Wallet
+                    wallet = new WalletModel
                     {
                         WalletCode = bankCode,
                         WalletName = "Test",

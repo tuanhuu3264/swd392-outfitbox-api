@@ -14,7 +14,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Helpers
     public class AuthHelper
     {
 
-        public static JwtSecurityToken GetToken(Customer user)
+        public static JwtSecurityToken GetToken(CustomerModel user)
         {
             List<Claim> authClaims = new List<Claim>
             {
