@@ -22,9 +22,9 @@ using SWD392.OutfitBox.DataLayer.RepoInterfaces;
 using SWD392.OutfitBox.BusinessLayer.Services.AreaService;
 using SWD392.OutfitBox.BusinessLayer.Services.PartnerService;
 using SWD392.OutfitBox.BusinessLayer.Services.ReturnOrderService;
-using SWD392.OutfitBox.BusinessLayer.Services.BrandRepository;
 using SWD392.OutfitBox.DataLayer.Databases.Redis;
 using SWD392.OutfitBox.DataLayer.Repositories.Interfaces;
+using SWD392.OutfitBox.BusinessLayer.Services.BrandService;
 
 namespace SWD392.OutfitBox.API.CollectionRegisters
 {

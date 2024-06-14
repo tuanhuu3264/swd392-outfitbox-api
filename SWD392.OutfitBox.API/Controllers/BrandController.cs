@@ -6,13 +6,12 @@ using SWD392.OutfitBox.API.Configurations.HTTPResponse;
 using SWD392.OutfitBox.API.Controllers.Endpoints;
 using SWD392.OutfitBox.BusinessLayer.Models.Requests.Brand;
 using SWD392.OutfitBox.BusinessLayer.Models.Responses.Brand;
-
-using SWD392.OutfitBox.BusinessLayer.Services.BrandRepository;
+using SWD392.OutfitBox.BusinessLayer.Services.BrandService;
 using System.Net;
 
 namespace SWD392.OutfitBox.API.Controllers
 {
-    
+
     [ApiController]
     public class BrandController : ControllerBase
     {

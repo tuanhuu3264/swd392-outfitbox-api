@@ -155,7 +155,7 @@ namespace SWD392.OutfitBox.API.Configurations.Mapper
                 ReverseMap();
             CreateMap<string, Image>()
                 .ForMember(x => x.Link, pro => pro.MapFrom(x => x));
-            CreateMap<Product, Product>();
+            CreateMap<Product, Product>().ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
 
         }
         public void ItemInUserPackageProfile()

@@ -2,6 +2,7 @@
 using SWD392.OutfitBox.BusinessLayer.Models.Requests.Package;
 using SWD392.OutfitBox.BusinessLayer.Models.Responses.CategoryPackage;
 using SWD392.OutfitBox.Core.Models.Responses.Package;
+using SWD392.OutfitBox.DataLayer.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.CategoryPackageService
     {
         public Task<List<CategoryPackageDTO>> GetAllCategoryPackagesByPackageId(int packageId);
         public Task<CreateCategoryPackageResponseDTO> CreatePackage(CreateCategoryPackageRequestDTO request);
-        public Task<UpdateCategoryPackageResponseDTO> UpdatePackage(UpdateCategoryPackageRequestDTO request);
+        public Task<UpdateCategoryPackageResponseDTO> UpdatePackage(CategoryPackage request);
         public Task<DeleteCategoryPackageResponseDTO> DeletePackageById(int id); 
     }
 }

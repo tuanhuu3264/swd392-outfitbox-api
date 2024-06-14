@@ -6,7 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SWD392.OutfitBox.BusinessLayer.Models.Requests.Brand
+namespace SWD392.OutfitBox.API.DTOs.Brand
+
 {
     public class UpdateBrandRequestDTO
     {

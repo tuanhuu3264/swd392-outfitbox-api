@@ -49,11 +49,13 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.CategoryPackageService
             return (await _categoryPackageRepository.GetAllCategoryPackagesByPackageId(packageId)).Select(x => _mapper.Map<CategoryPackageDTO>(x)).ToList();
         }
 
-        public async Task<UpdateCategoryPackageResponseDTO> UpdatePackage(UpdateCategoryPackageRequestDTO request)
+        public async Task<UpdateCategoryPackageResponseDTO> UpdatePackage(CategoryPackage request)
         {
             var updatedCategoryPackage = await _categoryPackageRepository.GetCategoryPackageById(request.Id);
+       
             updatedCategoryPackage.MaxAvailableQuantity = request.MaxAvailableQuantity;
             var returnedCategoryPackage = await _categoryPackageRepository.UpdateCategoryPackage(updatedCategoryPackage);
+            
             return _mapper.Map<UpdateCategoryPackageResponseDTO>(returnedCategoryPackage);
             
         }

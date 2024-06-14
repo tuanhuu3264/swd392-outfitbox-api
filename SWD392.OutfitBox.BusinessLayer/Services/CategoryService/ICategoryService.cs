@@ -1,6 +1,7 @@
 ﻿
 using SWD392.OutfitBox.BusinessLayer.Models.Requests.Category;
 using SWD392.OutfitBox.BusinessLayer.Models.Responses.Category;
+using SWD392.OutfitBox.DataLayer.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +16,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.CategoryService
         public Task<CategoryDTO> GetCategoryById(int id);
         
         public Task<CreateCategoryResponseDTO> CreateCategory(CreateCategoryRequestDTO category);
-        public Task<UpdateCategoryResponseDTO> UpdateCategory(UpdateCategoryRequestDTO category);
+        public Task<UpdateCategoryResponseDTO> UpdateCategory(Category category);
         public Task<CategoryDTO> ActiveOrDeactiveCategory(int id);
     }
 }

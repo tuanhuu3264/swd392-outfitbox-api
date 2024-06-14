@@ -47,13 +47,16 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.CategoryService
             return _mapper.Map<CategoryDTO>(await _categoryRepository.GetById(id)); 
         }
 
-        public async Task<UpdateCategoryResponseDTO> UpdateCategory(UpdateCategoryRequestDTO category)
+        public async Task<UpdateCategoryResponseDTO> UpdateCategory(Category category)
         {
             var checkingCategory = await _categoryRepository.GetById(category.ID);
+
             if (checkingCategory == null) throw new Exception("Not found the category that has id: " + category.ID);
+            
             checkingCategory.Description = category.Description;
             checkingCategory.Name = category.Name;
             checkingCategory.Status = 1;
+            
             var updatedCategory = await _categoryRepository.UpdateCategory(checkingCategory);
             return _mapper.Map<UpdateCategoryResponseDTO>(updatedCategory);
         }
