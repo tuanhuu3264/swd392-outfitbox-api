@@ -10,12 +10,12 @@ namespace SWD392.OutfitBox.DataLayer.Entities
 {
     public class DepositModel
     {
-        public int Id { get; set; }
-        public DateTime Date { get; set; }
-        public double AmountMoney { get; set; }
-        public string Type {  get; set; } = string.Empty;
+        public int? Id { get; set; }
+        public DateTime? Date { get; set; }
+        public double? AmountMoney { get; set; }
+        public string? Type {  get; set; } = string.Empty;
         
-        public int CustomerId {  get; set; }
+        public int? CustomerId {  get; set; }
 
 
     }

@@ -67,7 +67,7 @@ namespace SWD392.OutfitBox.API.Configurations.Mapper
         }
         public void TransactionProfile()
         {
-            CreateMap<Transaction, TransactionModel>().ReverseMap();
+            CreateMap<Transaction, BusinessLayer.BusinessModels.TransactionModel>().ReverseMap();
         }
         public void WalletProfile()
         {
@@ -133,7 +133,10 @@ namespace SWD392.OutfitBox.API.Configurations.Mapper
         public void ReturnOrderProfile()
         {
             CreateMap<CreateReturnOrderRequestDTO, ReturnOrderModel>().ReverseMap();
-            CreateMap<ReturnOrderModel, ReturnOrder>().ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
+
+            CreateMap<ReturnOrderModel, ReturnOrder>()
+                .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
+
             CreateMap<ReturnOrder, ReturnOrderModel>();
         }
         public void PartnerProfile()

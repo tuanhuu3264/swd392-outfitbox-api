@@ -1,5 +1,6 @@
 ﻿using Microsoft.IdentityModel.Tokens;
 using RTools_NTS.Util;
+using SWD392.OutfitBox.BusinessLayer.BusinessModels;
 using SWD392.OutfitBox.DataLayer.Entities;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Helpers
     public class AuthHelper
     {
 
-        public static JwtSecurityToken GetToken(CustomerModel user)
+        public static JwtSecurityToken GetToken(Customer user)
         {
             List<Claim> authClaims = new List<Claim>
             {
