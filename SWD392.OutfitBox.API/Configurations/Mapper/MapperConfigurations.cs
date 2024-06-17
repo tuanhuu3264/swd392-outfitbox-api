@@ -104,11 +104,14 @@ namespace SWD392.OutfitBox.API.Configurations.Mapper
         }
         public void ProductProfile()
         {
-            CreateMap<ProductModel, CreatedProductDto>().ReverseMap();
-            CreateMap<string, Image>().ForMember(x => x.Link, img => img.MapFrom(x => x));
-            CreateMap<Product, ProductModel>();
-
-            CreateMap<ProductModel, UpdateProductDto>();
+            CreateMap<ProductModel, CreatedProductDto>()
+                .ForMember(x=>x.ImageUrls,opt =>opt.MapFrom(x=>x.Images))
+                .ReverseMap();
+            CreateMap<string, ImageModel>().ForMember(x => x.Link, img => img.MapFrom(x => x));
+            CreateMap<Product, ProductModel>()
+                .ForMember(x=>x.Images,opt=>opt.MapFrom(x=>x.Images));
+            CreateMap<Image, ImageModel>().ReverseMap();
+            CreateMap<ProductModel, UpdateProductDto>().ReverseMap();
             CreateMap<string, Image>()
                 .ForMember(x => x.Link, pro => pro.MapFrom(x => x));
             CreateMap<ProductModel, Product>().ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));

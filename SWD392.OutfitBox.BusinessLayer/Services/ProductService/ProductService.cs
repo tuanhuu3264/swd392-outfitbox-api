@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+﻿    using AutoMapper;
 using SWD392.OutfitBox.DataLayer.RepoInterfaces;
 using SWD392.OutfitBox.DataLayer.Entities;
 using SWD392.OutfitBox.DataLayer.Interfaces;
@@ -37,6 +37,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.ProductService
         {
             var product = _mapper.Map<Product>(createdProduct);
             product.Status = 0;
+            product.IsUsed = "False";
             product.AvailableQuantity = product.Quantity;
             if (createdProduct.IdBrand.HasValue == false) throw new Exception("There is no id brand in model.");
             product.Brand = await _unitOfWork._brandRepository.GetById(createdProduct.IdBrand.Value);
@@ -51,7 +52,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.ProductService
         public async Task<ProductModel> UpdateProduct(ProductModel updateProduct)
         {
             if (updateProduct.ID.HasValue == false) throw new Exception("There is no id in model.");
-            await _unitOfWork._imageRepository.DeleteImageByProductId(updateProduct.ID.Value);
+            //await _unitOfWork._imageRepository.DeleteImageByProductId(updateProduct.ID.Value);
             var product = await _repository.GetDetail(updateProduct.ID.Value);
             if (product == null) { throw new ArgumentNullException("Can't not find this Id"); }
             product = _mapper.Map(updateProduct, product);
