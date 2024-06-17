@@ -1,9 +1,10 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SWD392.OutfitBox.API.Configurations.HTTPResponse;
 using SWD392.OutfitBox.API.Controllers.Endpoints;
-using SWD392.OutfitBox.BusinessLayer.Models.Requests.Category;
-using SWD392.OutfitBox.BusinessLayer.Models.Responses.Category;
+using SWD392.OutfitBox.API.DTOs.Category;
+using SWD392.OutfitBox.BusinessLayer.BusinessModels;
 using SWD392.OutfitBox.BusinessLayer.Services.CategoryService;
 
 
@@ -16,82 +17,87 @@ namespace SWD392.OutfitBox.API.Controllers
     public class CategoryController : ControllerBase
     {
         public ICategoryService _categoryService;
-        public CategoryController(ICategoryService categoryService)
+        public IMapper _mapper;
+        public CategoryController(ICategoryService categoryService, IMapper mapper)
         {
             _categoryService = categoryService;
+            _mapper = mapper;
         }
         [HttpGet(CategoryEndpoints.GetAllCategories)]
-        public async Task<ActionResult<BaseResponse<List<CategoryDTO>>>> GetAllCategories()
+        public async Task<ActionResult<BaseResponse<List<CategoryModel>>>> GetAllCategories()
         {
-            BaseResponse<List<CategoryDTO>> response;
+            BaseResponse<List<CategoryModel>> response;
             try
             {
                 var data = await _categoryService.GetAllCategories();
-                response = new BaseResponse<List<CategoryDTO>>("Get categories successfully.", HttpStatusCode.OK,data);
+                response = new BaseResponse<List<CategoryModel>>("Get categories successfully.", HttpStatusCode.OK,data);
             } catch (Exception ex)
             {
-                response = new BaseResponse<List<CategoryDTO>>(ex.Message, HttpStatusCode.InternalServerError, null);
+                response = new BaseResponse<List<CategoryModel>>(ex.Message, HttpStatusCode.InternalServerError, null);
             }
             return StatusCode((int)response.StatusCode, response);
         }
 
         [HttpGet(CategoryEndpoints.GetCategoryById)]
-        public async Task<ActionResult<BaseResponse<CategoryDTO>>> GetCategoryById([FromRoute] int id)
+        public async Task<ActionResult<BaseResponse<CategoryModel>>> GetCategoryById([FromRoute] int id)
         {
-            BaseResponse<CategoryDTO> response;
+            BaseResponse<CategoryModel> response;
             try
             {
                 var data = await _categoryService.GetCategoryById(id);
-                response = new BaseResponse<CategoryDTO> ("Get categories successfully.", HttpStatusCode.OK, data);
+                response = new BaseResponse<CategoryModel> ("Get categories successfully.", HttpStatusCode.OK, data);
             }
             catch (Exception ex)
             {
-                response = new BaseResponse<CategoryDTO> (ex.Message, HttpStatusCode.InternalServerError, null);
+                response = new BaseResponse<CategoryModel> (ex.Message, HttpStatusCode.InternalServerError, null);
             }
             return StatusCode((int)response.StatusCode, response);
         }
         [HttpPost(CategoryEndpoints.CreateCategory)]
-        public async Task<ActionResult<BaseResponse<CreateCategoryResponseDTO>>> CreateCategory([FromBody] CreateCategoryRequestDTO createCategoryRequestDTO)
+        public async Task<ActionResult<BaseResponse<CategoryModel>>> CreateCategory([FromBody] CreateCategoryRequestDTO createCategoryRequestDTO)
         {
-            BaseResponse<CreateCategoryResponseDTO> response;
+            BaseResponse<CategoryModel> response;
             try
-            {
-                var data = await _categoryService.CreateCategory(createCategoryRequestDTO);
-                response = new BaseResponse<CreateCategoryResponseDTO>("Create category successfully.", HttpStatusCode.OK, data);
+            {   
+                var mapping = _mapper.Map<CategoryModel>(createCategoryRequestDTO);
+                var data = await _categoryService.CreateCategory(mapping);
+                response = new BaseResponse<CategoryModel>("Create category successfully.", HttpStatusCode.OK, data);
             }
             catch (Exception ex)
             {
-                response = new BaseResponse<CreateCategoryResponseDTO>(ex.Message, HttpStatusCode.InternalServerError, null);
+                response = new BaseResponse<CategoryModel>(ex.Message, HttpStatusCode.InternalServerError, null);
             }
             return StatusCode((int)response.StatusCode, response);
         }
-        [HttpPatch(CategoryEndpoints.UpdateCategory)]
-        public async Task<ActionResult<BaseResponse<UpdateCategoryResponseDTO>>> UpdateCategory([FromBody] UpdateCategoryRequestDTO updateCategoryRequestDTO)
+        [HttpPatch("categories/{id}")]
+        public async Task<ActionResult<BaseResponse<CategoryModel>>> UpdateCategory([FromRoute] int id, [FromBody] UpdateCategoryRequestDTO updateCategoryRequestDTO)
         {
-            BaseResponse<UpdateCategoryResponseDTO> response;
+            BaseResponse<CategoryModel> response;
             try
             {
-                var data = await _categoryService.UpdateCategory(updateCategoryRequestDTO);
-                response = new BaseResponse<UpdateCategoryResponseDTO>("Update category successfully.", HttpStatusCode.OK, data);
+                var mapping = _mapper.Map<CategoryModel>(updateCategoryRequestDTO);
+                mapping.ID = id;
+                var data = await _categoryService.UpdateCategory(mapping);
+                response = new BaseResponse<CategoryModel>("Update category successfully.", HttpStatusCode.OK, data);
             }
             catch (Exception ex)
             {
-                response = new BaseResponse<UpdateCategoryResponseDTO>(ex.Message, HttpStatusCode.InternalServerError, null);
+                response = new BaseResponse<CategoryModel>(ex.Message, HttpStatusCode.InternalServerError, null);
             }
             return StatusCode((int)response.StatusCode, response);
         }
         [HttpPut("categories/{id}/status/{status}")]
-        public async Task<ActionResult<BaseResponse<CategoryDTO>>> ActiveOrDeactiveCategory([FromBody]int id)
+        public async Task<ActionResult<BaseResponse<CategoryModel>>> ActiveOrDeactiveCategory([FromBody]int id)
         {
-            BaseResponse<CategoryDTO> response;
+            BaseResponse<CategoryModel> response;
             try
             {
                 var data = await _categoryService.ActiveOrDeactiveCategory(id);
-                response = new BaseResponse<CategoryDTO>("Update category successfully.", HttpStatusCode.OK, data);
+                response = new BaseResponse<CategoryModel>("Update category successfully.", HttpStatusCode.OK, data);
             }
             catch (Exception ex)
             {
-                response = new BaseResponse<CategoryDTO>(ex.Message, HttpStatusCode.InternalServerError, null);
+                response = new BaseResponse<CategoryModel>(ex.Message, HttpStatusCode.InternalServerError, null);
             }
             return StatusCode((int)response.StatusCode, response);
         }

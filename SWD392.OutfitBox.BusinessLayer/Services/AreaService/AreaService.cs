@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
-using SWD392.OutfitBox.BusinessLayer.Models.Requests.Area;
-using SWD392.OutfitBox.BusinessLayer.Models.Responses.Area;
+using SWD392.OutfitBox.BusinessLayer.BusinessModels;
 using SWD392.OutfitBox.DataLayer.Entities;
 using SWD392.OutfitBox.DataLayer.UnitOfWork;
 using System;
@@ -20,30 +19,31 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.AreaService
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
-        public async Task<CreateAreaResponseDTO> CreateArea(CreateAreaRequestDTO createAreaRequestDTO)
+        public async Task<AreaModel> CreateArea(AreaModel createAreaRequestDTO)
         {
             var addedArea = _mapper.Map<Area>(createAreaRequestDTO);
             var result =  await _unitOfWork._areaRepository.CreateArea(addedArea);
-            var returnArea = _mapper.Map<CreateAreaResponseDTO>(result);
+            var returnArea = _mapper.Map<AreaModel>(result);
             return returnArea;
         }
 
-        public async Task<List<AreaDTO>> GetAllAreas()
+        public async Task<List<AreaModel>> GetAllAreas()
         {
            var result = await _unitOfWork._areaRepository.GetAllArea();
-           var returnAreas = result.Select(x=> _mapper.Map<AreaDTO>(x)).ToList().ToList();
+           var returnAreas = result.Select(x=> _mapper.Map<AreaModel>(x)).ToList().ToList();
            return returnAreas;
         }
 
-        public async Task<UpdateAreaResponseDTO> UpdateArea(UpdateAreaRequestDTO updateAreaRequestDTO)
+        public async Task<AreaModel> UpdateArea(AreaModel area)
         {
-            var checkingArea =await _unitOfWork._areaRepository.GetById(updateAreaRequestDTO.Id);
-            if (checkingArea == null) throw new ArgumentNullException("There is not found the area that has id: " + updateAreaRequestDTO.Id);
-            checkingArea.Ward = updateAreaRequestDTO.Ward;
-            checkingArea.District=updateAreaRequestDTO.District;
-            checkingArea.City=updateAreaRequestDTO.City;
+            if (area.Id.HasValue == false) throw new Exception("There is no id in request");
+
+            var checkingArea =await _unitOfWork._areaRepository.GetById(area.Id.Value);
+
+            if (checkingArea == null) throw new ArgumentNullException("There is not found the area that has id: " + area.Id);
+            _mapper.Map(area, checkingArea);
             var result = await _unitOfWork._areaRepository.UpdateArea(checkingArea);
-            return _mapper.Map<UpdateAreaResponseDTO>(result);
+            return _mapper.Map<AreaModel>(result);
         }
 
         

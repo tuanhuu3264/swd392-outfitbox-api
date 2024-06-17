@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
-using SWD392.OutfitBox.BusinessLayer.Models.Requests.ReturnOrder;
-using SWD392.OutfitBox.BusinessLayer.Models.Responses.ReturnOrder;
+using SWD392.OutfitBox.BusinessLayer.BusinessModels;
 using SWD392.OutfitBox.DataLayer.Entities;
 using SWD392.OutfitBox.DataLayer.UnitOfWork;
 using System;
@@ -21,11 +20,11 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.ReturnOrderService
             _mapper = mapper;
         }
 
-        public async Task<CreateReturnOrderResponseDTO> CreateReturnOrder(CreateReturnOrderRequestDTO requestDTO)
+        public async Task<ReturnOrderModel> CreateReturnOrder(ReturnOrderModel requestDTO)
         {
             var mappingReturnOrder = _mapper.Map<ReturnOrder>(requestDTO);
             var result = await _unitOfWork._returnOrderRepository.CreateReturnOrder(mappingReturnOrder);
-            return _mapper.Map<CreateReturnOrderResponseDTO>(result);
+            return _mapper.Map<ReturnOrderModel>(result);
         }
 
         public async Task<string> DeleteReturnOrder(int id)
@@ -36,23 +35,23 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.ReturnOrderService
             return "Delete return order successfully";
         }
 
-        public async Task<List<ReturnOrderDTO>> GetReturnOrders(int? pageNumber = null, int? pageSize = null, int? partnerid = null, int? customerId = null)
+        public async Task<List<ReturnOrderModel>> GetReturnOrders(int? pageNumber = null, int? pageSize = null, int? partnerid = null, int? customerId = null)
         {
-            return (await _unitOfWork._returnOrderRepository.GetReturnOrders(pageNumber, pageSize, partnerid, customerId)).Select(x=> _mapper.Map<ReturnOrderDTO>(x)).ToList();   
+            return (await _unitOfWork._returnOrderRepository.GetReturnOrders(pageNumber, pageSize, partnerid, customerId)).Select(x=> _mapper.Map<ReturnOrderModel>(x)).ToList();   
         }
 
-        public async Task<ReturnOrderDTO> GetReturnOrderById(int id)
+        public async Task<ReturnOrderModel> GetReturnOrderById(int id)
         {
-            return _mapper.Map<ReturnOrderDTO>(await _unitOfWork._returnOrderRepository.GetReturnOrderById(id));
+            return _mapper.Map<ReturnOrderModel>(await _unitOfWork._returnOrderRepository.GetReturnOrderById(id));
         }
 
-        public async Task<ReturnOrderDTO> ChangeStatus(int id, int status)
+        public async Task<ReturnOrderModel> ChangeStatus(int id, int status)
         {
             var returnOrder = await _unitOfWork._returnOrderRepository.GetReturnOrderById(id);
             if (returnOrder == null) throw new ArgumentNullException("There is no return order has id :" + id);
             returnOrder.Status=status;
             await _unitOfWork._returnOrderRepository.UpdateReturnOrder(returnOrder);
-            return _mapper.Map<ReturnOrderDTO>(returnOrder);
+            return _mapper.Map<ReturnOrderModel>(returnOrder);
         }
     }
 }

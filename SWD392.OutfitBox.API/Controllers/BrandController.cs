@@ -1,102 +1,106 @@
-﻿using Azure;
+﻿using AutoMapper;
+using Azure;
 using FirebaseAdmin.Auth.Multitenancy;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SWD392.OutfitBox.API.Configurations.HTTPResponse;
-using SWD392.OutfitBox.API.Controllers.Endpoints;
-using SWD392.OutfitBox.BusinessLayer.Models.Requests.Brand;
-using SWD392.OutfitBox.BusinessLayer.Models.Responses.Brand;
-
-using SWD392.OutfitBox.BusinessLayer.Services.BrandRepository;
+using SWD392.OutfitBox.API.DTOs.Brand;
+using SWD392.OutfitBox.BusinessLayer.BusinessModels;
+using SWD392.OutfitBox.BusinessLayer.Services.BrandService;
 using System.Net;
 
 namespace SWD392.OutfitBox.API.Controllers
 {
-    
+
     [ApiController]
     public class BrandController : ControllerBase
     {
-        public IBrandService _brandService; 
-        public BrandController(IBrandService brandService)
+        public IBrandService _brandService;
+        public IMapper _mapper;
+        public BrandController(IBrandService brandService, IMapper mapper)
         {
             _brandService = brandService;
+            _mapper = mapper;
         }
         [HttpGet("brands")]
-        public async Task<ActionResult<BaseResponse<List<BrandDTO>>>> GetAllBrands()
+        public async Task<ActionResult<BaseResponse<List<BrandModel>>>> GetAllBrands()
         {
-            BaseResponse<List<BrandDTO>> response;
+            BaseResponse<List<BrandModel>> response;
             try
             {
                 var data = await _brandService.GetAllBrands();
-                response = new BaseResponse<List<BrandDTO>>("Get brands successfully.", System.Net.HttpStatusCode.OK, data); 
+                response = new BaseResponse<List<BrandModel>>("Get brands successfully.", System.Net.HttpStatusCode.OK, data); 
             }catch(Exception ex)
             {
-                response = new BaseResponse<List<BrandDTO>>(ex.Message, System.Net.HttpStatusCode.InternalServerError, null); 
+                response = new BaseResponse<List<BrandModel>>(ex.Message, System.Net.HttpStatusCode.InternalServerError, null); 
             }
             return StatusCode((int)response.StatusCode,response);
         }
 
         [HttpGet("brands/{id}")]
-        public async Task<ActionResult<BaseResponse<BrandDTO>>> GetBrandById([FromRoute] int id)
+        public async Task<ActionResult<BaseResponse<BrandModel>>> GetBrandById([FromRoute] int id)
         {
-            BaseResponse<BrandDTO> response;
+            BaseResponse<BrandModel> response;
             try
             {
                 var data = await _brandService.GetBrandById(id);
-                response = new BaseResponse<BrandDTO>("Get brand successfully.", HttpStatusCode.OK, data);
+                response = new BaseResponse<BrandModel>("Get brand successfully.", HttpStatusCode.OK, data);
             }
             catch (ArgumentNullException ex)
             {
-                response = new BaseResponse<BrandDTO>(ex.Message, HttpStatusCode.NotFound, null);
+                response = new BaseResponse<BrandModel>(ex.Message, HttpStatusCode.NotFound, null);
             }
             catch (Exception ex)
             {
-                response = new BaseResponse<BrandDTO>(ex.Message, HttpStatusCode.InternalServerError, null);
+                response = new BaseResponse<BrandModel>(ex.Message, HttpStatusCode.InternalServerError, null);
             }
             return StatusCode((int)response.StatusCode, response);
         }
         [HttpPost("brands")]
-        public async Task<ActionResult<BaseResponse<CreateBrandResponseDTO>>> CreateBrand([FromBody] CreateBrandRequestDTO createBrandRequestDTO)
+        public async Task<ActionResult<BaseResponse<BrandModel>>> CreateBrand([FromBody] CreateBrandRequestDTO createBrandRequestDTO)
         {
-            BaseResponse<CreateBrandResponseDTO> response;
+            BaseResponse<BrandModel> response;
             try
             {
-                var data = await _brandService.CreateBrand(createBrandRequestDTO);
-                response = new BaseResponse<CreateBrandResponseDTO>("Create brand successfully.", HttpStatusCode.OK, data);
+                var mapping = _mapper.Map<BrandModel>(createBrandRequestDTO); 
+                var data = await _brandService.CreateBrand(mapping);
+                response = new BaseResponse<BrandModel>("Create brand successfully.", HttpStatusCode.OK, data);
             }
             catch (Exception ex)
             {
-                response = new BaseResponse<CreateBrandResponseDTO>(ex.Message, HttpStatusCode.InternalServerError, null);
+                response = new BaseResponse<BrandModel>(ex.Message, HttpStatusCode.InternalServerError, null);
             }
             return StatusCode((int)response.StatusCode, response);
         }
-        [HttpPatch("brands")]
-        public async Task<ActionResult<BaseResponse<UpdateBrandResponseDTO>>> UpdateBrand([FromBody] UpdateBrandRequestDTO updateBrandRequestDTO)
+        [HttpPatch("brands/{id}")]
+        public async Task<ActionResult<BaseResponse<BrandModel>>> UpdateBrand([FromRoute] int id, [FromBody] UpdateBrandRequestDTO updateBrandRequestDTO)
         {
-            BaseResponse<UpdateBrandResponseDTO> response;
+            BaseResponse<BrandModel> response;
             try
             {
-                var data = await _brandService.UpdateBrand(updateBrandRequestDTO);
-                response = new BaseResponse<UpdateBrandResponseDTO>("Update brand successfully.", HttpStatusCode.OK, data);
+                var mapping = _mapper.Map<BrandModel>(updateBrandRequestDTO);
+                mapping.ID= id;
+                var data = await _brandService.UpdateBrand(mapping );
+                response = new BaseResponse<BrandModel>("Update brand successfully.", HttpStatusCode.OK, data);
             }
             catch (Exception ex)
             {
-                response = new BaseResponse<UpdateBrandResponseDTO>(ex.Message, HttpStatusCode.InternalServerError, null);
+                response = new BaseResponse<BrandModel>(ex.Message, HttpStatusCode.InternalServerError, null);
             }
             return StatusCode((int)response.StatusCode, response);
         }
         [HttpPatch("brands/{id}/status/{status}")]
-        public async Task<ActionResult<BaseResponse<BrandDTO>>>ChangeBrandStatus([FromRoute] int id, [FromRoute] int status)
+        public async Task<ActionResult<BaseResponse<BrandModel>>>ChangeBrandStatus([FromRoute] int id, [FromRoute] int status)
         {
-            BaseResponse<BrandDTO> response;
+            BaseResponse<BrandModel> response;
             try
             {
                 var data = await _brandService.UpdateStatus(id,status);
-                response = new BaseResponse<BrandDTO>("Update brand successfully.", HttpStatusCode.OK, data);
+                response = new BaseResponse<BrandModel>("Update brand successfully.", HttpStatusCode.OK, data);
             }
             catch (Exception ex)
             {
-                response = new BaseResponse<BrandDTO>(ex.Message, HttpStatusCode.InternalServerError, null);
+                response = new BaseResponse<BrandModel>(ex.Message, HttpStatusCode.InternalServerError, null);
             }
             return StatusCode((int)response.StatusCode, response);
         }

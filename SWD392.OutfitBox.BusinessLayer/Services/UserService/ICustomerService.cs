@@ -1,6 +1,6 @@
 ﻿
-using SWD392.OutfitBox.BusinessLayer.Models.Requests.Customer;
-using SWD392.OutfitBox.BusinessLayer.Models.Responses.Customer;
+using SWD392.OutfitBox.BusinessLayer.BusinessModels;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,14 +11,14 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.UserService
 {
     public interface ICustomerService
     {
-       public Task<List<CustomerDTO>> GetAllCustomers();   
+       public Task<List<CustomerModel>> GetAllCustomers();   
        
-       public Task<CustomerDTO> GetCustomerById(int id);
+       public Task<CustomerModel> GetCustomerById(int id);
        
-       public Task<CreateCustomerResponseDTO> CreateCustomer(CreateCustomerRequestDTO user);
+       public Task<CustomerModel> CreateCustomer(CustomerModel user);
 
-       public Task<UpdateCustomerResponseDTO> UpdateCustomer(UpdateCustomerRequestDTO user);
+       public Task<CustomerModel> UpdateCustomer(CustomerModel user);
        
-       public Task<CustomerDTO> ActiveAndDeactiveCustomer(int id);
+       public Task<CustomerModel> ActiveAndDeactiveCustomer(int id);
     }
 }

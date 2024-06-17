@@ -1,5 +1,6 @@
 ﻿using Microsoft.IdentityModel.Tokens;
 using RTools_NTS.Util;
+using SWD392.OutfitBox.BusinessLayer.BusinessModels;
 using SWD392.OutfitBox.DataLayer.Entities;
 using System;
 using System.Collections.Generic;

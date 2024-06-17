@@ -1,4 +1,4 @@
-﻿using BusinessLayer.Services;
+﻿/*using BusinessLayer.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SWD392.OutfitBox.BusinessLayer.Models.Requests.VNPay;
@@ -28,3 +28,4 @@ namespace SWD392.OutfitBox.API.Controllers
         }
     }
 }
+*/

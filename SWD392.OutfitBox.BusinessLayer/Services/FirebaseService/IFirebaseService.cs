@@ -1,4 +1,4 @@
-﻿using SWD392.OutfitBox.BusinessLayer.Models.Responses.Auth;
+﻿using SWD392.OutfitBox.BusinessLayer.BusinessModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +9,8 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.FirebaseService
 {
     public interface IFirebaseService
     {
-        public Task<LoginFirebaseResponseDTO> VerifyFirebaseThirdPartToken(string accessToken);
-        public Task<LoginFirebaseResponseDTO> VerifyFirebaseNormalToken(string accessToken);
+        public Task<LoginModel> VerifyFirebaseThirdPartToken(string accessToken);
+        public Task<LoginModel> VerifyFirebaseNormalToken(string accessToken);
       
     }
 }

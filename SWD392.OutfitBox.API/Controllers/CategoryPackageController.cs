@@ -1,10 +1,11 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SWD392.OutfitBox.API.Configurations.HTTPResponse;
 using SWD392.OutfitBox.API.Controllers.Endpoints;
-using SWD392.OutfitBox.BusinessLayer.Models.Requests.CategoryPackage;
-using SWD392.OutfitBox.BusinessLayer.Models.Requests.Package;
-using SWD392.OutfitBox.BusinessLayer.Models.Responses.CategoryPackage;
+using SWD392.OutfitBox.API.DTOs.CategoryPackage;
+using SWD392.OutfitBox.API.DTOs.CreatePackage;
+using SWD392.OutfitBox.BusinessLayer.BusinessModels;
 using SWD392.OutfitBox.BusinessLayer.Services.CategoryPackageService;
 using SWD392.OutfitBox.DataLayer.Entities;
 using System.Net;
@@ -15,56 +16,61 @@ namespace SWD392.OutfitBox.API.Controllers
     public class CategoryPackageController : ControllerBase
     {
         public ICategoryPackageService _categoryPackageService;
-        public CategoryPackageController(ICategoryPackageService categoryPackageService)
+        public IMapper _mapper;
+        public CategoryPackageController(ICategoryPackageService categoryPackageService, IMapper mapper)
         {
             _categoryPackageService = categoryPackageService;
+            _mapper = mapper;   
         }
         [HttpGet(CategoryPackageEndpoints.GetAllCategoryPackagesByPackageId)]
-        public async Task<ActionResult<BaseResponse<List<CategoryPackageDTO>>>> GetAllCategoryPackageByPackageId([FromRoute] int packageId)
+        public async Task<ActionResult<BaseResponse<List<CategoryPackageModel>>>> GetAllCategoryPackageByPackageId([FromRoute] int packageId)
         {
-            BaseResponse<List<CategoryPackageDTO>> response;
+            BaseResponse<List<CategoryPackageModel>> response;
             try
             {
                 var data = await _categoryPackageService.GetAllCategoryPackagesByPackageId(packageId);
-                response = new BaseResponse<List<CategoryPackageDTO>>("Get successfully category packages by package id:" + packageId, HttpStatusCode.OK, data);
+                response = new BaseResponse<List<CategoryPackageModel>>("Get successfully category packages by package id:" + packageId, HttpStatusCode.OK, data);
             }
             catch (Exception ex)
             {
-                response = new BaseResponse<List<CategoryPackageDTO>>(ex.Message, HttpStatusCode.InternalServerError, null);
+                response = new BaseResponse<List<CategoryPackageModel>>(ex.Message, HttpStatusCode.InternalServerError, null);
             }
             return StatusCode((int)response.StatusCode, response);
         }
         [HttpPost(CategoryPackageEndpoints.CreateCategoryPackage)]
-        public async Task<ActionResult<BaseResponse<CreateCategoryPackageResponseDTO>>> CreateCategoryPackage([FromBody] CreateCategoryPackageRequestDTO request)
+        public async Task<ActionResult<BaseResponse<CategoryPackageModel>>> CreateCategoryPackage([FromBody] CreateCategoryPackageRequestDTO request)
         {
-            BaseResponse<CreateCategoryPackageResponseDTO> response;
+            BaseResponse<CategoryPackageModel> response;
             try
-            {
-                var data = await _categoryPackageService.CreatePackage(request);
-                response = new BaseResponse<CreateCategoryPackageResponseDTO>("Create successfully category package.", HttpStatusCode.OK, data);
+            {   
+                var mapping = _mapper.Map<CategoryPackageModel>(request);   
+                var data = await _categoryPackageService.CreatePackage(mapping);
+                response = new BaseResponse<CategoryPackageModel>("Create successfully category package.", HttpStatusCode.OK, data);
             }
             catch (Exception ex)
             {
-                response = new BaseResponse<CreateCategoryPackageResponseDTO>(ex.Message, HttpStatusCode.InternalServerError, null);
+                response = new BaseResponse<CategoryPackageModel>(ex.Message, HttpStatusCode.InternalServerError, null);
             }
             return StatusCode((int)response.StatusCode, response);
         }
-        [HttpPatch(CategoryPackageEndpoints.UpdateCategoryPackage)]
-        public async Task<ActionResult<BaseResponse<UpdateCategoryPackageResponseDTO>>> UpdateCategoryPackage([FromBody] UpdateCategoryPackageRequestDTO request)
+        [HttpPatch("category-packages/{id}")]
+        public async Task<ActionResult<BaseResponse<CategoryPackageModel>>> UpdateCategoryPackage([FromRoute] int id, [FromBody] UpdateCategoryPackageRequestDTO request)
         {
-            BaseResponse<UpdateCategoryPackageResponseDTO> response;
+            BaseResponse<CategoryPackageModel> response;
             try
             {
-                var data = await _categoryPackageService.UpdatePackage(request);
-                response = new BaseResponse<UpdateCategoryPackageResponseDTO>("Update successfully category package.", HttpStatusCode.OK, data);
+                var mapping = _mapper.Map<CategoryPackageModel>(request);
+                mapping.Id = id;
+                var data = await _categoryPackageService.UpdatePackage(mapping);
+                response = new BaseResponse<CategoryPackageModel>("Update successfully category package.", HttpStatusCode.OK, data);
             }
             catch (ArgumentNullException ex)
             {
-                response = new BaseResponse<UpdateCategoryPackageResponseDTO>(ex.Message, HttpStatusCode.NotFound, null);
+                response = new BaseResponse<CategoryPackageModel>(ex.Message, HttpStatusCode.NotFound, null);
             }
             catch (Exception ex)
             {
-                response = new BaseResponse<UpdateCategoryPackageResponseDTO>(ex.Message, HttpStatusCode.InternalServerError, null);
+                response = new BaseResponse<CategoryPackageModel>(ex.Message, HttpStatusCode.InternalServerError, null);
             }
             return StatusCode((int)response.StatusCode, response);
         }

@@ -1,10 +1,11 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MimeKit.Tnef;
 using SWD392.OutfitBox.API.Configurations.HTTPResponse;
 using SWD392.OutfitBox.API.Controllers.Endpoints;
-using SWD392.OutfitBox.BusinessLayer.Models.Requests.Review;
-using SWD392.OutfitBox.BusinessLayer.Models.Responses.Review;
+using SWD392.OutfitBox.API.DTOs.Review;
+using SWD392.OutfitBox.BusinessLayer.BusinessModels;
 using SWD392.OutfitBox.BusinessLayer.Services.ReviewService;
 using SWD392.OutfitBox.DataLayer.Entities;
 using SWD392.OutfitBox.DataLayer.Repositories;
@@ -17,70 +18,73 @@ namespace SWD392.OutfitBox.API.Controllers
     public class ReviewController : ControllerBase
     {
         public IReviewService _reviewService;
-        public ReviewController(IReviewService reviewService)
+        public IMapper _mapper;
+        public ReviewController(IReviewService reviewService, IMapper mapper)
         {
             _reviewService = reviewService;
+            _mapper = mapper;
         }
         [HttpPut("reviews/actived-reviews")]
-        public async Task<ActionResult<BaseResponse<List<ReviewDTO>>>> GetAllEnabledReviews()
+        public async Task<ActionResult<BaseResponse<List<ReviewModel>>>> GetAllEnabledReviews()
         {
-            BaseResponse<List<ReviewDTO>> response; 
+            BaseResponse<List<ReviewModel>> response; 
             try 
             {
                 var data = await _reviewService.GetAllEnabledReviews();
-                response = new BaseResponse<List<ReviewDTO>>("Get enable reviews successfully.", HttpStatusCode.OK, data);
+                response = new BaseResponse<List<ReviewModel>>("Get enable reviews successfully.", HttpStatusCode.OK, data);
             }
             catch (Exception ex)
             {
-                response = new BaseResponse<List<ReviewDTO>>(ex.Message, HttpStatusCode.InternalServerError, null);
+                response = new BaseResponse<List<ReviewModel>>(ex.Message, HttpStatusCode.InternalServerError, null);
             }
             
             return StatusCode((int)response.StatusCode,response);
         }
         [HttpGet("reviews/actived-reviews/customers/{customerId}")]
-        public async Task<ActionResult<BaseResponse<List<ReviewDTO>>>> GetAllEnabledReviewsByCustomerId([FromRoute]int customerId)
+        public async Task<ActionResult<BaseResponse<List<ReviewModel>>>> GetAllEnabledReviewsByCustomerId([FromRoute]int customerId)
         {
-            BaseResponse<List<ReviewDTO>> response;
+            BaseResponse<List<ReviewModel>> response;
             try
             {
                 var data = await _reviewService.GetAllEnabledReviewsByCustomerId(customerId);
-                response = new BaseResponse<List<ReviewDTO>>("Get reviews successfully by customer.", HttpStatusCode.OK, data);
+                response = new BaseResponse<List<ReviewModel>>("Get reviews successfully by customer.", HttpStatusCode.OK, data);
             }
             catch (Exception ex)
             {
-                response = new BaseResponse<List<ReviewDTO>>(ex.Message, HttpStatusCode.InternalServerError, null);
+                response = new BaseResponse<List<ReviewModel>>(ex.Message, HttpStatusCode.InternalServerError, null);
             }
 
             return StatusCode((int)response.StatusCode, response);
         }
         [HttpGet(ReviewEndpoints.GetReviewById)]
-        public async Task<ActionResult<BaseResponse<ReviewDTO>>> GetReviewById(int id)
+        public async Task<ActionResult<BaseResponse<ReviewModel>>> GetReviewById(int id)
         {
-            BaseResponse<ReviewDTO> response;
+            BaseResponse<ReviewModel> response;
             try
             {
                 var data = await _reviewService.GetReviewById(id);
-                response = new BaseResponse<ReviewDTO>("Get reviews successfully by customer.", HttpStatusCode.OK, data);
+                response = new BaseResponse<ReviewModel>("Get reviews successfully by customer.", HttpStatusCode.OK, data);
             }
             catch (Exception ex)
             {
-                response = new BaseResponse<ReviewDTO>(ex.Message, HttpStatusCode.InternalServerError, null);
+                response = new BaseResponse<ReviewModel>(ex.Message, HttpStatusCode.InternalServerError, null);
             }
 
             return StatusCode((int)response.StatusCode, response);
         }
         [HttpPost(ReviewEndpoints.CreateReview)]
-        public async Task<ActionResult<BaseResponse<CreateReviewResponseDTO>>> CreateReview([FromBody] CreateReviewRequestDTO request)
+        public async Task<ActionResult<BaseResponse<ReviewModel>>> CreateReview([FromBody] CreateReviewRequestDTO request)
         {
-            BaseResponse<CreateReviewResponseDTO> response;
+            BaseResponse<ReviewModel> response;
             try
-            {
-                var data = await _reviewService.CreateReview(request);
-                response = new BaseResponse<CreateReviewResponseDTO>("Create review successfully by customer.", HttpStatusCode.Created, data);
+            {   
+                var mapping = _mapper.Map<ReviewModel>(request);
+                var data = await _reviewService.CreateReview(mapping);
+                response = new BaseResponse<ReviewModel>("Create review successfully by customer.", HttpStatusCode.Created, data);
             }
             catch (Exception ex)
             {
-                response = new BaseResponse<CreateReviewResponseDTO>(ex.Message, HttpStatusCode.InternalServerError, null);
+                response = new BaseResponse<ReviewModel>(ex.Message, HttpStatusCode.InternalServerError, null);
             }
             return StatusCode((int)response.StatusCode, response);
         }
