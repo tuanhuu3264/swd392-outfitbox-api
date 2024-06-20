@@ -119,5 +119,25 @@ namespace SWD392.OutfitBox.API.Controllers
             }
             return StatusCode((int)response.StatusCode, response);
         }
+        [HttpPost("brands/uploaded-file")]
+        public async Task<IActionResult> UpdateFile(IFormFile file)
+        {
+            BaseResponse<string> response;
+            try
+            {
+
+                var result = await _brandService.UploadBrandImage(file);
+                response = new BaseResponse<string>("Product:", HttpStatusCode.OK, result);
+            }
+            catch (ArgumentNullException ex)
+            {
+                response = new BaseResponse<string>(ex.Message, HttpStatusCode.NotFound, null);
+            }
+            catch (Exception ex)
+            {
+                response = new BaseResponse<string>(ex.Message, HttpStatusCode.InternalServerError, null);
+            }
+            return StatusCode((int)response.StatusCode, response);
+        }
     }
 }

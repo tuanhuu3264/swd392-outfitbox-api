@@ -19,6 +19,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.ProductService
         Task<ProductModel> UpdateProduct(ProductModel updateProduct);
 
         Task<List<string>> UploadFiles(List<IFormFile> files);
+        Task<string> UploadFile(IFormFile file);
 
     }
 }

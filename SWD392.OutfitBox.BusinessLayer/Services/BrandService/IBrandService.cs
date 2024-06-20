@@ -1,5 +1,6 @@
 ﻿
 
+using Microsoft.AspNetCore.Http;
 using SWD392.OutfitBox.BusinessLayer.BusinessModels;
 using SWD392.OutfitBox.DataLayer.Entities;
 using System;
@@ -18,5 +19,6 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.BrandService
         public Task<bool> DeleteBrand(int id);
         public Task<BrandModel> UpdateStatus(int id, int status);
         public Task<BrandModel> GetBrandById(int id);
+        public Task<string> UploadBrandImage(IFormFile image);
     }
 }

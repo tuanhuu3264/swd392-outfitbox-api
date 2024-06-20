@@ -104,7 +104,7 @@ namespace SWD392.OutfitBox.DataLayer.Firebase
             return string.Empty;
         }
 
-        public static async Task<string> UploadFileToFirebase(IFormFile file, string pathFileName, string apiKey, string email, string password, string bucketName)
+        public static async Task<string> UploadFileToFirebase(IFormFile file, string pathFileName, string apiKey,string domain, string email, string password, string bucketName)
         {
             if (file == null || file.Length == 0)
             {
@@ -116,8 +116,8 @@ namespace SWD392.OutfitBox.DataLayer.Firebase
                 var stream = file.OpenReadStream();
                 var config = new FirebaseAuthConfig
                 {
-                    ApiKey = "AIzaSyBC1xdmtGB_mCwHtvN7J67Zicf2pawEBWM",
-                    AuthDomain = $"outfit4rent-c7575.firebaseapp.com",
+                    ApiKey = apiKey,
+                    AuthDomain = domain,
                     Providers = new FirebaseAuthProvider[]
                     {
                 new EmailProvider(),
@@ -145,7 +145,9 @@ namespace SWD392.OutfitBox.DataLayer.Firebase
                         ThrowOnCancel = true
                     });
 
-                var downloadUrl = await storage.Child(pathFileName).PutAsync(stream);
+                var destinationPath = $"{pathFileName}/{file.FileName}";
+
+                var downloadUrl = await storage.Child(destinationPath).PutAsync(stream);
                 return downloadUrl;
             }
             catch (Exception ex)
@@ -162,8 +164,8 @@ namespace SWD392.OutfitBox.DataLayer.Firebase
             {
                 var config = new FirebaseAuthConfig
                 {
-                    ApiKey = "AIzaSyBC1xdmtGB_mCwHtvN7J67Zicf2pawEBWM",
-                    AuthDomain = $"outfit4rent-c7575.firebaseapp.com",
+                    ApiKey = apiKey,
+                    AuthDomain = domainName,
                     Providers = new FirebaseAuthProvider[]
                      {
                 new EmailProvider(),
