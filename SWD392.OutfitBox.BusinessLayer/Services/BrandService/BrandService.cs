@@ -1,6 +1,10 @@
 ﻿using AutoMapper;
+
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 using SWD392.OutfitBox.BusinessLayer.BusinessModels;
 using SWD392.OutfitBox.DataLayer.Entities;
+using SWD392.OutfitBox.DataLayer.Firebase;
 using SWD392.OutfitBox.DataLayer.Interfaces;
 using SWD392.OutfitBox.DataLayer.UnitOfWork;
 using System;
@@ -15,10 +19,12 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.BrandService
     {
         public IUnitOfWork _unitOfWork { get; set; }
         public IMapper _mapper { get; set; }
-        public BrandService(IUnitOfWork unitOfWork, IMapper mapper)
+        public IConfiguration _configuration { get; set; }
+        public BrandService(IUnitOfWork unitOfWork, IMapper mapper, IConfiguration configuration)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _configuration = configuration;
         }
         public async Task<List<BrandModel>> GetAllBrands()
         {
@@ -73,6 +79,12 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.BrandService
             var result = await _unitOfWork._brandRepository.GetById(id);
             if (result == null) throw new ArgumentNullException("There is not found brand.");
             return _mapper.Map<BrandModel>(result);
+        }
+
+        public async Task<string> UploadBrandImage(IFormFile image)
+        {
+            var url = await FirebaseStorageHelper.UploadFileToFirebase(image, $"{nameof(Brand).ToLower()}", _configuration["Firebase:ApiKey"], _configuration["Firebase:DomainName"], _configuration["Firebase:Email"], _configuration["Firebase:Password"], _configuration["Firebase:StorageBucket"]);
+            return url;
         }
     }
 }

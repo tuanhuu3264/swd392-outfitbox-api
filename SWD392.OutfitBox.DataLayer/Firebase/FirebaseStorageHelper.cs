@@ -145,7 +145,6 @@ namespace SWD392.OutfitBox.DataLayer.Firebase
                         ThrowOnCancel = true
                     });
 
-                
                 var destinationPath = $"{pathFileName}/{file.FileName}";
 
                 var downloadUrl = await storage.Child(destinationPath).PutAsync(stream);
@@ -165,8 +164,8 @@ namespace SWD392.OutfitBox.DataLayer.Firebase
             {
                 var config = new FirebaseAuthConfig
                 {
-                    ApiKey = "AIzaSyBC1xdmtGB_mCwHtvN7J67Zicf2pawEBWM",
-                    AuthDomain = $"outfit4rent-c7575.firebaseapp.com",
+                    ApiKey = apiKey,
+                    AuthDomain = domainName,
                     Providers = new FirebaseAuthProvider[]
                      {
                 new EmailProvider(),
@@ -201,7 +200,10 @@ namespace SWD392.OutfitBox.DataLayer.Firebase
                         continue;
                     }
 
-                    
+                    var stream = file.OpenReadStream();
+                    var destinationPath = $"{basePath}/{file.FileName}";
+
+                    var downloadUrl = await storage.Child(destinationPath).PutAsync(stream);
                     uploadResults.Add(downloadUrl);
                 }
 

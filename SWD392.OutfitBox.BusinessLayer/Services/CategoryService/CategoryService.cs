@@ -1,6 +1,9 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 using SWD392.OutfitBox.BusinessLayer.BusinessModels;
 using SWD392.OutfitBox.DataLayer.Entities;
+using SWD392.OutfitBox.DataLayer.Firebase;
 using SWD392.OutfitBox.DataLayer.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -13,11 +16,13 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.CategoryService
     public class CategoryService : ICategoryService
     {   
         public ICategoryRepository _categoryRepository { get; set; }
-        public IMapper _mapper; 
-        public CategoryService(ICategoryRepository categoryRepository, IMapper mapper)
+        public IMapper _mapper;
+        public IConfiguration _configuration;
+        public CategoryService(ICategoryRepository categoryRepository, IMapper mapper, IConfiguration configuration)
         {
             _categoryRepository = categoryRepository;
             _mapper = mapper;
+            _configuration = configuration;
         }
         public async Task<CategoryModel> ActiveOrDeactiveCategory(int id)
         {
@@ -56,6 +61,11 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.CategoryService
             
             var updatedCategory = await _categoryRepository.UpdateCategory(checkingCategory);
             return _mapper.Map<CategoryModel>(updatedCategory);
+        }
+        public async Task<string> UploadCategoryImage(IFormFile image)
+        {
+            var url = await FirebaseStorageHelper.UploadFileToFirebase(image, $"{nameof(Category).ToLower()}", _configuration["Firebase:ApiKey"], _configuration["Firebase:DomainName"], _configuration["Firebase:Email"], _configuration["Firebase:Password"], _configuration["Firebase:StorageBucket"]);
+            return url;
         }
     }
 }
