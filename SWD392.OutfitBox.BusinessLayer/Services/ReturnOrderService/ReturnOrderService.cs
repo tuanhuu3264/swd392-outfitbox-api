@@ -49,7 +49,20 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.ReturnOrderService
         {
             var returnOrder = await _unitOfWork._returnOrderRepository.GetReturnOrderById(id);
             if (returnOrder == null) throw new ArgumentNullException("There is no return order has id :" + id);
+            if (returnOrder.Status == status) { throw new Exception("This return order has this Status"); }
             returnOrder.Status=status;
+            if (status > 0)
+            {
+              foreach(var item in returnOrder.ProductReturnOrders)
+                {
+                   item.Status = status;// khuc nay k biet
+                   var product = await _unitOfWork._productRepository.GetById(item.ProductId);
+                   if(product == null) { throw new ArgumentNullException("Not Found this Product"); }
+                   product.AvailableQuantity = product.AvailableQuantity + item.Quantity;
+                   await _unitOfWork._productRepository.UpdateProduct(product);
+                }
+              
+            }
             await _unitOfWork._returnOrderRepository.UpdateReturnOrder(returnOrder);
             return _mapper.Map<ReturnOrderModel>(returnOrder);
         }

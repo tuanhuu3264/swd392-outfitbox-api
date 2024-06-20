@@ -32,5 +32,11 @@ namespace SWD392.OutfitBox.DataLayer.Repositories
             await this.SaveChangesAsync();
             return true;
         }
+
+        public async Task<List<Product>> GetFavoritesByCustomerId(int customerId)
+        {
+            var result = await this.Get().Where(x=>x.CustomerId == customerId).Include(x=>x.Product).ThenInclude(x=>x.Images).Select(x=>x.Product).ToListAsync();
+            return result;
+        }
     }
 }
