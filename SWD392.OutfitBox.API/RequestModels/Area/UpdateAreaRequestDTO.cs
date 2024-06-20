@@ -8,7 +8,7 @@ namespace SWD392.OutfitBox.API.DTOs.Area
 {
     public class UpdateAreaRequestDTO
     {
-      
+        
         public string? District { get; set; } 
         public string? City { get; set; } 
     }

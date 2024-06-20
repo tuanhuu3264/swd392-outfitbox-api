@@ -45,8 +45,8 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.UserPackageService
                         }
                         await _unitOfWork._productRepository.UpdateProduct(product);
                     }
-                    customerPackageModel.Status = status;
                 }
+                customerPackageModel.Status = status;
                 await _unitOfWork._customerPackageRepository.SaveAsyn(customerPackageModel);
                 await _unitOfWork.SaveChangesAsync();
                 await _unitOfWork.CommitTransaction();

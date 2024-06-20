@@ -19,7 +19,7 @@ namespace SWD392.OutfitBox.API.Controllers
             _productService = productService;
             _mapper = mapper;
         }
-        [HttpGet("admin/products")]
+        [HttpGet("products")]
         public async Task<IActionResult> GetAllForAdmin(
                                                 [FromQuery(Name ="_start")]
                                                 int? started = null,
@@ -54,7 +54,7 @@ namespace SWD392.OutfitBox.API.Controllers
             }
             return StatusCode((int)response.StatusCode, response);
         }
-        [HttpGet("products")]
+        [HttpGet("customers/products")]
         public async Task<IActionResult> GetAllForCustomer(
                                                 [FromQuery(Name ="_start")]
                                                 int? started = null,
@@ -138,6 +138,26 @@ namespace SWD392.OutfitBox.API.Controllers
             catch (Exception ex)
             {
                 response = new BaseResponse<ProductModel>(ex.Message, HttpStatusCode.InternalServerError, null);
+            }
+            return StatusCode((int)response.StatusCode, response);
+        }
+        [HttpPost("products/uploaded-files")]
+        public async Task<IActionResult> UpdateFiles(List<IFormFile> files)
+        {
+            BaseResponse<List<string>> response;
+            try
+            {
+
+                var result = await _productService.UploadFiles(files);
+                response = new BaseResponse<List<string>>("Product:", HttpStatusCode.OK, result);
+            }
+            catch (ArgumentNullException ex)
+            {
+                response = new BaseResponse<List<string>>(ex.Message, HttpStatusCode.NotFound, null);
+            }
+            catch (Exception ex)
+            {
+                response = new BaseResponse<List<string>>(ex.Message, HttpStatusCode.InternalServerError, null);
             }
             return StatusCode((int)response.StatusCode, response);
         }

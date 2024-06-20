@@ -3,7 +3,6 @@ using SWD392.OutfitBox.API.Configurations.HTTPResponse;
 using SWD392.OutfitBox.API.DTOs.Customer;
 using SWD392.OutfitBox.BusinessLayer.BusinessModels;
 using SWD392.OutfitBox.BusinessLayer.Services.UserPackageService;
-using SWD392.OutfitBox.BusinessLayer.Services.UserService;
 using System.Net;
 
 namespace SWD392.OutfitBox.API.Controllers

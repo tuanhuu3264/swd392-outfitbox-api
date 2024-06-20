@@ -169,7 +169,10 @@ namespace SWD392.OutfitBox.API.Configurations.Mapper
         }
         public void CustomerPackageProfile()
         {
-            CreateMap<CustomerPackageModel, CustomerPackage>().ReverseMap();
+            CreateMap<CustomerPackageModel, CustomerPackage>()
+                .ForMember(x=>x.Items,opt =>opt.MapFrom(x=>x.ItemInUsers))
+                .ReverseMap();
+            CreateMap<ItemInUserPackage, ItemInUserPackageModel>().ReverseMap();
         }
         
     }
