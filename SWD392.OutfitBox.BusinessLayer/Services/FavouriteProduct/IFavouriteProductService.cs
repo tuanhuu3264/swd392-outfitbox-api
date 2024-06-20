@@ -1,4 +1,5 @@
 ﻿
+using SWD392.OutfitBox.BusinessLayer.BusinessModels;
 using SWD392.OutfitBox.DataLayer.Entities;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,6 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.FavouriteProduct
     {
         public Task<FavouriteProductModel> CreateFavouriteProduct(int productId, int customerId);
         public Task<bool> DeleteFavouriteProduct(int productId, int customerId);
-
+        Task<List<ProductModel>> GetByCustomerId(int customerId);
     }
 }

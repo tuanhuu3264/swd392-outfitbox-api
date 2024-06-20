@@ -11,5 +11,6 @@ namespace SWD392.OutfitBox.DataLayer.Interfaces
     {
         public Task<FavouriteProduct> CreateFavouriteProductByCustomerIdAndProductId(int customerId, int productId);
         public Task<bool> DeleteFavouriteProductByCustomerIdAndProductId(int customerId, int productId);
+        public Task<List<Product>> GetFavoritesByCustomerId(int customerId);
     }
 }

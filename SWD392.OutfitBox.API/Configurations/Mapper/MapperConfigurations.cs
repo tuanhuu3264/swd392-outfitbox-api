@@ -110,7 +110,7 @@ namespace SWD392.OutfitBox.API.Configurations.Mapper
                 .ReverseMap();
             CreateMap<string, ImageModel>().ForMember(x => x.Link, img => img.MapFrom(x => x));
             CreateMap<Product, ProductModel>()
-                .ForMember(x=>x.Images,opt=>opt.MapFrom(x=>x.Images));
+                .ForMember(x=>x.Images,opt=>opt.MapFrom(x=>x.Images)).ReverseMap();
             CreateMap<Image, ImageModel>().ReverseMap();
             CreateMap<ProductModel, UpdateProductDto>().ReverseMap();
             CreateMap<string, Image>()

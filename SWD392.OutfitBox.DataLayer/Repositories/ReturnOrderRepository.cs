@@ -32,7 +32,7 @@ namespace SWD392.OutfitBox.DataLayer.Repositories
 
         public async Task<ReturnOrder> GetReturnOrderById(int id)
         {
-            return await this.Get().FirstOrDefaultAsync(x => x.Id == id);
+            return await this.Get().Include(x=>x.ProductReturnOrders).FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task<List<ReturnOrder>> GetReturnOrders(int? pageNumber = null, int? pageSize = null, int? partnerid = null, int? customerId = null)

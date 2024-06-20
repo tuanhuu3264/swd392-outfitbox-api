@@ -1,6 +1,7 @@
 ﻿using Abp.Domain.Uow;
 using AutoMapper;
 using SWD392.OutfitBox.BusinessLayer.BusinessModels;
+using SWD392.OutfitBox.DataLayer.Entities;
 using SWD392.OutfitBox.DataLayer.UnitOfWork;
 using System;
 using System.Collections.Generic;
@@ -53,6 +54,11 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.UserPackageService
                 return _mapper.Map<CustomerPackageModel>(customerPackageModel);
             }       
         }
-
+     public async Task<CustomerPackageModel> CreateCustomerPackage(CustomerPackageModel customerPackageModel)
+        {
+            var customerPackage = _mapper.Map<CustomerPackage>(customerPackageModel);
+            var result = await _unitOfWork._customerPackageRepository.CreateUserPackage(customerPackage);
+            return _mapper.Map<CustomerPackageModel>(result);
+        }
     }
 }
