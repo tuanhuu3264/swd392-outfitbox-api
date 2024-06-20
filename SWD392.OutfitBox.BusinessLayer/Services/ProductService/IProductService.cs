@@ -1,4 +1,5 @@
 ﻿
+using Microsoft.AspNetCore.Http;
 using SWD392.OutfitBox.BusinessLayer.BusinessModels;
 using SWD392.OutfitBox.DataLayer.Entities;
 using System;
@@ -16,6 +17,8 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.ProductService
         Task<ProductModel> CreateProduct(ProductModel createdProduct);
         Task<ProductModel> GetById(int Id);
         Task<ProductModel> UpdateProduct(ProductModel updateProduct);
-        
+
+        Task<List<string>> UploadFiles(List<IFormFile> files);
+
     }
 }

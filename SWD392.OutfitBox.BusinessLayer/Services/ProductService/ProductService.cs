@@ -7,6 +7,10 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using SWD392.OutfitBox.BusinessLayer.BusinessModels;
+using Microsoft.AspNetCore.Http;
+using SWD392.OutfitBox.DataLayer.Firebase;
+using Microsoft.Extensions.Configuration;
+
 
 namespace SWD392.OutfitBox.BusinessLayer.Services.ProductService
 {
@@ -17,14 +21,16 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.ProductService
         readonly ICategoryRepository _categoryRepository;
         readonly IBrandRepository _brandRepository;
         readonly IUnitOfWork _unitOfWork;
+        readonly IConfiguration _configuration; 
         public ProductService(IProductRepository repository, IMapper mapper, ICategoryRepository categoryRepository,
-            IBrandRepository brandRepository, IUnitOfWork unitOfWork)
+            IBrandRepository brandRepository, IUnitOfWork unitOfWork, IConfiguration configuration)
         {
             _repository = repository;
             _mapper = mapper;
             _categoryRepository = categoryRepository;
             _brandRepository = brandRepository;
             _unitOfWork = unitOfWork;
+            _configuration = configuration;
         }
 
         public async Task<List<ProductModel>> GetList(int? pageIndex = null, int? pageSize = null, string sorted = "", string orders = "", string name = "", List<int>? idBrand = null, List<int>? idCategory = null, int? status = null, double? maxMoney = null, double? minMoney = null)
@@ -66,6 +72,12 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.ProductService
             if (product.ID <= 0) throw new ArgumentNullException("Can't not find this Id");
             var data = _mapper.Map<ProductModel>(product);
             return data;
+        }
+
+        public async Task<List<string>> UploadFiles(List<IFormFile> files)
+        {   
+            var urls = await FirebaseStorageHelper.UploadFilesToFirebase(files, $"{nameof(Product).ToLower()}", _configuration["Firebase:ApiKey"], _configuration["Firebase:DomainName"], _configuration["Firebase:Email"], _configuration["Firebase:Password"], _configuration["Firebase:StorageBucket"]);
+            return urls;
         }
     }
 }
