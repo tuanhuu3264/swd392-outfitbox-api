@@ -79,5 +79,11 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.ProductService
             var urls = await FirebaseStorageHelper.UploadFilesToFirebase(files, $"{nameof(Product).ToLower()}", _configuration["Firebase:ApiKey"], _configuration["Firebase:DomainName"], _configuration["Firebase:Email"], _configuration["Firebase:Password"], _configuration["Firebase:StorageBucket"]);
             return urls;
         }
+
+        public async Task<string> UploadFile(IFormFile file)
+        {
+            var url = await FirebaseStorageHelper.UploadFileToFirebase(file, $"{nameof(Product).ToLower()}", _configuration["Firebase:ApiKey"], _configuration["Firebase:DomainName"], _configuration["Firebase:Email"], _configuration["Firebase:Password"], _configuration["Firebase:StorageBucket"]);
+            return url;
+        }
     }
 }
