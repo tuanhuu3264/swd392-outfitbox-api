@@ -6,7 +6,7 @@ namespace SWD392.OutfitBox.API.Configurations.Databases
     public static class DatabasesConfigurations
     {
         public static void AddSQLServerDatabase(this IServiceCollection services, IConfiguration configuration)
-        {
+        { 
             services.AddDbContext<Context>(options =>
             {
                 options.UseSqlServer("data source=34.123.203.83;initial catalog=Outfit4Rent;user id=sa;password=<YourStrong@Passw0rd>;trustservercertificate=true;multipleactiveresultsets=true;")

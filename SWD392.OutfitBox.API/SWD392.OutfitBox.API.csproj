@@ -30,6 +30,7 @@
 
   <ItemGroup>
     <Folder Include="Middlewares\" />
+    <Folder Include="RequestModels\CustomerPackage\" />
   </ItemGroup>
 
   <ItemGroup>

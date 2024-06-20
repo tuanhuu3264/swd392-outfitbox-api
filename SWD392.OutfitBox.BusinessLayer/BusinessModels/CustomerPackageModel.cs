@@ -12,8 +12,7 @@ namespace SWD392.OutfitBox.BusinessLayer.BusinessModels
  
     public class CustomerPackageModel
     {
- 
-        public int? Id { get; set; }
+         public int? Id { get; set; }
         public int? CustomerId { get; set; } 
         public int? PackageId { get; set; }
         public string? PackageName { get; set; } = string.Empty;
@@ -25,5 +24,6 @@ namespace SWD392.OutfitBox.BusinessLayer.BusinessModels
         public string? ReceiverAddress { get; set; } = string.Empty; 
         public int? Status { get; set; }
         public int? TransactionId { get; set; }
+        public List<ItemInUserPackageModel> ItemInUsers { get; set; }
     }
 }
