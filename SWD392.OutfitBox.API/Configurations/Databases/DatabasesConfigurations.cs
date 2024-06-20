@@ -9,7 +9,7 @@ namespace SWD392.OutfitBox.API.Configurations.Databases
         {
             services.AddDbContext<Context>(options =>
             {
-                options.UseSqlServer("data source=34.123.203.83;initial catalog=Outfit4Rent;user id=sa;password=<YourStrong@Passw0rd>;trustservercertificate=true;multipleactiveresultsets=true;")
+                options.UseSqlServer(configuration["ConnectionStrings:DefaultConnection"])
                        .EnableSensitiveDataLogging();
             });
         }
