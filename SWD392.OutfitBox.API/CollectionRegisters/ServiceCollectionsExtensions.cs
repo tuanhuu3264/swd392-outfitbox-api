@@ -24,6 +24,7 @@ using SWD392.OutfitBox.BusinessLayer.Services.ReturnOrderService;
 using SWD392.OutfitBox.DataLayer.Databases.Redis;
 using SWD392.OutfitBox.DataLayer.Repositories.Interfaces;
 using SWD392.OutfitBox.BusinessLayer.Services.BrandService;
+using SWD392.OutfitBox.BusinessLayer.Services.UserPackageService;
 
 namespace SWD392.OutfitBox.API.CollectionRegisters
 {
@@ -70,6 +71,7 @@ namespace SWD392.OutfitBox.API.CollectionRegisters
             services.AddScoped<IReturnOrderService, ReturnOrderService>();
             services.AddScoped <IProductReturnOrderRepository, ProductReturnOrderRepository>();
             services.AddScoped<IBrandService, BrandService>();
+            services.AddScoped<ICustomerPackageService, CustomerPackageService>();
         }
         public static void RepositoriesRegister(this IServiceCollection services)
         {
@@ -99,6 +101,7 @@ namespace SWD392.OutfitBox.API.CollectionRegisters
             services.AddScoped<IReturnOrderRepository, ReturnOrderRepository>();
             services.AddScoped<IDepositRepository,DepositRepository>();
             services.AddScoped<IUserRepository,UserRepository>();   
+            services.AddScoped<ICustomerPackageRepository, CustomerPackageRepository>();
             
         }
 
