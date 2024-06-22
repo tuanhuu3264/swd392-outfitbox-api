@@ -54,5 +54,12 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.ItemInUserPackageService
             var obj = await _unitOfWork._itemsInUserPackageRepository.DeleteItem(itemid);
             return obj;
         }
+
+        public async Task<List<ItemInUserPackageModel>> GetByUserPackageId(int id)
+        {
+            var list =  await _unitOfWork._itemsInUserPackageRepository.GetByUserPackageId(id);
+            var listItem = _mapper.Map<List<ItemInUserPackageModel>>(list);
+            return listItem;
+        }
     }
 }
