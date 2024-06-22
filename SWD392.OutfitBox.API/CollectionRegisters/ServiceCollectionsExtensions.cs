@@ -25,6 +25,7 @@ using SWD392.OutfitBox.DataLayer.Databases.Redis;
 using SWD392.OutfitBox.DataLayer.Repositories.Interfaces;
 using SWD392.OutfitBox.BusinessLayer.Services.BrandService;
 using SWD392.OutfitBox.BusinessLayer.Services.UserPackageService;
+using SWD392.OutfitBox.BusinessLayer.Services.PaymentService;
 
 namespace SWD392.OutfitBox.API.CollectionRegisters
 {
@@ -54,7 +55,7 @@ namespace SWD392.OutfitBox.API.CollectionRegisters
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IPackageService, PackageService>();
-    /*        services.AddScoped<ITransactionService, TransactionService>();*/
+          //services.AddScoped<ITransactionService, TransactionService>();
             services.AddScoped<ICustomerService, CustomerService>();
             services.AddScoped<IWalletService, WalletService>();
             services.AddScoped<IRoleService, RoleService>();
@@ -64,7 +65,7 @@ namespace SWD392.OutfitBox.API.CollectionRegisters
             services.AddScoped<IProductService,ProductService>();
             services.AddScoped<IItemsInUserPackageService, ItemsInUserPackageService>();
             services.AddScoped<IFirebaseService, FirebaseService>();
-           /* services.AddScoped<IPaymentService, PaymentService>();*/
+            //services.AddScoped<IPaymentService, PaymentService>();
             services.AddScoped<IFirebaseService, FirebaseService>();
             services.AddScoped<IAreaService, AreaService>();    
             services.AddScoped<IPartnerService, PartnerService>();  
@@ -102,6 +103,7 @@ namespace SWD392.OutfitBox.API.CollectionRegisters
             services.AddScoped<IDepositRepository,DepositRepository>();
             services.AddScoped<IUserRepository,UserRepository>();   
             services.AddScoped<ICustomerPackageRepository, CustomerPackageRepository>();
+            
             
         }
 
