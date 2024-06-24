@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Http;
 using SWD392.OutfitBox.DataLayer.Firebase;
 using Microsoft.Extensions.Configuration;
 using Abp.Extensions;
+using System.Management;
 
 
 namespace SWD392.OutfitBox.BusinessLayer.Services.ProductService
@@ -32,7 +33,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.ProductService
 
         public async Task<List<ProductModel>> GetList(int? pageIndex = null, int? pageSize = null, string sorted = "", string orders = "", string name = "", List<int>? idBrand = null, List<int>? idCategory = null, int? status = null, double? maxMoney = null, double? minMoney = null)
         {
-            var products = await _unitOfWork._productRepository.GetStartEnd(pageIndex, pageSize, sorted, orders, name, idBrand, idCategory, status, maxMoney, minMoney);
+            var products = await _unitOfWork._productRepository.GetList(null, null, sorted, orders, name, idBrand, idCategory, status, maxMoney, minMoney);
             var data = _mapper.Map<List<ProductModel>>(products);
             return data;
         }
@@ -47,8 +48,23 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.ProductService
             if (createdProduct.IdCategory.HasValue == false) throw new Exception("There is no id in model.");
             if (product.Brand == null) { throw new ArgumentNullException("Can not find Brand"); }
             product.Category = await _unitOfWork._categoryRepository.GetById(createdProduct.IdCategory.Value);
+
             if (product.Category == null) { throw new ArgumentNullException("Can not find Category"); }
             var productCreate = await _unitOfWork._productRepository.CreateProduct(product);
+            List <Image> images = new List<Image>();
+            if(createdProduct.Images != null)
+            {
+                foreach(var item in createdProduct.Images)
+                {
+                    var newImage = await _unitOfWork._imageRepository.CreateImage(new Image()
+                    {
+                        Link = item.Link,
+                        IdProduct=productCreate.ID
+                    });
+                    images.Add(newImage);
+                }
+            }
+             productCreate.Images= images;
             var data = _mapper.Map<ProductModel>(productCreate);
             return data;
         }
@@ -68,7 +84,6 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.ProductService
             if (updateProduct.Images != null)
             {
                 var existingImageLinks = product.Images?.Select(x => x.Link).ToHashSet();
-                var imagesToKeep = new List<Image>();
                 var newImagesToAdd = new List<Image>();
 
                 var imagesToDelete = product.Images?.Where(img => !updateProduct.Images.Any(uimg => uimg.Link == img.Link)).ToList();
@@ -88,12 +103,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.ProductService
                    
                 }
             }
-            var idCategory = product.IdCategory;
-            var idBrand = product.IdBrand;
-            updateProduct.Images = null;
             _mapper.Map(updateProduct, product);
-            if(product.IdBrand==0) product.IdBrand = idBrand;
-            if(product.IdCategory==0) product.IdCategory = idCategory;
             var updatedProduct = await _unitOfWork._productRepository.UpdateProduct(product);
 
             return _mapper.Map<ProductModel>(updatedProduct);

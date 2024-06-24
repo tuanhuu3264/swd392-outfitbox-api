@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace SWD392.OutfitBox.API.DTOs.Product
 {
@@ -23,6 +24,11 @@ namespace SWD392.OutfitBox.API.DTOs.Product
         public int? IdBrand { get; set; }
         public string? Type { get; set; }
         public bool? IsFeatured { get; set; }
-        public List<string>? Images { get; set; }
+        public List<ImageRequestModel>? Images { get; set; }
+    }
+    public class ImageRequestModel
+    {
+        [JsonProperty("url")]
+        public string? Url { get; set; }
     }
 }

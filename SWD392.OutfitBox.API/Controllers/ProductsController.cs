@@ -21,10 +21,10 @@ namespace SWD392.OutfitBox.API.Controllers
         }
         [HttpGet("products")]
         public async Task<IActionResult> GetAllForAdmin(
-                                                [FromQuery(Name ="_start")]
-                                                int? started = null,
-                                                [FromQuery(Name ="_end")]
-                                                int? ended = null,
+                                                [FromQuery(Name ="page_index")]
+                                                int? pageIndex = null,
+                                                [FromQuery(Name ="page_size")]
+                                                int? pageSize = null,
                                                 [FromQuery(Name ="_sort")]
                                                 string sorted = "",
                                                 [FromQuery(Name ="_order")]
@@ -45,7 +45,7 @@ namespace SWD392.OutfitBox.API.Controllers
             BaseResponse<List<ProductModel>> response;
             try
             {
-                var data = await _productService.GetList(started, ended, sorted, orders, name, idBrand, idCategory, status, maxMoney, minMoney);
+                var data = await _productService.GetList(pageIndex, pageSize, sorted, orders, name, idBrand, idCategory, status, maxMoney, minMoney);
                 response = new BaseResponse<List<ProductModel>>("Get Product successfully.", HttpStatusCode.OK, data);
             }
             catch (Exception ex)
@@ -56,10 +56,10 @@ namespace SWD392.OutfitBox.API.Controllers
         }
         [HttpGet("customers/products")]
         public async Task<IActionResult> GetAllForCustomer(
-                                                [FromQuery(Name ="_start")]
-                                                int? started = null,
-                                                [FromQuery(Name ="_end")]
-                                                int? ended = null,
+                                                [FromQuery(Name ="page_index")]
+                                                int? pageIndex = null,
+                                                [FromQuery(Name ="page_size")]
+                                                int? pageSize = null,
                                                 [FromQuery(Name ="_sort")]
                                                 string sorted = "", 
                                                 [FromQuery(Name ="_order")]                                    
@@ -78,7 +78,7 @@ namespace SWD392.OutfitBox.API.Controllers
             BaseResponse<List<ProductModel>> response;
             try
             {
-                var data = await _productService.GetList(started,ended, sorted, orders, name, idBrand, idCategory,1, maxMoney, minMoney);
+                var data = await _productService.GetList(pageIndex, pageSize, sorted, orders, name, idBrand, idCategory,1, maxMoney, minMoney);
                 response = new BaseResponse<List<ProductModel>>("Get Product successfully.", HttpStatusCode.OK, data);
             }
             catch (Exception ex)

@@ -32,7 +32,7 @@ namespace SWD392.OutfitBox.API.DTOs.Product
         [Required(ErrorMessage = "The quantity is required.")]
         [Range(1, int.MaxValue, ErrorMessage = "The quantity is over range of data.")]
         public int Quantity { get; set; }
-        public List<string>? ImageUrls { get; set; }
+        public List<ImageRequestModel>? Images { get; set; }
 
     }
 }
