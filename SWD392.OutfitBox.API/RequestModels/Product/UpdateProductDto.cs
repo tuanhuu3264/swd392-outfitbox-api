@@ -18,9 +18,11 @@ namespace SWD392.OutfitBox.API.DTOs.Product
         public string? IsUsed { get; set; }
         public double? Deposit { get; set; }
         public int? IdCategory { get; set; }
+        public int? Quantity { get; set; }
+        public int? AvailableQuantity { get; set; }
         public int? IdBrand { get; set; }
         public string? Type { get; set; }
-        public int? Quantity {  get; set; }
+        public bool? IsFeatured { get; set; }
         public List<string>? Images { get; set; }
     }
 }

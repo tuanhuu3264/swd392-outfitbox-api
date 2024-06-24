@@ -22,7 +22,7 @@ builder.Configuration.AddJsonFile("./appsettings.Development.json")
 
 builder.Services.AddSwagger(builder.Configuration);
 builder.Services.AddJwtAuthorization(builder.Configuration);
-builder.Services.AddSQLServerDatabase(builder.Configuration);
+builder.Services.AddDatabaseSQLServer(builder.Configuration);
 builder.Services.AddRedis(builder.Configuration);
 builder.Services.RegisterService();
 builder.Configuration.CreateFirebaseApp();

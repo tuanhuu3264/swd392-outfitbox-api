@@ -26,6 +26,6 @@ namespace SWD392.OutfitBox.BusinessLayer.BusinessModels
         public int? IdBrand { get; set; }
         public string? Type { get; set; }
         public bool? IsFeatured { get; set; }
-        public List<ImageModel> Images { get; set; }
+        public List<ImageModel>? Images { get; set; }
     }
 }

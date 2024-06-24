@@ -16,5 +16,6 @@ namespace SWD392.OutfitBox.API.DTOs.Category
         public string? Description { get; set; }
         [Required(ErrorMessage = "The image is required.")]
         public string? ImageUrl { get; set; } 
+
     }
 }

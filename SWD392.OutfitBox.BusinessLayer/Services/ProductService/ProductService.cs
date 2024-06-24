@@ -10,25 +10,22 @@ using SWD392.OutfitBox.BusinessLayer.BusinessModels;
 using Microsoft.AspNetCore.Http;
 using SWD392.OutfitBox.DataLayer.Firebase;
 using Microsoft.Extensions.Configuration;
+using Abp.Extensions;
 
 
 namespace SWD392.OutfitBox.BusinessLayer.Services.ProductService
 {
     public class ProductService : IProductService
     {
-        readonly IProductRepository _repository;
+       
         readonly IMapper _mapper;
-        readonly ICategoryRepository _categoryRepository;
-        readonly IBrandRepository _brandRepository;
+    
         readonly IUnitOfWork _unitOfWork;
         readonly IConfiguration _configuration; 
-        public ProductService(IProductRepository repository, IMapper mapper, ICategoryRepository categoryRepository,
-            IBrandRepository brandRepository, IUnitOfWork unitOfWork, IConfiguration configuration)
+        public ProductService(IMapper mapper,IUnitOfWork unitOfWork, IConfiguration configuration)
         {
-            _repository = repository;
+            
             _mapper = mapper;
-            _categoryRepository = categoryRepository;
-            _brandRepository = brandRepository;
             _unitOfWork = unitOfWork;
             _configuration = configuration;
         }
@@ -49,26 +46,61 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.ProductService
             product.Brand = await _unitOfWork._brandRepository.GetById(createdProduct.IdBrand.Value);
             if (createdProduct.IdCategory.HasValue == false) throw new Exception("There is no id in model.");
             if (product.Brand == null) { throw new ArgumentNullException("Can not find Brand"); }
-            product.Category = await _categoryRepository.GetById(createdProduct.IdCategory.Value);
+            product.Category = await _unitOfWork._categoryRepository.GetById(createdProduct.IdCategory.Value);
             if (product.Category == null) { throw new ArgumentNullException("Can not find Category"); }
-            var productCreate = await _repository.CreateProduct(product);
+            var productCreate = await _unitOfWork._productRepository.CreateProduct(product);
             var data = _mapper.Map<ProductModel>(productCreate);
             return data;
         }
         public async Task<ProductModel> UpdateProduct(ProductModel updateProduct)
         {
-            if (updateProduct.ID.HasValue == false) throw new Exception("There is no id in model.");
-            //await _unitOfWork._imageRepository.DeleteImageByProductId(updateProduct.ID.Value);
-            var product = await _repository.GetDetail(updateProduct.ID.Value);
-            if (product == null) { throw new ArgumentNullException("Can't not find this Id"); }
-            product = _mapper.Map(updateProduct, product);
-            var flag = await _repository.UpdateProduct(product);
-            var result = _mapper.Map<ProductModel>(flag);
-            return result;
+            if (!updateProduct.ID.HasValue)
+            {
+                throw new ArgumentException("There is no ID in the model.");
+            }
+
+            var product = await _unitOfWork._productRepository.GetDetail(updateProduct.ID.Value);
+            if (product == null)
+            {
+                throw new ArgumentNullException($"Cannot find product with ID {updateProduct.ID.Value}.");
+            }
+
+            if (updateProduct.Images != null)
+            {
+                var existingImageLinks = product.Images?.Select(x => x.Link).ToHashSet();
+                var imagesToKeep = new List<Image>();
+                var newImagesToAdd = new List<Image>();
+
+                var imagesToDelete = product.Images?.Where(img => !updateProduct.Images.Any(uimg => uimg.Link == img.Link)).ToList();
+                
+                if(imagesToDelete != null) 
+                foreach (var img in imagesToDelete)
+                {
+                    await _unitOfWork._imageRepository.DeleteImageByProductId(img.ID);
+                }
+
+                foreach (var image in updateProduct.Images)
+                {
+                    if (existingImageLinks!=null && !existingImageLinks.Contains(image.Link))
+                    {
+                        await _unitOfWork._imageRepository.CreateImage(new Image { Link = image.Link, IdProduct = product.ID });
+                    }
+                   
+                }
+            }
+            var idCategory = product.IdCategory;
+            var idBrand = product.IdBrand;
+            updateProduct.Images = null;
+            _mapper.Map(updateProduct, product);
+            if(product.IdBrand==0) product.IdBrand = idBrand;
+            if(product.IdCategory==0) product.IdCategory = idCategory;
+            var updatedProduct = await _unitOfWork._productRepository.UpdateProduct(product);
+
+            return _mapper.Map<ProductModel>(updatedProduct);
         }
         public async Task<ProductModel> GetById(int Id)
         {
-            var product = await _repository.GetById(Id);
+            var product = await _unitOfWork._productRepository.GetById(Id);
             if (product.ID <= 0) throw new ArgumentNullException("Can't not find this Id");
             var data = _mapper.Map<ProductModel>(product);
             return data;
