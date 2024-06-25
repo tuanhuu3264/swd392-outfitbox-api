@@ -155,7 +155,7 @@ namespace SWD392.OutfitBox.API.Configurations.Mapper
         {
 
             CreateMap<AreaModel, Area>().ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
-            CreateMap<Area, AreaModel>();
+            CreateMap<Area, AreaModel>().ForPath(x=>x.Coordinate.X,x=>x.MapFrom(x=>x.X)).ForPath(x => x.Coordinate.Y, x => x.MapFrom(x => x.Y));
             CreateMap<CreateAreaRequestDTO, AreaModel>().ReverseMap();
             CreateMap<UpdateAreaRequestDTO, AreaModel>().ReverseMap();
        
