@@ -1,5 +1,5 @@
-﻿using SWD392.OutfitBox.BusinessLayer.Models.Requests.Wallet;
-using SWD392.OutfitBox.Core.Models.Responses.Wallet;
+﻿
+using SWD392.OutfitBox.BusinessLayer.BusinessModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,11 +10,11 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.WalletService
 {
     public interface IWalletService
     {
-        public Task<List<WalletDTO>> GetAllEnabledWalletWithUserId(int userId); 
-        public Task<List<WalletDTO>> GetAllWalletWithUserId (int userId);
-        public Task<WalletDTO> GetWalletById (int id);
-        public Task<CreateWalletResponseDTO> AddWalletWithUserId (int userId, CreateWalletRequestDTO wallet);
-        public Task<UpdateWalletResponseDTO> UpdateWalletWithUserId (int userId, UpdateWalletRequestDTO wallet);
-        public Task<WalletDTO> ActiveOrDeactiveWalletById(int id);
+        public Task<List<WalletModel>> GetAllEnabledWalletWithUserId(int userId); 
+        public Task<List<WalletModel>> GetAllWalletWithUserId (int userId);
+        public Task<WalletModel> GetWalletById (int id);
+        public Task<WalletModel> AddWalletWithUserId (WalletModel wallet);
+        public Task<WalletModel> UpdateWalletWithUserId (WalletModel wallet);
+        public Task<WalletModel> ActiveOrDeactiveWalletById(int id);
     }
 }

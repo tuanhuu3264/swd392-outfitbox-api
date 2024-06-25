@@ -1,69 +1,75 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SWD392.OutfitBox.API.Configurations.HTTPResponse;
 using SWD392.OutfitBox.API.Controllers.Endpoints;
-using SWD392.OutfitBox.BusinessLayer.Models.Requests.ItemInUserPackage;
-using SWD392.OutfitBox.BusinessLayer.Models.Responses.ItemInUserPackage;
-using SWD392.OutfitBox.BusinessLayer.Models.Responses.Product;
+using SWD392.OutfitBox.API.DTOs.ItemInUserPackage;
+using SWD392.OutfitBox.BusinessLayer.BusinessModels;
+
 using SWD392.OutfitBox.BusinessLayer.Services.ItemInUserPackageService;
 using System.Net;
 
 namespace SWD392.OutfitBox.API.Controllers
 {
-    [Route("api/[controller]")]
+
     [ApiController]
     public class ItemsInUserPackagesController : ControllerBase
     {
         readonly IItemsInUserPackageService _itemsInUserPackageService;
-        public ItemsInUserPackagesController(IItemsInUserPackageService itemsInUserPackageService)
+        public IMapper _mapper { get; set; }
+        public ItemsInUserPackagesController(IMapper mapper,IItemsInUserPackageService itemsInUserPackageService)
         {
             _itemsInUserPackageService = itemsInUserPackageService;
+            _mapper = mapper;
         }
         [HttpGet(ItemInUserPackageEndPoints.ItemsInUserPackages)]
         public async Task<ActionResult> GetAll()
         {
-            BaseResponse<List<ItemInUserPackageDto>> response;
+            BaseResponse<List<ItemInUserPackageModel>> response;
             try
             {
                 var result = await _itemsInUserPackageService.GetAll();
-                if (result == null) { response = new BaseResponse<List<ItemInUserPackageDto>>("List Null",HttpStatusCode.InternalServerError, null); }
-                response = new BaseResponse<List<ItemInUserPackageDto>>("Items in customer package", HttpStatusCode.OK, result);
+                if (result == null) { response = new BaseResponse<List<ItemInUserPackageModel>>("List Null",HttpStatusCode.InternalServerError, null); }
+                response = new BaseResponse<List<ItemInUserPackageModel>>("Items in customer package", HttpStatusCode.OK, result);
             }
             catch (Exception ex)
             {
-                response = new BaseResponse<List<ItemInUserPackageDto>>(ex.Message, HttpStatusCode.InternalServerError, null);
+                response = new BaseResponse<List<ItemInUserPackageModel>>(ex.Message, HttpStatusCode.InternalServerError, null);
             }
             return StatusCode((int)response.StatusCode,response);
         }
         [HttpPost(ItemInUserPackageEndPoints.ItemsInUserPackages)]
         public async Task<ActionResult> CreateAnItemInUserPackage([FromBody] CreatedItemInPackage createdItemInPackage)
         {
-            BaseResponse<ItemInUserPackageDto> response;
+            BaseResponse<ItemInUserPackageModel> response;
             try
-            {
-                var result = await _itemsInUserPackageService.CreateItem(createdItemInPackage);
-                if (result == null) { response = new BaseResponse<ItemInUserPackageDto>("Fail", HttpStatusCode.InternalServerError, null); }
-                response = new BaseResponse<ItemInUserPackageDto>("Successful", HttpStatusCode.OK, result);
+            {   
+                var mapping = _mapper.Map<ItemInUserPackageModel>(createdItemInPackage);
+                var result = await _itemsInUserPackageService.CreateItem(mapping);
+                if (result == null) { response = new BaseResponse<ItemInUserPackageModel>("Fail", HttpStatusCode.InternalServerError, null); }
+                response = new BaseResponse<ItemInUserPackageModel>("Successful", HttpStatusCode.OK, result);
             }
             catch (Exception ex)
             {
-                response = new BaseResponse<ItemInUserPackageDto>(ex.Message, HttpStatusCode.InternalServerError, null);
+                response = new BaseResponse<ItemInUserPackageModel>(ex.Message, HttpStatusCode.InternalServerError, null);
             }
             return StatusCode((int)response.StatusCode, response);
         }
-        [HttpPatch(ItemInUserPackageEndPoints.ItemsInUserPackages)]
-        public async Task<ActionResult> UpdateAnItemInUserPackage([FromBody] UpdateItemInPackage updateItemInPackage)
+        [HttpPatch("products-in-customer-package/{id}")]
+        public async Task<ActionResult> UpdateAnItemInUserPackage([FromRoute] int id, [FromBody] UpdateItemInPackage updateItemInPackage)
         {
-            BaseResponse<ItemInUserPackageDto> response;
+            BaseResponse<ItemInUserPackageModel> response;
             try
             {
-                var result = await _itemsInUserPackageService.UpdateItem(updateItemInPackage);
-                if (result == null) { response = new BaseResponse<ItemInUserPackageDto>("Fail", HttpStatusCode.InternalServerError, null); }
-                response = new BaseResponse<ItemInUserPackageDto>("Successful", HttpStatusCode.OK, result);
+                var mapping = _mapper.Map<ItemInUserPackageModel>(updateItemInPackage);
+                mapping.Id = id;
+                var result = await _itemsInUserPackageService.UpdateItem(mapping);
+                if (result == null) { response = new BaseResponse<ItemInUserPackageModel>("Fail", HttpStatusCode.InternalServerError, null); }
+                response = new BaseResponse<ItemInUserPackageModel>("Successful", HttpStatusCode.OK, result);
             }
             catch (Exception ex)
             {
-                response = new BaseResponse<ItemInUserPackageDto>(ex.Message, HttpStatusCode.InternalServerError, null);
+                response = new BaseResponse<ItemInUserPackageModel>(ex.Message, HttpStatusCode.InternalServerError, null);
             }
             return StatusCode((int)response.StatusCode, response);
         }
@@ -74,7 +80,7 @@ namespace SWD392.OutfitBox.API.Controllers
             try
             {
                 var result = await _itemsInUserPackageService.DeleteItem(id);
-                if (result == null) { response = new BaseResponse<bool>("Fail", HttpStatusCode.InternalServerError,false ); }
+                if (result == false) { response = new BaseResponse<bool>("Fail", HttpStatusCode.InternalServerError,false ); }
                 response = new BaseResponse<bool>("Successful", HttpStatusCode.OK,true );
             }
             catch(ArgumentException ex)
@@ -84,6 +90,22 @@ namespace SWD392.OutfitBox.API.Controllers
             catch (Exception ex)
             {
                 response = new BaseResponse<bool>(ex.Message, HttpStatusCode.InternalServerError, false);
+            }
+            return StatusCode((int)response.StatusCode, response);
+        }
+        [HttpGet(ItemInUserPackageEndPoints.ItemsInUserPackageId)]
+        public async Task<ActionResult> GetItemsbyCustomerPackageId([FromRoute] int id)
+        {
+            BaseResponse<List<ItemInUserPackageModel>> response;
+            try
+            {
+                var result = await _itemsInUserPackageService.GetByUserPackageId(id);
+                if (result == null) { response = new BaseResponse<List<ItemInUserPackageModel>>("List Null", HttpStatusCode.InternalServerError, null); }
+                response = new BaseResponse<List<ItemInUserPackageModel>>("Items in customer package", HttpStatusCode.OK, result);
+            }
+            catch (Exception ex)
+            {
+                response = new BaseResponse<List<ItemInUserPackageModel>>(ex.Message, HttpStatusCode.InternalServerError, null);
             }
             return StatusCode((int)response.StatusCode, response);
         }

@@ -24,5 +24,7 @@ namespace SWD392.OutfitBox.DataLayer.Entities
         [ForeignKey(nameof(AreaId))]
         public Area? Area { get; set; }
         public List<ReturnOrder>? ReturnOrders { get; set; }
+        public string X { get; set; }
+        public string Y { get; set; }
     }
 }

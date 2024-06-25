@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SWD392.OutfitBox.DataLayer"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SWD392.OutfitBox.Test", "SWD392.OutfitBox.Test\SWD392.OutfitBox.Test.csproj", "{86EE7A25-86D0-4BD6-B044-5CFBB7F23964}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SWD392.OutfitBox.BackgroundWorker", "SWD392.OutfitBox.BackgroundWorker\SWD392.OutfitBox.BackgroundWorker.csproj", "{07EAF63B-67D1-4E31-9FD3-9DEDB7F3103A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SWD392.OutfitBox.BackgroundWorker", "SWD392.OutfitBox.BackgroundWorker\SWD392.OutfitBox.BackgroundWorker.csproj", "{07EAF63B-67D1-4E31-9FD3-9DEDB7F3103A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

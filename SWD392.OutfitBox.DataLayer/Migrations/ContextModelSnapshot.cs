@@ -30,6 +30,10 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("City")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -46,12 +50,14 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                         new
                         {
                             Id = 1,
+                            Address = "Linh Trung",
                             City = "Ho Chi Minh",
                             District = "Thu Duc"
                         },
                         new
                         {
                             Id = 2,
+                            Address = "Dong Hoa",
                             City = "Binh Duong",
                             District = "Di An"
                         });
@@ -92,7 +98,7 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                         {
                             ID = 1,
                             Description = " Explosive within the Vietnamese fashion community in 2013, Nosbyn captured the hearts of young fashion enthusiasts with its stylish yet basic items. Leading the way were its signature solid-colored crop tops, which remained a prominent fixture even after three years of development. Today, Nosbyn continues to hold a strong position in the hearts of Vietnamese fashionistas.",
-                            ImageUrl = "https://nosbyn.com/",
+                            ImageUrl = "https://theme.hstatic.net/200000571545/1000929382/14/logo.png?v=171",
                             IsFeatured = false,
                             Name = "NOSBYN",
                             Status = 1
@@ -101,7 +107,7 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                         {
                             ID = 2,
                             Description = "The BlueTshirt, established in 2012, initially introduced simple t-shirt designs with inspiring slogans to the Vietnamese market. The brand's designs strike a perfect balance between elegance and a free-spirited nature, reflecting the personality of its founder. Whether you are a gentle and graceful woman or someone with a strong individualistic style, The BlueTshirt offers a wide range of products to cater to your preferences.",
-                            ImageUrl = "https://thebluetshirt.com/",
+                            ImageUrl = "https://theme.hstatic.net/1000053720/1001049163/14/logo.png?v=3942",
                             IsFeatured = false,
                             Name = "THE BLUE T-SHIRT",
                             Status = 1
@@ -110,9 +116,18 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                         {
                             ID = 3,
                             Description = "With an unwavering commitment to quality craftsmanship, ethical practices, and timeless design, O4R is poised to become the go-to destination for fashion-conscious individuals seeking both substance and style",
-                            ImageUrl = "https://thebluetshirt.com/",
+                            ImageUrl = "https://panel.outfit4rent.online/images/logo-mark-light.svg",
                             IsFeatured = false,
                             Name = "OUTFIT4RENT",
+                            Status = 1
+                        },
+                        new
+                        {
+                            ID = 4,
+                            Description = "With an unwavering commitment to quality craftsmanship, ethical practices, and timeless design, O4R is poised to become the go-to destination for fashion-conscious individuals seeking both substance and style",
+                            ImageUrl = "https://file.hstatic.net/1000003969/file/logo-svg.svg",
+                            IsFeatured = false,
+                            Name = "JUNO",
                             Status = 1
                         });
                 });
@@ -492,8 +507,8 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                         {
                             Id = 1,
                             CustomerId = 1,
-                            DateFrom = new DateTime(2024, 6, 11, 13, 45, 54, 630, DateTimeKind.Local).AddTicks(9208),
-                            DateTo = new DateTime(2024, 7, 11, 13, 45, 54, 630, DateTimeKind.Local).AddTicks(9222),
+                            DateFrom = new DateTime(2024, 6, 25, 12, 41, 41, 262, DateTimeKind.Local).AddTicks(1217),
+                            DateTo = new DateTime(2024, 7, 25, 12, 41, 41, 262, DateTimeKind.Local).AddTicks(1232),
                             PackageId = 1,
                             PackageName = "Newcomer Trial",
                             Price = 200.0,
@@ -538,8 +553,8 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                             Id = 1,
                             AmountMoney = 20.0,
                             CustomerId = 1,
-                            Date = new DateTime(2024, 6, 11, 13, 45, 54, 630, DateTimeKind.Local).AddTicks(9320),
-                           Type = "Khuyen Mai"
+                            Date = new DateTime(2024, 6, 25, 12, 41, 41, 262, DateTimeKind.Local).AddTicks(1292),
+                            Type = "Khuyen Mai"
                         });
                 });
 
@@ -759,6 +774,14 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
+                    b.Property<string>("X")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Y")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("AreaId");
@@ -776,7 +799,9 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                             OTP = "",
                             Password = "",
                             Phone = "123456",
-                            Status = 0
+                            Status = 0,
+                            X = "10.8447022",
+                            Y = "106.7618557"
                         },
                         new
                         {
@@ -788,7 +813,9 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                             OTP = "",
                             Password = "",
                             Phone = "123456",
-                            Status = 0
+                            Status = 0,
+                            X = "10.8447022",
+                            Y = "106.7618557"
                         });
                 });
 
@@ -1163,7 +1190,7 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                         {
                             Id = 1,
                             Amount = 0.0,
-                            DateTransaction = new DateTime(2024, 6, 11, 13, 45, 54, 630, DateTimeKind.Local).AddTicks(9272),
+                            DateTransaction = new DateTime(2024, 6, 25, 12, 41, 41, 262, DateTimeKind.Local).AddTicks(1264),
                             DepositId = 1,
                             Paymethod = "",
                             Status = 0,
@@ -1419,7 +1446,7 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                         .IsRequired();
 
                     b.HasOne("SWD392.OutfitBox.DataLayer.Entities.Partner", "Partner")
-                        .WithMany()
+                        .WithMany("ReturnOrders")
                         .HasForeignKey("PartnerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1541,6 +1568,11 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                     b.Navigation("CategoryPackages");
 
                     b.Navigation("CustomerPackages");
+                });
+
+            modelBuilder.Entity("SWD392.OutfitBox.DataLayer.Entities.Partner", b =>
+                {
+                    b.Navigation("ReturnOrders");
                 });
 
             modelBuilder.Entity("SWD392.OutfitBox.DataLayer.Entities.Product", b =>

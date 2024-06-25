@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SWD392.OutfitBox.API.Configurations.HTTPResponse;
 using SWD392.OutfitBox.API.Controllers.Endpoints;
-using SWD392.OutfitBox.BusinessLayer.Models.Requests.Customer;
-using SWD392.OutfitBox.BusinessLayer.Models.Responses.Customer;
+using SWD392.OutfitBox.API.DTOs.Customer;
+using SWD392.OutfitBox.BusinessLayer.BusinessModels;
+
 using SWD392.OutfitBox.BusinessLayer.Services.UserService;
 using System.Collections.Generic;
 using System.Net;
@@ -16,103 +18,108 @@ namespace SWD392.OutfitBox.API.Controllers
     public class CustomerController : ControllerBase
     {
         public ICustomerService _customerService;
-        public CustomerController(ICustomerService customerService)
+        public IMapper _mapper;
+        public CustomerController(ICustomerService customerService, IMapper mapper)
         {
             _customerService = customerService;
+            _mapper = mapper;
         }
         [HttpGet(CustomerEndpoints.GetAllCustomers)]
-        public async Task<ActionResult<BaseResponse<List<CustomerDTO>>>> GetAllUsers()
+        public async Task<ActionResult<BaseResponse<List<CustomerModel>>>> GetAllUsers()
         {
-            BaseResponse<List<CustomerDTO>> response;
+            BaseResponse<List<CustomerModel>> response;
             try
             {
                 var data = await _customerService.GetAllCustomers(); 
-                response = new BaseResponse<List<CustomerDTO>>("Get customers successfully.", HttpStatusCode.OK ,data);
+                response = new BaseResponse<List<CustomerModel>>("Get customers successfully.", HttpStatusCode.OK ,data);
 
             }
             catch (Exception ex)
             {
-                response = new BaseResponse<List<CustomerDTO>>(ex.Message, HttpStatusCode.InternalServerError, null);
+                response = new BaseResponse<List<CustomerModel>>(ex.Message, HttpStatusCode.InternalServerError, null);
             }
             return StatusCode((int)response.StatusCode, response);
         }
         [HttpGet(CustomerEndpoints.GetCustomerById)]
-        public async Task<ActionResult<BaseResponse<CustomerDTO>>> GetCustomerById([FromRoute] int id)
+        public async Task<ActionResult<BaseResponse<CustomerModel>>> GetCustomerById([FromRoute] int id)
         {
-            BaseResponse<CustomerDTO> response;
+            BaseResponse<CustomerModel> response;
             try
             {
                 var data = await _customerService.GetCustomerById(id);
-                response = new BaseResponse<CustomerDTO>("Get customers successfully.", HttpStatusCode.OK, data);
+                response = new BaseResponse<CustomerModel>("Get customers successfully.", HttpStatusCode.OK, data);
 
             }
             catch (ArgumentNullException ex)
             {
 
-                response = new BaseResponse<CustomerDTO>(ex.Message, HttpStatusCode.NotFound, null);
+                response = new BaseResponse<CustomerModel>(ex.Message, HttpStatusCode.NotFound, null);
             }
             catch (Exception ex)
             {
-                response = new BaseResponse<CustomerDTO>(ex.Message, HttpStatusCode.InternalServerError, null);
+                response = new BaseResponse<CustomerModel>(ex.Message, HttpStatusCode.InternalServerError, null);
             }
             
             return StatusCode((int)response.StatusCode, response);
         }
         [HttpPost(CustomerEndpoints.CreateCustomer)]
-        public async Task<ActionResult<BaseResponse<CreateCustomerResponseDTO>>> CreateCustomer([FromBody] CreateCustomerRequestDTO createCustomerRequestDTO)
+        public async Task<ActionResult<BaseResponse<CustomerModel>>> CreateCustomer([FromBody] CreateCustomerRequestDTO createCustomerRequestDTO)
         {
-            BaseResponse<CreateCustomerResponseDTO> response;
+            BaseResponse<CustomerModel> response;
             try
-            {
-                var data = await _customerService.CreateCustomer(createCustomerRequestDTO);
-                response = new BaseResponse<CreateCustomerResponseDTO>("Create customer successfully.", HttpStatusCode.OK, data);
+            {   
+                var mapping = _mapper.Map<CustomerModel>(createCustomerRequestDTO);
+                var data = await _customerService.CreateCustomer(mapping);
+                response = new BaseResponse<CustomerModel>("Create customer successfully.", HttpStatusCode.OK, data);
 
             }
             catch (Exception ex)
             {
-                response = new BaseResponse<CreateCustomerResponseDTO>(ex.Message, HttpStatusCode.InternalServerError, null);
+                response = new BaseResponse<CustomerModel>(ex.Message, HttpStatusCode.InternalServerError, null);
             }
 
             return StatusCode((int)response.StatusCode, response);
         }
-        [HttpPatch("customers")]
-        public async Task<ActionResult<UpdateCustomerResponseDTO>> UpdateCustomer([FromBody] UpdateCustomerRequestDTO updateCustomerRequestDTO)
+        [HttpPatch("customers/{id}")]
+        public async Task<ActionResult<CustomerModel>> UpdateCustomer([FromRoute] int id, [FromBody] UpdateCustomerRequestDTO updateCustomerRequestDTO)
         {
-            BaseResponse<UpdateCustomerResponseDTO> response;
+            BaseResponse<CustomerModel> response;
             try
             {
-                var data = await _customerService.UpdateCustomer(updateCustomerRequestDTO);
-                response = new BaseResponse<UpdateCustomerResponseDTO>("Update customer successfully.", HttpStatusCode.OK, data);
+                var mapping = _mapper.Map<CustomerModel>(updateCustomerRequestDTO);
+                mapping.Id = id;
+                var data = await _customerService.UpdateCustomer(mapping);
+                response = new BaseResponse<CustomerModel>("Update customer successfully.", HttpStatusCode.OK, data);
 
             }
             catch (ArgumentNullException ex)
             {
-                response = new BaseResponse<UpdateCustomerResponseDTO>(ex.Message, HttpStatusCode.NotFound, null);
+                response = new BaseResponse<CustomerModel>(ex.Message, HttpStatusCode.NotFound, null);
             }
             catch (Exception ex)
             {
-                response = new BaseResponse<UpdateCustomerResponseDTO>(ex.Message, HttpStatusCode.InternalServerError, null);
+                response = new BaseResponse<CustomerModel>(ex.Message, HttpStatusCode.InternalServerError, null);
             }
 
             return StatusCode((int)response.StatusCode, response);
         }
         [HttpPatch(CustomerEndpoints.ActiveOrDeactiveCustomer)]
-        public async Task<ActionResult<CustomerDTO>> ActiveOrDeactiveCustomer([FromRoute] int id)
+        public async Task<ActionResult<CustomerModel>> ActiveOrDeactiveCustomer([FromRoute] int id)
         {
-            BaseResponse<CustomerDTO> response;
+            BaseResponse<CustomerModel> response;
             try
             {
                 var data = await _customerService.ActiveAndDeactiveCustomer(id);
-                response = new BaseResponse<CustomerDTO>("Update customer successfully.", HttpStatusCode.OK, data);
+                response = new BaseResponse<CustomerModel>("Update customer successfully.", HttpStatusCode.OK, data);
 
             }
             catch (ArgumentNullException ex)
             {
-                response = new BaseResponse<CustomerDTO>(ex.Message, HttpStatusCode.NotFound, null);
+                response = new BaseResponse<CustomerModel>(ex.Message, HttpStatusCode.NotFound, null);
             }
             catch (Exception ex)
             {
-                response = new BaseResponse<CustomerDTO>(ex.Message, HttpStatusCode.InternalServerError, null);
+                response = new BaseResponse<CustomerModel>(ex.Message, HttpStatusCode.InternalServerError, null);
             }
 
             return StatusCode((int)response.StatusCode, response);

@@ -1,5 +1,5 @@
 ﻿
-using BusinessLayer.Services;
+
 using SWD392.OutfitBox.BusinessLayer.Services.AuthService;
 using SWD392.OutfitBox.BusinessLayer.Services.CategoryPackageService;
 using SWD392.OutfitBox.BusinessLayer.Services.CategoryService;
@@ -17,14 +17,15 @@ using SWD392.OutfitBox.DataLayer.Interfaces;
 using SWD392.OutfitBox.DataLayer.Repositories;
 using SWD392.OutfitBox.DataLayer.UnitOfWork;
 using System.Text.Json.Serialization;
-using IPaymentService = BusinessLayer.Services.IPaymentService;
 using SWD392.OutfitBox.DataLayer.RepoInterfaces;
 using SWD392.OutfitBox.BusinessLayer.Services.AreaService;
 using SWD392.OutfitBox.BusinessLayer.Services.PartnerService;
 using SWD392.OutfitBox.BusinessLayer.Services.ReturnOrderService;
-using SWD392.OutfitBox.BusinessLayer.Services.BrandRepository;
 using SWD392.OutfitBox.DataLayer.Databases.Redis;
 using SWD392.OutfitBox.DataLayer.Repositories.Interfaces;
+using SWD392.OutfitBox.BusinessLayer.Services.BrandService;
+using SWD392.OutfitBox.BusinessLayer.Services.UserPackageService;
+using SWD392.OutfitBox.BusinessLayer.Services.PaymentService;
 
 namespace SWD392.OutfitBox.API.CollectionRegisters
 {
@@ -54,7 +55,7 @@ namespace SWD392.OutfitBox.API.CollectionRegisters
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IPackageService, PackageService>();
-            services.AddScoped<ITransactionService, TransactionService>();
+          //services.AddScoped<ITransactionService, TransactionService>();
             services.AddScoped<ICustomerService, CustomerService>();
             services.AddScoped<IWalletService, WalletService>();
             services.AddScoped<IRoleService, RoleService>();
@@ -64,13 +65,14 @@ namespace SWD392.OutfitBox.API.CollectionRegisters
             services.AddScoped<IProductService,ProductService>();
             services.AddScoped<IItemsInUserPackageService, ItemsInUserPackageService>();
             services.AddScoped<IFirebaseService, FirebaseService>();
-            services.AddScoped<IPaymentService, PaymentService>();
+            //services.AddScoped<IPaymentService, PaymentService>();
             services.AddScoped<IFirebaseService, FirebaseService>();
             services.AddScoped<IAreaService, AreaService>();    
             services.AddScoped<IPartnerService, PartnerService>();  
             services.AddScoped<IReturnOrderService, ReturnOrderService>();
             services.AddScoped <IProductReturnOrderRepository, ProductReturnOrderRepository>();
             services.AddScoped<IBrandService, BrandService>();
+            services.AddScoped<ICustomerPackageService, CustomerPackageService>();
         }
         public static void RepositoriesRegister(this IServiceCollection services)
         {
@@ -100,6 +102,8 @@ namespace SWD392.OutfitBox.API.CollectionRegisters
             services.AddScoped<IReturnOrderRepository, ReturnOrderRepository>();
             services.AddScoped<IDepositRepository,DepositRepository>();
             services.AddScoped<IUserRepository,UserRepository>();   
+            services.AddScoped<ICustomerPackageRepository, CustomerPackageRepository>();
+            
             
         }
 

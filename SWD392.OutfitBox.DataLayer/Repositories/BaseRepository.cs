@@ -93,10 +93,10 @@ namespace SWD392.OutfitBox.DataLayer.Repositories
                 query = orderBy(query);
             }
 
-            // Implementing pagination
+     
             if (pageIndex.HasValue && pageSize.HasValue)
             {
-                // Ensure the pageIndex and pageSize are valid
+                
                 int validPageIndex = pageIndex.Value > 0 ? pageIndex.Value - 1 : 0;
                 int validPageSize = pageSize.Value > 0 ? pageSize.Value : 10; // Assuming a default pageSize of 10 if an invalid value is passed
 

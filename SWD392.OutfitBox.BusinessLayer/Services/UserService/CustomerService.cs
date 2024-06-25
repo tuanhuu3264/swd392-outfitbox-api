@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
-using SWD392.OutfitBox.BusinessLayer.Models.Requests.Customer;
-using SWD392.OutfitBox.BusinessLayer.Models.Responses.Customer;
+
 using SWD392.OutfitBox.DataLayer.RepoInterfaces;
 using SWD392.OutfitBox.DataLayer.Entities;
 using SWD392.OutfitBox.DataLayer.Interfaces;
@@ -10,6 +9,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using SWD392.OutfitBox.BusinessLayer.BusinessModels;
 
 namespace SWD392.OutfitBox.BusinessLayer.Services.UserService
 {
@@ -23,53 +23,53 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.UserService
             _mapper = mapper;
         }
 
-        public async Task<CustomerDTO> ActiveAndDeactiveCustomer(int id)
+        public async Task<CustomerModel> ActiveAndDeactiveCustomer(int id)
         {
             var condition = await _customerRepository.GetCustomerById(id);
             if (condition == null) throw new Exception("Not found customer has id: "+id);
             var result = await _customerRepository.ActiveOrDeActive(id);
-            return _mapper.Map<CustomerDTO>(result);
+            return _mapper.Map<CustomerModel>(result);
         }
 
-        public async Task<CreateCustomerResponseDTO> CreateCustomer(CreateCustomerRequestDTO customer)
+        public async Task<CustomerModel> CreateCustomer(CustomerModel customer)
         {
             var mappingCustomer = _mapper.Map<Customer>(customer);
-            if(await IsDuplicatedEmailNormal(customer.Email))
+            if(string.IsNullOrEmpty(customer.Email) && await IsDuplicatedEmailNormal(customer.Email))
             {
                 throw new Exception("Email is duplicated.");
             }
-            if(await IsDuplicatedPhoneNormal(customer.Phone))
+            if(string.IsNullOrEmpty(customer.Phone) && await IsDuplicatedPhoneNormal(customer.Phone))
             {
                 throw new Exception("Phone is duplicated.");
             }
 
             var result = await _customerRepository.Create(mappingCustomer);
-            return _mapper.Map<CreateCustomerResponseDTO>(result);
+            return _mapper.Map<CustomerModel>(result);
         }
 
-        public async Task<List<CustomerDTO>> GetAllCustomers()
+        public async Task<List<CustomerModel>> GetAllCustomers()
         {
-            var result = (await _customerRepository.GetAllCustomers()).Select(x=>_mapper.Map<CustomerDTO>(x)).ToList();
+            var result = (await _customerRepository.GetAllCustomers()).Select(x=>_mapper.Map<CustomerModel>(x)).ToList();
             return result;
         }
 
-        public async Task<CustomerDTO> GetCustomerById(int id)
+        public async Task<CustomerModel> GetCustomerById(int id)
         {
-            var result = _mapper.Map<CustomerDTO>(await _customerRepository.GetCustomerById(id));
+            var result = _mapper.Map<CustomerModel>(await _customerRepository.GetCustomerById(id));
             return result;
         }
 
-        public async Task<UpdateCustomerResponseDTO> UpdateCustomer(UpdateCustomerRequestDTO user)
+        public async Task<CustomerModel> UpdateCustomer(CustomerModel user)
         {
-            
-            if (await IsDuplicatedEmailUpdateMode(user.Phone, user.Id))
+            if (!user.Id.HasValue) throw new Exception("There is no id in model.");
+            if (string.IsNullOrEmpty(user.Phone) && await IsDuplicatedEmailUpdateMode(user.Phone, user.Id.Value))
             {
                 throw new Exception("Phone is existed.");
             }
             var mappingCustomer = _mapper.Map<Customer>(user);
             var result = await _customerRepository.UpdateCustomer(mappingCustomer);
 
-            return _mapper.Map<UpdateCustomerResponseDTO>(result);
+            return _mapper.Map<CustomerModel>(result);
         }
 
         public async Task<bool> IsDuplicatedEmailNormal(string email)

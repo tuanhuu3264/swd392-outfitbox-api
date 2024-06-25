@@ -1,6 +1,5 @@
 ﻿
-using SWD392.OutfitBox.BusinessLayer.Models.Requests.ItemInUserPackage;
-using SWD392.OutfitBox.BusinessLayer.Models.Responses.ItemInUserPackage;
+using SWD392.OutfitBox.BusinessLayer.BusinessModels;
 using SWD392.OutfitBox.DataLayer.Entities;
 using System;
 using System.Collections.Generic;
@@ -12,9 +11,10 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.ItemInUserPackageService
 {
     public interface IItemsInUserPackageService
     {
-        Task<List<ItemInUserPackageDto>> GetAll();
-        Task<ItemInUserPackageDto> CreateItem(CreatedItemInPackage itemInPackage);
-        Task<ItemInUserPackageDto> UpdateItem(UpdateItemInPackage updateItemInPackage);
+        Task<List<ItemInUserPackageModel>> GetAll();
+        Task<ItemInUserPackageModel> CreateItem(ItemInUserPackageModel itemInPackage);
+        Task<ItemInUserPackageModel> UpdateItem(ItemInUserPackageModel updateItemInPackage);
         Task<bool> DeleteItem(int itemid);
+        Task<List<ItemInUserPackageModel>> GetByUserPackageId(int id);
     }
 }

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Server.Kestrel.Internal.System.IO.Pipelines.Testing;
 using SWD392.OutfitBox.API.CollectionRegisters;
 using SWD392.OutfitBox.API.Configurations.Authorizations;
 using SWD392.OutfitBox.API.Configurations.Databases;
+using SWD392.OutfitBox.API.Configurations.Firebase;
 using SWD392.OutfitBox.API.Configurations.Swagger;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,18 +16,17 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Configuration.AddJsonFile("./appsettings.Development.json")
+                     .AddJsonFile("./firebase-storage-key.json")
+                     .AddJsonFile("./appsettings.json", optional: false, reloadOnChange: true);
+
 builder.Services.AddSwagger(builder.Configuration);
 builder.Services.AddJwtAuthorization(builder.Configuration);
-builder.Services.AddSQLServerDatabase(builder.Configuration);
+builder.Services.AddDatabaseSQLServer(builder.Configuration);
 builder.Services.AddRedis(builder.Configuration);
 builder.Services.RegisterService();
+builder.Configuration.CreateFirebaseApp();
 
-//FirebaseApp.Create(new AppOptions
-//{
-//    Credential = GoogleCredential.FromFile("./outfit4rent-c7575-firebase-adminsdk-i1m0b-210c02b093.json"),
-//    ProjectId = "outfit4rent-c7575"
-//    // Add more options as needed
-//});
 var app = builder.Build();
 
 app.UseCors(cors => cors.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());

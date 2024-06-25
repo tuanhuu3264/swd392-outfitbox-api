@@ -31,5 +31,6 @@ namespace SWD392.OutfitBox.DataLayer.Databases.Redis
             }
             return JsonSerializer.Deserialize<T>(jsonData);
         }
+
     }
 }

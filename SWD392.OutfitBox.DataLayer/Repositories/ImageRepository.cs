@@ -54,10 +54,18 @@ namespace SWD392.OutfitBox.DataLayer.Repositories
             }
            
         }
-        public async Task DeleteImageByProductId(int id)
+        public async Task<bool> DeleteImageByProductId(int id)
         {
             var listimg = await this.Get().Where(x => x.IdProduct == id).ToArrayAsync();
             this.DeleteRange(listimg);
+            return true;
+        }
+
+        public async Task<Image> CreateImage(Image image)
+        {
+            await this.AddAsync(image); 
+            await this.SaveChangesAsync();
+            return await this.Get().OrderBy(x=>x.ID).LastAsync();
         }
     }
 }

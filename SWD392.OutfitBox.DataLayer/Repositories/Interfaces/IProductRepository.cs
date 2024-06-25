@@ -15,7 +15,6 @@ namespace SWD392.OutfitBox.DataLayer.Interfaces
         Task<Product> UpdateProduct(Product product);
         Task<Product> DeleteProduct(int id);
         Task<Product> GetDetail(int id);
-        Task<List<Product>> GetList(int? pageIndex=null, int? pageSize =null, string sorted = "", string orders ="" ,string name = "", List<int>? idBrand = null, List<int>? idCategory = null, int? status = null, double? maxMoney=null, double? minMoney = null);
-        Task<List<Product>> GetStartEnd(int? started = null, int? ended = null, string sorted = "", string orders = "", string name = "", List<int>? idBrand = null, List<int>? idCategory = null, int? status = null, double? maxMoney = null, double? minMoney = null);
+        Task<List<Product>> GetList(int? pageIndex = null, int? pageSize = null, string sorted = "", string orders = "", string name = "", List<int>? idBrand = null, List<int>? idCategory = null, int? status = null, double? maxMoney = null, double? minMoney = null, bool? isFeatured=null);
     }
 }

@@ -1,6 +1,5 @@
 ﻿
-using SWD392.OutfitBox.BusinessLayer.Models.Requests.Role;
-using SWD392.OutfitBox.BusinessLayer.Models.Responses.Role;
+using SWD392.OutfitBox.BusinessLayer.BusinessModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +10,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.RoleService
 {
     public interface IRoleService
     {
-        public Task<List<RoleDTO>> GetAllRoles();
-        public Task<CreateRoleResponseDTO> CreateRole(CreateRoleRequestDTO createRoleRequestDTO);
+        public Task<List<RoleModel>> GetAllRoles();
+        public Task<RoleModel> CreateRole(RoleModel createRoleRequestDTO);
     }
 }
