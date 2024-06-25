@@ -17,5 +17,12 @@ namespace SWD392.OutfitBox.BusinessLayer.BusinessModels
         public string? Email {  get; set; } 
         public int? Status { get; set; }
         public int? AreaId { get; set; }
+        public AreaModel Area { get; set; }
+        public Coordinate Coordinate { get; set; }
+    }
+    public class Coordinate
+    {
+        public string? X { get; set; }
+        public string? Y { get; set; }
     }
 }

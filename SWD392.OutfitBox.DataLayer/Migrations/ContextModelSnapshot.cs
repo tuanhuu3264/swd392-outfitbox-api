@@ -30,19 +30,15 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("City")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("District")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("X")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Y")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -54,18 +50,16 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                         new
                         {
                             Id = 1,
+                            Address = "Linh Trung",
                             City = "Ho Chi Minh",
-                            District = "Thu Duc",
-                            X = "10.8447022",
-                            Y = "106.7618557"
+                            District = "Thu Duc"
                         },
                         new
                         {
                             Id = 2,
+                            Address = "Dong Hoa",
                             City = "Binh Duong",
-                            District = "Di An",
-                            X = "10.8447022",
-                            Y = "106.7618557"
+                            District = "Di An"
                         });
                 });
 
@@ -513,8 +507,8 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                         {
                             Id = 1,
                             CustomerId = 1,
-                            DateFrom = new DateTime(2024, 6, 25, 11, 36, 56, 504, DateTimeKind.Local).AddTicks(4334),
-                            DateTo = new DateTime(2024, 7, 25, 11, 36, 56, 504, DateTimeKind.Local).AddTicks(4348),
+                            DateFrom = new DateTime(2024, 6, 25, 12, 41, 41, 262, DateTimeKind.Local).AddTicks(1217),
+                            DateTo = new DateTime(2024, 7, 25, 12, 41, 41, 262, DateTimeKind.Local).AddTicks(1232),
                             PackageId = 1,
                             PackageName = "Newcomer Trial",
                             Price = 200.0,
@@ -559,7 +553,7 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                             Id = 1,
                             AmountMoney = 20.0,
                             CustomerId = 1,
-                            Date = new DateTime(2024, 6, 25, 11, 36, 56, 504, DateTimeKind.Local).AddTicks(4435),
+                            Date = new DateTime(2024, 6, 25, 12, 41, 41, 262, DateTimeKind.Local).AddTicks(1292),
                             Type = "Khuyen Mai"
                         });
                 });
@@ -780,6 +774,14 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
+                    b.Property<string>("X")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Y")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("AreaId");
@@ -797,7 +799,9 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                             OTP = "",
                             Password = "",
                             Phone = "123456",
-                            Status = 0
+                            Status = 0,
+                            X = "10.8447022",
+                            Y = "106.7618557"
                         },
                         new
                         {
@@ -809,7 +813,9 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                             OTP = "",
                             Password = "",
                             Phone = "123456",
-                            Status = 0
+                            Status = 0,
+                            X = "10.8447022",
+                            Y = "106.7618557"
                         });
                 });
 
@@ -1184,7 +1190,7 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                         {
                             Id = 1,
                             Amount = 0.0,
-                            DateTransaction = new DateTime(2024, 6, 25, 11, 36, 56, 504, DateTimeKind.Local).AddTicks(4392),
+                            DateTransaction = new DateTime(2024, 6, 25, 12, 41, 41, 262, DateTimeKind.Local).AddTicks(1264),
                             DepositId = 1,
                             Paymethod = "",
                             Status = 0,
