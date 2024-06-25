@@ -4,6 +4,9 @@ using FirebaseAdmin;
 using Google.Apis.Auth.OAuth2;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
+using System.Configuration;
+using System.Text.Json;
 
 namespace SWD392.OutfitBox.API.Configurations.Firebase
 {
@@ -31,11 +34,13 @@ namespace SWD392.OutfitBox.API.Configurations.Firebase
 
         public static void CreateFirebaseApp(this IConfiguration configuration)
         {
+          
+
             FirebaseApp.Create(new AppOptions
-            {
+            { 
                 Credential = GoogleCredential.FromFile(configuration["FirebaseAdmin:Path"]),
                 ProjectId = configuration["FirebaseAdmin:ProjectId"]
-                // Add more options as needed
+               
             });
         }
     }

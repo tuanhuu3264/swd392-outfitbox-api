@@ -5,8 +5,8 @@ namespace SWD392.OutfitBox.API.Configurations.Databases
 {
     public static class DatabasesConfigurations
     {
-        public static void AddSQLServerDatabase(this IServiceCollection services, IConfiguration configuration)
-        { 
+        public static void AddDatabaseSQLServer(this IServiceCollection services, IConfiguration configuration)
+        {
             services.AddDbContext<Context>(options =>
             {
                 options.UseSqlServer(configuration["ConnectionStrings:DefaultConnection"])

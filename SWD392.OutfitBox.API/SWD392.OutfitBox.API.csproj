@@ -42,6 +42,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="Configurations\Firebase\FirebaseConfiguration.cs">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
 		<Content Update="outfit4rent-c7575-firebase-adminsdk-i1m0b-65ecec1826.json">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>

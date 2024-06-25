@@ -29,7 +29,7 @@ namespace SWD392.OutfitBox.DataLayer.Firebase
 
             try
             {
-                // Initialize the FirebaseAuthConfig with the ApiKey and Providers
+          
                 var config = new FirebaseAuthConfig
                 {
                     ApiKey = apiKey,

@@ -21,11 +21,11 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.PackageService
             _mapper = mapper;
         }
 
-        public async Task<PackageModel> ActiveOrDeactivePackageById(int id)
+        public async Task<PackageModel> ChangeStatus(int id, int status)
         {
             var package = await _packageRepository.GetPackageById(id);
             if (package == null) throw new Exception("Not found the package that has id: "+id);
-            package.Status = Math.Abs(1-package.Status);
+            package.Status = status;
             var updatedPackage = await _packageRepository.UpdatePackage(package);
             var returnedPackage = _mapper.Map<PackageModel>(updatedPackage);
             return returnedPackage;

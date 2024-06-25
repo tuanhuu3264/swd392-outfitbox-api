@@ -11,4 +11,10 @@
     <ProjectReference Include="..\SWD392.OutfitBox.DataLayer\SWD392.OutfitBox.DataLayer.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="FirebaseTasks\" />
+    <Folder Include="NotifyTasks\" />
+    <Folder Include="RedisTask\" />
+  </ItemGroup>
+
 </Project>

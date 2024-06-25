@@ -6,6 +6,6 @@
         public const string GetAllEnabledPackages = "packages/enabled";
         public const string CreatePackage = "packages";
         public const string UpdatePackage = "packages";
-        public const string ActiveOrDeactivePackage = "packages/active-or-deactive/{id}";
+        public const string ChangeStatus = "packages/{id}/status/{status}";
     }
 }

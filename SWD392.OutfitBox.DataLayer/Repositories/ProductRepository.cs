@@ -66,6 +66,7 @@ namespace SWD392.OutfitBox.DataLayer.Repositories
         {
             var predicate = PredicateBuilder.New<Product>();
 
+            predicate.And(x => true);
             if (!string.IsNullOrEmpty(name.Trim()))
             {
                 predicate = predicate.And(x => x.Name.ToLower().Contains(name.ToLower()));
@@ -119,7 +120,11 @@ namespace SWD392.OutfitBox.DataLayer.Repositories
 
                 };
             }
-            return (await this.Get(predicate, orderBy, x => x.Include("Brand").Include("Category").Include("Images"), pageIndex, pageSize)).ToList();
+
+            var result= (await this.Get(predicate, orderBy, x=>x.Include("Brand").Include("Category").Include("Images"), pageIndex, pageSize)).ToList();
+            return result;
+
+            
         }
         public async Task<List<Product>> GetStartEnd(int? started = null, int? ended = null,
                                                      string sorted = "", string orders = "", string name = "",
@@ -188,6 +193,8 @@ namespace SWD392.OutfitBox.DataLayer.Repositories
                 };
             }
             return (await this.GetStartEnd(predicate, orderBy, x => x.Include("Brand").Include("Category").Include("Images"), started, ended)).ToList();
+
         }
+        
     }
 }

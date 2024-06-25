@@ -21,10 +21,10 @@ namespace SWD392.OutfitBox.API.Controllers
         }
         [HttpGet("products")]
         public async Task<IActionResult> GetAllForAdmin(
-                                                [FromQuery(Name ="_start")]
-                                                int? started = null,
-                                                [FromQuery(Name ="_end")]
-                                                int? ended = null,
+                                                [FromQuery(Name ="page_index")]
+                                                int? pageIndex = null,
+                                                [FromQuery(Name ="page_size")]
+                                                int? pageSize = null,
                                                 [FromQuery(Name ="_sort")]
                                                 string sorted = "",
                                                 [FromQuery(Name ="_order")]
@@ -45,7 +45,7 @@ namespace SWD392.OutfitBox.API.Controllers
             BaseResponse<List<ProductModel>> response;
             try
             {
-                var data = await _productService.GetList(started, ended, sorted, orders, name, idBrand, idCategory, status, maxMoney, minMoney);
+                var data = await _productService.GetList(pageIndex, pageSize, sorted, orders, name, idBrand, idCategory, status, maxMoney, minMoney);
                 response = new BaseResponse<List<ProductModel>>("Get Product successfully.", HttpStatusCode.OK, data);
             }
             catch (Exception ex)
@@ -56,10 +56,10 @@ namespace SWD392.OutfitBox.API.Controllers
         }
         [HttpGet("customers/products")]
         public async Task<IActionResult> GetAllForCustomer(
-                                                [FromQuery(Name ="_start")]
-                                                int? started = null,
-                                                [FromQuery(Name ="_end")]
-                                                int? ended = null,
+                                                [FromQuery(Name ="page_index")]
+                                                int? pageIndex = null,
+                                                [FromQuery(Name ="page_size")]
+                                                int? pageSize = null,
                                                 [FromQuery(Name ="_sort")]
                                                 string sorted = "", 
                                                 [FromQuery(Name ="_order")]                                    
@@ -78,7 +78,7 @@ namespace SWD392.OutfitBox.API.Controllers
             BaseResponse<List<ProductModel>> response;
             try
             {
-                var data = await _productService.GetList(started,ended, sorted, orders, name, idBrand, idCategory,1, maxMoney, minMoney);
+                var data = await _productService.GetList(pageIndex, pageSize, sorted, orders, name, idBrand, idCategory,1, maxMoney, minMoney);
                 response = new BaseResponse<List<ProductModel>>("Get Product successfully.", HttpStatusCode.OK, data);
             }
             catch (Exception ex)
@@ -125,10 +125,27 @@ namespace SWD392.OutfitBox.API.Controllers
             BaseResponse<ProductModel> response;
             try
             {
-                var mappingProduct = _mapper.Map<ProductModel>(product);
-                mappingProduct.ID= id;
-
-                var result = await _productService.UpdateProduct(mappingProduct);
+                var productModel = new ProductModel()
+                {
+                    ID = id,
+                    AvailableQuantity = product.AvailableQuantity,
+                    Deposit = product.Deposit,
+                    Description = product.Description,
+                    IdBrand = product.IdBrand,
+                    IdCategory = product.IdCategory,
+                    IsFeatured = product.IsFeatured,
+                    IsUsed = product.IsUsed,
+                    Name = product.Name,
+                    Price = product.Price,
+                    Quantity = product.Quantity,
+                    Size = product.Size,
+                    Status = product.Status,
+                    Type = product.Type,
+                    Images = product.Images?.Select(x => _mapper.Map<ImageModel>(x)).ToList()
+                };
+                productModel.Images?.ForEach(x=>x.IdProduct=id); 
+                var result = await _productService.UpdateProduct(productModel);
+                
                 response = new BaseResponse<ProductModel>("Product:", HttpStatusCode.OK, result);
             }
             catch(ArgumentNullException ex)
