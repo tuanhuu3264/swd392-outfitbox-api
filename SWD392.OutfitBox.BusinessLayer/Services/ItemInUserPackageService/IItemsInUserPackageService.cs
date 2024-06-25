@@ -15,5 +15,6 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.ItemInUserPackageService
         Task<ItemInUserPackageModel> CreateItem(ItemInUserPackageModel itemInPackage);
         Task<ItemInUserPackageModel> UpdateItem(ItemInUserPackageModel updateItemInPackage);
         Task<bool> DeleteItem(int itemid);
+        Task<List<ItemInUserPackageModel>> GetByUserPackageId(int id);
     }
 }

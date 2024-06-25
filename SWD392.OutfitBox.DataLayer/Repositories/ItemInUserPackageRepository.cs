@@ -59,5 +59,10 @@ namespace SWD392.OutfitBox.DataLayer.Repositories
             return true;
 
         }
+        public async Task<List<ItemInUserPackage>> GetByUserPackageId(int Id)
+        {
+            var obj = await this.Get().Where(x=>x.UserPackageId==Id).ToListAsync();
+            return obj;
+        }
     }
 }

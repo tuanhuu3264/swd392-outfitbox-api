@@ -12,9 +12,8 @@ namespace SWD392.OutfitBox.BusinessLayer.BusinessModels
     {
      
         public int? Id { get; set; }
-        public string? Ward;
+        public string? Address { get; set; }
         public string? District { get; set; } 
         public string? City { get; set; } 
-      
     }
 }

@@ -8,6 +8,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.PaymentService
 {
     public interface IPaymentService
     {
-
+        //Task<ResponsePayment> GetInformationPayment(VNPayRequestDTO dto);
+        //Task<string> CallAPIPayByUserId(int userId, int orderId);
     }
 }

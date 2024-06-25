@@ -42,6 +42,7 @@ namespace SWD392.OutfitBox.API.Configurations.Mapper
             AreaProfile();
             BrandProfile();
             ItemInUserPackageProfile();
+            CustomerPackageProfile();
 
         }
         public void CategoryProfile()
@@ -119,12 +120,12 @@ namespace SWD392.OutfitBox.API.Configurations.Mapper
         }
         public void ItemInUserPackageProfile()
         {
-            /* CreateMap<ItemInUserPackageDto, ItemInUserPackage>()
-                 .ForPath(x => x.Product.Name, opt => opt.MapFrom(src => src.ProductName))
-                 .ReverseMap();
-             CreateMap<ItemInUserPackage, CreatedItemInPackage>().ReverseMap();
-             CreateMap<UpdateItemInPackage, ItemInUserPackage>().ReverseMap();
-             CreateMap<ItemInUserPackage, ItemInUserPackage>();*/
+            //CreateMap<ItemInUserPackageDto, ItemInUserPackage>()
+            //    .ForPath(x => x.Product.Name, opt => opt.MapFrom(src => src.ProductName))
+            //    .ReverseMap();ll
+            //CreateMap<ItemInUserPackage, CreatedItemInPackage>().ReverseMap();
+            //CreateMap<UpdateItemInPackage, ItemInUserPackage>().ReverseMap();
+            CreateMap<ItemInUserPackage, ItemInUserPackageModel>().ReverseMap();
         }
         public void ProductReturnOrderProfile()
         {
@@ -144,7 +145,7 @@ namespace SWD392.OutfitBox.API.Configurations.Mapper
         }
         public void PartnerProfile()
         {
-            CreateMap<Partner, PartnerModel>();
+            CreateMap<Partner, PartnerModel>().ForPath(x=>x.Coordinate.X, x=>x.MapFrom(x=>x.X)).ForPath(x => x.Coordinate.Y, x => x.MapFrom(x => x.Y));
             CreateMap<CreatePartnerRequestDTO, PartnerModel>().ReverseMap();
             CreateMap<UpdatePartnerRequestDTO, PartnerModel>().ReverseMap();
             CreateMap<PartnerModel, Partner>().ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
@@ -172,7 +173,14 @@ namespace SWD392.OutfitBox.API.Configurations.Mapper
 
             CreateMap<Brand, BrandModel>();
             CreateMap<CreateBrandRequestDTO, BrandModel>().ReverseMap();
-            CreateMap<UpdateBrandRequestDTO, BrandModel>();
+            CreateMap<UpdateBrandRequestDTO, BrandModel>().ReverseMap();
+        }
+        public void CustomerPackageProfile()
+        {
+            CreateMap<CustomerPackageModel, CustomerPackage>()
+                .ForMember(x=>x.Items,opt =>opt.MapFrom(x=>x.ItemInUsers))
+                .ReverseMap();
+            CreateMap<ItemInUserPackage, ItemInUserPackageModel>().ReverseMap();
         }
         public bool IsNonDefaultValue<T>(T value)
         {
@@ -183,6 +191,5 @@ namespace SWD392.OutfitBox.API.Configurations.Mapper
 
             return !EqualityComparer<T>.Default.Equals(value, default(T));
         }
-
     }
 }

@@ -10,7 +10,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.PackageService
         public Task<List<PackageModel>> GetAllPackages();
         public Task<PackageModel> CreatePackage(PackageModel package);
         public Task<PackageModel> UpdatePackage(PackageModel package);
-        public Task<PackageModel> ActiveOrDeactivePackageById(int id);
+        public Task<PackageModel> ChangeStatus(int id, int status);
 
     }
 }
