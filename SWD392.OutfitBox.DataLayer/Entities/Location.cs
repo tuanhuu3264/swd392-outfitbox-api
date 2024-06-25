@@ -14,9 +14,7 @@ namespace SWD392.OutfitBox.DataLayer.Entities
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        public string Address = string.Empty;
-        public string X {  get; set; }
-        public string Y { get; set; }
+        public string Address { get; set; } = string.Empty;
         public string District { get; set; } = string.Empty;
         public string City { get; set; } = string.Empty;
         public List<Partner>? Partners { get; set; } 

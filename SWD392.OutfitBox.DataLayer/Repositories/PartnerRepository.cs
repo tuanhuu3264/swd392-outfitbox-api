@@ -28,7 +28,7 @@ namespace SWD392.OutfitBox.DataLayer.Repositories
 
         public async Task<List<Partner>> GetAllPartners()
         {
-            return await this.Get().ToListAsync();
+            return await this.Get().Include(x=>x.Area).ToListAsync();
         }
 
         public async Task<Partner> GetPartnerById(int id)

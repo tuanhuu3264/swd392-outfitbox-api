@@ -427,8 +427,7 @@ namespace SWD392.OutfitBox.DataLayer.Databases.Redis
                     City = "Ho Chi Minh",
                     District = "Thu Duc",
                     Address = "Linh Trung",
-                    X = "10.8447022",
-                    Y = "106.7618557"
+                 
                 },
                 new Area
                 {
@@ -436,8 +435,7 @@ namespace SWD392.OutfitBox.DataLayer.Databases.Redis
                     City = "Binh Duong",
                     District = "Di An",
                     Address = "Dong Hoa",
-                    X = "10.8447022",
-                    Y = "106.7618557"
+                   
                 }
                 );
             modelBuilder.Entity<Partner>().HasData(
@@ -449,6 +447,8 @@ namespace SWD392.OutfitBox.DataLayer.Databases.Redis
                     Phone = "123456",
                     Email = "Grap@gmail.com",
                     AreaId = 1,
+                    X = "10.8447022",
+                    Y = "106.7618557"
                 },
                 new Partner
                 {
@@ -458,6 +458,8 @@ namespace SWD392.OutfitBox.DataLayer.Databases.Redis
                     Phone = "123456",
                     Email = "Grap@gmail.com",
                     AreaId = 1,
+                    X = "10.8447022",
+                    Y = "106.7618557"
                 }
                 );
             modelBuilder.Entity<CustomerPackage>().HasData(

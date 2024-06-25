@@ -145,7 +145,7 @@ namespace SWD392.OutfitBox.API.Configurations.Mapper
         }
         public void PartnerProfile()
         {
-            CreateMap<Partner, PartnerModel>();
+            CreateMap<Partner, PartnerModel>().ForPath(x=>x.Coordinate.X, x=>x.MapFrom(x=>x.X)).ForPath(x => x.Coordinate.Y, x => x.MapFrom(x => x.Y));
             CreateMap<CreatePartnerRequestDTO, PartnerModel>().ReverseMap();
             CreateMap<UpdatePartnerRequestDTO, PartnerModel>().ReverseMap();
             CreateMap<PartnerModel, Partner>().ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
@@ -155,7 +155,7 @@ namespace SWD392.OutfitBox.API.Configurations.Mapper
         {
 
             CreateMap<AreaModel, Area>().ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
-            CreateMap<Area, AreaModel>().ForPath(x=>x.Coordinate.X,x=>x.MapFrom(x=>x.X)).ForPath(x => x.Coordinate.Y, x => x.MapFrom(x => x.Y));
+            CreateMap<Area, AreaModel>();
             CreateMap<CreateAreaRequestDTO, AreaModel>().ReverseMap();
             CreateMap<UpdateAreaRequestDTO, AreaModel>().ReverseMap();
        

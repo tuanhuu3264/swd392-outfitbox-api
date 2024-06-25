@@ -15,12 +15,5 @@ namespace SWD392.OutfitBox.BusinessLayer.BusinessModels
         public string? Address { get; set; }
         public string? District { get; set; } 
         public string? City { get; set; } 
-        public Coordinate? Coordinate {  get; set; }
-
-    }
-    public class Coordinate
-    {
-        public string? X { get; set; }
-        public string? Y { get; set; }
     }
 }
