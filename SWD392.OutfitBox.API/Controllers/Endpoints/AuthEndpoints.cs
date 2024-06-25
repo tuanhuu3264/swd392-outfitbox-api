@@ -7,6 +7,6 @@
         public const string Register = "auth/register";
         public const string VerifyOTP = "auth/verify-otp";
 
-        public const string VerifyThirdPartyInFirebaseToken = "auth/firebase/verify-token";
+        public const string VerifyThirdPartyInFirebaseToken = "auth/firebase/verified-token";
     }   
 }

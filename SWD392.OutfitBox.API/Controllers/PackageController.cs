@@ -83,13 +83,13 @@ namespace SWD392.OutfitBox.API.Controllers
             }
             return StatusCode((int)response.StatusCode, response);
         }
-        [HttpPatch(PackageEndPoints.ActiveOrDeactivePackage)]
-        public async Task<ActionResult<PackageDTO>> ActiveOrDeactivePackage([FromRoute] int id)
+        [HttpPatch(PackageEndPoints.ChangeStatus)]
+        public async Task<ActionResult<PackageDTO>> ActiveOrDeactivePackage([FromRoute] int id, [FromRoute] int status)
         {
             BaseResponse<PackageDTO> response;
             try
             {
-                var data = await _packageService.ActiveOrDeactivePackageById(id);
+                var data = await _packageService.ChangeStatus(id, status);
                 response = new BaseResponse<PackageDTO>("Update package successfully.", HttpStatusCode.Accepted, data);
             }
             catch (ArgumentNullException ex)

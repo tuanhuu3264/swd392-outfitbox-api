@@ -15,7 +15,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.PackageService
         public Task<List<PackageDTO>> GetAllPackages();
         public Task<CreatePackageResponseDTO> CreatePackage(CreatePackageRequestDTO package);
         public Task<UpdatePackageResponseDTO> UpdatePackage(UpdatePackageRequestDTO package);
-        public Task<PackageDTO> ActiveOrDeactivePackageById(int id);
+        public Task<PackageDTO> ChangeStatus(int id, int status);
 
     }
 }

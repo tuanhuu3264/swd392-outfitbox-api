@@ -1,0 +1,13 @@
+{
+  "Firebase": {
+    "ApiKey": "AIzaSyBC1xdmtGB_mCwHtvN7J67Zicf2pawEBWM",
+    "DomainName": "outfit4rent-c7575.firebaseapp.com",
+    "Email": "admin@gmail.com",
+    "Password": "Tuan@08082003",
+    "StorageBucket": "outfit4rent-c7575.appspot.com"
+  },
+  "FirebaseAdmin": {
+    "Path": "./outfit4rent-c7575-firebase-adminsdk-i1m0b-210c02b093.json",
+    "ProjectId": "outfit4rent-c7575"
+  }
+}
