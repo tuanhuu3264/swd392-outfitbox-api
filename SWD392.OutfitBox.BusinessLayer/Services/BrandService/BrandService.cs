@@ -47,7 +47,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.BrandService
             var checking = await _unitOfWork._brandRepository.GetById(brand.ID.Value);
             if (checking == null) throw new ArgumentNullException("There is not found brand.");
    
-            _mapper.Map(brand, checking, opt => opt.Items["PreserveExisting"] = true);
+            _mapper.Map(brand, checking);
 
             var result = await _unitOfWork._brandRepository.UpdateBrand(checking);
             return _mapper.Map<BrandModel>(result);
