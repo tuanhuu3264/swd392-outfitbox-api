@@ -61,7 +61,6 @@ namespace SWD392.OutfitBox.DataLayer.Firebase
                         ThrowOnCancel = true
                     });
 
-                // Delete the specified file from storage
                 await storage.Child(pathFileName).DeleteAsync();
                 return true;
             }

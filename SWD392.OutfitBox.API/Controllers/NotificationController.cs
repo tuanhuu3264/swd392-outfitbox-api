@@ -13,13 +13,13 @@ namespace SWD392.OutfitBox.API.Controllers
         { 
         NotificationService ??=new NotificationService();
         }
-        [HttpPost("test")]
+        [HttpPost("notifications/topic")]
         public async Task<string> Send(string topic, string title, string body)
         {
             var result = await NotificationService.SendMessage(topic, title, body);
             return result;
         }
-        [HttpPost("test2")]
+        [HttpPost("notifications")]
         public async Task<string> Send2(string token, string title, string body)
         {
             var result = await NotificationService.SendMessageToken(token, title, body);

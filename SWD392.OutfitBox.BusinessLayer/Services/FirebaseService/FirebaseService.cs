@@ -50,26 +50,27 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.FirebaseService
                 var resultNewCustomer = await _customerRepository.Create(newCustomer);
                 if (result.IsVerify == false)
                     throw new AuthenticationException("The account is verify.");
-                var tokenHandler = AuthHelper.GetToken(resultNewCustomer);
-                return new LoginModel
+                var accessTokenHandler = AuthHelper.GetToken(customer, 1);
+                var refreshTokenHandler = AuthHelper.GetToken(customer, 3);
+                return new LoginModel()
                 {
-                    
-                    Token = new JwtSecurityTokenHandler().WriteToken(tokenHandler),
-                    Expiration = tokenHandler.ValidTo,
-                    Guid=result.GUID,
-                    Email = newCustomer.Email,
-                    Id= newCustomer.Id,
-                    Picture = result.Picture
-
+                    RefreshToken = new JwtSecurityTokenHandler().WriteToken(refreshTokenHandler),
+                    Token = new JwtSecurityTokenHandler().WriteToken(accessTokenHandler),
+                    Expiration = accessTokenHandler.ValidTo,
+                    Guid = result.GUID,
+                    Email = result.Email,
+                    Picture = result.Picture,
+                    Id = customer.Id,
                 };
-                
+
             }
-            var tokenHandler2 = AuthHelper.GetToken(customer);
+            var accessTokenHandler2 = AuthHelper.GetToken(customer, 1);
+            var refreshTokenHandler2 = AuthHelper.GetToken(customer, 3);
             return new LoginModel()
             {
-               
-                Token = new JwtSecurityTokenHandler().WriteToken(tokenHandler2),
-                Expiration = tokenHandler2.ValidTo,
+                RefreshToken= new JwtSecurityTokenHandler().WriteToken(refreshTokenHandler2),
+                Token = new JwtSecurityTokenHandler().WriteToken(accessTokenHandler2),
+                Expiration = accessTokenHandler2.ValidTo,
                 Guid = result.GUID,
                 Email = result.Email,
                 Picture = result.Picture,
@@ -78,7 +79,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.FirebaseService
 
 
         }
-
+      
         private async Task<FirebaseAuthModels> DecodeFirebaseToken(string accessToken)
         {
 
@@ -104,7 +105,6 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.FirebaseService
                 GUID = userId,
                 Email = email,
                 IsVerify = isVerify,
-             
                 Picture = picture,
                 SignInProvider = signInProvider,
                 Name = name
@@ -130,35 +130,46 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.FirebaseService
 
                     Address = ""
                 };
-                var resultNewCustomer = await _customerRepository.Create(newCustomer);
-                var tokenHandler = AuthHelper.GetToken(resultNewCustomer);
+                var accessTokenHandler = AuthHelper.GetToken(customer, 1);
+                var refreshTokenHandler = AuthHelper.GetToken(customer, 3);
                 return new LoginModel()
                 {
-                    
-                    Token = new JwtSecurityTokenHandler().WriteToken(tokenHandler),
-                    Expiration = tokenHandler.ValidTo,
+                    RefreshToken = new JwtSecurityTokenHandler().WriteToken(refreshTokenHandler),
+                    Token = new JwtSecurityTokenHandler().WriteToken(accessTokenHandler),
+                    Expiration = accessTokenHandler.ValidTo,
                     Guid = result.GUID,
                     Email = result.Email,
-                 
-
-                    Picture = result.Picture
-
+                    Picture = result.Picture,
+                    Id = customer.Id,
                 };
 
             }
-            var tokenHandler2 = AuthHelper.GetToken(customer);
+            var accessTokenHandler2 = AuthHelper.GetToken(customer, 1);
+            var refreshTokenHandler2 = AuthHelper.GetToken(customer, 3);
             return new LoginModel()
             {
-          
-                Token = new JwtSecurityTokenHandler().WriteToken(tokenHandler2),
-                Expiration = tokenHandler2.ValidTo,
-                 Guid = result.GUID,
+                RefreshToken = new JwtSecurityTokenHandler().WriteToken(refreshTokenHandler2),
+                Token = new JwtSecurityTokenHandler().WriteToken(accessTokenHandler2),
+                Expiration = accessTokenHandler2.ValidTo,
+                Guid = result.GUID,
                 Email = result.Email,
-                Picture = result.Picture
-
+                Picture = result.Picture,
+                Id = customer.Id,
             };
 
 
+        }
+
+        public Task<LoginModel> GetAccessTokenFromRefeshToken(string refreshToken)
+        {
+            /*try
+            {
+                var result = 
+            }catch(Exception ex)
+            {
+
+            }*/
+            throw new Exception();
         }
     }
 }

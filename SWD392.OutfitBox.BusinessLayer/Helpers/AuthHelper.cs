@@ -14,8 +14,8 @@ namespace SWD392.OutfitBox.BusinessLayer.Helpers
 {
     public class AuthHelper
     {
-
-        public static JwtSecurityToken GetToken(Customer user)
+       
+        public static JwtSecurityToken GetToken(Customer user, int day)
         {
             List<Claim> authClaims = new List<Claim>
             {
@@ -32,13 +32,13 @@ namespace SWD392.OutfitBox.BusinessLayer.Helpers
                 issuer: "outfit4rent.online",
                 audience: "outfit4rent.online",
                 claims: authClaims,
-                expires: DateTime.Now.AddDays(3),
+                expires: DateTime.Now.AddDays(day),
                 signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
             );
 
             return token;
         }
-        public static JwtSecurityToken GetUserToken(User user,string role)
+        public static JwtSecurityToken GetUserToken(User user,string role, int day)
         {
             List<Claim> authClaims = new List<Claim>
             {
@@ -54,13 +54,13 @@ namespace SWD392.OutfitBox.BusinessLayer.Helpers
                 issuer: "outfit4rent.online",
                 audience: "outfit4rent.online",
                 claims: authClaims,
-                expires: DateTime.Now.AddDays(3),
+                expires: DateTime.Now.AddDays(day),
                 signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
             );
 
             return token;
         }
-        public static JwtSecurityToken GetPartnerToken(Partner partner)
+        public static JwtSecurityToken GetPartnerToken(Partner partner, int day)
         {
             List<Claim> authClaims = new List<Claim>
             {
@@ -76,7 +76,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Helpers
                 issuer: "outfit4rent.online",
                 audience: "outfit4rent.online",
                 claims: authClaims,
-                expires: DateTime.Now.AddDays(3),
+                expires: DateTime.Now.AddDays(day),
                 signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
             );
 

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace SWD392.OutfitBox.API.DTOs.Package
@@ -13,6 +14,8 @@ namespace SWD392.OutfitBox.API.DTOs.Package
         [Required(ErrorMessage ="The price is required.")]
         [Range(0, double.MaxValue, ErrorMessage ="The price is over the range of data." )]
         public double Price { get; set; }
+        [JsonPropertyName("url")]
+        public string ImageUrl { get; set; } = string.Empty;
         [Required(ErrorMessage ="The name is required.")]
         public string Name { get; set; } = string.Empty;
         [Required(ErrorMessage ="The description is required.")]

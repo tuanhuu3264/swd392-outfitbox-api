@@ -11,6 +11,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.FirebaseService
     {
         public Task<LoginModel> VerifyFirebaseThirdPartToken(string accessToken);
         public Task<LoginModel> VerifyFirebaseNormalToken(string accessToken);
+        public  Task<LoginModel> GetAccessTokenFromRefeshToken(string refreshToken);
       
     }
 }

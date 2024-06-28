@@ -22,9 +22,7 @@ namespace SWD392.OutfitBox.DataLayer.Entities
         public int Status { get; set; }
         public long MoneyInWallet { get; set; }
         public List<CustomerPackage>? UserPackages { get; set; }
-
         public List<ReturnOrder>? ReturnOrders { get; set; }
-
         public List<Wallet>? Wallets { get; set; }
         public List<Review>? Reviews { get; set; }
     }

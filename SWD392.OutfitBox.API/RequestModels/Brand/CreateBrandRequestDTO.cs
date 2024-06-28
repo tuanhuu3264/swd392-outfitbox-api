@@ -6,6 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FirebaseAdmin.Messaging;
+using System.Text.Json.Serialization;
+using System.Text.Json;
 
 namespace SWD392.OutfitBox.API.DTOs.Brand
 {
@@ -15,7 +17,9 @@ namespace SWD392.OutfitBox.API.DTOs.Brand
         
         public string? Name { get; set; }
         [Required(ErrorMessage = "The image is required")]
+        [JsonPropertyName("url")]
         public string? ImageUrl { get; set; } 
         public string? Description { get; set; }
     }
+   
 }

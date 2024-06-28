@@ -62,12 +62,24 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.UserService
         public async Task<CustomerModel> UpdateCustomer(CustomerModel user)
         {
             if (!user.Id.HasValue) throw new Exception("There is no id in model.");
-            if (string.IsNullOrEmpty(user.Phone) && await IsDuplicatedEmailUpdateMode(user.Phone, user.Id.Value))
+            if (!string.IsNullOrEmpty(user.Phone) && await IsDuplicatedEmailUpdateMode(user.Phone, user.Id.Value))
             {
                 throw new Exception("Phone is existed.");
             }
-            var mappingCustomer = _mapper.Map<Customer>(user);
-            var result = await _customerRepository.UpdateCustomer(mappingCustomer);
+            var updatedCustomer = await _customerRepository.GetCustomerById(user.Id.Value);
+            updatedCustomer = new Customer
+            {
+                Id = user.Id.Value,
+                MoneyInWallet = user.MoneyInWallet.HasValue ? user.MoneyInWallet.Value : updatedCustomer.MoneyInWallet,
+                Address = !string.IsNullOrEmpty(user.Address) ? user.Address : updatedCustomer.Address,
+                Email = !string.IsNullOrEmpty(user.Email) ? user.Email : updatedCustomer.Email,
+                Name = !string.IsNullOrEmpty(user.Name) ? user.Name : updatedCustomer.Name,
+                Phone = !string.IsNullOrEmpty(user.Phone) ? user.Phone : updatedCustomer.Phone,
+                Picture = !string.IsNullOrEmpty(user.Picture) ? user.Picture : updatedCustomer.Picture,
+                Status = user.Status.HasValue ? user.Status.Value : updatedCustomer.Status
+            };
+           
+            var result = await _customerRepository.UpdateCustomer(updatedCustomer);
 
             return _mapper.Map<CustomerModel>(result);
         }
@@ -85,8 +97,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.UserService
         public async Task<bool> IsDuplicatedEmailUpdateMode(string email, int id)
         {
             var duplicatedEmail = await _customerRepository.GetCustomerByPhoneOrEmail(email);
-            if (duplicatedEmail == null) return false;
-            if (duplicatedEmail.Id == id) return false;
+            if (duplicatedEmail == null || duplicatedEmail.Id == id) return false;
             return true;
         }
         public async Task<bool> IsDuplicatedPhoneUpdateMode(string phone, int id)

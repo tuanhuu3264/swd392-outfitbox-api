@@ -8,6 +8,7 @@ namespace SWD392.OutfitBox.BusinessLayer.BusinessModels
 {
     public class LoginModel
     {
+        public string? RefreshToken { get; set; }
         public string? Token { get; set; }
         public DateTime? Expiration {  get; set; }
         public int? Id { get; set; }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace SWD392.OutfitBox.API.DTOs.Package
@@ -12,7 +13,8 @@ namespace SWD392.OutfitBox.API.DTOs.Package
         
         public double? Price { get; set; }
         public int? AvailableRentDays { get; set; }
-
+        [JsonPropertyName("url")]
+        public string ImageUrl { get; set; } = string.Empty;
         public string? Name { get; set; } = string.Empty;
 
         public string? Description { get; set; } = string.Empty;

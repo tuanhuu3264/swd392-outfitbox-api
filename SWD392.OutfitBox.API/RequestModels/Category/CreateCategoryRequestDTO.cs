@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace SWD392.OutfitBox.API.DTOs.Category
@@ -15,6 +16,7 @@ namespace SWD392.OutfitBox.API.DTOs.Category
         [Required(ErrorMessage = "The description is required.")]
         public string? Description { get; set; }
         [Required(ErrorMessage = "The image is required.")]
+        [JsonPropertyName("url")]
         public string? ImageUrl { get; set; } 
 
     }

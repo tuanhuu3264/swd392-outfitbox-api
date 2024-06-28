@@ -33,11 +33,13 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.AuthService{
             var checking = await _userRepository.CheckLogin(email.ToLower().Trim(), password);
             if (!checking) return new LoginModel();
             var user = await _userRepository.GetUserByEmail(email);
-            var tokenHandler =  AuthHelper.GetUserToken(user,user.Role.Name);
+            var accessTokenHandler =  AuthHelper.GetUserToken(user,user.Role.Name,1);
+            var refreshTokenHandler = AuthHelper.GetUserToken(user, user.Role.Name,3);
             return  new LoginModel()
             { 
-              Token= new JwtSecurityTokenHandler().WriteToken(tokenHandler),
-              Expiration= tokenHandler.ValidTo
+                RefreshToken = new JwtSecurityTokenHandler().WriteToken(refreshTokenHandler),
+                Token = new JwtSecurityTokenHandler().WriteToken(accessTokenHandler),
+              Expiration= accessTokenHandler.ValidTo
             };
         }
         public async Task<LoginModel> LoginPartner(string email, string password)
@@ -46,11 +48,13 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.AuthService{
             if (checking.IsNullOrEmpty()) return new LoginModel();
             if(checking.First().Password!=password) return new LoginModel();
             var partner = checking.First();
-            var tokenHandler = AuthHelper.GetPartnerToken(partner);
+            var accessTokenHandler = AuthHelper.GetPartnerToken(partner,1);
+            var refreshTokenHandler = AuthHelper.GetPartnerToken(partner, 3);
             return new LoginModel()
-            {
-                Token = new JwtSecurityTokenHandler().WriteToken(tokenHandler),
-                Expiration = tokenHandler.ValidTo
+            {   
+                RefreshToken= new JwtSecurityTokenHandler().WriteToken(refreshTokenHandler),
+                Token = new JwtSecurityTokenHandler().WriteToken(accessTokenHandler),
+                Expiration = accessTokenHandler.ValidTo
             };
         }
     }

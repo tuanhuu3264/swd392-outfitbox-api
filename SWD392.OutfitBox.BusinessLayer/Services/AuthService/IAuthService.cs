@@ -13,5 +13,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.AuthService
         public Task<LoginModel> LoginSystem(string email, string password);
         public  Task<LoginModel> LoginPartner(string email, string password);
 
+       
+
     }
 }
