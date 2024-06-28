@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SWD392.OutfitBox.BusinessLayer.BusinessModels;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -22,5 +23,6 @@ namespace SWD392.OutfitBox.API.DTOs.Partner
         [Required(ErrorMessage = "The area id is required.")]
         [Range(1, int.MaxValue, ErrorMessage ="The area id is over range of data.")]
         public int AreaId { get; set; }
+        public Coordinate Coordinate { get; set; }
     }
 }

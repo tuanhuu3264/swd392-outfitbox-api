@@ -32,6 +32,8 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.PartnerService
         public async Task<PartnerModel> CreatePartner(PartnerModel createPartnerRequestDTO)
         {
             var crearedPartner = _mapper.Map<Partner>(createPartnerRequestDTO);
+            crearedPartner.X = createPartnerRequestDTO.Coordinate.X;
+            crearedPartner.Y = createPartnerRequestDTO.Coordinate.Y;
             crearedPartner.Status = 1;
             var result = await _unitOfWork._partnerRepository.CreatePartner(crearedPartner);
             return _mapper.Map<PartnerModel>(result);
@@ -54,7 +56,18 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.PartnerService
         {
             var checkingPartner = await _unitOfWork._partnerRepository.GetPartnerById(updatePartnerRequestDTO.Id.Value);
             if (checkingPartner == null) throw new Exception("There is not found the partner that has id: " + updatePartnerRequestDTO.Id);
-            _mapper.Map(updatePartnerRequestDTO,checkingPartner);
+            if (updatePartnerRequestDTO.Coordinate != null)
+            {
+                if (updatePartnerRequestDTO.Coordinate.X != null)
+                {
+                    checkingPartner.X = updatePartnerRequestDTO.Coordinate.X;
+                }
+                if (updatePartnerRequestDTO.Coordinate.Y != null)
+                {
+                    checkingPartner.Y = updatePartnerRequestDTO.Coordinate.Y;
+                }
+            }
+            _mapper.Map(checkingPartner, updatePartnerRequestDTO);
             var result = await _unitOfWork._partnerRepository.UpdatePartner(checkingPartner);
             return _mapper.Map<PartnerModel>(result);
         }
