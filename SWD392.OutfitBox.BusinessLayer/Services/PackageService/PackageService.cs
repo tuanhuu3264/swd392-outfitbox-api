@@ -70,7 +70,13 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.PackageService
         public async Task<PackageModel> UpdatePackage(PackageModel packageDTO)
         {   
             var package = await _packageRepository.GetPackageById(packageDTO.Id.Value);
-            _mapper.Map(packageDTO,package);
+            package.Name = packageDTO.Name != null ? packageDTO.Name : package.Name;
+            package.Status = packageDTO.Status.HasValue ? packageDTO.Status.Value :package.Status; 
+            package.NumOfProduct = packageDTO.NumOfProduct.HasValue ? packageDTO.NumOfProduct.Value : package.NumOfProduct;
+            package.Price = packageDTO.Price.HasValue ? packageDTO.Price.Value : package.Price;
+            package.AvailableRentDays = packageDTO.AvailableRentDays.HasValue? packageDTO.AvailableRentDays.Value : package.AvailableRentDays;
+            package.IsFeatured= packageDTO.IsFeatured.HasValue? packageDTO.IsFeatured.Value : package.IsFeatured;
+            package.Description =packageDTO.Description!=null ? packageDTO.Description : package.Description;
             var updatedPackage = await _packageRepository.UpdatePackage(package);
             return _mapper.Map<PackageModel>(updatedPackage);
         }

@@ -46,9 +46,11 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.BrandService
             if (brand.ID.HasValue == false) throw new Exception("There is no id in model.");
             var checking = await _unitOfWork._brandRepository.GetById(brand.ID.Value);
             if (checking == null) throw new ArgumentNullException("There is not found brand.");
-   
-            _mapper.Map(brand, checking);
-
+            checking.Name = brand.Name != null ? brand.Name : checking.Name; 
+            checking.ImageUrl = brand.ImageUrl != null ? brand.ImageUrl : checking.ImageUrl;
+            checking.Status = brand.Status.HasValue ? brand.Status.Value : checking.Status;
+            checking.Description = brand.Description != null ? brand.Description : checking.Description; 
+            checking.IsFeatured = brand.IsFeatured.HasValue ? brand.IsFeatured.Value : checking.IsFeatured;
             var result = await _unitOfWork._brandRepository.UpdateBrand(checking);
             return _mapper.Map<BrandModel>(result);
         }

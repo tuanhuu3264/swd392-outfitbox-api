@@ -56,6 +56,11 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.PartnerService
         {
             var checkingPartner = await _unitOfWork._partnerRepository.GetPartnerById(updatePartnerRequestDTO.Id.Value);
             if (checkingPartner == null) throw new Exception("There is not found the partner that has id: " + updatePartnerRequestDTO.Id);
+            checkingPartner.Phone = updatePartnerRequestDTO.Phone != null ? updatePartnerRequestDTO.Phone : checkingPartner.Phone;
+            checkingPartner.Status = updatePartnerRequestDTO.Status.HasValue ? updatePartnerRequestDTO.Status.Value : checkingPartner.Status;
+            checkingPartner.Name = updatePartnerRequestDTO.Name != null ? updatePartnerRequestDTO.Name:checkingPartner.Name ;
+            checkingPartner.Address = updatePartnerRequestDTO.Address != null ? updatePartnerRequestDTO.Address : checkingPartner.Address;
+            checkingPartner.Email = updatePartnerRequestDTO.Email != null ? updatePartnerRequestDTO.Email : checkingPartner.Email;
             if (updatePartnerRequestDTO.Coordinate != null)
             {
                 if (updatePartnerRequestDTO.Coordinate.X != null)
@@ -67,7 +72,6 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.PartnerService
                     checkingPartner.Y = updatePartnerRequestDTO.Coordinate.Y;
                 }
             }
-            _mapper.Map(checkingPartner, updatePartnerRequestDTO);
             var result = await _unitOfWork._partnerRepository.UpdatePartner(checkingPartner);
             return _mapper.Map<PartnerModel>(result);
         }

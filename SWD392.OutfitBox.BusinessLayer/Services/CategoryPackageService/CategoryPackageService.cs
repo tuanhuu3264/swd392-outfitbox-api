@@ -45,8 +45,9 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.CategoryPackageService
         {
             if (request.Id.HasValue == false) throw new Exception("There is no id in model.");
             var updatedCategoryPackage = await _categoryPackageRepository.GetCategoryPackageById(request.Id.Value);
-       
-            _mapper.Map(request, updatedCategoryPackage);
+            updatedCategoryPackage.Status = request.Status.HasValue ? request.Status.Value : updatedCategoryPackage.Status;
+            updatedCategoryPackage.MaxAvailableQuantity = request.MaxAvailableQuantity.HasValue? request.MaxAvailableQuantity.Value : updatedCategoryPackage.MaxAvailableQuantity;
+            // tu them di ku
             var returnedCategoryPackage = await _categoryPackageRepository.UpdateCategoryPackage(updatedCategoryPackage);
             
             return _mapper.Map<CategoryPackageModel>(returnedCategoryPackage);

@@ -58,7 +58,11 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.CategoryService
 
             if (checkingCategory == null) throw new Exception("Not found the category that has id: " + category.ID);
             
-            _mapper.Map(category,checkingCategory);
+            checkingCategory.Name = category.Name!=null? category.Name: checkingCategory.Name;
+            checkingCategory.Status = category.Status.HasValue? category.Status.Value: checkingCategory.Status;
+            checkingCategory.ImageUrl = category.ImageUrl!=null? category.ImageUrl: checkingCategory.ImageUrl;
+            checkingCategory.IsFeatured = category.IsFeatured.HasValue? category.IsFeatured.Value: checkingCategory.IsFeatured; 
+            checkingCategory.Description = category.Description!=null? category.Description: checkingCategory.Description; 
             
             var updatedCategory = await _categoryRepository.UpdateCategory(checkingCategory);
             return _mapper.Map<CategoryModel>(updatedCategory);

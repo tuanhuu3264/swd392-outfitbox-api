@@ -103,7 +103,17 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.ProductService
                    
                 }
             }
-            _mapper.Map(updateProduct, product);
+            product.Name = updateProduct.Name != null ? updateProduct.Name : product.Name;
+            product.Price = updateProduct.Price.HasValue ? updateProduct.Price.Value : product.Price;
+            product.Size = updateProduct.Size != null ? updateProduct.Size : product.Size;
+            product.Description = updateProduct.Description != null ? updateProduct.Description : product.Description;  
+            product.Status = updateProduct.Status.HasValue ? updateProduct.Status.Value : product.Status;   
+            product.Deposit = updateProduct.Deposit.HasValue ? updateProduct.Deposit.Value :product.Deposit;    
+            product.Quantity = updateProduct.Quantity.HasValue? updateProduct.Quantity.Value :product.Quantity;
+            product.AvailableQuantity = updateProduct.AvailableQuantity.HasValue? updateProduct.AvailableQuantity.Value : product.AvailableQuantity;  
+            product.IsUsed = updateProduct.IsUsed!=null ? updateProduct.IsUsed:product.IsUsed;  
+            product.IsFeatured = updateProduct.IsFeatured.HasValue? updateProduct.IsFeatured.Value : product.IsFeatured;
+            product.Type = updateProduct.Type != null ? updateProduct.Type : product.Type;
             var updatedProduct = await _unitOfWork._productRepository.UpdateProduct(product);
 
             return _mapper.Map<ProductModel>(updatedProduct);

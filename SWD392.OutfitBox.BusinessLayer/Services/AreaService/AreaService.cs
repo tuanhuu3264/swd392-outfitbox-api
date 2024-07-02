@@ -41,7 +41,9 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.AreaService
             var checkingArea =await _unitOfWork._areaRepository.GetById(area.Id.Value);
 
             if (checkingArea == null) throw new ArgumentNullException("There is not found the area that has id: " + area.Id);
-            _mapper.Map(area, checkingArea);
+            checkingArea.Address = area.Address != null ? area.Address.ToString() : checkingArea.Address;
+            checkingArea.District = area.District != null ? area.District.ToString() : checkingArea.District;
+            checkingArea.City = area.City != null ? area.City.ToString() : checkingArea.City;
             var result = await _unitOfWork._areaRepository.UpdateArea(checkingArea);
             return _mapper.Map<AreaModel>(result);
         }
