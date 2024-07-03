@@ -56,13 +56,13 @@ namespace SWD392.OutfitBox.API.Configurations.Mapper
         {
             CreateMap<CreatePackageRequestDTO, PackageModel>().ReverseMap();
             CreateMap<UpdatePackageRequestDTO, PackageModel>().ReverseMap();
-            CreateMap<Package, PackageModel>();
+            CreateMap<Package, PackageModel>().ForMember(x=>x.CategoryPackages,otp=>otp.MapFrom(x=>x.CategoryPackages));
             CreateMap<PackageModel, Package>().ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
         }
         public void CategoryPackageProfile()
         {
             CreateMap<CategoryPackageModel, CategoryPackage>().ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
-            CreateMap<CategoryPackage, CategoryPackageModel>();
+            CreateMap<CategoryPackage, CategoryPackageModel>().ForMember(x => x.Category, otp => otp.MapFrom(x => x.Category));
             CreateMap<CreateCategoryPackageRequestDTO, CategoryPackageModel>().ReverseMap();
 
             CreateMap<UpdateCategoryPackageRequestDTO, CategoryPackageModel>().ReverseMap();
