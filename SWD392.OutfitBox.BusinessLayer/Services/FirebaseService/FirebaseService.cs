@@ -48,10 +48,8 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.FirebaseService
                     Address = ""
                 } ;
                 var resultNewCustomer = await _customerRepository.Create(newCustomer);
-                if (result.IsVerify == false)
-                    throw new AuthenticationException("The account is verify.");
-                var accessTokenHandler = AuthHelper.GetToken(customer, 1);
-                var refreshTokenHandler = AuthHelper.GetToken(customer, 3);
+                var accessTokenHandler = AuthHelper.GetToken(resultNewCustomer, 1);
+                var refreshTokenHandler = AuthHelper.GetToken(resultNewCustomer, 3);
                 return new LoginModel()
                 {
                     RefreshToken = new JwtSecurityTokenHandler().WriteToken(refreshTokenHandler),
@@ -60,9 +58,8 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.FirebaseService
                     Guid = result.GUID,
                     Email = result.Email,
                     Picture = result.Picture,
-                    Id = customer.Id,
+                    Id = resultNewCustomer.Id,
                 };
-
             }
             var accessTokenHandler2 = AuthHelper.GetToken(customer, 1);
             var refreshTokenHandler2 = AuthHelper.GetToken(customer, 3);
@@ -96,7 +93,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.FirebaseService
             var userId = claims.ContainsKey("user_id") ? claims["user_id"].ToString() : null;
             var email = claims.ContainsKey("email") ? claims["email"].ToString() : null;
       
-            var picture = claims.ContainsKey("picture") ? claims["picture"].ToString() : null;
+            var picture = claims.ContainsKey("picture") ? claims["picture"].ToString() : "https://firebasestorage.googleapis.com/v0/b/outfit4rent-c7575.appspot.com/o/Users%2FImages%2FProfile%2Fuser.png?alt=media&token=ac1891b6-d18e-4db9-b042-e4f4ce62b515";
             var signInProvider = claims.ContainsKey("sign_in_provider") ? claims["sign_in_provider"].ToString() : null;
             var isVerify = claims.ContainsKey("email_verified") ? bool.Parse(claims["email_verified"].ToString()) : false;
             var name = claims.ContainsKey("name") ? claims["name"].ToString() : null;
@@ -115,8 +112,6 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.FirebaseService
         public async Task<LoginModel> VerifyFirebaseNormalToken(string accessToken)
         {
             var result = await DecodeFirebaseToken(accessToken);
-
-            if (result.IsVerify == false) throw new AuthenticationException("The account is not verify.");
             var customer = await _customerRepository.GetCustomerByPhoneOrEmail(result.Email.ToLower());
 
             if (customer == null)

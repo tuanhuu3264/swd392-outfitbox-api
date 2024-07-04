@@ -16,6 +16,7 @@ namespace SWD392.OutfitBox.API.DTOs.Package
         [JsonPropertyName("url")]
         public string ImageUrl { get; set; } = string.Empty;
         public string? Name { get; set; } = string.Empty;
+        public int? NumOfProduct { get; set; }
 
         public string? Description { get; set; } = string.Empty;
         public bool? IsFeatured { get; set; }

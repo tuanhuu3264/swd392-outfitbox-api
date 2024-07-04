@@ -1,6 +1,10 @@
-﻿using AutoMapper;
+﻿using Abp.Domain.Uow;
+using AutoMapper;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 using SWD392.OutfitBox.BusinessLayer.BusinessModels;
 using SWD392.OutfitBox.DataLayer.Entities;
+using SWD392.OutfitBox.DataLayer.Firebase;
 using SWD392.OutfitBox.DataLayer.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -15,10 +19,14 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.PackageService
     {   
         public IPackageRepository _packageRepository;
         public IMapper _mapper;
-        public PackageService(IPackageRepository packageRepository, IMapper mapper)
+        public IConfiguration _configuration;
+
+        public PackageService( IPackageRepository packageRepository, IMapper mapper, IConfiguration configuration)
         {
             _packageRepository = packageRepository;
             _mapper = mapper;
+            _configuration = configuration;
+         
         }
 
         public async Task<PackageModel> ChangeStatus(int id, int status)
@@ -33,15 +41,18 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.PackageService
             return returnedPackage;
         }
 
-        public async Task<PackageModel> CreatePackage(PackageModel package)
-        {
+        public async Task<PackageModel> CreatePackage(PackageModel package, List<CategoryPackageModel> categoryPackageModel)
+        {   
+
             var mappingPackage = _mapper.Map<Package>(package);
-
-            
+            if (categoryPackageModel != null)
+            {
+                var categoryPackageLs = _mapper.Map<List<CategoryPackage>>(categoryPackageModel);
+                categoryPackageLs.ForEach(x => x.Status = 1);
+                mappingPackage.CategoryPackages = categoryPackageLs;
+            }
             var createdPackage = await _packageRepository.CreatePackage(mappingPackage);
-
             var newPackage = (await _packageRepository.GetAllPackage()).OrderBy(x => x.Id).Last();
-
             var returnedPackage= _mapper.Map<PackageModel>(newPackage);
             return returnedPackage;
         }
@@ -67,12 +78,23 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.PackageService
             return returnedPackages;
         }
 
+        public async Task<PackageModel> GetPackageById(int id)
+        {
+            var package = await _packageRepository.GetPackageById(id);
+            return _mapper.Map<PackageModel>(package);
+        }
+
         public async Task<PackageModel> UpdatePackage(PackageModel packageDTO)
         {   
             var package = await _packageRepository.GetPackageById(packageDTO.Id.Value);
             _mapper.Map(packageDTO,package);
             var updatedPackage = await _packageRepository.UpdatePackage(package);
             return _mapper.Map<PackageModel>(updatedPackage);
+        }
+        public async Task<string> UploadFile(IFormFile file)
+        {
+            var url = await FirebaseStorageHelper.UploadFileToFirebase(file, $"{nameof(Package).ToLower()}", _configuration["Firebase:ApiKey"], _configuration["Firebase:DomainName"], _configuration["Firebase:Email"], _configuration["Firebase:Password"], _configuration["Firebase:StorageBucket"]);
+            return url;
         }
     }
 }

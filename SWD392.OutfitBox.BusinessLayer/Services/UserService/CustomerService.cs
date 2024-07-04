@@ -69,7 +69,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.UserService
             var updatedCustomer = await _customerRepository.GetCustomerById(user.Id.Value);
             updatedCustomer = new Customer
             {
-                Id = user.Id.Value,
+                Id = updatedCustomer.Id,
                 MoneyInWallet = user.MoneyInWallet.HasValue ? user.MoneyInWallet.Value : updatedCustomer.MoneyInWallet,
                 Address = !string.IsNullOrEmpty(user.Address) ? user.Address : updatedCustomer.Address,
                 Email = !string.IsNullOrEmpty(user.Email) ? user.Email : updatedCustomer.Email,
@@ -80,7 +80,6 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.UserService
             };
            
             var result = await _customerRepository.UpdateCustomer(updatedCustomer);
-
             return _mapper.Map<CustomerModel>(result);
         }
 

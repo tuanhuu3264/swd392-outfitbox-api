@@ -56,18 +56,20 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.PartnerService
         {
             var checkingPartner = await _unitOfWork._partnerRepository.GetPartnerById(updatePartnerRequestDTO.Id.Value);
             if (checkingPartner == null) throw new Exception("There is not found the partner that has id: " + updatePartnerRequestDTO.Id);
-            if (updatePartnerRequestDTO.Coordinate != null)
+            checkingPartner = new Partner()
             {
-                if (updatePartnerRequestDTO.Coordinate.X != null)
-                {
-                    checkingPartner.X = updatePartnerRequestDTO.Coordinate.X;
-                }
-                if (updatePartnerRequestDTO.Coordinate.Y != null)
-                {
-                    checkingPartner.Y = updatePartnerRequestDTO.Coordinate.Y;
-                }
-            }
-            _mapper.Map(checkingPartner, updatePartnerRequestDTO);
+
+                Address = !string.IsNullOrEmpty(updatePartnerRequestDTO.Address) ? updatePartnerRequestDTO.Address : checkingPartner.Address,
+                AreaId = updatePartnerRequestDTO.AreaId.HasValue ? updatePartnerRequestDTO.AreaId.Value : checkingPartner.AreaId,
+                Email= !string.IsNullOrEmpty(updatePartnerRequestDTO.Email) ? updatePartnerRequestDTO.Email : checkingPartner.Email,
+                Name = !string.IsNullOrEmpty(updatePartnerRequestDTO.Name) ? updatePartnerRequestDTO.Name : checkingPartner.Name,
+                OTP = checkingPartner.OTP,
+                Password = checkingPartner.Password,
+                Phone= !string.IsNullOrEmpty(updatePartnerRequestDTO.Phone) ? updatePartnerRequestDTO.Phone : checkingPartner.Phone,
+                Status = updatePartnerRequestDTO.Status.HasValue ? updatePartnerRequestDTO.Status.Value : checkingPartner.Status,
+                X = updatePartnerRequestDTO.Coordinate!=null && updatePartnerRequestDTO.Coordinate.X!=null ? updatePartnerRequestDTO.Coordinate.X : checkingPartner.X,
+                Y = updatePartnerRequestDTO.Coordinate!=null&& updatePartnerRequestDTO.Coordinate.Y!=null ? updatePartnerRequestDTO.Coordinate.Y :  checkingPartner.Y
+            };
             var result = await _unitOfWork._partnerRepository.UpdatePartner(checkingPartner);
             return _mapper.Map<PartnerModel>(result);
         }

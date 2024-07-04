@@ -6,7 +6,10 @@ using SWD392.OutfitBox.API.Configurations.HTTPResponse;
 using SWD392.OutfitBox.API.Controllers.Endpoints;
 using SWD392.OutfitBox.API.DTOs.Package;
 using SWD392.OutfitBox.BusinessLayer.BusinessModels;
+using SWD392.OutfitBox.BusinessLayer.Services.CategoryPackageService;
 using SWD392.OutfitBox.BusinessLayer.Services.PackageService;
+using SWD392.OutfitBox.DataLayer.Entities;
+using SWD392.OutfitBox.DataLayer.RepoInterfaces;
 using System.Net;
 
 namespace SWD392.OutfitBox.API.Controllers
@@ -15,10 +18,12 @@ namespace SWD392.OutfitBox.API.Controllers
     public class PackageController : ControllerBase
     {
         public IPackageService _packageService;
+        public ICategoryPackageService _categoryPackageService;
         public IMapper _mapper;
-        public PackageController(IPackageService packageService, IMapper mapper)
+        public PackageController(ICategoryPackageService categoryPackageService, IPackageService packageService, IMapper mapper)
         {
             _packageService = packageService;
+            _categoryPackageService = categoryPackageService;
             _mapper = mapper;
         }
 
@@ -67,6 +72,26 @@ namespace SWD392.OutfitBox.API.Controllers
             }
             return StatusCode((int)response.StatusCode, response);
         }
+        [HttpGet("packages/{id}")]
+        public async Task<ActionResult<PackageModel>> GetPackageById([FromRoute] int id)
+        {
+            BaseResponse<PackageModel> response;
+            try
+            {
+               
+                var data = await _packageService.GetPackageById(id);
+                response = new BaseResponse<PackageModel>("Get package successfully.", HttpStatusCode.Accepted, data);
+            }
+            catch (ArgumentNullException ex)
+            {
+                response = new BaseResponse<PackageModel>(ex.Message, HttpStatusCode.NotFound, null);
+            }
+            catch (Exception ex)
+            {
+                response = new BaseResponse<PackageModel>(ex.Message, HttpStatusCode.InternalServerError, null);
+            }
+            return StatusCode((int)response.StatusCode, response);
+        }
         [HttpPost(PackageEndPoints.CreatePackage)]
         public async Task<ActionResult<BaseResponse<PackageModel>>> CreatePackage([FromBody] CreatePackageRequestDTO cratePackageRequestDTO)
         {
@@ -74,7 +99,9 @@ namespace SWD392.OutfitBox.API.Controllers
             try
             {   
                 var mapping = _mapper.Map<PackageModel>(cratePackageRequestDTO);
-                var data = await _packageService.CreatePackage(mapping);
+                var categoryPackageList = cratePackageRequestDTO.CategoryPackages?.Select(x => _mapper.Map<CategoryPackageModel>(x)).ToList();
+                var data = await _packageService.CreatePackage(mapping, categoryPackageList);
+                
                 response = new BaseResponse<PackageModel>("Create package successfully.", HttpStatusCode.Created, data);
             }
             catch (Exception ex)
@@ -120,6 +147,26 @@ namespace SWD392.OutfitBox.API.Controllers
             catch (Exception ex)
             {
                 response = new BaseResponse<PackageModel>(ex.Message, HttpStatusCode.InternalServerError, null);
+            }
+            return StatusCode((int)response.StatusCode, response);
+        }
+        [HttpPost("packages/uploaded-file")]
+        public async Task<IActionResult> UpdateFile(IFormFile file)
+        {
+            BaseResponse<string> response;
+            try
+            {
+
+                var result = await _packageService.UploadFile(file);
+                response = new BaseResponse<string>("Package:", HttpStatusCode.OK, result);
+            }
+            catch (ArgumentNullException ex)
+            {
+                response = new BaseResponse<string>(ex.Message, HttpStatusCode.NotFound, null);
+            }
+            catch (Exception ex)
+            {
+                response = new BaseResponse<string>(ex.Message, HttpStatusCode.InternalServerError, null);
             }
             return StatusCode((int)response.StatusCode, response);
         }
