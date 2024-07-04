@@ -170,5 +170,24 @@ namespace SWD392.OutfitBox.API.Controllers
             }
             return StatusCode((int)response.StatusCode, response);
         }
+        [HttpGet("packages/{id}")]
+        public async Task<ActionResult<PackageModel>> GetPackage([FromRoute] int id)
+        {
+            BaseResponse<PackageModel> response;
+            try
+            { 
+                var data = await _packageService.GetPackageById(id);
+                response = new BaseResponse<PackageModel>("Get package successfully.", HttpStatusCode.OK, data);
+            }
+            catch (ArgumentNullException ex)
+            {
+                response = new BaseResponse<PackageModel>(ex.Message, HttpStatusCode.NotFound, null);
+            }
+            catch (Exception ex)
+            {
+                response = new BaseResponse<PackageModel>(ex.Message, HttpStatusCode.InternalServerError, null);
+            }
+            return StatusCode((int)response.StatusCode, response);
+        }
     }
 }

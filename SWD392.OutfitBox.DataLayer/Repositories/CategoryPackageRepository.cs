@@ -33,7 +33,7 @@ namespace SWD392.OutfitBox.DataLayer.Repositories
 
         public async Task<List<CategoryPackage>> GetAllCategoryPackagesByPackageId(int packageId)
         {
-            return await this.Get().Where(x => x.PackageId == packageId).ToListAsync();
+            return await this.Get().Where(x => x.PackageId == packageId).Include(x => x.Package).Include(x => x.Category).ToListAsync();
         }
 
         public async Task<CategoryPackage> GetCategoryPackageByCategoryIdAndPackageId(int categoryId, int packageId)

@@ -22,5 +22,6 @@ namespace SWD392.OutfitBox.BusinessLayer.BusinessModels
         public int? Status { get; set; }
         public int? NumOfProduct {  get; set; }
         public bool? IsFeatured { get; set; }
+        public List<CategoryPackageModel> CategoryPackages {  get; set; }
     }
 }

@@ -56,9 +56,10 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.PartnerService
         {
             var checkingPartner = await _unitOfWork._partnerRepository.GetPartnerById(updatePartnerRequestDTO.Id.Value);
             if (checkingPartner == null) throw new Exception("There is not found the partner that has id: " + updatePartnerRequestDTO.Id);
-            checkingPartner = new Partner()
-            {
-
+            if (updatePartnerRequestDTO.Coordinate != null)
+                checkingPartner = new Partner()
+                {
+                 Id = updatePartnerRequestDTO.Coordinate.Id,
                 Address = !string.IsNullOrEmpty(updatePartnerRequestDTO.Address) ? updatePartnerRequestDTO.Address : checkingPartner.Address,
                 AreaId = updatePartnerRequestDTO.AreaId.HasValue ? updatePartnerRequestDTO.AreaId.Value : checkingPartner.AreaId,
                 Email= !string.IsNullOrEmpty(updatePartnerRequestDTO.Email) ? updatePartnerRequestDTO.Email : checkingPartner.Email,
