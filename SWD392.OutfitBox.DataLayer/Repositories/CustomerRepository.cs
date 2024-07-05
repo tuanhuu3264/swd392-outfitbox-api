@@ -71,7 +71,17 @@ namespace SWD392.OutfitBox.DataLayer.Repositories
 
             return await GetCustomerById(user.Id);
         }
-
+        public async Task<List<AdminData>> GetNewCustomers()
+        {
+            
+            var data = await this.Get().GroupBy(x=>x.Time).OrderBy(x=>x.Key).Select(g => new AdminData
+            {
+                Date = g.Key,
+                Value = g.Count()
+            }
+                ).ToListAsync();
+            return data;
+        }
       
     }
 }

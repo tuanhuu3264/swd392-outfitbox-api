@@ -19,6 +19,7 @@ namespace SWD392.OutfitBox.DataLayer.Entities
         public string Email { get; set; } = string.Empty;
         public string Phone { get; set; } = string.Empty;
         public string Address { get; set; } = string.Empty;
+        public DateTime Time { get; set; } = DateTime.Now;
         public int Status { get; set; }
         public long MoneyInWallet { get; set; }
         public List<CustomerPackage>? UserPackages { get; set; }

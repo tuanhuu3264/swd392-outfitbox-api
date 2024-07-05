@@ -31,10 +31,11 @@ namespace SWD392.OutfitBox.DataLayer.UnitOfWork
         public IDepositRepository _depositRepository { get; set; }
         public IWalletRepository _walletRepository { get; set; }
         public ITransactionRepository _transactionRepository { get; set; }
+        public IPackageRepository _packageRepository { get; set; }
 
         public UnitOfWork(Context dbContext, ICustomerRepository customerRepository, IProductRepository productRepository, IImageRepository imageRepository, IBrandRepository brandRepository, ICategoryPackageRepository categoryPackageRepository
                           , ICategoryRepository categoryRepository, IItemsInUserPackageRepository itemsInUserPackageRepository, IAreaRepository areaRepository, IPartnerRepository partnerRepository, ICustomerPackageRepository customerPackageRepository, IReturnOrderRepository returnOrderRepository
-            , IWalletRepository walletRepository,IDepositRepository depositRepository,ITransactionRepository transactionRepository)
+            , IWalletRepository walletRepository,IDepositRepository depositRepository,ITransactionRepository transactionRepository, IPackageRepository packageRepository)
         {
             _dbContext= dbContext;
             _customerRepository= customerRepository;
@@ -53,6 +54,7 @@ namespace SWD392.OutfitBox.DataLayer.UnitOfWork
             _walletRepository= walletRepository;
             _depositRepository= depositRepository;
             _transactionRepository= transactionRepository;
+            _packageRepository= packageRepository;
         }
 
         public async Task BenginTransaction()
