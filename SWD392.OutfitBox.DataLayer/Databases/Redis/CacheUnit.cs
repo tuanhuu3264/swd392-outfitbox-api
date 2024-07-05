@@ -85,7 +85,6 @@ namespace SWD392.OutfitBox.DataLayer.Databases.Redis
                 throw new NotImplementedException("OK");
             }
 
-            // Ensure obj and id are not null
             if (obj == null)
             {
                 throw new ArgumentNullException(nameof(obj));
@@ -96,17 +95,11 @@ namespace SWD392.OutfitBox.DataLayer.Databases.Redis
                 throw new ArgumentNullException(nameof(id));
             }
 
-            // Use typeof(T).Name instead of nameof(T) to get the type name
             string key = $"{typeof(T).Name}_{id.ToString()}";
 
-            // Set the JSON object in the database
             await db.JSON().SetAsync(key, "$", obj);
             await db.KeyExpireAsync(key, TimeSpan.FromDays(1));
             return true;
         }
-       /* public void Subscribe(Action<RedisChannel, RedisValue> handler)
-        {
-            sub.Subscribe(GetTopicName(), handler);
-        }*/
     }
 }

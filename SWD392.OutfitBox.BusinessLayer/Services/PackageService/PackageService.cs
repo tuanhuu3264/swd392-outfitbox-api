@@ -84,6 +84,12 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.PackageService
             return _mapper.Map<PackageModel>(result);
         }
 
+        public async Task<PackageModel> GetPackageByIdV2(int v)
+        {
+            var result = await _packageRepository.GetPackageById(v);
+            return _mapper.Map<PackageModel>(result);
+        }
+
         public async Task<PackageModel> UpdatePackage(PackageModel packageDTO)
         {   
             var package = await _packageRepository.GetPackageById(packageDTO.Id.Value);
