@@ -23,14 +23,21 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.AdminService
             double sum = 0;
             var result = new AdminModel();
             result.Data = new List<AdminData>();
-            var trend = 0;
+            if (data != null && data.Count > 1)
+            {
+                data = data.OrderBy(c => c.Date).ToList();
+                var lastCustomer = data[^1]; 
+                var penultimateCustomer = data[^2];
+                var trend = lastCustomer.Value - penultimateCustomer.Value;
+                result.Trend = trend;
+            }
             foreach (var customer in data)
             {
                 result.Data.Add(customer);
-                sum = sum + customer.Value;
+                sum += customer.Value;
             }
-            result.Total = sum;
             return result;
+
         }
 
         public async Task<AdminModel> GetDailyRevenue()
@@ -39,7 +46,14 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.AdminService
             double sum = 0;
             var result = new AdminModel();
             result.Data = new List<AdminData>();
-            var trend = 0;
+            if (data != null && data.Count > 1)
+            {
+                data = data.OrderBy(c => c.Date).ToList();
+                var lastCustomer = data[^1];
+                var penultimateCustomer = data[^2];
+                var trend = lastCustomer.Value - penultimateCustomer.Value;
+                result.Trend = trend;
+            }
             foreach (var customer in data)
             {
                 result.Data.Add(customer);
@@ -55,9 +69,15 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.AdminService
           double sum = 0;
           var result = new AdminModel();
           result.Data = new List<AdminData>();
-            //Last Day - First Day 
-            var trend = 0;
-          foreach (var customer in data)
+            if (data != null && data.Count > 1)
+            {
+                data = data.OrderBy(c => c.Date).ToList();
+                var lastCustomer = data[^1];
+                var penultimateCustomer = data[^2];
+                var trend = lastCustomer.Value - penultimateCustomer.Value;
+                result.Trend = trend;
+            }
+            foreach (var customer in data)
           {
                 result.Data.Add(customer);
                 sum = sum + customer.Value;
