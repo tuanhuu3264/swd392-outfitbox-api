@@ -26,6 +26,7 @@ using SWD392.OutfitBox.DataLayer.Repositories.Interfaces;
 using SWD392.OutfitBox.BusinessLayer.Services.BrandService;
 using SWD392.OutfitBox.BusinessLayer.Services.UserPackageService;
 using SWD392.OutfitBox.BusinessLayer.Services.PaymentService;
+using SWD392.OutfitBox.BusinessLayer.Services.AdminService;
 
 namespace SWD392.OutfitBox.API.CollectionRegisters
 {
@@ -73,6 +74,7 @@ namespace SWD392.OutfitBox.API.CollectionRegisters
             services.AddScoped <IProductReturnOrderRepository, ProductReturnOrderRepository>();
             services.AddScoped<IBrandService, BrandService>();
             services.AddScoped<ICustomerPackageService, CustomerPackageService>();
+            services.AddScoped<IAdminService, AdminService>();
         }
         public static void RepositoriesRegister(this IServiceCollection services)
         {

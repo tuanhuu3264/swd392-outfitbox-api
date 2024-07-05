@@ -19,7 +19,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Folder Include="Services\AdminService\" />
 		<Folder Include="Services\UserPackageService\" />
 	</ItemGroup>
 

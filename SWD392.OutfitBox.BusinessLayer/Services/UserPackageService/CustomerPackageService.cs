@@ -1,6 +1,7 @@
 ﻿using Abp.Domain.Uow;
 using AutoMapper;
 using SWD392.OutfitBox.BusinessLayer.BusinessModels;
+using SWD392.OutfitBox.BusinessLayer.BusinessModels.PaymentModels;
 using SWD392.OutfitBox.DataLayer.Entities;
 using SWD392.OutfitBox.DataLayer.UnitOfWork;
 using System;
@@ -60,5 +61,18 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.UserPackageService
             var result = await _unitOfWork._customerPackageRepository.CreateUserPackage(customerPackage);
             return _mapper.Map<CustomerPackageModel>(result);
         }
+     public async Task<CheckoutPackageModel> CheckoutPackage(int customerId,int packageId)
+        {
+            CheckoutPackageModel result = new CheckoutPackageModel();
+            var customer = await _unitOfWork._customerRepository.GetCustomerById(customerId);
+            result.customer = _mapper.Map<CustomerModel>(customer);
+            var package = await _unitOfWork._packageRepository.GetPackageById(packageId);
+            result.package = _mapper.Map<PackageModel>(package);
+            var wallets = await _unitOfWork._walletRepository.GetAllWalletsByUserId(customerId);
+            result.wallets = _mapper.Map<List<WalletModel>>(wallets);
+            return result;
+        }   
     }
+
+
 }

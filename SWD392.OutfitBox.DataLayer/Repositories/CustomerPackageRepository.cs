@@ -39,5 +39,27 @@ namespace SWD392.OutfitBox.DataLayer.Repositories
         {
             return await this.Get().Include(x=>x.Items).Include(x=>x.Package).FirstOrDefaultAsync(x => x.Id == id);
         }
+
+        public async Task<List<AdminData>> GetTotalPackagePrice()
+        {
+            var data = await this.Get().GroupBy(x => x.DateFrom).OrderBy(x => x.Key).Select(g => new AdminData
+            {
+                Date = g.Key,
+                Value = g.Sum(x=>x.Price)
+            }
+            ).ToListAsync();
+            return data;
+        }
+
+        public async Task<List<AdminData>> GetDailyOrders()
+        {
+            var data = await this.Get().GroupBy(x => x.DateFrom).OrderBy(x => x.Key).Select(g => new AdminData
+            {
+                Date = g.Key,
+                Value = g.Count()
+            }
+            ).ToListAsync();
+            return data;
+        }
     }
 }

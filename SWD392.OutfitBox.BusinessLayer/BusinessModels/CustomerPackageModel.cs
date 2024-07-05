@@ -12,7 +12,7 @@ namespace SWD392.OutfitBox.BusinessLayer.BusinessModels
  
     public class CustomerPackageModel
     {
-         public int? Id { get; set; }
+        public int? Id { get; set; }
         public int? CustomerId { get; set; } 
         public int? PackageId { get; set; }
         public string? PackageName { get; set; } = string.Empty;
