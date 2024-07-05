@@ -59,7 +59,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.PartnerService
             if (updatePartnerRequestDTO.Coordinate != null)
                 checkingPartner = new Partner()
                 {
-                 Id = updatePartnerRequestDTO.Coordinate.Id,
+                 Id = updatePartnerRequestDTO.Id.Value,
                 Address = !string.IsNullOrEmpty(updatePartnerRequestDTO.Address) ? updatePartnerRequestDTO.Address : checkingPartner.Address,
                 AreaId = updatePartnerRequestDTO.AreaId.HasValue ? updatePartnerRequestDTO.AreaId.Value : checkingPartner.AreaId,
                 Email= !string.IsNullOrEmpty(updatePartnerRequestDTO.Email) ? updatePartnerRequestDTO.Email : checkingPartner.Email,

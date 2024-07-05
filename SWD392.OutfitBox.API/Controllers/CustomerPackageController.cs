@@ -15,7 +15,7 @@ namespace SWD392.OutfitBox.API.Controllers
         {
             _customerPackageService = customerPackageService;
         }
-        [HttpPatch("customers/package/{id},{status}")]
+        [HttpPatch("customers/packages/{id}/status/{status}")]
         public async Task<ActionResult<CustomerPackageModel>> UpdateCustomerPackage([FromRoute] int id, [FromRoute] int status)
         {
             BaseResponse<CustomerPackageModel> response;
