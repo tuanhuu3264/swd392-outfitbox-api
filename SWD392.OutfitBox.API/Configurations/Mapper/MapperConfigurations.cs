@@ -27,7 +27,7 @@ namespace SWD392.OutfitBox.API.Configurations.Mapper
 
 
             CategoryProfile();
-            PackagePofile();
+            PackageProfile();
             TransactionProfile();
             WalletProfile();
             CustomerProfile();
@@ -52,7 +52,7 @@ namespace SWD392.OutfitBox.API.Configurations.Mapper
             CreateMap<Category, CategoryModel>();
             CreateMap<CategoryModel, Category>().ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
         }
-        public void PackagePofile()
+        public void PackageProfile()
         {
             CreateMap<CreatePackageRequestDTO, PackageModel>().ReverseMap();
             CreateMap<UpdatePackageRequestDTO, PackageModel>().ReverseMap();

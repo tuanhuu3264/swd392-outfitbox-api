@@ -15,7 +15,7 @@ namespace SWD392.OutfitBox.DataLayer.Interfaces
         public Task<Customer> Create(Customer user);
         public Task<Customer> UpdateCustomer(Customer user);
         public Task<Customer> ActiveOrDeActive(int id);
-
+        public Task<List<AdminData>> GetNewCustomers();
         public Task<Customer> GetCustomerByPhoneOrEmail(string phoneOrEmail);
 
     }

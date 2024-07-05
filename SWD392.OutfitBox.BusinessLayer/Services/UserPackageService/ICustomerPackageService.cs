@@ -1,4 +1,5 @@
 ﻿using SWD392.OutfitBox.BusinessLayer.BusinessModels;
+using SWD392.OutfitBox.BusinessLayer.BusinessModels.PaymentModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,5 +12,6 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.UserPackageService
     {
         Task<CustomerPackageModel> ChangeStatus(int id, int status);
         Task<CustomerPackageModel> CreateCustomerPackage(CustomerPackageModel customerPackageModel);
+        Task<CheckoutPackageModel> CheckoutPackage(int customerId, int packageid);
     }
 }

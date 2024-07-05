@@ -24,6 +24,7 @@ namespace SWD392.OutfitBox.DataLayer.UnitOfWork
         public IDepositRepository _depositRepository { get; set; }
         public IWalletRepository _walletRepository { get; set; }
         public ITransactionRepository _transactionRepository { get; set; }
+        public IPackageRepository _packageRepository { get; set; }
         Task BenginTransaction();
         Task CommitTransaction();
         Task RollbackTransaction();

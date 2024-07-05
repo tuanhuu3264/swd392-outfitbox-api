@@ -2,6 +2,7 @@
 using SWD392.OutfitBox.API.Configurations.HTTPResponse;
 using SWD392.OutfitBox.API.DTOs.Customer;
 using SWD392.OutfitBox.BusinessLayer.BusinessModels;
+using SWD392.OutfitBox.BusinessLayer.BusinessModels.PaymentModels;
 using SWD392.OutfitBox.BusinessLayer.Services.UserPackageService;
 using System.Net;
 
@@ -20,7 +21,7 @@ namespace SWD392.OutfitBox.API.Controllers
             BaseResponse<CustomerPackageModel> response;
             try
             {
-               var result =  await _customerPackageService.ChangeStatus(id, status);
+                var result = await _customerPackageService.ChangeStatus(id, status);
                 response = new BaseResponse<CustomerPackageModel>("Update customer successfully.", HttpStatusCode.OK, result);
 
             }
@@ -35,5 +36,24 @@ namespace SWD392.OutfitBox.API.Controllers
 
             return StatusCode((int)response.StatusCode, response);
         }
+        [HttpGet("customers/{customerId}/package/{packageId}")]
+        public async Task<ActionResult<CheckoutPackageModel>> GetCheckoutCustomerPackage([FromRoute] int customerId, [FromRoute] int packageId)
+        {
+            BaseResponse<CheckoutPackageModel> response;
+            try
+            {
+                var result = await _customerPackageService.CheckoutPackage(customerId, packageId);
+                response = new BaseResponse<CheckoutPackageModel>("Checkout", HttpStatusCode.OK, result);
+
+            }
+            catch (Exception ex)
+            {
+                response = new BaseResponse<CheckoutPackageModel>(ex.Message, HttpStatusCode.InternalServerError, null);
+            }
+
+            return StatusCode((int)response.StatusCode, response);
+        }
+        //[HttpPost("customers/{customerId/package}")]
+        //public async Task<ActionResult<>>
     }
 }
