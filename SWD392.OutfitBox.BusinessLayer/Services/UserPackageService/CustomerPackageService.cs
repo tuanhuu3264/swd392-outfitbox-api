@@ -1,5 +1,6 @@
 ﻿using Abp.Domain.Uow;
 using AutoMapper;
+using Azure.Core;
 using SWD392.OutfitBox.BusinessLayer.BusinessModels;
 using SWD392.OutfitBox.BusinessLayer.BusinessModels.PaymentModels;
 using SWD392.OutfitBox.DataLayer.Entities;
@@ -7,6 +8,7 @@ using SWD392.OutfitBox.DataLayer.UnitOfWork;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 using IUnitOfWork = SWD392.OutfitBox.DataLayer.UnitOfWork.IUnitOfWork;
@@ -58,19 +60,37 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.UserPackageService
      public async Task<CustomerPackageModel> CreateCustomerPackage(CustomerPackageModel customerPackageModel)
         {
             var customerPackage = _mapper.Map<CustomerPackage>(customerPackageModel);
+            var package = await _unitOfWork._packageRepository.GetPackageById(customerPackage.PackageId);
+            var user = await _unitOfWork._customerRepository.GetCustomerById(customerPackage.CustomerId);
+            customerPackage.PackageName = package.Name;
+            customerPackage.DateTo = customerPackage.DateFrom.AddDays(package.AvailableRentDays);
+            customerPackage.Price = package.Price;
+            customerPackage.ReceiverAddress = user.Address;
+            customerPackage.ReceiverPhone = user.Phone;
+            customerPackage.ReceiverName = user.Name;
+            customerPackage.Status = 0;
+            var count = package.NumOfProduct;
+            var categorypackages = package.CategoryPackages;
+            foreach (var quantityCategory in categorypackages)
+            {
+
+            }
+            foreach (var item in customerPackage.Items)
+            {
+                var product = await _unitOfWork._productRepository.GetById(item.ProductId); 
+                item.Status = 0;
+                item.Deposit = product.Deposit;
+                item.TornMoney = customerPackage.Price * item.Deposit;
+                customerPackage.Price += item.TornMoney*item.Quantity;
+                count = count - item.Quantity;
+            }
             var result = await _unitOfWork._customerPackageRepository.CreateUserPackage(customerPackage);
             return _mapper.Map<CustomerPackageModel>(result);
         }
-     public async Task<CheckoutPackageModel> CheckoutPackage(int customerId,int packageId)
+     public async Task<CustomerPackageModel> GetPackagebyId(int packageid)
         {
-            CheckoutPackageModel result = new CheckoutPackageModel();
-            var customer = await _unitOfWork._customerRepository.GetCustomerById(customerId);
-            result.customer = _mapper.Map<CustomerModel>(customer);
-            var package = await _unitOfWork._packageRepository.GetPackageById(packageId);
-            result.package = _mapper.Map<PackageModel>(package);
-            var wallets = await _unitOfWork._walletRepository.GetAllWalletsByUserId(customerId);
-            result.wallets = _mapper.Map<List<WalletModel>>(wallets);
-            return result;
+           var result = await _unitOfWork._customerPackageRepository.GetCustomerPackageById(packageid);
+            return _mapper.Map < CustomerPackageModel > (result);
         }   
     }
 
