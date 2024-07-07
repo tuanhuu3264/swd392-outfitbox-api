@@ -30,7 +30,7 @@ namespace SWD392.OutfitBox.DataLayer.Entities
         [ForeignKey("PackageId")]
         public Package? Package { get; set; }
         public List<ItemInUserPackage>? Items { get; set; }
-        public int TransactionId { get; set; }
+        public int? TransactionId { get; set; }
         [ForeignKey(nameof(TransactionId))]
         public Transaction? Transaction { get; set; }
     }

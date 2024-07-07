@@ -11,9 +11,7 @@ namespace SWD392.OutfitBox.BusinessLayer.BusinessModels
     public class CategoryPackageModel
     {
         public int? Id { get; set; }
-
         public int? MaxAvailableQuantity { get; set; }
-        
         public int? CategoryId { get; set; }
         public CategoryModel? Category { get; set; }
         public int? PackageId { get; set; }

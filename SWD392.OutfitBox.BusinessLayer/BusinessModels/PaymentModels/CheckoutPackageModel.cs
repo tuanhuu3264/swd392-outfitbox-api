@@ -8,7 +8,7 @@ namespace SWD392.OutfitBox.BusinessLayer.BusinessModels.PaymentModels
 {
     public class CheckoutPackageModel
     {
-       public PackageModel package {  get; set; }
+       public CategoryPackageModel package {  get; set; }
        public List<WalletModel> wallets { get; set; }
        public CustomerModel customer { get; set; }
     }

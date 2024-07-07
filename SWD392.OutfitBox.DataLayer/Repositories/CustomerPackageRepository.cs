@@ -27,7 +27,7 @@ namespace SWD392.OutfitBox.DataLayer.Repositories
         }
         public async Task<CustomerPackage> GetCustomerPackageById(int id)
         {
-            return await this.Get().FirstOrDefaultAsync(x=>x.Id==id);
+            return await this.Get().Include(x=>x.Items).FirstOrDefaultAsync(x=>x.Id==id);
         }
         public async Task<CustomerPackage> SaveAsyn(CustomerPackage customerPacket)
         {
@@ -42,7 +42,7 @@ namespace SWD392.OutfitBox.DataLayer.Repositories
 
         public async Task<List<AdminData>> GetTotalPackagePrice()
         {
-            var data = await this.Get().GroupBy(x => x.DateFrom).OrderBy(x => x.Key).Select(g => new AdminData
+            var data = await this.Get().GroupBy(x => x.DateFrom.Date).OrderBy(x => x.Key).Select(g => new AdminData
             {
                 Date = g.Key,
                 Value = g.Sum(x=>x.Price)
@@ -53,7 +53,7 @@ namespace SWD392.OutfitBox.DataLayer.Repositories
 
         public async Task<List<AdminData>> GetDailyOrders()
         {
-            var data = await this.Get().GroupBy(x => x.DateFrom).OrderBy(x => x.Key).Select(g => new AdminData
+            var data = await this.Get().GroupBy(x => x.DateFrom.Date).OrderBy(x => x.Key).Select(g => new AdminData
             {
                 Date = g.Key,
                 Value = g.Count()

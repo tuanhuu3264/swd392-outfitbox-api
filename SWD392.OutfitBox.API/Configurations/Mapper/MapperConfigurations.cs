@@ -14,6 +14,7 @@ using SWD392.OutfitBox.API.DTOs.ReturnOrder;
 using SWD392.OutfitBox.API.DTOs.Review;
 using SWD392.OutfitBox.API.DTOs.Role;
 using SWD392.OutfitBox.API.DTOs.Wallet;
+using SWD392.OutfitBox.API.RequestModels.CustomerPackage;
 using SWD392.OutfitBox.BusinessLayer;
 using SWD392.OutfitBox.BusinessLayer.BusinessModels;
 using SWD392.OutfitBox.DataLayer.Entities;
@@ -179,6 +180,9 @@ namespace SWD392.OutfitBox.API.Configurations.Mapper
                 .ForMember(x=>x.Items,opt =>opt.MapFrom(x=>x.ItemInUsers))
                 .ReverseMap();
             CreateMap<ItemInUserPackage, ItemInUserPackageModel>().ReverseMap();
+            CreateMap<CustomerPackageRequest,CustomerPackageModel>()
+                .ForMember(x=>x.ItemInUsers,x=>x.MapFrom(x=>x.CreateItems)).ReverseMap();
+            CreateMap<CreateItemInUserPackage, ItemInUserPackageModel>().ReverseMap();
         }
         public bool IsNonDefaultValue<T>(T value)
         {
