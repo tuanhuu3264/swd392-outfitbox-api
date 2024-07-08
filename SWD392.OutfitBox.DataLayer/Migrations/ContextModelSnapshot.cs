@@ -216,6 +216,15 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                             IsFeatured = false,
                             Name = "Accessories",
                             Status = 0
+                        },
+                        new
+                        {
+                            ID = 7,
+                            Description = "Way for couples or friends to express their affection and bond with each other",
+                            ImageUrl = "",
+                            IsFeatured = false,
+                            Name = "Couple",
+                            Status = 0
                         });
                 });
 
@@ -359,6 +368,14 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                             MaxAvailableQuantity = 4,
                             PackageId = 3,
                             Status = 1
+                        },
+                        new
+                        {
+                            Id = 15,
+                            CategoryId = 7,
+                            MaxAvailableQuantity = 4,
+                            PackageId = 4,
+                            Status = 1
                         });
                 });
 
@@ -414,7 +431,7 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                             Phone = "0325739910",
                             Picture = "",
                             Status = 1,
-                            Time = new DateTime(2024, 7, 7, 14, 42, 55, 599, DateTimeKind.Local).AddTicks(5113)
+                            Time = new DateTime(2024, 7, 8, 17, 3, 22, 173, DateTimeKind.Local).AddTicks(6446)
                         },
                         new
                         {
@@ -426,7 +443,7 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                             Phone = "123",
                             Picture = "",
                             Status = 1,
-                            Time = new DateTime(2024, 7, 7, 14, 42, 55, 599, DateTimeKind.Local).AddTicks(5134)
+                            Time = new DateTime(2024, 7, 8, 17, 3, 22, 173, DateTimeKind.Local).AddTicks(6484)
                         },
                         new
                         {
@@ -438,7 +455,7 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                             Phone = "123",
                             Picture = "",
                             Status = 1,
-                            Time = new DateTime(2024, 7, 7, 14, 42, 55, 599, DateTimeKind.Local).AddTicks(5136)
+                            Time = new DateTime(2024, 7, 8, 17, 3, 22, 173, DateTimeKind.Local).AddTicks(6486)
                         },
                         new
                         {
@@ -450,7 +467,7 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                             Phone = "123",
                             Picture = "",
                             Status = 1,
-                            Time = new DateTime(2024, 7, 7, 14, 42, 55, 599, DateTimeKind.Local).AddTicks(5137)
+                            Time = new DateTime(2024, 7, 8, 17, 3, 22, 173, DateTimeKind.Local).AddTicks(6487)
                         });
                 });
 
@@ -481,6 +498,9 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                     b.Property<double>("Price")
                         .HasColumnType("float");
 
+                    b.Property<int?>("QuantityOfItems")
+                        .HasColumnType("int");
+
                     b.Property<string>("ReceiverAddress")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -495,6 +515,9 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
+
+                    b.Property<double?>("TotalDeposit")
+                        .HasColumnType("float");
 
                     b.Property<int?>("TransactionId")
                         .HasColumnType("int");
@@ -514,8 +537,8 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                         {
                             Id = 1,
                             CustomerId = 1,
-                            DateFrom = new DateTime(2024, 7, 7, 14, 42, 55, 599, DateTimeKind.Local).AddTicks(5249),
-                            DateTo = new DateTime(2024, 8, 6, 14, 42, 55, 599, DateTimeKind.Local).AddTicks(5250),
+                            DateFrom = new DateTime(2024, 7, 8, 17, 3, 22, 173, DateTimeKind.Local).AddTicks(6550),
+                            DateTo = new DateTime(2024, 8, 7, 17, 3, 22, 173, DateTimeKind.Local).AddTicks(6550),
                             PackageId = 1,
                             PackageName = "Newcomer Trial",
                             Price = 200.0,
@@ -560,7 +583,7 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                             Id = 1,
                             AmountMoney = 20.0,
                             CustomerId = 1,
-                            Date = new DateTime(2024, 7, 7, 14, 42, 55, 599, DateTimeKind.Local).AddTicks(5333),
+                            Date = new DateTime(2024, 7, 8, 17, 3, 22, 173, DateTimeKind.Local).AddTicks(6634),
                             Type = "Khuyen Mai"
                         });
                 });
@@ -621,6 +644,102 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                             ID = 2,
                             IdProduct = 1,
                             Link = "https://down-vn.img.susercontent.com/file/vn-11134201-7r98o-lvmx2hoo6zzv29"
+                        },
+                        new
+                        {
+                            ID = 3,
+                            IdProduct = 8,
+                            Link = "https://down-vn.img.susercontent.com/file/1e890d0f6604feb16d1c020fb4296a56"
+                        },
+                        new
+                        {
+                            ID = 4,
+                            IdProduct = 8,
+                            Link = "https://down-vn.img.susercontent.com/file/a73d437dcb06544be1efcb2fff22154d"
+                        },
+                        new
+                        {
+                            ID = 5,
+                            IdProduct = 2,
+                            Link = "https://down-vn.img.susercontent.com/file/cn-11134207-7qukw-lk7tiyi2rj4t2c"
+                        },
+                        new
+                        {
+                            ID = 6,
+                            IdProduct = 2,
+                            Link = "https://down-vn.img.susercontent.com/file/cn-11134207-7qukw-lk7tiyi2rj0481"
+                        },
+                        new
+                        {
+                            ID = 7,
+                            IdProduct = 3,
+                            Link = "https://down-vn.img.susercontent.com/file/eaecde77548a04719b5822daf9b5e4b7"
+                        },
+                        new
+                        {
+                            ID = 8,
+                            IdProduct = 3,
+                            Link = "https://down-vn.img.susercontent.com/file/216545f44c9824c6548349fbb63d9103"
+                        },
+                        new
+                        {
+                            ID = 9,
+                            IdProduct = 4,
+                            Link = "https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lwoaor9y31sr34"
+                        },
+                        new
+                        {
+                            ID = 10,
+                            IdProduct = 4,
+                            Link = "https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lwoaor9ooj4p98"
+                        },
+                        new
+                        {
+                            ID = 11,
+                            IdProduct = 5,
+                            Link = "https://down-vn.img.susercontent.com/file/vn-11134201-7r98o-lt4vm66wzc73f1"
+                        },
+                        new
+                        {
+                            ID = 12,
+                            IdProduct = 5,
+                            Link = "https://down-vn.img.susercontent.com/file/vn-11134201-7r98o-lt4vm8t95aet8f"
+                        },
+                        new
+                        {
+                            ID = 13,
+                            IdProduct = 6,
+                            Link = "https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lwle0pi76c4b5f"
+                        },
+                        new
+                        {
+                            ID = 14,
+                            IdProduct = 6,
+                            Link = "https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lstn66047vt094"
+                        },
+                        new
+                        {
+                            ID = 15,
+                            IdProduct = 6,
+                            Link = "https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lstn6604aoxw93"
+                        },
+                        new
+                        {
+                            ID = 16,
+                            IdProduct = 7,
+                            Link = "https://down-vn.img.susercontent.com/file/sg-11134201-7rd6m-lvcplff2w8bx42"
+                        },
+                        new
+                        {
+                            ID = 17,
+                            IdProduct = 7,
+                            Link = "https://down-vn.img.susercontent.com/file/sg-11134201-7rd49-lvcpl96w0b3v79"
+                        },
+                        new
+                        {
+                            ID = 18,
+                            IdProduct = 7,
+                            Link = "https://down-vn.img.susercontent.com/file/sg-11134201-7rd4d-lvcplok5iobc5f"
                         });
                 });
 
@@ -721,7 +840,7 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                         {
                             Id = 2,
                             AvailableRentDays = 30,
-                            Description = "Customers will feel comfortable and appreciate the size and quality of the outfit, The package will provide 8 products in 5 parkage:Shirt,Short,Skirt,Dress,Accessories.  Max product in each category is 3",
+                            Description = "Customers will feel comfortable and appreciate the size and quality of the outfit, The package will provide 8 products in 5 packages:Shirt,Short,Skirt,Dress,Accessories.  Max product in each category is 3",
                             ImageUrl = "",
                             IsFeatured = false,
                             Name = "Basic Package",
@@ -733,12 +852,24 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                         {
                             Id = 3,
                             AvailableRentDays = 30,
-                            Description = "Customers will feel comfortable and appreciate the size and quality of the outfit, The package will provide 12 products in 6 parkage:Shirt,Short,Skirt,Dress,Accessories,Costumes.Max product in each category is 4",
+                            Description = "Customers will feel comfortable and appreciate the size and quality of the outfit, The package will provide 12 products in 6 packages:Shirt,Short,Skirt,Dress,Accessories,Costumes .Max product in each category is 4",
                             ImageUrl = "",
                             IsFeatured = false,
                             Name = "VIP Package",
                             NumOfProduct = 12,
                             Price = 800.0,
+                            Status = 1
+                        },
+                        new
+                        {
+                            Id = 4,
+                            AvailableRentDays = 30,
+                            Description = "excited to introduce the package, designed to make this summer unforgettable for couples and close friends! Celebrate the warmth of the season and the bonds of love with our exclusive matching items that perfectly capture the essence of togetherness",
+                            ImageUrl = "",
+                            IsFeatured = false,
+                            Name = "'Love'Summer",
+                            NumOfProduct = 4,
+                            Price = 600.0,
                             Status = 1
                         });
                 });
@@ -891,7 +1022,7 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                         {
                             ID = 1,
                             AvailableQuantity = 20,
-                            Deposit = 100.0,
+                            Deposit = 0.10000000000000001,
                             Description = "Men's and Women's Short Sleeve Shirt Loose Letter Couple Ins Shirt Multifunctional Vintage Half Sleeve UFO Shirt",
                             IdBrand = 1,
                             IdCategory = 1,
@@ -908,7 +1039,7 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                         {
                             ID = 2,
                             AvailableQuantity = 20,
-                            Deposit = 110.0,
+                            Deposit = 0.10000000000000001,
                             Description = "The ZHUXIA loose-fitting, short-sleeved shirt with a retro Japanese vintage style is a great choice for women's summer fashion.",
                             IdBrand = 2,
                             IdCategory = 1,
@@ -925,13 +1056,13 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                         {
                             ID = 3,
                             AvailableQuantity = 20,
-                            Deposit = 160.0,
-                            Description = "Men's and Women's Short Sleeve Shirt Loose Letter Couple Ins Shirt Multifunctional Vintage Half Sleeve UFO Shirt",
+                            Deposit = 0.14999999999999999,
+                            Description = "Men's basic wide-leg khaki pants made in Korea are extremely beautiful, 3-color elastic waist pants show off Korean style",
                             IdBrand = 3,
-                            IdCategory = 3,
+                            IdCategory = 2,
                             IsFeatured = false,
                             IsUsed = "False",
-                            Name = "Wide-leg retro-style Korean",
+                            Name = "Men's basic wide-leg pants",
                             Price = 160f,
                             Quantity = 20,
                             Size = "X",
@@ -942,7 +1073,7 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                         {
                             ID = 4,
                             AvailableQuantity = 20,
-                            Deposit = 100.0,
+                            Deposit = 0.14999999999999999,
                             Description = "[HOT MODEL 2023] made of cool linen fabric, high-waisted with elastic waistband and drawstring for adjustable fit.",
                             IdBrand = 3,
                             IdCategory = 1,
@@ -959,13 +1090,13 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                         {
                             ID = 5,
                             AvailableQuantity = 20,
-                            Deposit = 100.0,
-                            Description = "Gonz Wide-Fit Round Neck T-Shirt for Men and Women with Silk Screen Print, made of PC Cotton material.",
+                            Deposit = 0.10000000000000001,
+                            Description = "Gonz BLACK Loose FORM T-SHIRT - GONZ The Face 4 NEW HOT 2024",
                             IdBrand = 3,
                             IdCategory = 1,
                             IsFeatured = false,
                             IsUsed = "False",
-                            Name = "Gonz Wide-Fit Round Neck T-Shirt",
+                            Name = "Gonz WIDE FORM T-SHIRT",
                             Price = 130f,
                             Quantity = 20,
                             Size = "M",
@@ -976,7 +1107,7 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                         {
                             ID = 6,
                             AvailableQuantity = 20,
-                            Deposit = 100.0,
+                            Deposit = 0.20000000000000001,
                             Description = "This vintage floral dress features a flattering A-line silhouette with a delicate floral print. Perfect for a summer day out or a casual evening event.",
                             IdBrand = 1,
                             IdCategory = 1,
@@ -993,7 +1124,7 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                         {
                             ID = 7,
                             AvailableQuantity = 0,
-                            Deposit = 170.0,
+                            Deposit = 0.14999999999999999,
                             Description = "Make a statement with this stunning floral maxi skirt. Its flowing design and beautiful floral pattern will turn heads wherever you go.",
                             IdBrand = 3,
                             IdCategory = 4,
@@ -1001,6 +1132,23 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                             IsUsed = "False",
                             Name = "Floral Maxi Skirt",
                             Price = 170f,
+                            Quantity = 0,
+                            Size = "XS",
+                            Status = 1,
+                            Type = "New"
+                        },
+                        new
+                        {
+                            ID = 8,
+                            AvailableQuantity = 0,
+                            Deposit = 0.20000000000000001,
+                            Description = "Men's and women's couple shirts with a dog and cat pulling a leash design",
+                            IdBrand = 3,
+                            IdCategory = 7,
+                            IsFeatured = false,
+                            IsUsed = "False",
+                            Name = "Dog cat couple",
+                            Price = 230f,
                             Quantity = 0,
                             Size = "XS",
                             Status = 1,
@@ -1197,7 +1345,7 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                         {
                             Id = 1,
                             Amount = 0.0,
-                            DateTransaction = new DateTime(2024, 7, 7, 14, 42, 55, 599, DateTimeKind.Local).AddTicks(5292),
+                            DateTransaction = new DateTime(2024, 7, 8, 17, 3, 22, 173, DateTimeKind.Local).AddTicks(6595),
                             DepositId = 1,
                             Paymethod = "",
                             Status = 0,

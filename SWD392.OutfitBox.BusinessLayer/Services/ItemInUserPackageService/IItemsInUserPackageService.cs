@@ -12,7 +12,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.ItemInUserPackageService
     public interface IItemsInUserPackageService
     {
         Task<List<ItemInUserPackageModel>> GetAll();
-        Task<ItemInUserPackageModel> CreateItem(ItemInUserPackageModel itemInPackage);
+        Task<ItemInUserPackageModel> CreateItem(int customerPackageId,ItemInUserPackageModel itemInPackage);
         Task<ItemInUserPackageModel> UpdateItem(ItemInUserPackageModel updateItemInPackage);
         Task<bool> DeleteItem(int itemid);
         Task<List<ItemInUserPackageModel>> GetByUserPackageId(int id);

@@ -31,12 +31,19 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.ItemInUserPackageService
                 var listItem = _mapper.Map<List<ItemInUserPackageModel>>(list);
                 return listItem;        
         }
-        public async Task<ItemInUserPackageModel> CreateItem(ItemInUserPackageModel itemInPackage)
+        public async Task<ItemInUserPackageModel> CreateItem(int customerPackageId,ItemInUserPackageModel itemInPackage)
         {
-                var item = _mapper.Map<ItemInUserPackage>(itemInPackage);
-                var obj = await _unitOfWork._itemsInUserPackageRepository.CreateItemInUserPackage(item);
-                var data = _mapper.Map<ItemInUserPackageModel>(obj);
-                return data;
+            var package = await _unitOfWork._customerPackageRepository.GetCustomerPackageById(customerPackageId);
+            if (package == null) { throw new Exception("Not Found Customer Package"); }
+            var item = _mapper.Map<ItemInUserPackage>(itemInPackage);
+            item.UserPackageId = customerPackageId;
+            var product = await _unitOfWork._productRepository.GetById(item.ProductId);
+            if (product == null) { throw new Exception("Not Found Product"); }
+            item.Deposit = product.Deposit;
+            var obj = await _unitOfWork._itemsInUserPackageRepository.CreateItemInUserPackage(item);
+
+            var data = _mapper.Map<ItemInUserPackageModel>(obj);
+            return data;
         }
         public async Task<ItemInUserPackageModel> UpdateItem(ItemInUserPackageModel updateItemInPackage)
         {

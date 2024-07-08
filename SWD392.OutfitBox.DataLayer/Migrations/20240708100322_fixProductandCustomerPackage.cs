@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace SWD392.OutfitBox.DataLayer.Migrations
 {
     /// <inheritdoc />
-    public partial class InitDb : Migration
+    public partial class fixProductandCustomerPackage : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -19,6 +19,7 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     District = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     City = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
@@ -68,13 +69,13 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Picture = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Phone = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Time = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
-                    MoneyInWallet = table.Column<long>(type: "bigint", nullable: false),
-                    OTP = table.Column<long>(type: "bigint", nullable: false)
+                    MoneyInWallet = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -127,7 +128,9 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     OTP = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
-                    AreaId = table.Column<int>(type: "int", nullable: false)
+                    AreaId = table.Column<int>(type: "int", nullable: false),
+                    X = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Y = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -149,9 +152,8 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Price = table.Column<float>(type: "real", nullable: false),
                     Size = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Color = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false),
                     IsUsed = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Deposit = table.Column<double>(type: "float", nullable: false),
                     IdCategory = table.Column<int>(type: "int", nullable: false),
@@ -475,7 +477,9 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                     ReceiverPhone = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ReceiverAddress = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
-                    TransactionId = table.Column<int>(type: "int", nullable: false)
+                    TransactionId = table.Column<int>(type: "int", nullable: true),
+                    QuantityOfItems = table.Column<int>(type: "int", nullable: true),
+                    TotalDeposit = table.Column<double>(type: "float", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -532,11 +536,11 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
 
             migrationBuilder.InsertData(
                 table: "Area",
-                columns: new[] { "Id", "City", "District" },
+                columns: new[] { "Id", "Address", "City", "District" },
                 values: new object[,]
                 {
-                    { 1, "Ho Chi Minh", "Thu Duc" },
-                    { 2, "Binh Duong", "Di An" }
+                    { 1, "Linh Trung", "Ho Chi Minh", "Thu Duc" },
+                    { 2, "Dong Hoa", "Binh Duong", "Di An" }
                 });
 
             migrationBuilder.InsertData(
@@ -544,9 +548,10 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                 columns: new[] { "ID", "Description", "ImageUrl", "IsFeatured", "Name", "Status" },
                 values: new object[,]
                 {
-                    { 1, " Explosive within the Vietnamese fashion community in 2013, Nosbyn captured the hearts of young fashion enthusiasts with its stylish yet basic items. Leading the way were its signature solid-colored crop tops, which remained a prominent fixture even after three years of development. Today, Nosbyn continues to hold a strong position in the hearts of Vietnamese fashionistas.", "https://nosbyn.com/", false, "NOSBYN", 1 },
-                    { 2, "The BlueTshirt, established in 2012, initially introduced simple t-shirt designs with inspiring slogans to the Vietnamese market. The brand's designs strike a perfect balance between elegance and a free-spirited nature, reflecting the personality of its founder. Whether you are a gentle and graceful woman or someone with a strong individualistic style, The BlueTshirt offers a wide range of products to cater to your preferences.", "https://thebluetshirt.com/", false, "THE BLUE T-SHIRT", 1 },
-                    { 3, "With an unwavering commitment to quality craftsmanship, ethical practices, and timeless design, O4R is poised to become the go-to destination for fashion-conscious individuals seeking both substance and style", "https://thebluetshirt.com/", false, "OUTFIT4RENT", 1 }
+                    { 1, " Explosive within the Vietnamese fashion community in 2013, Nosbyn captured the hearts of young fashion enthusiasts with its stylish yet basic items. Leading the way were its signature solid-colored crop tops, which remained a prominent fixture even after three years of development. Today, Nosbyn continues to hold a strong position in the hearts of Vietnamese fashionistas.", "https://theme.hstatic.net/200000571545/1000929382/14/logo.png?v=171", false, "NOSBYN", 1 },
+                    { 2, "The BlueTshirt, established in 2012, initially introduced simple t-shirt designs with inspiring slogans to the Vietnamese market. The brand's designs strike a perfect balance between elegance and a free-spirited nature, reflecting the personality of its founder. Whether you are a gentle and graceful woman or someone with a strong individualistic style, The BlueTshirt offers a wide range of products to cater to your preferences.", "https://theme.hstatic.net/1000053720/1001049163/14/logo.png?v=3942", false, "THE BLUE T-SHIRT", 1 },
+                    { 3, "With an unwavering commitment to quality craftsmanship, ethical practices, and timeless design, O4R is poised to become the go-to destination for fashion-conscious individuals seeking both substance and style", "https://panel.outfit4rent.online/images/logo-mark-light.svg", false, "OUTFIT4RENT", 1 },
+                    { 4, "With an unwavering commitment to quality craftsmanship, ethical practices, and timeless design, O4R is poised to become the go-to destination for fashion-conscious individuals seeking both substance and style", "https://file.hstatic.net/1000003969/file/logo-svg.svg", false, "JUNO", 1 }
                 });
 
             migrationBuilder.InsertData(
@@ -559,18 +564,19 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                     { 3, "Skater,Circle,Aline,Maxi,Sarong,...", "", false, "Skirt", 0 },
                     { 4, "A-line,Empire,Tent,Princess,Shift,...", "", false, "Dress", 0 },
                     { 5, "Ao dai,Traditional clothers,...", "", false, "Costumes", 0 },
-                    { 6, "Sunglasses,Tie,Watch,Bow,...", "", false, "Accessories", 0 }
+                    { 6, "Sunglasses,Tie,Watch,Bow,...", "", false, "Accessories", 0 },
+                    { 7, "Way for couples or friends to express their affection and bond with each other", "", false, "Couple", 0 }
                 });
 
             migrationBuilder.InsertData(
                 table: "Customer",
-                columns: new[] { "Id", "Address", "Email", "MoneyInWallet", "Name", "OTP", "Password", "Phone", "Status" },
+                columns: new[] { "Id", "Address", "Email", "MoneyInWallet", "Name", "Phone", "Picture", "Status", "Time" },
                 values: new object[,]
                 {
-                    { 1, "Dong Nai", "Khanhvhdse173550@fpt.edu.vn", 1000L, "Khanh Sky", 111111L, "123456", "0325739910", 1 },
-                    { 2, "HCM", "User2@gmail.com", 100L, "User2", 222222L, "123456", "123", 1 },
-                    { 3, "HCM", "User3@gmail.com", 100L, "User3", 333333L, "123456", "123", 1 },
-                    { 4, "HCM", "User4gmail.com", 100L, "User4", 444444L, "123456", "123", 1 }
+                    { 1, "Dong Nai", "Khanhvhdse173550@fpt.edu.vn", 1000L, "Khanh Sky", "0325739910", "", 1, new DateTime(2024, 7, 8, 17, 3, 22, 173, DateTimeKind.Local).AddTicks(6446) },
+                    { 2, "HCM", "User2@gmail.com", 100L, "User2", "123", "", 1, new DateTime(2024, 7, 8, 17, 3, 22, 173, DateTimeKind.Local).AddTicks(6484) },
+                    { 3, "HCM", "User3@gmail.com", 100L, "User3", "123", "", 1, new DateTime(2024, 7, 8, 17, 3, 22, 173, DateTimeKind.Local).AddTicks(6486) },
+                    { 4, "HCM", "User4gmail.com", 100L, "User4", "123", "", 1, new DateTime(2024, 7, 8, 17, 3, 22, 173, DateTimeKind.Local).AddTicks(6487) }
                 });
 
             migrationBuilder.InsertData(
@@ -579,8 +585,9 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                 values: new object[,]
                 {
                     { 1, 30, "The new customer can use to experience, with total 4 product in 4 category: Shirt,Short,Skirt,Dress. Max product in each category is 2", "", false, "Newcomer Trial", 4, 200.0, 1 },
-                    { 2, 30, "Customers will feel comfortable and appreciate the size and quality of the outfit, The package will provide 8 products in 5 parkage:Shirt,Short,Skirt,Dress,Accessories.  Max product in each category is 3", "", false, "Basic Package", 8, 600.0, 1 },
-                    { 3, 30, "Customers will feel comfortable and appreciate the size and quality of the outfit, The package will provide 12 products in 6 parkage:Shirt,Short,Skirt,Dress,Accessories,Costumes.Max product in each category is 4", "", false, "VIP Package", 12, 800.0, 1 }
+                    { 2, 30, "Customers will feel comfortable and appreciate the size and quality of the outfit, The package will provide 8 products in 5 packages:Shirt,Short,Skirt,Dress,Accessories.  Max product in each category is 3", "", false, "Basic Package", 8, 600.0, 1 },
+                    { 3, 30, "Customers will feel comfortable and appreciate the size and quality of the outfit, The package will provide 12 products in 6 packages:Shirt,Short,Skirt,Dress,Accessories,Costumes .Max product in each category is 4", "", false, "VIP Package", 12, 800.0, 1 },
+                    { 4, 30, "excited to introduce the package, designed to make this summer unforgettable for couples and close friends! Celebrate the warmth of the season and the bonds of love with our exclusive matching items that perfectly capture the essence of togetherness", "", false, "'Love'Summer", 4, 600.0, 1 }
                 });
 
             migrationBuilder.InsertData(
@@ -601,35 +608,37 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                     { 11, 2, 4, 3, 1 },
                     { 12, 3, 4, 3, 1 },
                     { 13, 4, 4, 3, 1 },
-                    { 14, 6, 4, 3, 1 }
+                    { 14, 6, 4, 3, 1 },
+                    { 15, 7, 4, 4, 1 }
                 });
 
             migrationBuilder.InsertData(
                 table: "Deposits",
                 columns: new[] { "Id", "AmountMoney", "CustomerId", "Date", "Type" },
-                values: new object[] { 1, 20.0, 1, new DateTime(2024, 6, 10, 20, 54, 42, 970, DateTimeKind.Local).AddTicks(655), "Khuyen Mai" });
+                values: new object[] { 1, 20.0, 1, new DateTime(2024, 7, 8, 17, 3, 22, 173, DateTimeKind.Local).AddTicks(6634), "Khuyen Mai" });
 
             migrationBuilder.InsertData(
                 table: "Partners",
-                columns: new[] { "Id", "Address", "AreaId", "Email", "Name", "OTP", "Password", "Phone", "Status" },
+                columns: new[] { "Id", "Address", "AreaId", "Email", "Name", "OTP", "Password", "Phone", "Status", "X", "Y" },
                 values: new object[,]
                 {
-                    { 1, "https://www.grab.com/vn/express/", 1, "Grap@gmail.com", "Grap", "", "", "123456", 0 },
-                    { 2, "https://be.com.vn/", 1, "Grap@gmail.com", "Bee", "", "", "123456", 0 }
+                    { 1, "https://www.grab.com/vn/express/", 1, "Grap@gmail.com", "Grap", "", "", "123456", 0, "10.8447022", "106.7618557" },
+                    { 2, "https://be.com.vn/", 1, "Grap@gmail.com", "Bee", "", "", "123456", 0, "10.8447022", "106.7618557" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Product",
-                columns: new[] { "ID", "AvailableQuantity", "Color", "Deposit", "Description", "IdBrand", "IdCategory", "IsFeatured", "IsUsed", "Name", "Price", "Quantity", "Size", "Status", "Type" },
+                columns: new[] { "ID", "AvailableQuantity", "Deposit", "Description", "IdBrand", "IdCategory", "IsFeatured", "IsUsed", "Name", "Price", "Quantity", "Size", "Status", "Type" },
                 values: new object[,]
                 {
-                    { 1, 20, "Blue", 100.0, "Men's and Women's Short Sleeve Shirt Loose Letter Couple Ins Shirt Multifunctional Vintage Half Sleeve UFO Shirt", 1, 1, false, "False", "Cosmic Planet", 100f, 20, "M", "1", "New" },
-                    { 2, 20, "Grey", 110.0, "The ZHUXIA loose-fitting, short-sleeved shirt with a retro Japanese vintage style is a great choice for women's summer fashion.", 2, 1, false, "False", "ZHUXIA-Shirt", 110f, 20, "X", "1", "New" },
-                    { 3, 20, "Black", 160.0, "Men's and Women's Short Sleeve Shirt Loose Letter Couple Ins Shirt Multifunctional Vintage Half Sleeve UFO Shirt", 3, 3, false, "False", "Wide-leg retro-style Korean", 160f, 20, "X", "1", "New" },
-                    { 4, 20, "White", 100.0, "[HOT MODEL 2023] made of cool linen fabric, high-waisted with elastic waistband and drawstring for adjustable fit.", 3, 1, false, "False", "Wide-leg women's pants", 150f, 20, "M", "1", "New" },
-                    { 5, 20, "Black", 100.0, "Gonz Wide-Fit Round Neck T-Shirt for Men and Women with Silk Screen Print, made of PC Cotton material.", 3, 1, false, "False", "Gonz Wide-Fit Round Neck T-Shirt", 130f, 20, "M", "1", "New" },
-                    { 6, 20, "Pink", 100.0, "This vintage floral dress features a flattering A-line silhouette with a delicate floral print. Perfect for a summer day out or a casual evening event.", 1, 1, false, "False", "Vintage Floral Dress", 200f, 20, "M", "1", "New" },
-                    { 7, 0, "White", 170.0, "Make a statement with this stunning floral maxi skirt. Its flowing design and beautiful floral pattern will turn heads wherever you go.", 3, 4, false, "False", "Floral Maxi Skirt", 170f, 0, "XS", "1", "New" }
+                    { 1, 20, 0.10000000000000001, "Men's and Women's Short Sleeve Shirt Loose Letter Couple Ins Shirt Multifunctional Vintage Half Sleeve UFO Shirt", 1, 1, false, "False", "Cosmic Planet", 100f, 20, "M", 1, "New" },
+                    { 2, 20, 0.10000000000000001, "The ZHUXIA loose-fitting, short-sleeved shirt with a retro Japanese vintage style is a great choice for women's summer fashion.", 2, 1, false, "False", "ZHUXIA-Shirt", 110f, 20, "X", 1, "New" },
+                    { 3, 20, 0.14999999999999999, "Men's basic wide-leg khaki pants made in Korea are extremely beautiful, 3-color elastic waist pants show off Korean style", 3, 2, false, "False", "Men's basic wide-leg pants", 160f, 20, "X", 1, "New" },
+                    { 4, 20, 0.14999999999999999, "[HOT MODEL 2023] made of cool linen fabric, high-waisted with elastic waistband and drawstring for adjustable fit.", 3, 1, false, "False", "Wide-leg women's pants", 150f, 20, "M", 1, "New" },
+                    { 5, 20, 0.10000000000000001, "Gonz BLACK Loose FORM T-SHIRT - GONZ The Face 4 NEW HOT 2024", 3, 1, false, "False", "Gonz WIDE FORM T-SHIRT", 130f, 20, "M", 1, "New" },
+                    { 6, 20, 0.20000000000000001, "This vintage floral dress features a flattering A-line silhouette with a delicate floral print. Perfect for a summer day out or a casual evening event.", 1, 1, false, "False", "Vintage Floral Dress", 200f, 20, "M", 1, "New" },
+                    { 7, 0, 0.14999999999999999, "Make a statement with this stunning floral maxi skirt. Its flowing design and beautiful floral pattern will turn heads wherever you go.", 3, 4, false, "False", "Floral Maxi Skirt", 170f, 0, "XS", 1, "New" },
+                    { 8, 0, 0.20000000000000001, "Men's and women's couple shirts with a dog and cat pulling a leash design", 3, 7, false, "False", "Dog cat couple", 230f, 0, "XS", 1, "New" }
                 });
 
             migrationBuilder.InsertData(
@@ -643,18 +652,34 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                 values: new object[,]
                 {
                     { 1, 1, "https://down-vn.img.susercontent.com/file/vn-11134201-7r98o-lvmx2enml619c4" },
-                    { 2, 1, "https://down-vn.img.susercontent.com/file/vn-11134201-7r98o-lvmx2hoo6zzv29" }
+                    { 2, 1, "https://down-vn.img.susercontent.com/file/vn-11134201-7r98o-lvmx2hoo6zzv29" },
+                    { 3, 8, "https://down-vn.img.susercontent.com/file/1e890d0f6604feb16d1c020fb4296a56" },
+                    { 4, 8, "https://down-vn.img.susercontent.com/file/a73d437dcb06544be1efcb2fff22154d" },
+                    { 5, 2, "https://down-vn.img.susercontent.com/file/cn-11134207-7qukw-lk7tiyi2rj4t2c" },
+                    { 6, 2, "https://down-vn.img.susercontent.com/file/cn-11134207-7qukw-lk7tiyi2rj0481" },
+                    { 7, 3, "https://down-vn.img.susercontent.com/file/eaecde77548a04719b5822daf9b5e4b7" },
+                    { 8, 3, "https://down-vn.img.susercontent.com/file/216545f44c9824c6548349fbb63d9103" },
+                    { 9, 4, "https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lwoaor9y31sr34" },
+                    { 10, 4, "https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lwoaor9ooj4p98" },
+                    { 11, 5, "https://down-vn.img.susercontent.com/file/vn-11134201-7r98o-lt4vm66wzc73f1" },
+                    { 12, 5, "https://down-vn.img.susercontent.com/file/vn-11134201-7r98o-lt4vm8t95aet8f" },
+                    { 13, 6, "https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lwle0pi76c4b5f" },
+                    { 14, 6, "https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lstn66047vt094" },
+                    { 15, 6, "https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lstn6604aoxw93" },
+                    { 16, 7, "https://down-vn.img.susercontent.com/file/sg-11134201-7rd6m-lvcplff2w8bx42" },
+                    { 17, 7, "https://down-vn.img.susercontent.com/file/sg-11134201-7rd49-lvcpl96w0b3v79" },
+                    { 18, 7, "https://down-vn.img.susercontent.com/file/sg-11134201-7rd4d-lvcplok5iobc5f" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Transactions",
                 columns: new[] { "Id", "Amount", "DateTransaction", "DepositId", "Paymethod", "Status", "WalletId" },
-                values: new object[] { 1, 0.0, new DateTime(2024, 6, 10, 20, 54, 42, 970, DateTimeKind.Local).AddTicks(505), 1, "", 0, 1 });
+                values: new object[] { 1, 0.0, new DateTime(2024, 7, 8, 17, 3, 22, 173, DateTimeKind.Local).AddTicks(6595), 1, "", 0, 1 });
 
             migrationBuilder.InsertData(
                 table: "CustomerPackage",
-                columns: new[] { "Id", "CustomerId", "DateFrom", "DateTo", "PackageId", "PackageName", "Price", "ReceiverAddress", "ReceiverName", "ReceiverPhone", "Status", "TransactionId" },
-                values: new object[] { 1, 1, new DateTime(2024, 6, 10, 20, 54, 42, 970, DateTimeKind.Local).AddTicks(338), new DateTime(2024, 7, 10, 20, 54, 42, 970, DateTimeKind.Local).AddTicks(364), 1, "Newcomer Trial", 200.0, "Nha Van Hoa Sinh Vien", "Khanh Sky", "0325739910", 1, 1 });
+                columns: new[] { "Id", "CustomerId", "DateFrom", "DateTo", "PackageId", "PackageName", "Price", "QuantityOfItems", "ReceiverAddress", "ReceiverName", "ReceiverPhone", "Status", "TotalDeposit", "TransactionId" },
+                values: new object[] { 1, 1, new DateTime(2024, 7, 8, 17, 3, 22, 173, DateTimeKind.Local).AddTicks(6550), new DateTime(2024, 8, 7, 17, 3, 22, 173, DateTimeKind.Local).AddTicks(6550), 1, "Newcomer Trial", 200.0, null, "Nha Van Hoa Sinh Vien", "Khanh Sky", "0325739910", 1, null, 1 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_CategoryPackages_CategoryId",

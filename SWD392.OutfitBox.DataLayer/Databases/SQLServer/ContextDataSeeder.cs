@@ -87,7 +87,13 @@ namespace SWD392.OutfitBox.DataLayer.Databases.Redis
                     ID = 6,
                     Name = "Accessories",
                     Description = "Sunglasses,Tie,Watch,Bow,..."
-                }
+                },
+                 new Category
+                 {
+                     ID= 7,
+                     Name= "Couple",
+                     Description = "Way for couples or friends to express their affection and bond with each other"
+                 }
                 );
             modelBuilder.Entity<Product>().HasData(
              new Product
@@ -96,11 +102,11 @@ namespace SWD392.OutfitBox.DataLayer.Databases.Redis
                  Name = "Cosmic Planet",
                  Price = 100,
                  Size = "M",
-             //    Color = "Blue",
+                 //    Color = "Blue",
                  Description = "Men's and Women's Short Sleeve Shirt Loose Letter Couple Ins Shirt Multifunctional Vintage Half Sleeve UFO Shirt",
                  Status = 1,
                  IsUsed = "False",
-                 Deposit = 100,
+                 Deposit = 0.1,
                  IdCategory = 1,
                  Quantity = 20,
                  IdBrand = 1,
@@ -113,11 +119,11 @@ namespace SWD392.OutfitBox.DataLayer.Databases.Redis
                 Name = "ZHUXIA-Shirt",
                 Price = 110,
                 Size = "X",
-             //   Color = "Grey",
+                //   Color = "Grey",
                 Description = "The ZHUXIA loose-fitting, short-sleeved shirt with a retro Japanese vintage style is a great choice for women's summer fashion.",
                 Status = 1,
                 IsUsed = "False",
-                Deposit = 110,
+                Deposit = 0.1,
                 IdCategory = 1,
                 Quantity = 20,
                 IdBrand = 2,
@@ -127,15 +133,15 @@ namespace SWD392.OutfitBox.DataLayer.Databases.Redis
             new Product
             {
                 ID = 3,
-                Name = "Wide-leg retro-style Korean",
+                Name = "Men's basic wide-leg pants",
                 Price = 160,
                 Size = "X",
-              //  Color = "Black",
-                Description = "Men's and Women's Short Sleeve Shirt Loose Letter Couple Ins Shirt Multifunctional Vintage Half Sleeve UFO Shirt",
+                //  Color = "Black",
+                Description = "Men's basic wide-leg khaki pants made in Korea are extremely beautiful, 3-color elastic waist pants show off Korean style",
                 Status = 1,
                 IsUsed = "False",
-                Deposit = 160,
-                IdCategory = 3,
+                Deposit = 0.15,
+                IdCategory = 2,
                 Quantity = 20,
                 IdBrand = 3,
                 AvailableQuantity = 20,
@@ -147,11 +153,11 @@ namespace SWD392.OutfitBox.DataLayer.Databases.Redis
                 Name = "Wide-leg women's pants",
                 Price = 150,
                 Size = "M",
-             //   Color = "White",
+                //   Color = "White",
                 Description = "[HOT MODEL 2023] made of cool linen fabric, high-waisted with elastic waistband and drawstring for adjustable fit.",
                 Status = 1,
                 IsUsed = "False",
-                Deposit = 100,
+                Deposit = 0.15,
                 IdCategory = 1,
                 Quantity = 20,
                 IdBrand = 3,
@@ -161,14 +167,14 @@ namespace SWD392.OutfitBox.DataLayer.Databases.Redis
             new Product
             {
                 ID = 5,
-                Name = "Gonz Wide-Fit Round Neck T-Shirt",
+                Name = "Gonz WIDE FORM T-SHIRT",
                 Price = 130,
                 Size = "M",
-               // Color = "Black",
-                Description = "Gonz Wide-Fit Round Neck T-Shirt for Men and Women with Silk Screen Print, made of PC Cotton material.",
+                // Color = "Black",
+                Description = "Gonz BLACK Loose FORM T-SHIRT - GONZ The Face 4 NEW HOT 2024",
                 Status = 1,
                 IsUsed = "False",
-                Deposit = 100,
+                Deposit = 0.1,
                 IdCategory = 1,
                 Quantity = 20,
                 IdBrand = 3,
@@ -181,11 +187,11 @@ namespace SWD392.OutfitBox.DataLayer.Databases.Redis
                 Name = "Vintage Floral Dress",
                 Price = 200,
                 Size = "M",
-            //    Color = "Pink",
+                //    Color = "Pink",
                 Description = "This vintage floral dress features a flattering A-line silhouette with a delicate floral print. Perfect for a summer day out or a casual evening event.",
                 Status = 1,
                 IsUsed = "False",
-                Deposit = 100,
+                Deposit = 0.2,
                 IdCategory = 1,
                 Quantity = 20,
                 IdBrand = 1,
@@ -198,15 +204,29 @@ namespace SWD392.OutfitBox.DataLayer.Databases.Redis
                 Name = "Floral Maxi Skirt",
                 Price = 170,
                 Size = "XS",
-              //  Color = "White",
+                //  Color = "White",
                 Description = "Make a statement with this stunning floral maxi skirt. Its flowing design and beautiful floral pattern will turn heads wherever you go.",
                 Status = 1,
                 IsUsed = "False",
-                Deposit = 170,
+                Deposit = 0.15,
                 IdCategory = 4,
                 IdBrand = 3,
                 Type = "New"
-            });
+            },
+            new Product
+            {
+                ID = 8,
+                Name = "Dog cat couple",
+                Price = 230,
+                Size = "XS",
+                Description = "Men's and women's couple shirts with a dog and cat pulling a leash design",
+                Status = 1,
+                IsUsed = "False",
+                Deposit = 0.2,
+                IdCategory = 7,
+                IdBrand = 3,
+                Type = "New"
+            }) ;
             modelBuilder.Entity<Package>().HasData(
                new Package
                {
@@ -223,7 +243,7 @@ namespace SWD392.OutfitBox.DataLayer.Databases.Redis
                    Id = 2,
                    Name = "Basic Package",
                    Price = 600,
-                   Description = "Customers will feel comfortable and appreciate the size and quality of the outfit, The package will provide 8 products in 5 parkage:Shirt,Short,Skirt,Dress,Accessories.  Max product in each category is 3",
+                   Description = "Customers will feel comfortable and appreciate the size and quality of the outfit, The package will provide 8 products in 5 packages:Shirt,Short,Skirt,Dress,Accessories.  Max product in each category is 3",
                    AvailableRentDays = 30,
                    Status = 1,
                    NumOfProduct = 8,
@@ -235,10 +255,21 @@ namespace SWD392.OutfitBox.DataLayer.Databases.Redis
                    Id = 3,
                    Name = "VIP Package",
                    Price = 800,
-                   Description = "Customers will feel comfortable and appreciate the size and quality of the outfit, The package will provide 12 products in 6 parkage:Shirt,Short,Skirt,Dress,Accessories,Costumes.Max product in each category is 4",
+                   Description = "Customers will feel comfortable and appreciate the size and quality of the outfit, The package will provide 12 products in 6 packages:Shirt,Short,Skirt,Dress,Accessories,Costumes .Max product in each category is 4",
                    AvailableRentDays = 30,
                    Status = 1,
                    NumOfProduct = 12,
+               },
+               new Package
+               {
+                   Id = 4,
+                   Name = "'Love'Summer",
+                   Price = 600,
+                   Description = "excited to introduce the package, designed to make this summer unforgettable for couples and close friends! Celebrate the warmth of the season and the bonds of love with our exclusive matching items that perfectly capture the essence of togetherness",
+                   AvailableRentDays = 30,
+                   Status = 1,
+                   NumOfProduct = 4,
+
                }
               );
             modelBuilder.Entity<CategoryPackage>().HasData(
@@ -353,6 +384,15 @@ namespace SWD392.OutfitBox.DataLayer.Databases.Redis
                           Status = 1,
                           MaxAvailableQuantity = 4
                       }
+                      ,
+                      new CategoryPackage
+                      {
+                          Id = 15,
+                          CategoryId = 7,
+                          PackageId = 4,
+                          Status = 1,
+                          MaxAvailableQuantity = 4
+                      }
             );
             modelBuilder.Entity<Image>().HasData(
                  new Image
@@ -366,7 +406,104 @@ namespace SWD392.OutfitBox.DataLayer.Databases.Redis
                       ID = 2,
                       Link = "https://down-vn.img.susercontent.com/file/vn-11134201-7r98o-lvmx2hoo6zzv29",
                       IdProduct = 1,
+                  },
+                  new Image
+                  {
+                      ID= 3,
+                      Link = "https://down-vn.img.susercontent.com/file/1e890d0f6604feb16d1c020fb4296a56",
+                      IdProduct = 8,
+                  },
+                  new Image
+                  {
+                      ID = 4,
+                      Link= "https://down-vn.img.susercontent.com/file/a73d437dcb06544be1efcb2fff22154d",
+                      IdProduct = 8,
+                  },
+                  new Image
+                  {
+                       ID =5,
+                       Link= "https://down-vn.img.susercontent.com/file/cn-11134207-7qukw-lk7tiyi2rj4t2c",
+                       IdProduct = 2,
+                  },
+                  new Image
+                  {
+                      ID = 6,
+                      Link = "https://down-vn.img.susercontent.com/file/cn-11134207-7qukw-lk7tiyi2rj0481",
+                      IdProduct = 2
+                  },
+                  new Image
+                  {
+                      ID = 7,
+                      Link = "https://down-vn.img.susercontent.com/file/eaecde77548a04719b5822daf9b5e4b7",
+                      IdProduct = 3
+                  },
+                  new Image
+                  {
+                      ID=8,
+                      Link = "https://down-vn.img.susercontent.com/file/216545f44c9824c6548349fbb63d9103",
+                      IdProduct = 3
+                  },
+                  new Image
+                  {
+                      ID = 9,
+                      Link = "https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lwoaor9y31sr34",
+                      IdProduct = 4
+                  },
+                  new Image
+                  {
+                      ID =10,
+                      Link = "https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lwoaor9ooj4p98",
+                      IdProduct = 4
+                  },
+                  new Image
+                  {
+                      ID= 11,
+                      Link= "https://down-vn.img.susercontent.com/file/vn-11134201-7r98o-lt4vm66wzc73f1",
+                      IdProduct = 5
+                  },
+                  new Image
+                  {
+                      ID= 12,
+                      Link = "https://down-vn.img.susercontent.com/file/vn-11134201-7r98o-lt4vm8t95aet8f",
+                      IdProduct = 5
+                  },
+                  new Image
+                  {
+                      ID = 13,
+                      Link = "https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lwle0pi76c4b5f",
+                      IdProduct = 6
+                  },
+                  new Image
+                  {
+                      ID=14,
+                      Link= "https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lstn66047vt094",
+                      IdProduct = 6
+                  },
+                  new Image
+                  {
+                      ID = 15,
+                      Link= "https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lstn6604aoxw93",
+                      IdProduct = 6
+                  },
+                  new Image
+                  {
+                      ID = 16,
+                      Link = "https://down-vn.img.susercontent.com/file/sg-11134201-7rd6m-lvcplff2w8bx42",
+                      IdProduct = 7
+                  },
+                  new Image
+                  {
+                      ID= 17,
+                      Link = "https://down-vn.img.susercontent.com/file/sg-11134201-7rd49-lvcpl96w0b3v79",
+                      IdProduct = 7
+                  },
+                  new Image
+                  {
+                      ID= 18,
+                      Link = "https://down-vn.img.susercontent.com/file/sg-11134201-7rd4d-lvcplok5iobc5f",
+                      IdProduct = 7
                   }
+                  
                 );
             modelBuilder.Entity<Customer>().HasData(
                     new Customer
