@@ -57,14 +57,33 @@ namespace SWD392.OutfitBox.API.Controllers
 
             return StatusCode((int)response.StatusCode, response);
         }
-        [HttpPost("customers/packages")]
-        public async Task<ActionResult<CustomerPackageModel>> CreateCustomerPackage([FromBody] CustomerPackageRequest request)
+        [HttpGet("customers/{customerId}/packages")]
+        public async Task<ActionResult<List<CustomerPackageModel>>> GetCustomerPackageByCustomerId([FromRoute] int customerId)
+        {
+            BaseResponse<List<CustomerPackageModel>> response;
+            try
+            {
+                var result = await _customerPackageService.GetAllCustomerPackageByCustomerId(customerId);
+                response = new BaseResponse<List<CustomerPackageModel>>("Successfully", HttpStatusCode.OK, result.ToList());
+
+            }
+            catch (Exception ex)
+            {
+                response = new BaseResponse<List<CustomerPackageModel>>(ex.Message, HttpStatusCode.InternalServerError, null);
+            }
+
+            return StatusCode((int)response.StatusCode, response);
+        }
+        [HttpPost("customers/{customerId}/wallets/{walletId}/packages/{packageId}")]
+        public async Task<ActionResult<CustomerPackageModel>> CreateCustomerPackage([FromBody] CustomerPackageRequest request, [FromRoute] int walletId, [FromRoute] int customerId, [FromRoute] int packageId)
         {
             BaseResponse<CustomerPackageModel> response;
             try
             {
                 var customerPackage = _mapper.Map<CustomerPackageModel>(request);
-                var result = await _customerPackageService.CreateCustomerPackage(customerPackage);
+                customerPackage.CustomerId = customerId;
+                customerPackage.PackageId = packageId;
+                var result = await _customerPackageService.CreateCustomerPackage(customerPackage,walletId);
                 response = new BaseResponse<CustomerPackageModel>("Successfully", HttpStatusCode.OK, result);
             }
             catch (Exception ex)

@@ -19,7 +19,7 @@ namespace SWD392.OutfitBox.API.Controllers
             _walletService = walletService;
             _mapper = mapper;
         }
-        [HttpGet("wallets/customers/{customerId}")]
+        [HttpGet("customers/{customerId}/wallets/")]
         public async Task<ActionResult<BaseResponse<List<WalletModel>>>> GetAllWalletsByUserId([FromRoute]int customerId)
         {
             BaseResponse<List<WalletModel>> response; 
@@ -33,7 +33,7 @@ namespace SWD392.OutfitBox.API.Controllers
             }
             return StatusCode((int)response.StatusCode,response);
         }
-        [HttpGet("wallets/actived-wallets/customers/{customerId}")]
+        [HttpGet("customers/{customerId}/wallets/actived-wallets")]
         public async Task<ActionResult<List<WalletModel>>> GetAllEnabledWalletsByUserId([FromRoute]int customerId)
         {
             BaseResponse<List<WalletModel>> response;
@@ -48,7 +48,7 @@ namespace SWD392.OutfitBox.API.Controllers
             }
             return StatusCode((int)response.StatusCode, response);
         }
-        [HttpPost("wallets/customers/{customerId}")]
+        [HttpPost("customers/{customerId}/wallets")]
         public async Task<ActionResult<BaseResponse<WalletModel>>> AddWalletByUserId([FromRoute] int id, [FromBody] CreateWalletRequestDTO createWalletRequestDTO)
         {
             BaseResponse<WalletModel> response;
@@ -65,7 +65,7 @@ namespace SWD392.OutfitBox.API.Controllers
             }
             return StatusCode((int)response.StatusCode, response);
         }
-        [HttpPatch("wallets/{walletId}/customers/{customerId}")]
+        [HttpPatch("customers/{customerId}/wallets/{walletId}")]
         public async Task<ActionResult<BaseResponse<WalletModel>>> UpdateWalletByUserId([FromRoute] int walletId, [FromRoute] int id, [FromBody] UpdateWalletRequestDTO updateWalletRequestDTO)
         {
             BaseResponse<WalletModel> response;
