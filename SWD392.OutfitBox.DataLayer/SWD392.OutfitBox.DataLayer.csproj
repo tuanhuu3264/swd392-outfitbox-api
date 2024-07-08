@@ -9,7 +9,6 @@
 	<ItemGroup>
 		<Folder Include="Constants\" />
 		<Folder Include="Libraries\" />
-		<Folder Include="Migrations\" />
 	</ItemGroup>
 
 	<ItemGroup>

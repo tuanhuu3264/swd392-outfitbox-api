@@ -33,5 +33,7 @@ namespace SWD392.OutfitBox.DataLayer.Entities
         public int? TransactionId { get; set; }
         [ForeignKey(nameof(TransactionId))]
         public Transaction? Transaction { get; set; }
+        public int? QuantityOfItems {  get; set; }
+        public double? TotalDeposit { get; set; }
     }
 }

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using SWD392.OutfitBox.API.Configurations.HTTPResponse;
 using SWD392.OutfitBox.API.Controllers.Endpoints;
 using SWD392.OutfitBox.API.DTOs.ItemInUserPackage;
+using SWD392.OutfitBox.API.RequestModels.CustomerPackage;
 using SWD392.OutfitBox.BusinessLayer.BusinessModels;
 
 using SWD392.OutfitBox.BusinessLayer.Services.ItemInUserPackageService;
@@ -38,14 +39,14 @@ namespace SWD392.OutfitBox.API.Controllers
             }
             return StatusCode((int)response.StatusCode,response);
         }
-        [HttpPost(ItemInUserPackageEndPoints.ItemsInUserPackages)]
-        public async Task<ActionResult> CreateAnItemInUserPackage([FromBody] CreatedItemInPackage createdItemInPackage)
+        [HttpPost(ItemInUserPackageEndPoints.ItemsInUserPackageId)]
+        public async Task<ActionResult> CreateAnItemInUserPackage([FromBody] CreateItemInUserPackage createdItemInPackage, [FromRoute] int id)
         {
             BaseResponse<ItemInUserPackageModel> response;
             try
             {   
                 var mapping = _mapper.Map<ItemInUserPackageModel>(createdItemInPackage);
-                var result = await _itemsInUserPackageService.CreateItem(mapping);
+                var result = await _itemsInUserPackageService.CreateItem(id,mapping);
                 if (result == null) { response = new BaseResponse<ItemInUserPackageModel>("Fail", HttpStatusCode.InternalServerError, null); }
                 response = new BaseResponse<ItemInUserPackageModel>("Successful", HttpStatusCode.OK, result);
             }

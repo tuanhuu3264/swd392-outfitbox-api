@@ -13,9 +13,7 @@ namespace SWD392.OutfitBox.DataLayer.Entities
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-
         public int MaxAvailableQuantity { get; set; }
-        
         public int CategoryId { get; set; }
         public int PackageId { get; set; }
         public int Status {  get; set; }
@@ -23,6 +21,5 @@ namespace SWD392.OutfitBox.DataLayer.Entities
         public Category? Category { get; set; }
         [ForeignKey(nameof(PackageId))]
         public Package? Package { get; set; }
-
     }
 }
