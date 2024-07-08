@@ -15,5 +15,6 @@ namespace SWD392.OutfitBox.DataLayer.Repositories.Interfaces
         Task<CustomerPackage> GetCustomerPackgageAndItemsbyId(int id);
         Task<List<AdminData>> GetTotalPackagePrice();
         Task<List<AdminData>> GetDailyOrders();
+        Task<List<CustomerPackage>> GetCustomerPackageByCustomerId(int customerId);
     }
 }

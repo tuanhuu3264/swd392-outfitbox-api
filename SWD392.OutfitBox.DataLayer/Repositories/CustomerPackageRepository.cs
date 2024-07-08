@@ -29,6 +29,10 @@ namespace SWD392.OutfitBox.DataLayer.Repositories
         {
             return await this.Get().Include(x=>x.Items).FirstOrDefaultAsync(x=>x.Id==id);
         }
+        public async Task<List<CustomerPackage>> GetCustomerPackageByCustomerId(int customerId)
+        {
+            return await this.Get().Include(x => x.Items).Where(x => x.CustomerId == customerId).ToListAsync();
+        }
         public async Task<CustomerPackage> SaveAsyn(CustomerPackage customerPacket)
         {
                 await this.Update(customerPacket);
