@@ -74,8 +74,25 @@ namespace SWD392.OutfitBox.API.Controllers
 
             return StatusCode((int)response.StatusCode, response);
         }
-        [HttpPost("orders/customers/{customerId}/wallets/{walletId}/packages/{packageId}")]
-        public async Task<ActionResult<CustomerPackageModel>> CreateCustomerPackage([FromBody] CustomerPackageRequest request, [FromRoute] int walletId, [FromRoute] int customerId, [FromRoute] int packageId)
+        [HttpGet("orders/status/{status}")]
+        public async Task<ActionResult<List<CustomerPackageModel>>> GetCustomerPackageByStatus([FromRoute] int status)
+        {
+            BaseResponse<List<CustomerPackageModel>> response;
+            try
+            {
+                var result = await _customerPackageService.GetCustomrPackagesByStatus(status);
+                response = new BaseResponse<List<CustomerPackageModel>>("Successfully", HttpStatusCode.OK, result.ToList());
+
+            }
+            catch (Exception ex)
+            {
+                response = new BaseResponse<List<CustomerPackageModel>>(ex.Message, HttpStatusCode.InternalServerError, null);
+            }
+
+            return StatusCode((int)response.StatusCode, response);
+        }
+        [HttpPost("orders/customers/{customerId}/packages/{packageId}")]
+        public async Task<ActionResult<CustomerPackageModel>> CreateCustomerPackage([FromBody] CustomerPackageRequest request, [FromRoute] int customerId, [FromRoute] int packageId)
         {
             BaseResponse<CustomerPackageModel> response;
             try
@@ -83,7 +100,7 @@ namespace SWD392.OutfitBox.API.Controllers
                 var customerPackage = _mapper.Map<CustomerPackageModel>(request);
                 customerPackage.CustomerId = customerId;
                 customerPackage.PackageId = packageId;
-                var result = await _customerPackageService.CreateCustomerPackage(customerPackage,walletId);
+                var result = await _customerPackageService.CreateCustomerPackage(customerPackage,request.WalletId);
                 response = new BaseResponse<CustomerPackageModel>("Successfully", HttpStatusCode.OK, result);
             }
             catch (Exception ex)

@@ -24,6 +24,8 @@ namespace SWD392.OutfitBox.BusinessLayer.BusinessModels
         public string? ReceiverAddress { get; set; } = string.Empty; 
         public int? Status { get; set; }
         public int? TransactionId { get; set; }
+        public int? QuantityOfItems { get; set; }
+        public double? TotalDeposit { get; set; }
         public List<ItemInUserPackageModel> ItemInUsers { get; set; }
     }
 }

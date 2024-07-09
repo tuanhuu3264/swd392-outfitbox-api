@@ -14,5 +14,6 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.UserPackageService
         Task<CustomerPackageModel> CreateCustomerPackage(CustomerPackageModel customerPackageModel, int walletId);
         Task<CustomerPackageModel> GetPackagebyId( int packageid);
         Task<List<CustomerPackageModel>> GetAllCustomerPackageByCustomerId(int customerId);
+        Task<List<CustomerPackageModel>> GetCustomrPackagesByStatus(int status);
     }
 }

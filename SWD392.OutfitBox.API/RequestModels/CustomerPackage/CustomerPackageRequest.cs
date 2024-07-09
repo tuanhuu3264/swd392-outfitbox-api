@@ -10,6 +10,7 @@ namespace SWD392.OutfitBox.API.RequestModels.CustomerPackage
         public string? ReceiverName {  get; set; }
         public string? ReceiverPhone { get; set; }
         public string? ReceiverAddress { get; set; }
+        public int WalletId { get; set; }
         public List<CreateItemInUserPackage> CreateItems { get; set; }
     }
     public class CreateItemInUserPackage
