@@ -19,7 +19,7 @@ namespace SWD392.OutfitBox.API.Controllers
             _customerPackageService = customerPackageService;
             _mapper = mapper;
         }
-        [HttpPatch("customers/packages/{id}/status/{status}")]
+        [HttpPatch("orders/{id}/status/{status}")]
         public async Task<ActionResult<CustomerPackageModel>> UpdateCustomerPackage([FromRoute] int id, [FromRoute] int status)
         {
             BaseResponse<CustomerPackageModel> response;
@@ -40,13 +40,13 @@ namespace SWD392.OutfitBox.API.Controllers
 
             return StatusCode((int)response.StatusCode, response);
         }
-        [HttpGet("customers/packages/{packageId}")]
-        public async Task<ActionResult<CustomerPackageModel>> GetCustomerPackageById( [FromRoute] int packageId)
+        [HttpGet("orders/{id}")]
+        public async Task<ActionResult<CustomerPackageModel>> GetCustomerPackageById( [FromRoute] int id)
         {
             BaseResponse<CustomerPackageModel> response;
             try
             {
-                var result = await _customerPackageService.GetPackagebyId(packageId);
+                var result = await _customerPackageService.GetPackagebyId(id);
                 response = new BaseResponse<CustomerPackageModel>("Successfully", HttpStatusCode.OK, result);
 
             }
@@ -57,7 +57,7 @@ namespace SWD392.OutfitBox.API.Controllers
 
             return StatusCode((int)response.StatusCode, response);
         }
-        [HttpGet("customers/{customerId}/packages")]
+        [HttpGet("orders/customers/{customerId}")]
         public async Task<ActionResult<List<CustomerPackageModel>>> GetCustomerPackageByCustomerId([FromRoute] int customerId)
         {
             BaseResponse<List<CustomerPackageModel>> response;
@@ -74,7 +74,7 @@ namespace SWD392.OutfitBox.API.Controllers
 
             return StatusCode((int)response.StatusCode, response);
         }
-        [HttpPost("customers/{customerId}/wallets/{walletId}/packages/{packageId}")]
+        [HttpPost("orders/customers/{customerId}/wallets/{walletId}/packages/{packageId}")]
         public async Task<ActionResult<CustomerPackageModel>> CreateCustomerPackage([FromBody] CustomerPackageRequest request, [FromRoute] int walletId, [FromRoute] int customerId, [FromRoute] int packageId)
         {
             BaseResponse<CustomerPackageModel> response;
@@ -92,6 +92,7 @@ namespace SWD392.OutfitBox.API.Controllers
             }
             return StatusCode((int)response.StatusCode, response);
         }
+        
 
     }
 }

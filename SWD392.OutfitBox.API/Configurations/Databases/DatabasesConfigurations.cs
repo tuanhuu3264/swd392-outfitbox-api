@@ -19,9 +19,8 @@ namespace SWD392.OutfitBox.API.Configurations.Databases
             services.AddStackExchangeRedisCache(
              opt =>
                    {
-                       opt.Configuration = "localhost:6379";
-                       opt.InstanceName = "RedisDemo_";
-
+                       opt.Configuration = "Outfit4rent.online:6379";
+                       opt.InstanceName = "Outfit4rent-";
                    });
         }
     }

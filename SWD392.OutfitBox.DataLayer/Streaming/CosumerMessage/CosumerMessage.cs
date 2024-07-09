@@ -1,58 +1,103 @@
 ﻿using Confluent.Kafka;
+using Newtonsoft.Json;
 using SWD392.OutfitBox.DataLayer.Entities;
+using SWD392.OutfitBox.DataLayer.Streaming.ProducerMessage;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using static Confluent.Kafka.ConfigPropertyNames;
-using static Org.BouncyCastle.Math.EC.ECCurve;
 
 namespace SWD392.OutfitBox.DataLayer.Streaming.CosumerMessage
 {
-    public class CosumerMessage
+    public class CosumerBrandMessage
     {
-        public CosumerMessage() { }
-        public async Task ProccessProductMessage()
+        public static async Task<Message<Brand>> ProcessMessageSetValueRedis(CancellationToken cancellationToken)
         {
+            Message<Brand> lastMessage = null;
+
             using (var c = new ConsumerBuilder<Ignore, string>(Config.GetConsumerConfig()).Build())
             {
-                c.Subscribe("Products");
-
-                CancellationTokenSource cts = new CancellationTokenSource();
-                Console.CancelKeyPress += (_, e) =>
-                {
-                    e.Cancel = true; // Prevent the process from terminating.
-                    cts.Cancel();
-                };
+                c.Subscribe("Brands");
 
                 try
                 {
-                    // Seek to the end of the partition(s)
                     c.Assign(c.Assignment);
                     foreach (var partition in c.Assignment)
                     {
                         c.Seek(new TopicPartitionOffset(partition.Topic, partition.Partition, Offset.End));
                     }
 
-                    // Consume the last message
-                    try
+                    while (!cancellationToken.IsCancellationRequested)
                     {
-                        var cr = c.Consume(cts.Token);
-                        Console.WriteLine($"Consumed message '{  cr.Value}' at: '{cr.TopicPartitionOffset}'.");
+                        var cr = c.Consume(cancellationToken);
+
+                        if (cr.Value != null) c.Commit(cr);
+                        Console.WriteLine($"Consumed message '{cr?.Value}' at: '{cr.TopicPartitionOffset}'.");
+
+                        lastMessage = JsonConvert.DeserializeObject<Message<Brand>>(cr.Value);
+                        return lastMessage;
                     }
-                    catch (ConsumeException e)
+                }
+                catch (ConsumeException e)
+                {
+                    throw new Exception(e.Message);
+                }
+                catch (OperationCanceledException)
+                {
+
+                }
+                finally
+                {
+                    c.Close();
+                }
+            }
+
+            return lastMessage;
+        }
+        public static async Task<Message<List<Brand>>> ProcessMessageSetListValueRedis(CancellationToken cancellationToken)
+        {
+            Message<List<Brand>> lastMessage = null;
+
+            using (var c = new ConsumerBuilder<Ignore, string>(Config.GetConsumerConfig()).Build())
+            {
+                c.Subscribe("List-Brands");
+
+                try
+                {
+                    c.Assign(c.Assignment);
+                    foreach (var partition in c.Assignment)
                     {
-                        Console.WriteLine($"Error occurred: {e.Error.Reason}");
+                        c.Seek(new TopicPartitionOffset(partition.Topic, partition.Partition, Offset.End));
+                    }
+
+                    while (!cancellationToken.IsCancellationRequested)
+                    {
+                        try
+                        {
+                            var cr = c.Consume(cancellationToken);
+                            if (cr.Value != null) c.Commit(cr);
+                            Console.WriteLine($"Consumed message '{cr?.Value}' at: '{cr.TopicPartitionOffset}'.");
+
+                            lastMessage = JsonConvert.DeserializeObject<Message<List<Brand>>>(cr.Value);
+                            return lastMessage;
+                        }
+                        catch (ConsumeException e)
+                        {
+                            Console.WriteLine($"Error occurred: {e.Error.Reason}");
+                        }
                     }
                 }
                 catch (OperationCanceledException)
                 {
-                    // Ensure the c leaves the group cleanly and final offsets are committed.
+                    // Expected exception on shutdown, no need to handle
+                }
+                finally
+                {
                     c.Close();
                 }
             }
+
+            return lastMessage;
         }
+
     }
 }

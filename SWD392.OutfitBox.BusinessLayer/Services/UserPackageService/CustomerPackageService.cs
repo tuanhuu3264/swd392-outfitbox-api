@@ -132,44 +132,45 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.UserPackageService
                 Type = "Payment for rent"
 
             };
-            await _unitOfWork.BenginTransaction();
-            await _unitOfWork.CommitTransaction();
-            try
+            using (_unitOfWork.BenginTransaction())
             {
-                var createdDeposit = await _unitOfWork._depositRepository.CreateDeposit(deposite);
-                var createdTransaction = await _unitOfWork._transactionRepository.CreateTransaction(new Transaction()
+                await _unitOfWork.CommitTransaction();
+                try
                 {
-                   Amount=createdDeposit.AmountMoney,
-                   DateTransaction=DateTime.Now,
-                   DepositId=createdDeposit.Id,
-                   Paymethod=wallet.WalletName,
-                   WalletId=wallet.Id,
-                   Status=0,
-                });
-                customerPackage.TransactionId = createdTransaction.Id;
-                var result = await _unitOfWork._customerPackageRepository.CreateUserPackage(customerPackage);
-                if(result != null) 
-                { 
-                 foreach(var product in products)
+                    var createdDeposit = await _unitOfWork._depositRepository.CreateDeposit(deposite);
+                    var createdTransaction = await _unitOfWork._transactionRepository.CreateTransaction(new Transaction()
                     {
-                        await _unitOfWork._productRepository.UpdateProduct(product);
-                    }
-                    if (wallet.WalletName == "Outfit4rent") 
+                        Amount = createdDeposit.AmountMoney,
+                        DateTransaction = DateTime.Now,
+                        DepositId = createdDeposit.Id,
+                        Paymethod = wallet.WalletName,
+                        WalletId = wallet.Id,
+                        Status = 0,
+                    });
+                    customerPackage.TransactionId = createdTransaction.Id;
+                    var result = await _unitOfWork._customerPackageRepository.CreateUserPackage(customerPackage);
+                    if (result != null)
                     {
-                        user.MoneyInWallet -= (long)(customerPackage.Price + customerPackage.TotalDeposit);
-                        await _unitOfWork._customerRepository.UpdateCustomer(user);
+                        foreach (var product in products)
+                        {
+                            await _unitOfWork._productRepository.UpdateProduct(product);
+                        }
+                        if (wallet.WalletName == "Outfit4rent")
+                        {
+                            user.MoneyInWallet -= (long)(customerPackage.Price + customerPackage.TotalDeposit);
+                            await _unitOfWork._customerRepository.UpdateCustomer(user);
+                        }
+
                     }
+                    return _mapper.Map<CustomerPackageModel>(result);
+                }
+                catch (Exception ex)
+                {
+                    await _unitOfWork.RollbackTransaction();
+                    throw new Exception(ex.Message);
 
                 }
-                return _mapper.Map<CustomerPackageModel>(result);
             }
-            catch(Exception ex)
-            {
-                await _unitOfWork.RollbackTransaction();
-                throw new Exception(ex.Message);
-               
-            }
-            
         }
 
         public async Task<List<CustomerPackageModel>> GetAllCustomerPackageByCustomerId(int customerId)
