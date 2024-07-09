@@ -40,7 +40,7 @@ namespace SWD392.OutfitBox.API.Controllers
             BaseResponse<string> response;
             try
             {
-                var data = await _favouriteProductService.CreateFavouriteProduct(productId, customerId);
+                var data = await _favouriteProductService.DeleteFavouriteProduct(productId, customerId);
                 response = new BaseResponse<string>("Delete favourite product successfully.", HttpStatusCode.OK, "");
             }
             catch (ArgumentNullException ex)
