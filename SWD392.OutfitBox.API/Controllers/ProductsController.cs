@@ -218,5 +218,20 @@ namespace SWD392.OutfitBox.API.Controllers
             }
             return StatusCode((int)response.StatusCode, response);
         }
+        [HttpGet("products/renting-products")]
+        public async Task<IActionResult> GetRentingProduct()
+        {
+            BaseResponse<List<ProductModel>> response;
+            try
+            {
+                var result = await _productService.GetRentingProducts();
+                response = new BaseResponse<List<ProductModel>>("Products is renting", HttpStatusCode.OK, result);
+            }
+            catch (Exception ex)
+            {
+                response = new BaseResponse<List<ProductModel>>(ex.Message, HttpStatusCode.InternalServerError, null);
+            }
+            return StatusCode((int)response.StatusCode, response);
+        }
     }
-}
+        }

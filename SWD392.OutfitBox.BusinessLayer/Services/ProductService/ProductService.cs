@@ -151,5 +151,11 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.ProductService
             }
             return result;
         }
+
+        public async Task<List<ProductModel>> GetRentingProducts()
+        {
+            var products = await _unitOfWork._itemsInUserPackageRepository.GetRentingProducts();
+            return _mapper.Map<List<ProductModel>>(products);
+        }
     }
 }
