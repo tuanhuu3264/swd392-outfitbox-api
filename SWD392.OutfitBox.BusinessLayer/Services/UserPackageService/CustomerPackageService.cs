@@ -143,7 +143,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.UserPackageService
 
             // Check số lượng category có phù hợp không 
             var categoryPackages = await _unitOfWork._categoryPackageRepository.GetAllCategoryPackagesByPackageId(package.Id);
-            var categoryPackage = categoryPackages.ToDictionary(cp => cp.Id, cp => cp.MaxAvailableQuantity);
+            var categoryPackage = categoryPackages.ToDictionary(cp => cp.CategoryId, cp => cp.MaxAvailableQuantity);
 
             if (customerPackage.Items != null)
             {
@@ -163,6 +163,8 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.UserPackageService
                         if (category == null) throw new Exception($"Category with ID {product.IdCategory} not found.");
                         throw new Exception($"The quantity of category {category.Name} is over required number");
                     }
+                    categoryPackage.Remove(product.IdCategory);
+                    categoryPackage.Add(product.IdCategory,maxQuantity-item.Quantity);
                 }
             }
 
@@ -174,7 +176,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.UserPackageService
                 {
                     var product = await _unitOfWork._productRepository.GetById(item.ProductId);
                     if (product == null) throw new Exception($"Product with ID {item.ProductId} not found.");
-
+                    item.DateGive = customerPackage.DateFrom;
                     item.Status = 0;
                     item.Deposit = product.Deposit;
                     item.TornMoney = 0;
@@ -248,6 +250,13 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.UserPackageService
         public async Task<List<CustomerPackageModel>> GetCustomrPackagesByStatus(int status)
         {   
             var result = await _unitOfWork._customerPackageRepository.GetCustomerPackageByStatus(status);
+            return _mapper.Map<List<CustomerPackageModel>>(result);
+        }
+
+        public async Task<List<CustomerPackageModel>> GetListOrder(int? start = null, int? end = null, string sorted = "", string orders = "", string packageName = "", int? customerId = null, int? packageId = null, int? status = null, DateTime? dateFrom = null, DateTime? dateTo = null, string receiverName = "", string receiverPhone = "", string receiverAddress = "", double? maxPrice = null, double? minPrice = null, int? transactionId = null, int? quantityOfItems = null, double? maxTotalDeposit = null, double? minTotalDeposit = null)
+        {
+            var result = await _unitOfWork._customerPackageRepository.GetListOrder(null,null,sorted,orders,packageName,customerId,packageId,status,dateFrom,dateTo,receiverName,receiverPhone,receiverAddress,maxPrice,minPrice,transactionId,quantityOfItems,maxTotalDeposit,minTotalDeposit);
+            result = result.Skip((int)start).Take((int)(end - start)).ToList();
             return _mapper.Map<List<CustomerPackageModel>>(result);
         }
 
