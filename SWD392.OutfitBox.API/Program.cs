@@ -7,6 +7,7 @@ using SWD392.OutfitBox.API.Configurations.Authorizations;
 using SWD392.OutfitBox.API.Configurations.Databases;
 using SWD392.OutfitBox.API.Configurations.Firebase;
 using SWD392.OutfitBox.API.Configurations.Swagger;
+using SWD392.OutfitBox.BackgroundWorker.StatusOrderTask;
 using SWD392.OutfitBox.DataLayer.Databases.Redis.Tasks;
 using SWD392.OutfitBox.DataLayer.Entities;
 using System.Management;
@@ -30,11 +31,11 @@ builder.Services.AddDatabaseSQLServer(builder.Configuration);
 builder.Services.AddRedis(builder.Configuration);
 builder.Services.RegisterService();
 builder.Configuration.CreateFirebaseApp();
-
 // Add hosted service
 builder.Services.AddSingleton<UpdateRedisData>();
 builder.Services.AddHostedService<CosumerBrandListen>();
 builder.Services.AddHostedService<CosumerListBrandListen>();
+builder.Services.AddHostedService<StatusOrderHost>();
 
 var app = builder.Build();
 
