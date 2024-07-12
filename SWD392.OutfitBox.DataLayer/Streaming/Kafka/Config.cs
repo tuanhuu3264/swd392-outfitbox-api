@@ -15,9 +15,9 @@ public class Config
 
     public static ConsumerConfig  GetConsumerConfig() => new ConsumerConfig
     {
-        EnableAutoCommit = false,
+        EnableAutoCommit = true,
         AutoOffsetReset = AutoOffsetReset.Earliest,
-        GroupId = "Oce",
+        GroupId = "Node-1",
         BootstrapServers = "34.123.203.83:9092",
     };
 }

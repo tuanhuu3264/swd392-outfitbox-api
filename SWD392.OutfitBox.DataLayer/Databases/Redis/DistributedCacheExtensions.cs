@@ -16,7 +16,7 @@ namespace SWD392.OutfitBox.DataLayer.Databases.Redis
         {
             var options = new DistributedCacheEntryOptions();
 
-            options.AbsoluteExpirationRelativeToNow = absoluteExpireTime ?? TimeSpan.FromSeconds(60);
+            options.AbsoluteExpirationRelativeToNow = absoluteExpireTime ?? TimeSpan.FromDays(1);
             options.SlidingExpiration = unusedExpirationTime;
             var jsonData = JsonSerializer.Serialize(data);
             await cache.SetStringAsync(recordId, jsonData, options);

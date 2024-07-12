@@ -19,7 +19,7 @@ namespace SWD392.OutfitBox.API.Controllers
             _customerPackageService = customerPackageService;
             _mapper = mapper;
         }
-        [HttpPatch("customers/packages/{id}/status/{status}")]
+        [HttpPatch("orders/{id}/status/{status}")]
         public async Task<ActionResult<CustomerPackageModel>> UpdateCustomerPackage([FromRoute] int id, [FromRoute] int status)
         {
             BaseResponse<CustomerPackageModel> response;
@@ -40,13 +40,13 @@ namespace SWD392.OutfitBox.API.Controllers
 
             return StatusCode((int)response.StatusCode, response);
         }
-        [HttpGet("customers/packages/{packageId}")]
-        public async Task<ActionResult<CustomerPackageModel>> GetCustomerPackageById( [FromRoute] int packageId)
+        [HttpGet("orders/{id}")]
+        public async Task<ActionResult<CustomerPackageModel>> GetCustomerPackageById( [FromRoute] int id)
         {
             BaseResponse<CustomerPackageModel> response;
             try
             {
-                var result = await _customerPackageService.GetPackagebyId(packageId);
+                var result = await _customerPackageService.GetPackagebyId(id);
                 response = new BaseResponse<CustomerPackageModel>("Successfully", HttpStatusCode.OK, result);
 
             }
@@ -57,14 +57,50 @@ namespace SWD392.OutfitBox.API.Controllers
 
             return StatusCode((int)response.StatusCode, response);
         }
-        [HttpPost("customers/packages")]
-        public async Task<ActionResult<CustomerPackageModel>> CreateCustomerPackage([FromBody] CustomerPackageRequest request)
+        [HttpGet("orders/customers/{customerId}")]
+        public async Task<ActionResult<List<CustomerPackageModel>>> GetCustomerPackageByCustomerId([FromRoute] int customerId)
+        {
+            BaseResponse<List<CustomerPackageModel>> response;
+            try
+            {
+                var result = await _customerPackageService.GetAllCustomerPackageByCustomerId(customerId);
+                response = new BaseResponse<List<CustomerPackageModel>>("Successfully", HttpStatusCode.OK, result.ToList());
+
+            }
+            catch (Exception ex)
+            {
+                response = new BaseResponse<List<CustomerPackageModel>>(ex.Message, HttpStatusCode.InternalServerError, null);
+            }
+
+            return StatusCode((int)response.StatusCode, response);
+        }
+        [HttpGet("orders/status/{status}")]
+        public async Task<ActionResult<List<CustomerPackageModel>>> GetCustomerPackageByStatus([FromRoute] int status)
+        {
+            BaseResponse<List<CustomerPackageModel>> response;
+            try
+            {
+                var result = await _customerPackageService.GetCustomrPackagesByStatus(status);
+                response = new BaseResponse<List<CustomerPackageModel>>("Successfully", HttpStatusCode.OK, result.ToList());
+
+            }
+            catch (Exception ex)
+            {
+                response = new BaseResponse<List<CustomerPackageModel>>(ex.Message, HttpStatusCode.InternalServerError, null);
+            }
+
+            return StatusCode((int)response.StatusCode, response);
+        }
+        [HttpPost("orders/customers/{customerId}/packages/{packageId}")]
+        public async Task<ActionResult<CustomerPackageModel>> CreateCustomerPackage([FromBody] CustomerPackageRequest request, [FromRoute] int customerId, [FromRoute] int packageId)
         {
             BaseResponse<CustomerPackageModel> response;
             try
             {
                 var customerPackage = _mapper.Map<CustomerPackageModel>(request);
-                var result = await _customerPackageService.CreateCustomerPackage(customerPackage);
+                customerPackage.CustomerId = customerId;
+                customerPackage.PackageId = packageId;
+                var result = await _customerPackageService.CreateCustomerPackage(customerPackage,request.WalletId);
                 response = new BaseResponse<CustomerPackageModel>("Successfully", HttpStatusCode.OK, result);
             }
             catch (Exception ex)
@@ -73,6 +109,7 @@ namespace SWD392.OutfitBox.API.Controllers
             }
             return StatusCode((int)response.StatusCode, response);
         }
+        
 
     }
 }

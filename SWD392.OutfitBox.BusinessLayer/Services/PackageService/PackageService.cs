@@ -100,6 +100,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.PackageService
             package.AvailableRentDays = packageDTO.AvailableRentDays.HasValue? packageDTO.AvailableRentDays.Value : package.AvailableRentDays;
             package.IsFeatured= packageDTO.IsFeatured.HasValue? packageDTO.IsFeatured.Value : package.IsFeatured;
             package.Description =packageDTO.Description!=null ? packageDTO.Description : package.Description;
+            package.ImageUrl = packageDTO.ImageUrl!=null? packageDTO.ImageUrl :package.ImageUrl;
             var updatedPackage = await _packageRepository.UpdatePackage(package);
             return _mapper.Map<PackageModel>(updatedPackage);
         }

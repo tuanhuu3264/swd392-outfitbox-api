@@ -29,9 +29,13 @@ namespace SWD392.OutfitBox.DataLayer.Repositories
         {
             return await this.Get().Include(x=>x.Items).FirstOrDefaultAsync(x=>x.Id==id);
         }
+        public async Task<List<CustomerPackage>> GetCustomerPackageByCustomerId(int customerId)
+        {
+            return await this.Get().Include(x => x.Items).Where(x => x.CustomerId == customerId).ToListAsync();
+        }
         public async Task<CustomerPackage> SaveAsyn(CustomerPackage customerPacket)
         {
-                await this.Update(customerPacket);
+            await this.Update(customerPacket);
             await this.SaveChangesAsync();
             return await GetCustomerPackageById(customerPacket.Id);
         }
@@ -60,6 +64,11 @@ namespace SWD392.OutfitBox.DataLayer.Repositories
             }
             ).ToListAsync();
             return data;
+        }
+
+        public async Task<List<CustomerPackage>> GetCustomerPackageByStatus(int status)
+        {
+            return await this.Get().Include(x => x.Items).Where(x=>x.Status==status).ToListAsync();
         }
     }
 }

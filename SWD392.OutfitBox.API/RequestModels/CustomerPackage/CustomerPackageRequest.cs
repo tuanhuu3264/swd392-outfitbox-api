@@ -5,9 +5,12 @@ namespace SWD392.OutfitBox.API.RequestModels.CustomerPackage
 {
     public class CustomerPackageRequest
     {
-        public int CustomerId { get; set; }
-        public int PackageId { get; set; }
+        
         public DateTime DateFrom { get; set; }
+        public string? ReceiverName {  get; set; }
+        public string? ReceiverPhone { get; set; }
+        public string? ReceiverAddress { get; set; }
+        public int WalletId { get; set; }
         public List<CreateItemInUserPackage> CreateItems { get; set; }
     }
     public class CreateItemInUserPackage
