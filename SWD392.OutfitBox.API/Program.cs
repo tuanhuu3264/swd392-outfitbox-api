@@ -7,7 +7,6 @@ using SWD392.OutfitBox.API.Configurations.Authorizations;
 using SWD392.OutfitBox.API.Configurations.Databases;
 using SWD392.OutfitBox.API.Configurations.Firebase;
 using SWD392.OutfitBox.API.Configurations.Swagger;
-
 using SWD392.OutfitBox.DataLayer.Databases.Redis.Tasks;
 using SWD392.OutfitBox.DataLayer.Entities;
 using System.Management;
