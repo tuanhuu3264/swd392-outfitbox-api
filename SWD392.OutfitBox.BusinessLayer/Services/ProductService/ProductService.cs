@@ -137,5 +137,19 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.ProductService
             var url = await FirebaseStorageHelper.UploadFileToFirebase(file, $"{nameof(Product).ToLower()}", _configuration["Firebase:ApiKey"], _configuration["Firebase:DomainName"], _configuration["Firebase:Email"], _configuration["Firebase:Password"], _configuration["Firebase:StorageBucket"]);
             return url;
         }
+
+        public async Task<List<ProductModel>> GetProductsByCustomerPackage(int customerPackageId)
+        {
+            var customerPackage = await _unitOfWork._customerPackageRepository.GetCustomerPackageById(customerPackageId);
+            if (customerPackage == null) throw new Exception("Do not find this customer package");
+            var result = new List<ProductModel>();
+            foreach(var item in customerPackage.Items)
+            {
+                var product = await _unitOfWork._productRepository.GetDetail(item.ProductId);
+                product.Quantity = item.Quantity;
+                result.Add(_mapper.Map<ProductModel>(product));
+            }
+            return result;
+        }
     }
 }

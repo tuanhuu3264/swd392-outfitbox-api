@@ -20,6 +20,6 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.ProductService
 
         Task<List<string>> UploadFiles(List<IFormFile> files);
         Task<string> UploadFile(IFormFile file);
-
+        Task<List<ProductModel>> GetProductsByCustomerPackage(int customerPackageId);
     }
 }
