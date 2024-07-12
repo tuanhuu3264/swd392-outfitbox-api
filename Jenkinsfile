@@ -18,8 +18,8 @@ pipeline {
 
             steps {
                 withDockerRegistry(credentialsId: 'dockerhub', url: 'https://index.docker.io/v1/') {
-                    sh 'docker tag outfitbox-api:latest tuanhuu3264/outfitbox-api:latest'
-                    sh 'docker push tuanhuu3264/outfitbox-api:latest'
+                    sh 'docker tag outfitbox-api:latest famsphase/outfitbox-api:latest'
+                    sh 'docker push famsphase/outfitbox-api:latest'
                 }
             }
         }
@@ -29,7 +29,7 @@ pipeline {
                 echo 'Deploying and cleaning'
                 sh 'docker container stop outfitbox-api || echo "this container does not exist" '
                 sh 'echo y | docker system prune '
-                sh 'docker container run -d --rm --name outfitbox-api -p 8080:80 -p 4433:443 tuanhuu3264/outfitbox-api '
+                sh 'docker container run -d --rm --name outfitbox-api -p 8080:80 -p 4433:443 famsphase/outfitbox-api '
             }
         }
         
