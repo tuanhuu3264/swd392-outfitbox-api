@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using NetTopologySuite.Index.HPRtree;
 
 namespace SWD392.OutfitBox.DataLayer.Repositories
 {
@@ -63,6 +64,27 @@ namespace SWD392.OutfitBox.DataLayer.Repositories
         {
             var obj = await this.Get().Where(x=>x.UserPackageId==Id).ToListAsync();
             return obj;
+        }
+
+        public async Task<List<Product>> GetRentingProducts()
+        {
+            var groupedProducts = await this.Get()
+            .Include(x => x.Product)
+            .ThenInclude(x=>x.Images)
+            .Where(x => x.Status == 1)
+            .GroupBy(x => x.Product.ID)
+            .Select(g => new
+            {
+            Product = g.First().Product,
+            TotalQuantity = g.Sum(x => x.Quantity)
+            })
+            .ToListAsync();
+            foreach (var item in groupedProducts)
+            {
+                item.Product.Quantity = item.TotalQuantity;
+            }
+            var products = groupedProducts.Select(x => x.Product).ToList();
+            return products;
         }
     }
 }
