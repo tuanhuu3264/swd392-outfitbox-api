@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using SWD392.OutfitBox.DataLayer.Entities;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,17 @@ namespace SWD392.OutfitBox.DataLayer.Databases.Redis
         public Context(DbContextOptions<Context> options) : base(options)
         {
         }
-
+        public static string GetConnectionString(string connectionStringName)
+        {
+            var config = new ConfigurationBuilder()
+                .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+                .AddJsonFile("appsettings.json")
+                .Build();
+            string connectionString = config.GetConnectionString(connectionStringName);
+            return connectionString;
+        }
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+           => optionsBuilder.UseSqlServer(GetConnectionString("DefaultConnection"));
         #region DbSet
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
@@ -36,8 +47,6 @@ namespace SWD392.OutfitBox.DataLayer.Databases.Redis
         public DbSet<Wallet> Wallets { get; set; }  
         public DbSet<Deposit> Deposits { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
-
-
         #endregion
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
