@@ -119,7 +119,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.UserPackageService
             if (wallet  == null) throw new Exception("There is no wallet that has id: " + walletId);
             
             
-
+            customerPackage.CreatedAt=DateTime.Now;
             customerPackage.PackageName = package.Name;
             customerPackage.DateTo = customerPackage.DateFrom.AddDays(package.AvailableRentDays);
             customerPackage.Price = package.Price;
@@ -240,9 +240,8 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.UserPackageService
                 }
             }
         }
-
         public async Task<List<CustomerPackageModel>> GetAllCustomerPackageByCustomerId(int customerId)
-        {
+        { 
             var result = await _unitOfWork._customerPackageRepository.GetCustomerPackageByCustomerId(customerId);
             return _mapper.Map<List<CustomerPackageModel>>(result);
         }
@@ -255,9 +254,18 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.UserPackageService
 
         public async Task<List<CustomerPackageModel>> GetListOrder(int? start = null, int? end = null, string sorted = "", string orders = "", string packageName = "", int? customerId = null, int? packageId = null, int? status = null, DateTime? dateFrom = null, DateTime? dateTo = null, string receiverName = "", string receiverPhone = "", string receiverAddress = "", double? maxPrice = null, double? minPrice = null, int? transactionId = null, int? quantityOfItems = null, double? maxTotalDeposit = null, double? minTotalDeposit = null)
         {
-            var result = await _unitOfWork._customerPackageRepository.GetListOrder(null,null,sorted,orders,packageName,customerId,packageId,status,dateFrom,dateTo,receiverName,receiverPhone,receiverAddress,maxPrice,minPrice,transactionId,quantityOfItems,maxTotalDeposit,minTotalDeposit);
-            result = result.Skip((int)start).Take((int)(end - start)).ToList();
-            return _mapper.Map<List<CustomerPackageModel>>(result);
+            try
+            {
+                var result = await _unitOfWork._customerPackageRepository.GetListOrder(null, null, sorted, orders, packageName, customerId, packageId, status, dateFrom, dateTo, receiverName, receiverPhone, receiverAddress, maxPrice, minPrice, transactionId, quantityOfItems, maxTotalDeposit, minTotalDeposit);
+
+                if (!start.HasValue) start = 0;
+                if (!end.HasValue) end = 10;
+                result = result.Skip((int)start).Take((int)(end - start)).ToList();
+                return _mapper.Map<List<CustomerPackageModel>>(result);
+            }catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
         public async Task<CustomerPackageModel> GetPackagebyId(int packageid)

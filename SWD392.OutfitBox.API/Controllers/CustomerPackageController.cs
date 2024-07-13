@@ -47,9 +47,9 @@ namespace SWD392.OutfitBox.API.Controllers
             int? start = null,
             [FromQuery(Name ="_end")]
             int? end = null,
-            [FromQuery]
+            [FromQuery(Name="_sort")]
             string sorted = "",
-            [FromQuery]
+            [FromQuery(Name ="_order")]
             string orders = "",
             [FromQuery]
             string packageName = "",

@@ -8,6 +8,7 @@ ENV ASPNETCORE_ENVIRONMENT=Development
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
 COPY ["SWD392.OutfitBox.API/SWD392.OutfitBox.API.csproj", "SWD392.OutfitBox.API/"]
+COPY ["SWD392.OutfitBox.BackgroundWorker/SWD392.OutfitBox.BackgroundWorker.csproj", "SWD392.OutfitBox.BackgroundWorker/"]
 COPY ["SWD392.OutfitBox.BusinessLayer/SWD392.OutfitBox.BusinessLayer.csproj", "SWD392.OutfitBox.BusinessLayer/"]
 COPY ["SWD392.OutfitBox.DataLayer/SWD392.OutfitBox.DataLayer.csproj", "SWD392.OutfitBox.DataLayer/"]
 RUN dotnet restore "SWD392.OutfitBox.API/SWD392.OutfitBox.API.csproj"

@@ -21,5 +21,7 @@ namespace SWD392.OutfitBox.DataLayer.Entities
         [ForeignKey("ReturnOrderId")]
         public ReturnOrder? ReturnOrder { get; set; }
         public int Quantity { get; set; }
+        public double ThornMoney { get; set; }
+        public string? Description {  get; set; }
     }
 }

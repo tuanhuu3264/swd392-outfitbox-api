@@ -13,6 +13,8 @@ using SWD392.OutfitBox.DataLayer.Repositories.Interfaces;
 using Abp.Linq.Expressions;
 using Google.Api;
 using Context = SWD392.OutfitBox.DataLayer.Databases.Redis.Context;
+using System.Globalization;
+using Azure.Identity;
 
 namespace SWD392.OutfitBox.DataLayer.Repositories
 {
@@ -162,16 +164,23 @@ namespace SWD392.OutfitBox.DataLayer.Repositories
             Func<IQueryable<CustomerPackage>, IOrderedQueryable<CustomerPackage>> orderBy = null;
             if (!string.IsNullOrEmpty(orders) && !string.IsNullOrEmpty(sorted))
             {
+                string CapitalizeFirstLetter(string str)
+                {
+                    if (string.IsNullOrEmpty(str))
+                        return str;
+                    return char.ToUpper(str[0]) + str.Substring(1);
+                }
+                string formattedSorted = CapitalizeFirstLetter(sorted);
                 orderBy = (query) =>
                 {
 
                     if (orders.ToLower().Equals("desc"))
                     {
-                        query = query.OrderByDescending(x => EF.Property<CustomerPackage>(x, sorted));
+                        query = query.OrderByDescending(x => EF.Property<CustomerPackage>(x, formattedSorted));
                     }
                     else
                     {
-                        query = query.OrderBy(x => EF.Property<CustomerPackage>(x, sorted));
+                        query = query.OrderBy(x => EF.Property<CustomerPackage>(x, formattedSorted));
                     }
                     return (IOrderedQueryable<CustomerPackage>)query;
 

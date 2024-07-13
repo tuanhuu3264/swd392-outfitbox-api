@@ -18,6 +18,13 @@ namespace SWD392.OutfitBox.DataLayer.Entities
         public string Address { get; set; } = string.Empty;
         public string Phone {  get; set; } = string.Empty;  
         public int Status { get; set; }
+        public int QuantityOfItems { get; set; }
+        public int CustomerPackageId { get; set; }
+        public double TotalThornMoney { get; set; }
+        public DateTime CreatedAt { get; set; }
+
+        [ForeignKey(nameof(CustomerPackageId))]
+        public CustomerPackage? CustomerPackage { get; set; }
         public int CustomerId { get; set; }
         [ForeignKey("CustomerId")]
         public Customer? Customer { get; set; }

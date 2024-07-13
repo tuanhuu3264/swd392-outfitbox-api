@@ -15,5 +15,7 @@ namespace SWD392.OutfitBox.BusinessLayer
         public int? ProductId { get; set; }             
         public int? ReturnOrderId { get; set; }
         public int? Quantity { get; set; }
+        public double? ThornMoney { get; set; }
+        public string? Description { get; set; }
     }
 }

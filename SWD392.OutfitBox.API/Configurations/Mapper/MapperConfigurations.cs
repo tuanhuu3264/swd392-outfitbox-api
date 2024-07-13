@@ -135,12 +135,12 @@ namespace SWD392.OutfitBox.API.Configurations.Mapper
         }
         public void ReturnOrderProfile()
         {
-            CreateMap<CreateReturnOrderRequestDTO, ReturnOrderModel>().ReverseMap();
+            CreateMap<CreateReturnOrderRequestDTO, ReturnOrderModel>().ForMember(x=>x.ProductReturnOrders, opt=>opt.MapFrom(x=>x.ProductReturnOrders)).ReverseMap();
 
             CreateMap<ReturnOrderModel, ReturnOrder>()
                 .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
 
-            CreateMap<ReturnOrder, ReturnOrderModel>();
+            CreateMap<ReturnOrder, ReturnOrderModel>().ForMember(x=>x.ProductReturnOrders, opt=>opt.MapFrom(x=>x.ProductReturnOrders));
         }
         public void PartnerProfile()
         {

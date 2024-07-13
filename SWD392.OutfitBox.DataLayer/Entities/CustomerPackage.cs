@@ -25,6 +25,7 @@ namespace SWD392.OutfitBox.DataLayer.Entities
         public string ReceiverPhone {  get; set; } = string.Empty;
         public string ReceiverAddress { get; set; } = string.Empty; 
         public int Status { get; set; }
+        public DateTime CreatedAt { get; set; }
         [ForeignKey(nameof(CustomerId))]
         public Customer? Customer {  get; set; }
         [ForeignKey("PackageId")]
