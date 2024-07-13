@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using SWD392.OutfitBox.API.Configurations.HTTPResponse;
 using SWD392.OutfitBox.API.Controllers.Endpoints;
 using SWD392.OutfitBox.API.DTOs.Customer;
+using SWD392.OutfitBox.BackgroundWorker.RedisTask;
 using SWD392.OutfitBox.BusinessLayer.BusinessModels;
 
 using SWD392.OutfitBox.BusinessLayer.Services.UserService;
@@ -19,10 +20,12 @@ namespace SWD392.OutfitBox.API.Controllers
     {
         public ICustomerService _customerService;
         public IMapper _mapper;
-        public CustomerController(ICustomerService customerService, IMapper mapper)
+        private readonly DeviceTokenService _deviceTokenService;
+        public CustomerController(ICustomerService customerService, IMapper mapper, DeviceTokenService deviceTokenService)
         {
             _customerService = customerService;
             _mapper = mapper;
+            _deviceTokenService = deviceTokenService;
         }
         [HttpGet(CustomerEndpoints.GetAllCustomers)]
         public async Task<ActionResult<BaseResponse<List<CustomerModel>>>> GetAllUsers()
@@ -124,6 +127,39 @@ namespace SWD392.OutfitBox.API.Controllers
 
             return StatusCode((int)response.StatusCode, response);
         }
+        [HttpPost("device-token")]
+        public ActionResult<DeviceTokenModels> AddDeviceToken([FromBody]DeviceTokenModels deviceTokenModel)
+        {
 
-    }
-}
+            BaseResponse<DeviceTokenModels> response;
+            try
+            {
+                _deviceTokenService.AddDeviceToken(deviceTokenModel);
+                response = new BaseResponse<DeviceTokenModels>("Create customer successfully.", HttpStatusCode.OK, deviceTokenModel);
+
+            }
+            catch (Exception ex)
+            {
+                response = new BaseResponse<DeviceTokenModels>(ex.Message, HttpStatusCode.InternalServerError, deviceTokenModel);
+            }
+            return StatusCode((int)response.StatusCode, response);
+            }
+        [HttpGet("device-token/{customerId}")]
+        public ActionResult<DeviceTokenModels> GetDeviceToken(int customerId)
+        {
+            BaseResponse<DeviceTokenModels> response;
+            try
+            {
+                var deviceToken = _deviceTokenService.GetDeviceToken(customerId);
+                response = new BaseResponse<DeviceTokenModels>("Customer", HttpStatusCode.OK, deviceToken);
+
+            }
+            catch (Exception ex)
+            {
+                response = new BaseResponse<DeviceTokenModels>(ex.Message, HttpStatusCode.InternalServerError, null);
+            }
+            return StatusCode((int)response.StatusCode, response);
+        }
+      
+        }
+ }
