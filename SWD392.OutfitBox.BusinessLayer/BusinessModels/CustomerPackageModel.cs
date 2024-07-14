@@ -28,6 +28,8 @@ namespace SWD392.OutfitBox.BusinessLayer.BusinessModels
         public int? TransactionId { get; set; }
         public int? QuantityOfItems { get; set; }
         public double? TotalDeposit { get; set; }
+        public double? ReturnDeposit { get; set; }
+        public bool? IsReturnedDeposit { get; set; }
         public List<ItemInUserPackageModel>? ItemInUsers { get; set; }
     }
 }

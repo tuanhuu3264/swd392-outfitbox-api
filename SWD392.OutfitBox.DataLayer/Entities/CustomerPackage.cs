@@ -36,5 +36,8 @@ namespace SWD392.OutfitBox.DataLayer.Entities
         public Transaction? Transaction { get; set; }
         public int? QuantityOfItems {  get; set; }
         public double? TotalDeposit { get; set; }
+
+        public double ReturnDeposit { get; set; }
+        public bool IsReturnedDeposit { get; set; } 
     }
 }

@@ -7,6 +7,7 @@ using SWD392.OutfitBox.API.Configurations.Authorizations;
 using SWD392.OutfitBox.API.Configurations.Databases;
 using SWD392.OutfitBox.API.Configurations.Firebase;
 using SWD392.OutfitBox.API.Configurations.Swagger;
+using SWD392.OutfitBox.BackgroundWorker.ReturnMoneyTask;
 using SWD392.OutfitBox.BackgroundWorker.StatusOrderTask;
 using SWD392.OutfitBox.DataLayer.Databases.Redis.Tasks;
 using SWD392.OutfitBox.DataLayer.Entities;
@@ -36,6 +37,8 @@ builder.Services.AddSingleton<UpdateRedisData>();
 builder.Services.AddHostedService<CosumerBrandListen>();
 builder.Services.AddHostedService<CosumerListBrandListen>();
 builder.Services.AddHostedService<StatusOrderHost>();
+builder.Services.AddHostedService<NotificationUserBackgroundService>();
+builder.Services.AddHostedService<ReturnMoneyBackgroundService>();
 
 var app = builder.Build();
 

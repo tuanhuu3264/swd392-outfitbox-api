@@ -63,6 +63,29 @@ namespace SWD392.OutfitBox.DataLayer.Streaming.ProducerMessage
                 }
             }
         }
+        public static async Task ProductProcessNotification(string messageContent, string command, CustomerPackage customerPackage, string key)
+        {
+            var message = new Message<CustomerPackage>()
+            {
+                Command = command,
+                Data = customerPackage,
+                MessageContent = messageContent,
+                Key = key
+            };
+            var serializedMessage = JsonConvert.SerializeObject(message);
+            using (var p = new ProducerBuilder<Null, string>(Config.GetProducerConfig()).Build())
+            {
+                try
+                {
+                    var dr = await p.ProduceAsync("Notifications-User", new Message<Null, string> { Value = serializedMessage, Timestamp = Timestamp.Default, Key = null, });
+                    Console.WriteLine($"Delivered '{dr.Value}' to '{dr.TopicPartitionOffset}'");
+                }
+                catch (ProduceException<Null, string> e)
+                {
+                    Console.WriteLine($"Delivery failed: {e.Error.Reason}");
+                }
+            }
+        }
     }
     public class Message<T> where T : class
     {   
