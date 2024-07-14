@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using SWD392.OutfitBox.BusinessLayer.BusinessModels;
+using SWD392.OutfitBox.BusinessLayer.BusinessModels.PaymentModels;
 using SWD392.OutfitBox.DataLayer.Entities;
 using SWD392.OutfitBox.DataLayer.Migrations;
 using SWD392.OutfitBox.DataLayer.UnitOfWork;
@@ -66,13 +67,34 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.ReturnOrderService
                     throw new Exception("Product with ID: " + item.ProductId + " not found in the original order");
                 }
             }
+            using (_unitOfWork.BenginTransaction())
+            {
+                await _unitOfWork.CommitTransaction();
+                    try
+                {
+                    Dictionary<int, int> updatedQuantity = new Dictionary<int, int>();
+                    var productsInCustomerPackage = await _unitOfWork._itemsInUserPackageRepository.GetByUserPackageId(mappingReturnOrder.CustomerPackageId);
+                    foreach (var item in productsInCustomerPackage)
+                    {
+                        if (updatedQuantity.TryGetValue(item.ProductId, out int quantity))
+                        {
+                            item.ReturnedQuantity += quantity;
+                            await _unitOfWork._itemsInUserPackageRepository.UpdateItem(item);
+                        }
+                    }
 
-            mappingReturnOrder.Status = 0;
-            mappingReturnOrder.CreatedAt = DateTime.Now;
-            mappingReturnOrder.QuantityOfItems = requestDTO.ProductReturnOrders.Sum(x => x.Quantity.Value);
+                    mappingReturnOrder.Status = 0;
+                    mappingReturnOrder.CreatedAt = DateTime.Now;
+                    mappingReturnOrder.QuantityOfItems = requestDTO.ProductReturnOrders.Sum(x => x.Quantity.Value);
 
-            var result = await _unitOfWork._returnOrderRepository.CreateReturnOrder(mappingReturnOrder);
-            return _mapper.Map<ReturnOrderModel>(result);
+                    var result = await _unitOfWork._returnOrderRepository.CreateReturnOrder(mappingReturnOrder);
+                    return _mapper.Map<ReturnOrderModel>(result);
+                }catch(Exception ex)
+                {
+                    await _unitOfWork.RollbackTransaction();
+                    throw new Exception(ex.Message);
+                }
+            }
         }
 
         public async Task<string> DeleteReturnOrder(int id)
@@ -109,30 +131,24 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.ReturnOrderService
                     returnOrder.Status = status;
                     Dictionary<int, int> updatedQuantity = new Dictionary<int, int>();
 
-                    if (returnOrder.Status == 0)
+                    if (returnOrder.Status == 0 && status == 1)
                     {
 
-                        if (status == 1)
+                        var productsInReturnOrder = await _unitOfWork._productReturnOrderRepository.GetProductReturnOrderByReturnOrderId(id);
+                        foreach (var item in productsInReturnOrder)
                         {
-                            var productsInCustomerPackage = await _unitOfWork._itemsInUserPackageRepository.GetByUserPackageId(returnOrder.CustomerPackageId);
-                            foreach (var item in productsInCustomerPackage)
-                            {
-                                if (updatedQuantity.TryGetValue(item.ProductId, out int quantity))
-                                {
-                                    item.ReturnedQuantity += quantity;
-                                    await _unitOfWork._itemsInUserPackageRepository.UpdateItem(item);
-                                }
-                            }
-
+                            var product = item.Product;
+                            product.Quantity += item.Quantity;
+                            await _unitOfWork._productRepository.UpdateProduct(product);
                         }
-                        if (returnOrder.ProductReturnOrders != null)
+                    }
+                    if (returnOrder.ProductReturnOrders != null)
+                    {
+                        foreach (var item in returnOrder.ProductReturnOrders)
                         {
-                            foreach (var item in returnOrder.ProductReturnOrders)
-                            {
-                                item.Status = status;
-                                await _unitOfWork._productReturnOrderRepository.UpdatePoductReturnOrder(item);
-                                updatedQuantity[item.ProductId] = item.Quantity;
-                            }
+                            item.Status = status;
+                            await _unitOfWork._productReturnOrderRepository.UpdatePoductReturnOrder(item);
+                            updatedQuantity[item.ProductId] = item.Quantity;
                         }
                     }
                     await _unitOfWork._returnOrderRepository.UpdateReturnOrder(returnOrder);
@@ -143,9 +159,15 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.ReturnOrderService
                 catch (Exception ex)
                 {
                     await _unitOfWork.RollbackTransaction();
-                    throw;
+                    throw new Exception(ex.Message);
                 }
             }
+        }
+        public async Task<List<ProductInReturnOrderViewModel>> GetByReturnOrderId(int returnOrderId)
+        {
+            var listProductsInOrderViewModel = await _unitOfWork._productReturnOrderRepository.GetProductReturnOrderByReturnOrderId(returnOrderId);
+            return _mapper.Map<List<ProductInReturnOrderViewModel>>(listProductsInOrderViewModel);
+
         }
     }
 }

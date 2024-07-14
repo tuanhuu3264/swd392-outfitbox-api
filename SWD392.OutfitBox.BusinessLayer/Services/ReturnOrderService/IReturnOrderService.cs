@@ -1,5 +1,6 @@
 ﻿
 using SWD392.OutfitBox.BusinessLayer.BusinessModels;
+using SWD392.OutfitBox.BusinessLayer.BusinessModels.PaymentModels;
 using SWD392.OutfitBox.DataLayer.Entities;
 using System;
 using System.Collections.Generic;
@@ -16,5 +17,6 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.ReturnOrderService
         public Task<string> DeleteReturnOrder(int id);
         public Task<ReturnOrderModel> GetReturnOrderById(int id);
         public Task<ReturnOrderModel> ChangeStatus(int id, int status);
+        public Task<List<ProductInReturnOrderViewModel>> GetByReturnOrderId(int returnOrderId);
     }
 }

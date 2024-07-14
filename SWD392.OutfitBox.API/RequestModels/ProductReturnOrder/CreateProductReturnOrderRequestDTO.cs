@@ -15,9 +15,6 @@ namespace SWD392.OutfitBox.API.DTOs.ProductReturnOrder
         [Required(ErrorMessage = "The product id is required.")]
         [Range(1, int.MaxValue, ErrorMessage = "The product id is over range of data.")]
         public int ProductId { get; set; }
-        [Required(ErrorMessage = "The return order id is required.")]
-        [Range(1, int.MaxValue, ErrorMessage = "The return order id is over range of data.")]
-        public int ReturnOrderId { get; set; }
 
     }
 }

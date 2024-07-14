@@ -57,6 +57,7 @@ namespace SWD392.OutfitBox.DataLayer.UnitOfWork
             _transactionRepository= transactionRepository;
             _packageRepository= packageRepository;
             _returnOrderRepository= returnOrderRepository;
+            _productReturnOrderRepository= productReturnOrderRepository;
         }
 
         public async Task BenginTransaction()

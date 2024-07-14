@@ -55,7 +55,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.BrandService
 
             if (data != null && data.Any())
             {
-                await Task.WhenAll(
+              Task.WhenAll(
                     ProducerMessage.ProductListBrandMessage("update-all-brands", "create", data, "all-brands")
                 );
             }
@@ -70,7 +70,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.BrandService
             addedBrand.IsFeatured = true;
             var result = await _unitOfWork._brandRepository.CreateBrand(addedBrand);
 
-             await Task.WhenAll(
+             Task.WhenAll(
                 ProducerMessage.ProductListBrandMessage("delete-all-brands", "delete", null, "all-brands"),
                 ProducerMessage.ProductListBrandMessage("delete-featured-brands", "delete", null, "featured-brands")
             );
@@ -181,7 +181,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.BrandService
                 item.Brand = null;
                 item.Category = null;
             }
-             await ProducerMessage.ProductBrandMessage("update-brand-" + id, "create", result, $"{nameof(Brand)}s-{id}");
+              ProducerMessage.ProductBrandMessage("update-brand-" + id, "create", result, $"{nameof(Brand)}s-{id}");
             return _mapper.Map<BrandModel>(result);
         }
 
