@@ -12,5 +12,12 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.AdminService
         public Task<AdminModel> GetDailyRevenue();
         public Task<AdminModel> GetDailyOrders();
         public Task<AdminModel> GetNewCustomers();
+        public Task<AdminModel> GetNumberTransaction(string kind);
+        public Task<List<AdminOjectModel>> GetTrendingPackage(string kind);
+        public  Task<List<AdminOjectModel>> GetQuantityRentigPoduct(string kind);
+        public Task<List<AdminOjectModel>> GetQuantityUnReturnedPoduct(string kind);
+        public Task<AdminModel> GetCompletedOrder(string kind);
+        public Task<AdminModel> GetCanceledOrder(string kind);
+        public  Task<AdminModel> GetLostProduct(string kind);
     }
 }

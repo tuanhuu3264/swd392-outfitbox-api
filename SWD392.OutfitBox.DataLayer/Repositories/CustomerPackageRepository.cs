@@ -192,5 +192,9 @@ namespace SWD392.OutfitBox.DataLayer.Repositories
 
            
         }
+        public async Task<List<CustomerPackage>> GetAllCustomerPackage()
+        {
+            return await this.Get().Include(x=>x.Items).ThenInclude(x=>x.Product).ThenInclude(x=>x.Images).ToListAsync();
+        }
     }
 }

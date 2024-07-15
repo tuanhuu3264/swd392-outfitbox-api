@@ -30,5 +30,21 @@ namespace SWD392.OutfitBox.DataLayer.Repositories
         {
             return this.Get().Include(x => x.Wallet).ThenInclude(x => x.Customer).Where(x => x.Wallet != null && x.Wallet.Customer != null && x.Wallet.Customer.Id == userId).ToListAsync();
         }
+
+        public async Task<List<Transaction>> GetByDate(DateTime date)
+        {
+            var result = await this.Get().Where(x => x.DateTransaction.Date == date).ToListAsync();
+            return result;
+        }
+        public async Task<List<Transaction>> GetByMonth(DateTime date)
+        {
+            var result = await this.Get().Where(x => x.DateTransaction.Date.ToString("MM/yyyy") == date.ToString("MM/yyyy")).ToListAsync();
+            return result;
+        }
+        public async Task<List<Transaction>> GetByYear(DateTime date)
+        {
+            var result = await this.Get().Where(x => x.DateTransaction.Date.ToString("yyyy") == date.ToString("yyyy")).ToListAsync();
+            return result;
+        }
     }
 }

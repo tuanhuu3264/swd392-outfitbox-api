@@ -35,5 +35,54 @@ namespace SWD392.OutfitBox.API.Controllers
             var response = new BaseResponse<AdminModel>("daily-orders", HttpStatusCode.OK, data);
             return StatusCode((int)response.StatusCode, response);
         }
+        [HttpGet("admin/number-transactions/{kind}")]
+        public async Task<ActionResult<BaseResponse<AdminModel>>> GetNumberTransaction([FromRoute]string kind)
+        {
+            var data = await _adminService.GetNumberTransaction(kind);
+            var response = new BaseResponse<AdminModel>("daily-orders", HttpStatusCode.OK, data);
+            return StatusCode((int)response.StatusCode, response);
+        }
+        [HttpGet("admin/trending-packages/{kind}")]
+        public async Task<ActionResult<BaseResponse<List<AdminOjectModel>>>> GetTrendingPackage([FromRoute] string kind)
+        {
+            var data = await _adminService.GetTrendingPackage(kind);
+            var response = new BaseResponse<List<AdminOjectModel>>("daily-orders", HttpStatusCode.OK, data);
+            return StatusCode((int)response.StatusCode, response);
+        }
+        [HttpGet("admin/quantity-renting/{kind}")]
+        public async Task<ActionResult<BaseResponse<List<AdminOjectModel>>>> GetQuantityRentigPoduct([FromRoute] string kind)
+        {
+            var data = await _adminService.GetQuantityRentigPoduct(kind);
+            var response = new BaseResponse<List<AdminOjectModel>>("daily-orders", HttpStatusCode.OK, data);
+            return StatusCode((int)response.StatusCode, response);
+        }
+        [HttpGet("admin/quantity-unt-returned/{kind}")]
+        public async Task<ActionResult<BaseResponse<List<AdminOjectModel>>>> GetQuantityUnReturnedPoduct([FromRoute] string kind)
+        {
+            var data = await _adminService.GetQuantityUnReturnedPoduct(kind);
+            var response = new BaseResponse<List<AdminOjectModel>>("daily-orders", HttpStatusCode.OK, data);
+            return StatusCode((int)response.StatusCode, response);
+        }
+        [HttpGet("admin/number-completed-order/{kind}")]
+        public async Task<ActionResult<BaseResponse<AdminModel>>> GetCompletedOrder([FromRoute] string kind)
+        {
+            var data = await _adminService.GetCompletedOrder(kind);
+            var response = new BaseResponse<AdminModel>("daily-orders", HttpStatusCode.OK, data);
+            return StatusCode((int)response.StatusCode, response);
+        }
+        [HttpGet("admin/number-cancelled-order/{kind}")]
+        public async Task<ActionResult<BaseResponse<AdminModel>>> GetCanceledOrder([FromRoute] string kind)
+        {
+            var data = await _adminService.GetCanceledOrder(kind);
+            var response = new BaseResponse<AdminModel>("daily-orders", HttpStatusCode.OK, data);
+            return StatusCode((int)response.StatusCode, response);
+        }
+        [HttpGet("admin/number-lost-order/{kind}")]
+        public async Task<ActionResult<BaseResponse<AdminModel>>> GetLostProduct([FromRoute] string kind)
+        {
+            var data = await _adminService.GetLostProduct(kind);
+            var response = new BaseResponse<AdminModel>("daily-orders", HttpStatusCode.OK, data);
+            return StatusCode((int)response.StatusCode, response);
+        }
     }
 }

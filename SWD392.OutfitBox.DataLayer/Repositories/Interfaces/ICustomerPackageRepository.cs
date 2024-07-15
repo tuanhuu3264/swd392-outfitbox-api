@@ -37,5 +37,7 @@ namespace SWD392.OutfitBox.DataLayer.Repositories.Interfaces
     int? quantityOfItems = null,
     double? maxTotalDeposit = null,
     double? minTotalDeposit = null);
+        public Task<List<CustomerPackage>> GetAllCustomerPackage();
     }
+    
 }

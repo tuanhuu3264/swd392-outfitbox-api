@@ -10,5 +10,8 @@ namespace SWD392.OutfitBox.DataLayer.Interfaces
     {
         public Task<Transaction> CreateTransaction (Transaction transaction);
         public Task<List<Transaction>> GetAllTransactionsByUserId (int userId);
+        public  Task<List<Transaction>> GetByDate(DateTime date);
+        public  Task<List<Transaction>> GetByMonth(DateTime date);
+        public  Task<List<Transaction>> GetByYear(DateTime date);
     }
 }
