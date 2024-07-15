@@ -42,12 +42,12 @@ namespace SWD392.OutfitBox.DataLayer.Repositories
         }
         public async Task<List<Transaction>> GetByMonth(DateTime date)
         {
-            var result = await this.Get().Where(x => x.DateTransaction.Date.ToString("MM/yyyy") == date.ToString("MM/yyyy")).ToListAsync();
+            var result = await this.Get().Where(x => x.DateTransaction!=null && x.DateTransaction.Month == date.Month && x.DateTransaction.Year==date.Year).ToListAsync();
             return result;
         }
         public async Task<List<Transaction>> GetByYear(DateTime date)
         {
-            var result = await this.Get().Where(x => x.DateTransaction.Date.ToString("yyyy") == date.ToString("yyyy")).ToListAsync();
+            var result = await this.Get().Where(x => x.DateTransaction!=null && x.DateTransaction.Year == date.Year).ToListAsync();
             return result;
         }
     }

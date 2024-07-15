@@ -126,39 +126,40 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.AdminService
         }
         public async Task<List<AdminOjectModel>> GetTrendingPackage(string kind)
         {
-            switch (kind)
+            var customerPackages = await _unitOfWork._customerPackageRepository.GetAllCustomerPackage();
+
+            switch (kind.ToLower())
             {
                 case "day":
-                    var customerPackagesDay = await _unitOfWork._customerPackageRepository.GetAllCustomerPackage();
-                    var currentPackagesDay = customerPackagesDay.Where(x => x.CreatedAt.Date == DateTime.Now.Date);
-                    var yesterdayPackagesDay = customerPackagesDay.Where(x => x.CreatedAt.Date == DateTime.Now.Date.Subtract(TimeSpan.FromDays(1)));
+                    var currentPackagesDay = customerPackages.Where(x => x.CreatedAt.Date == DateTime.Now.Date);
+                    var yesterdayPackagesDay = customerPackages.Where(x => x.CreatedAt.Date == DateTime.Now.Date.Subtract(TimeSpan.FromDays(1)));
 
-                    var trendingPackagesDay = CalculateTrendingPackages(currentPackagesDay, yesterdayPackagesDay);
-                    return trendingPackagesDay;
+                    return CalculateTrendingPackages(currentPackagesDay, yesterdayPackagesDay);
 
                 case "month":
-                    var customerPackagesMonth = await _unitOfWork._customerPackageRepository.GetAllCustomerPackage();
-                    var currentPackagesMonth = customerPackagesMonth.Where(x => x.CreatedAt.Month == DateTime.Now.Month);
-                    var lastMonthPackagesMonth = customerPackagesMonth.Where(x => x.CreatedAt.Month == DateTime.Now.AddMonths(-1).Month);
+                    var currentPackagesMonth = customerPackages.Where(x => x.CreatedAt.Month == DateTime.Now.Month && x.CreatedAt.Year == DateTime.Now.Year);
+                    var lastMonthPackagesMonth = customerPackages.Where(x => x.CreatedAt.Month == DateTime.Now.AddMonths(-1).Month && x.CreatedAt.Year == DateTime.Now.AddMonths(-1).Year);
 
-                    var trendingPackagesMonth = CalculateTrendingPackages(currentPackagesMonth, lastMonthPackagesMonth);
-                    return trendingPackagesMonth;
+                    return CalculateTrendingPackages(currentPackagesMonth, lastMonthPackagesMonth);
 
                 default:
                     throw new ArgumentException("Invalid 'kind' parameter. Supported values are 'day' and 'month'.");
             }
         }
+
         private List<AdminOjectModel> CalculateTrendingPackages(IEnumerable<CustomerPackage> currentPackages, IEnumerable<CustomerPackage> lastPackages)
         {
             var trendingPackages = currentPackages
                 .GroupBy(cp => cp.PackageId)
                 .Select(group => new AdminOjectModel
-                {   
-                    
+                {
                     Id = group.Key,
-                    Name = group.First().Package.Name,
+                    Name = group.FirstOrDefault()?.Package.Name,
+                    Url = group.FirstOrDefault()?.Package.ImageUrl,
                     Quantity = group.Sum(cp => cp.Items.Sum(item => item.Quantity)),
-                    Trend = lastPackages.Any() ? (currentPackages.Count() - lastPackages.Count()) / (double)lastPackages.Count() : 0
+                    Trend = lastPackages != null && lastPackages.Any()
+                        ? (currentPackages.Count() - lastPackages.Count()) / (double)lastPackages.Count()
+                        : currentPackages.Any() ? 1 : 0 // If no packages in the last period, trend is 1 or 0 based on current period
                 })
                 .ToList();
 
@@ -168,7 +169,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.AdminService
         public async Task<List<AdminOjectModel>> GetQuantityRentigPoduct(string kind)
         {
             var customerPackagesDay = await _unitOfWork._customerPackageRepository.GetAllCustomerPackage();
-            var currentPackagesDay = customerPackagesDay.Where(x => x.Id == 1).SelectMany(x=>x.Items).GroupBy(x=>x.ProductId).Select(x=>new AdminOjectModel() { 
+            var currentPackagesDay = customerPackagesDay.Where(x => x.Status == 1).SelectMany(x=>x.Items).GroupBy(x=>x.ProductId).Select(x=>new AdminOjectModel() { 
             
             DateTime=DateTime.Now,
                 Id = x.Select(x => x.Product).ToArray()[0].ID,
@@ -183,7 +184,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.AdminService
         public async Task<List<AdminOjectModel>> GetQuantityUnReturnedPoduct(string kind)
         {
             var customerPackagesDay = await _unitOfWork._customerPackageRepository.GetAllCustomerPackage();
-            var currentPackagesDay = customerPackagesDay.Where(x => x.Id == 2 && x.IsReturnedDeposit==false).SelectMany(x => x.Items).Where(x=>x.ReturnedQuantity<x.Quantity).GroupBy(x => x.ProductId).Select(x => new AdminOjectModel()
+            var currentPackagesDay = customerPackagesDay.Where(x => x.Status == 2 && x.IsReturnedDeposit==false).SelectMany(x => x.Items).Where(x=>x.ReturnedQuantity<x.Quantity).GroupBy(x => x.ProductId).Select(x => new AdminOjectModel()
             {
 
                 DateTime = DateTime.Now,
