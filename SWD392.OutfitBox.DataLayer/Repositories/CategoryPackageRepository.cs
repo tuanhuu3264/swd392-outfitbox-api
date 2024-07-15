@@ -54,5 +54,6 @@ namespace SWD392.OutfitBox.DataLayer.Repositories
             await this.SaveChangesAsync();
             return await GetCategoryPackageById(categoryPackage.Id);
         }
+       
     }
 }

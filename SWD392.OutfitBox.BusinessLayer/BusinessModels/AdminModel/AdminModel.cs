@@ -5,12 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SWD392.OutfitBox.BusinessLayer.BusinessModels
+namespace SWD392.OutfitBox.BusinessLayer.BusinessModels.AdminModel
 {
     public class AdminModel
     {
-       public List<AdminData> Data{ get;set; }
-       public double Trend {  get; set; }
-        public double Total {  get; set; }
+        public List<AdminData> Data { get; set; }
+        public double Trend { get; set; }
+        public double Total { get; set; }
     }
 }

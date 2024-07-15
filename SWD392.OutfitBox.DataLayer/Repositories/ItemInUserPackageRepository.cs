@@ -66,7 +66,7 @@ namespace SWD392.OutfitBox.DataLayer.Repositories
             return obj;
         }
 
-        public async Task<List<Product>> GetRentingProducts()
+        public async Task<List<AdminObjectData>> GetRentingProducts()
         {
             var groupedProducts = await this.Get()
             .Include(x => x.Product)
@@ -79,12 +79,26 @@ namespace SWD392.OutfitBox.DataLayer.Repositories
             TotalQuantity = g.Sum(x => x.Quantity)
             })
             .ToListAsync();
-            foreach (var item in groupedProducts)
+            var result = groupedProducts.Select(x => new AdminObjectData { Id = x.Product.ID, Name = x.Product.Name, Value = x.TotalQuantity, Url = x.Product.Images.First().Link }).ToList();
+            return result;
+        }
+
+        public async Task<List<AdminObjectData>> GetUnReturnProducts()
+        {
+            var groupedProducts = await this.Get()
+            .Include(x => x.UserPackage)
+            .Include(x => x.Product)
+            .ThenInclude(x => x.Images)
+            .Where(x => x.Status == 2 && x.UserPackage.IsReturnedDeposit==false)
+            .GroupBy(x => x.Product.ID)
+            .Select(g => new
             {
-                item.Product.Quantity = item.TotalQuantity;
-            }
-            var products = groupedProducts.Select(x => x.Product).ToList();
-            return products;
+                Product = g.First().Product,
+                TotalQuantity = g.Sum(x => x.Quantity)
+            })
+            .ToListAsync();
+            var result = groupedProducts.Select(x => new AdminObjectData { Id = x.Product.ID, Name = x.Product.Name, Value = x.TotalQuantity, Url = x.Product.Images.First().Link }).ToList();
+            return result;
         }
     }
 }
