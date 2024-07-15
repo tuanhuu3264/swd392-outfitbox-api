@@ -17,7 +17,7 @@ namespace SWD392.OutfitBox.DataLayer.Entities
         public string Password { get; set; } = string.Empty;
         public string Phone{ get; set; } = string.Empty;
         public int Status { get; set; }
-        public int RoldeId { get; set; }
+        public int RoleId { get; set; }
         [ForeignKey("RoleId")]
         public Role? Role { get; set; }
     }

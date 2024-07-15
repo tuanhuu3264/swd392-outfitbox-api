@@ -12,8 +12,8 @@ using SWD392.OutfitBox.DataLayer.Databases.Redis;
 namespace SWD392.OutfitBox.DataLayer.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20240708100322_fixProductandCustomerPackage")]
-    partial class fixProductandCustomerPackage
+    [Migration("20240715140311_database")]
+    partial class database
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -132,6 +132,33 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                             IsFeatured = false,
                             Name = "JUNO",
                             Status = 1
+                        },
+                        new
+                        {
+                            ID = 5,
+                            Description = "Uniqlo LLC is a Japanese casual wear design, apparel, and retail company.",
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/9/92/UNIQLO_logo.svg",
+                            IsFeatured = false,
+                            Name = "Uniqlo",
+                            Status = 1
+                        },
+                        new
+                        {
+                            ID = 6,
+                            Description = "Zara is a Spanish clothing and accessories brand.",
+                            ImageUrl = "https://img.salehere.co.th/p/1200x0/2024/02/16/gdlpd8hwxiob.jpg",
+                            IsFeatured = false,
+                            Name = "Zara",
+                            Status = 1
+                        },
+                        new
+                        {
+                            ID = 7,
+                            Description = "Famous Spanish fashion brand Pull&Bear.",
+                            ImageUrl = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgJ2G23IAT9jiabKjH8VZ09gtj9BRXH2kCsA&s",
+                            IsFeatured = false,
+                            Name = "Pull&Bear",
+                            Status = 1
                         });
                 });
 
@@ -170,7 +197,7 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                         {
                             ID = 1,
                             Description = "T-Shirt,Vest,Polo,Smock,...",
-                            ImageUrl = "",
+                            ImageUrl = "https://hoangnguyenstore.com/wp-content/uploads/2021/11/ao-so-mi-dior-hoa-tiet-nhen-asmd01-5.webp",
                             IsFeatured = false,
                             Name = "Shirt",
                             Status = 0
@@ -179,7 +206,7 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                         {
                             ID = 2,
                             Description = "Gauchos,Jeans,Trousers,...",
-                            ImageUrl = "",
+                            ImageUrl = "https://cf.shopee.vn/file/53ba7e3dcff647db1ff302f6c378a0bc",
                             IsFeatured = false,
                             Name = "Short",
                             Status = 0
@@ -188,7 +215,7 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                         {
                             ID = 3,
                             Description = "Skater,Circle,Aline,Maxi,Sarong,...",
-                            ImageUrl = "",
+                            ImageUrl = "https://lzd-img-global.slatic.net/g/p/ff217e1a9b75a39108b8a04c22d164dc.jpg_720x720q80.jpg",
                             IsFeatured = false,
                             Name = "Skirt",
                             Status = 0
@@ -197,7 +224,7 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                         {
                             ID = 4,
                             Description = "A-line,Empire,Tent,Princess,Shift,...",
-                            ImageUrl = "",
+                            ImageUrl = "https://image.dhgate.com/0x0s/f2-albu-g17-M00-71-84-rBVa4V_J8_iAXsmWAADRlVU_URo051.jpg/2021-black-ball-gown-gothic-wedding-dresses.jpg",
                             IsFeatured = false,
                             Name = "Dress",
                             Status = 0
@@ -206,7 +233,7 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                         {
                             ID = 5,
                             Description = "Ao dai,Traditional clothers,...",
-                            ImageUrl = "",
+                            ImageUrl = "https://i.pinimg.com/originals/47/2c/21/472c21c67c84e2d69866319ccf7906d6.jpg",
                             IsFeatured = false,
                             Name = "Costumes",
                             Status = 0
@@ -215,7 +242,7 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                         {
                             ID = 6,
                             Description = "Sunglasses,Tie,Watch,Bow,...",
-                            ImageUrl = "",
+                            ImageUrl = "https://d2hg8ctx8thzji.cloudfront.net/clusterfeed.net/wp-content/uploads/2020/07/6CommonlyUsedAccessoriestoChooseFrom-750x532.jpg",
                             IsFeatured = false,
                             Name = "Accessories",
                             Status = 0
@@ -224,7 +251,7 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                         {
                             ID = 7,
                             Description = "Way for couples or friends to express their affection and bond with each other",
-                            ImageUrl = "",
+                            ImageUrl = "https://top.chon.vn/wp-content/uploads/2019/09/shop-do-doi-5.jpg",
                             IsFeatured = false,
                             Name = "Couple",
                             Status = 0
@@ -434,7 +461,7 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                             Phone = "0325739910",
                             Picture = "",
                             Status = 1,
-                            Time = new DateTime(2024, 7, 8, 17, 3, 22, 173, DateTimeKind.Local).AddTicks(6446)
+                            Time = new DateTime(2024, 7, 15, 21, 3, 11, 277, DateTimeKind.Local).AddTicks(8764)
                         },
                         new
                         {
@@ -446,7 +473,7 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                             Phone = "123",
                             Picture = "",
                             Status = 1,
-                            Time = new DateTime(2024, 7, 8, 17, 3, 22, 173, DateTimeKind.Local).AddTicks(6484)
+                            Time = new DateTime(2024, 7, 15, 21, 3, 11, 277, DateTimeKind.Local).AddTicks(8789)
                         },
                         new
                         {
@@ -458,7 +485,7 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                             Phone = "123",
                             Picture = "",
                             Status = 1,
-                            Time = new DateTime(2024, 7, 8, 17, 3, 22, 173, DateTimeKind.Local).AddTicks(6486)
+                            Time = new DateTime(2024, 7, 15, 21, 3, 11, 277, DateTimeKind.Local).AddTicks(8791)
                         },
                         new
                         {
@@ -470,7 +497,7 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                             Phone = "123",
                             Picture = "",
                             Status = 1,
-                            Time = new DateTime(2024, 7, 8, 17, 3, 22, 173, DateTimeKind.Local).AddTicks(6487)
+                            Time = new DateTime(2024, 7, 15, 21, 3, 11, 277, DateTimeKind.Local).AddTicks(8792)
                         });
                 });
 
@@ -482,6 +509,9 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("CustomerId")
                         .HasColumnType("int");
 
@@ -490,6 +520,9 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
 
                     b.Property<DateTime>("DateTo")
                         .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsReturnedDeposit")
+                        .HasColumnType("bit");
 
                     b.Property<int>("PackageId")
                         .HasColumnType("int");
@@ -516,6 +549,9 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<double>("ReturnDeposit")
+                        .HasColumnType("float");
+
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
@@ -539,15 +575,18 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                         new
                         {
                             Id = 1,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CustomerId = 1,
-                            DateFrom = new DateTime(2024, 7, 8, 17, 3, 22, 173, DateTimeKind.Local).AddTicks(6550),
-                            DateTo = new DateTime(2024, 8, 7, 17, 3, 22, 173, DateTimeKind.Local).AddTicks(6550),
+                            DateFrom = new DateTime(2024, 7, 15, 21, 3, 11, 277, DateTimeKind.Local).AddTicks(8850),
+                            DateTo = new DateTime(2024, 8, 14, 21, 3, 11, 277, DateTimeKind.Local).AddTicks(8851),
+                            IsReturnedDeposit = false,
                             PackageId = 1,
                             PackageName = "Newcomer Trial",
                             Price = 200.0,
                             ReceiverAddress = "Nha Van Hoa Sinh Vien",
                             ReceiverName = "Khanh Sky",
                             ReceiverPhone = "0325739910",
+                            ReturnDeposit = 0.0,
                             Status = 1,
                             TransactionId = 1
                         });
@@ -586,7 +625,7 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                             Id = 1,
                             AmountMoney = 20.0,
                             CustomerId = 1,
-                            Date = new DateTime(2024, 7, 8, 17, 3, 22, 173, DateTimeKind.Local).AddTicks(6634),
+                            Date = new DateTime(2024, 7, 15, 21, 3, 11, 277, DateTimeKind.Local).AddTicks(8923),
                             Type = "Khuyen Mai"
                         });
                 });
@@ -743,6 +782,162 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                             ID = 18,
                             IdProduct = 7,
                             Link = "https://down-vn.img.susercontent.com/file/sg-11134201-7rd4d-lvcplok5iobc5f"
+                        },
+                        new
+                        {
+                            ID = 19,
+                            IdProduct = 9,
+                            Link = "https://down-vn.img.susercontent.com/file/sg-11134201-7rd46-lvwmevojczsfbe"
+                        },
+                        new
+                        {
+                            ID = 20,
+                            IdProduct = 10,
+                            Link = "https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lwjun5k781y12e"
+                        },
+                        new
+                        {
+                            ID = 21,
+                            IdProduct = 11,
+                            Link = "https://down-vn.img.susercontent.com/file/vn-11134207-7qukw-lhsgugwdqg7991"
+                        },
+                        new
+                        {
+                            ID = 22,
+                            IdProduct = 12,
+                            Link = "https://down-vn.img.susercontent.com/file/sg-11134201-7rd5a-lv49t9zt96ekd7"
+                        },
+                        new
+                        {
+                            ID = 23,
+                            IdProduct = 13,
+                            Link = "https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lvfjui2cg87hd0"
+                        },
+                        new
+                        {
+                            ID = 24,
+                            IdProduct = 14,
+                            Link = "https://down-vn.img.susercontent.com/file/vn-11134201-7r98o-lp66e2bf9opnd0"
+                        },
+                        new
+                        {
+                            ID = 25,
+                            IdProduct = 15,
+                            Link = "https://down-vn.img.susercontent.com/file/166a8d410782cede0c9aab49f2ddfbb5"
+                        },
+                        new
+                        {
+                            ID = 26,
+                            IdProduct = 16,
+                            Link = "https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-luuu44mmw1zm38"
+                        },
+                        new
+                        {
+                            ID = 27,
+                            IdProduct = 17,
+                            Link = "https://down-vn.img.susercontent.com/file/sg-11134201-7rcem-lsz1l11wdxtrd6"
+                        },
+                        new
+                        {
+                            ID = 28,
+                            IdProduct = 18,
+                            Link = "https://down-vn.img.susercontent.com/file/sg-11134201-7rd4z-lu0ei4d8jihjf3"
+                        },
+                        new
+                        {
+                            ID = 29,
+                            IdProduct = 19,
+                            Link = "https://down-vn.img.susercontent.com/file/sg-11134201-7rd6s-lvmvkwgtbyx80a"
+                        },
+                        new
+                        {
+                            ID = 30,
+                            IdProduct = 20,
+                            Link = "https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lubowd6lh1xtd3"
+                        },
+                        new
+                        {
+                            ID = 31,
+                            IdProduct = 21,
+                            Link = "https://www.thegioididong.com/dong-ho-deo-tay/casio-mtp-m100d-7avdf-nam#top-color-images-gallery-1174"
+                        },
+                        new
+                        {
+                            ID = 32,
+                            IdProduct = 22,
+                            Link = "https://www.thegioididong.com/dong-ho-deo-tay/citizen-em0809-83z-nu#top-color-images-gallery-15"
+                        },
+                        new
+                        {
+                            ID = 33,
+                            IdProduct = 23,
+                            Link = "https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lwifcpy87x099f"
+                        },
+                        new
+                        {
+                            ID = 34,
+                            IdProduct = 24,
+                            Link = "https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lv6d50ieiv167f"
+                        },
+                        new
+                        {
+                            ID = 35,
+                            IdProduct = 25,
+                            Link = "https://down-vn.img.susercontent.com/file/vn-11134207-7qukw-lgl8he41htnu33"
+                        },
+                        new
+                        {
+                            ID = 36,
+                            IdProduct = 26,
+                            Link = "https://down-vn.img.susercontent.com/file/cn-11134207-7r98o-lp4ymq73hkkcf0"
+                        },
+                        new
+                        {
+                            ID = 37,
+                            IdProduct = 27,
+                            Link = "https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lw2susc23ye1af"
+                        },
+                        new
+                        {
+                            ID = 38,
+                            IdProduct = 28,
+                            Link = "https://down-vn.img.susercontent.com/file/sg-11134201-22120-ap2882tdo4kv7c"
+                        },
+                        new
+                        {
+                            ID = 39,
+                            IdProduct = 29,
+                            Link = "https://down-vn.img.susercontent.com/file/cn-11134207-7qukw-lgoo5rn93r6k17"
+                        },
+                        new
+                        {
+                            ID = 40,
+                            IdProduct = 30,
+                            Link = "https://down-vn.img.susercontent.com/file/cn-11134301-7qukw-ljqq0pro1hisbc"
+                        },
+                        new
+                        {
+                            ID = 41,
+                            IdProduct = 31,
+                            Link = "https://down-vn.img.susercontent.com/file/sg-11134201-7rcd3-lrtwdc5pxtvgce"
+                        },
+                        new
+                        {
+                            ID = 42,
+                            IdProduct = 32,
+                            Link = "https://down-vn.img.susercontent.com/file/sg-11134201-7rccd-ls6ht57qzywrfc"
+                        },
+                        new
+                        {
+                            ID = 43,
+                            IdProduct = 33,
+                            Link = "https://down-vn.img.susercontent.com/file/vn-11134207-7qukw-lgngo6qyhohee1"
+                        },
+                        new
+                        {
+                            ID = 44,
+                            IdProduct = 34,
+                            Link = "https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lmmrmhaq9e5baa"
                         });
                 });
 
@@ -767,6 +962,9 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ReturnedQuantity")
                         .HasColumnType("int");
 
                     b.Property<int>("Status")
@@ -1156,6 +1354,465 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                             Size = "XS",
                             Status = 1,
                             Type = "New"
+                        },
+                        new
+                        {
+                            ID = 9,
+                            AvailableQuantity = 20,
+                            Deposit = 0.20000000000000001,
+                            Description = "Men's sports shirt absorbent and dries quickly",
+                            IdBrand = 2,
+                            IdCategory = 1,
+                            IsFeatured = false,
+                            IsUsed = "FALSE",
+                            Name = "Men's sports shirt",
+                            Price = 200f,
+                            Quantity = 20,
+                            Size = "XL",
+                            Status = 1,
+                            Type = "New"
+                        },
+                        new
+                        {
+                            ID = 10,
+                            AvailableQuantity = 20,
+                            Deposit = 0.0,
+                            Description = "Fabric/material: Chemical fiber/Polyester (Polyester Fiber) Ingredient content: 100%",
+                            IdBrand = 3,
+                            IdCategory = 3,
+                            IsFeatured = false,
+                            IsUsed = "FALSE",
+                            Name = "Women's low waist A-line dress",
+                            Price = 120f,
+                            Quantity = 20,
+                            Size = "S",
+                            Status = 1,
+                            Type = "New"
+                        },
+                        new
+                        {
+                            ID = 11,
+                            AvailableQuantity = 20,
+                            Deposit = 0.0,
+                            Description = "Cool t-shirt with wide FORM sleeves and embroidered chest",
+                            IdBrand = 1,
+                            IdCategory = 1,
+                            IsFeatured = false,
+                            IsUsed = "FALSE",
+                            Name = "T-shirt with embroidered bow tie and cool elastic sleeves, loose-sleeved form",
+                            Price = 100f,
+                            Quantity = 20,
+                            Size = "M",
+                            Status = 1,
+                            Type = "New"
+                        },
+                        new
+                        {
+                            ID = 12,
+                            AvailableQuantity = 20,
+                            Deposit = 0.0,
+                            Description = "The fabric is beautiful, not fuzzy, not shrinkable, soft and thick, absorbs sweat extremely quickly, and is super cool to wear.",
+                            IdBrand = 1,
+                            IdCategory = 1,
+                            IsFeatured = false,
+                            IsUsed = "FALSE",
+                            Name = "BEARLESS Unisex T-shirt",
+                            Price = 100f,
+                            Quantity = 20,
+                            Size = "L",
+                            Status = 1,
+                            Type = "New"
+                        },
+                        new
+                        {
+                            ID = 13,
+                            AvailableQuantity = 20,
+                            Deposit = 0.0,
+                            Description = "Style: Casual Travel/Simple Popular elements / Craftsmanship: Ruffles",
+                            IdBrand = 3,
+                            IdCategory = 3,
+                            IsFeatured = false,
+                            IsUsed = "FALSE",
+                            Name = "Bohemian irregular wavy lace skirt",
+                            Price = 100f,
+                            Quantity = 20,
+                            Size = "M",
+                            Status = 1,
+                            Type = "New"
+                        },
+                        new
+                        {
+                            ID = 14,
+                            AvailableQuantity = 20,
+                            Deposit = 0.0,
+                            Description = "White Lolita Dress with Flared Flared Lace and Elastic Waist for Women",
+                            IdBrand = 3,
+                            IdCategory = 3,
+                            IsFeatured = false,
+                            IsUsed = "FALSE",
+                            Name = "White Lolita Dress with Lace Flare",
+                            Price = 100f,
+                            Quantity = 20,
+                            Size = "M",
+                            Status = 1,
+                            Type = "New"
+                        },
+                        new
+                        {
+                            ID = 15,
+                            AvailableQuantity = 20,
+                            Deposit = 0.0,
+                            Description = "The material is light, soft and super cool to wear. The design is youthful, cute, feminine with many beautiful patterns",
+                            IdBrand = 5,
+                            IdCategory = 5,
+                            IsFeatured = false,
+                            IsUsed = "FALSE",
+                            Name = "Áo bà ba cổ tròn vạt đứng lụa siêu cao cấp (Traditional of VN)",
+                            Price = 100f,
+                            Quantity = 20,
+                            Size = "L",
+                            Status = 1,
+                            Type = "New"
+                        },
+                        new
+                        {
+                            ID = 16,
+                            AvailableQuantity = 20,
+                            Deposit = 0.0,
+                            Description = "High quality brocade silk ao dai, super pretty stylized sleeves",
+                            IdBrand = 5,
+                            IdCategory = 5,
+                            IsFeatured = false,
+                            IsUsed = "FALSE",
+                            Name = "Áo bà ba lụa gấm tơ cao cấp  (Traditional of VN)",
+                            Price = 120f,
+                            Quantity = 20,
+                            Size = "L",
+                            Status = 1,
+                            Type = "New"
+                        },
+                        new
+                        {
+                            ID = 17,
+                            AvailableQuantity = 20,
+                            Deposit = 0.0,
+                            Description = "Fans of Thai movies cannot miss this uniform",
+                            IdBrand = 5,
+                            IdCategory = 5,
+                            IsFeatured = false,
+                            IsUsed = "FALSE",
+                            Name = "Thai School Uniform Men's Version",
+                            Price = 150f,
+                            Quantity = 20,
+                            Size = "XL",
+                            Status = 1,
+                            Type = "New"
+                        },
+                        new
+                        {
+                            ID = 18,
+                            AvailableQuantity = 20,
+                            Deposit = 0.0,
+                            Description = "Style: Sweet and fresh / College",
+                            IdBrand = 5,
+                            IdCategory = 5,
+                            IsFeatured = false,
+                            IsUsed = "FALSE",
+                            Name = "Blue Japanese Female School Uniform",
+                            Price = 150f,
+                            Quantity = 20,
+                            Size = "M",
+                            Status = 1,
+                            Type = "New"
+                        },
+                        new
+                        {
+                            ID = 19,
+                            AvailableQuantity = 20,
+                            Deposit = 0.0,
+                            Description = "Popular elements: Flowers Quantity: 1 headscarf + 1 sunglasses",
+                            IdBrand = 6,
+                            IdCategory = 6,
+                            IsFeatured = false,
+                            IsUsed = "FALSE",
+                            Name = "Idylls Women's Turban",
+                            Price = 80f,
+                            Quantity = 20,
+                            Size = "X",
+                            Status = 1,
+                            Type = "New"
+                        },
+                        new
+                        {
+                            ID = 20,
+                            AvailableQuantity = 20,
+                            Deposit = 0.0,
+                            Description = "Square twisted wire of all sizes, machine cut, 45cm and 50cm thick",
+                            IdBrand = 6,
+                            IdCategory = 6,
+                            IsFeatured = false,
+                            IsUsed = "FALSE",
+                            Name = "Accessories Square twisted necklaces of all sizes 3mm, 4mm, 5mm, 6mm, 8mm, 10mm",
+                            Price = 900f,
+                            Quantity = 20,
+                            Size = "M",
+                            Status = 1,
+                            Type = "New"
+                        },
+                        new
+                        {
+                            ID = 21,
+                            AvailableQuantity = 20,
+                            Deposit = 0.0,
+                            Description = "G-Shock with strong design and high durability, Edifice with modern design and many outstanding features, Sheen with classic and luxurious design.",
+                            IdBrand = 6,
+                            IdCategory = 6,
+                            IsFeatured = false,
+                            IsUsed = "FALSE",
+                            Name = "Casio 42.5 mm Men's Watch MTP-M100D-7AVDF",
+                            Price = 1500f,
+                            Quantity = 20,
+                            Size = "M",
+                            Status = 1,
+                            Type = "New"
+                        },
+                        new
+                        {
+                            ID = 22,
+                            AvailableQuantity = 20,
+                            Deposit = 0.0,
+                            Description = "The main design trend of Citizen watches is simple and elegant.",
+                            IdBrand = 6,
+                            IdCategory = 6,
+                            IsFeatured = false,
+                            IsUsed = "FALSE",
+                            Name = "Citizen 28mm Women's Watch EM0809-83Z",
+                            Price = 1500f,
+                            Quantity = 20,
+                            Size = "M",
+                            Status = 1,
+                            Type = "New"
+                        },
+                        new
+                        {
+                            ID = 23,
+                            AvailableQuantity = 20,
+                            Deposit = 0.0,
+                            Description = "Unisex glasses for both men and women Anti-ultraviolet rays, UV400 rays, maximum eye protection",
+                            IdBrand = 6,
+                            IdCategory = 6,
+                            IsFeatured = false,
+                            IsUsed = "FALSE",
+                            Name = "UV protection sunglasses from NICOLE Korea",
+                            Price = 500f,
+                            Quantity = 20,
+                            Size = "XL",
+                            Status = 1,
+                            Type = "New"
+                        },
+                        new
+                        {
+                            ID = 24,
+                            AvailableQuantity = 20,
+                            Deposit = 0.0,
+                            Description = "Unique high-end beach travel couple outfit set for men and women for summer 2024",
+                            IdBrand = 7,
+                            IdCategory = 7,
+                            IsFeatured = false,
+                            IsUsed = "FALSE",
+                            Name = "Men's and women's couple's set of couple's clothes for traveling to the beach",
+                            Price = 300f,
+                            Quantity = 20,
+                            Size = "XL",
+                            Status = 1,
+                            Type = "New"
+                        },
+                        new
+                        {
+                            ID = 25,
+                            AvailableQuantity = 20,
+                            Deposit = 0.0,
+                            Description = "D.r silk dress with fancy off-the-shoulder lantern form for women to wear to go out and travel to the beach",
+                            IdBrand = 7,
+                            IdCategory = 7,
+                            IsFeatured = false,
+                            IsUsed = "FALSE",
+                            Name = "Pink double set includes men's shirt, women's skirt and cardigan",
+                            Price = 300f,
+                            Quantity = 20,
+                            Size = "M",
+                            Status = 1,
+                            Type = "New"
+                        },
+                        new
+                        {
+                            ID = 26,
+                            AvailableQuantity = 20,
+                            Deposit = 0.0,
+                            Description = "Short dress, Korean luxury Ulzzang babydoll dress Maxi",
+                            IdBrand = 4,
+                            IdCategory = 4,
+                            IsFeatured = false,
+                            IsUsed = "FALSE",
+                            Name = "Vintage Women's 2-shoulder bow-tie dress",
+                            Price = 120f,
+                            Quantity = 20,
+                            Size = "M",
+                            Status = 1,
+                            Type = "New"
+                        },
+                        new
+                        {
+                            ID = 27,
+                            AvailableQuantity = 20,
+                            Deposit = 0.0,
+                            Description = "Fabric name: Corduroy, Elasticity: Microplastic",
+                            IdBrand = 2,
+                            IdCategory = 2,
+                            IsFeatured = false,
+                            IsUsed = "FALSE",
+                            Name = "Spring and Autumn Fashion Casual Wide Leg Corduroy Pants for Men",
+                            Price = 100f,
+                            Quantity = 20,
+                            Size = "L",
+                            Status = 1,
+                            Type = "New"
+                        },
+                        new
+                        {
+                            ID = 28,
+                            AvailableQuantity = 20,
+                            Deposit = 0.0,
+                            Description = "Bigsize high-waist cargo pants model. Very beautiful straight shape. Easy to coordinate with different types of outfits: going out, going to work, going to parties... Loose, loose-fitting pants will bring you comfort and ease.",
+                            IdBrand = 2,
+                            IdCategory = 2,
+                            IsFeatured = false,
+                            IsUsed = "FALSE",
+                            Name = "Women's high-waisted wide-leg sports pants with vertical striped pattern, sporty fashion style",
+                            Price = 100f,
+                            Quantity = 20,
+                            Size = "M",
+                            Status = 1,
+                            Type = "New"
+                        },
+                        new
+                        {
+                            ID = 29,
+                            AvailableQuantity = 20,
+                            Deposit = 0.0,
+                            Description = "Thai crocodile t-shirt with 4-way stretch as uniform for employees with instant decal printing",
+                            IdBrand = 5,
+                            IdCategory = 5,
+                            IsFeatured = false,
+                            IsUsed = "FALSE",
+                            Name = "Polo Uniform T-shirt made of 4-way crocodile material",
+                            Price = 100f,
+                            Quantity = 20,
+                            Size = "M",
+                            Status = 1,
+                            Type = "New"
+                        },
+                        new
+                        {
+                            ID = 30,
+                            AvailableQuantity = 20,
+                            Deposit = 0.0,
+                            Description = "Fabric name: polyester. Main fabric component: polyester",
+                            IdBrand = 5,
+                            IdCategory = 5,
+                            IsFeatured = false,
+                            IsUsed = "FALSE",
+                            Name = "Short-sleeved hotel uniform, waiter, restaurant work uniform",
+                            Price = 100f,
+                            Quantity = 20,
+                            Size = "S",
+                            Status = 1,
+                            Type = "New"
+                        },
+                        new
+                        {
+                            ID = 31,
+                            AvailableQuantity = 20,
+                            Deposit = 0.0,
+                            Description = "Full rim glasses. Fashion style",
+                            IdBrand = 6,
+                            IdCategory = 6,
+                            IsFeatured = false,
+                            IsUsed = "FALSE",
+                            Name = "Korean retro style Small Square Frame Sunglasses",
+                            Price = 200f,
+                            Quantity = 20,
+                            Size = "M",
+                            Status = 1,
+                            Type = "New"
+                        },
+                        new
+                        {
+                            ID = 32,
+                            AvailableQuantity = 20,
+                            Deposit = 0.0,
+                            Description = "100% brand new, high quality",
+                            IdBrand = 6,
+                            IdCategory = 6,
+                            IsFeatured = false,
+                            IsUsed = "FALSE",
+                            Name = "Retro fashion cat eye sunglasses for women",
+                            Price = 150f,
+                            Quantity = 20,
+                            Size = "M",
+                            Status = 1,
+                            Type = "New"
+                        },
+                        new
+                        {
+                            ID = 33,
+                            AvailableQuantity = 20,
+                            Deposit = 0.0,
+                            Description = "100% brand new, high quality",
+                            IdBrand = 6,
+                            IdCategory = 6,
+                            IsFeatured = false,
+                            IsUsed = "FALSE",
+                            Name = "JENNIE sunglasses with Y2K style",
+                            Price = 300f,
+                            Quantity = 20,
+                            Size = "M",
+                            Status = 1,
+                            Type = "New"
+                        },
+                        new
+                        {
+                            ID = 34,
+                            AvailableQuantity = 20,
+                            Deposit = 0.0,
+                            Description = "Couple shirt dresses/matching outfits for men and women.",
+                            IdBrand = 7,
+                            IdCategory = 7,
+                            IsFeatured = false,
+                            IsUsed = "FALSE",
+                            Name = "Cute men's and women's couple's clothes",
+                            Price = 200f,
+                            Quantity = 20,
+                            Size = "M",
+                            Status = 1,
+                            Type = "New"
+                        },
+                        new
+                        {
+                            ID = 35,
+                            AvailableQuantity = 20,
+                            Deposit = 0.0,
+                            Description = "Latest models of men's and women's couple clothes, used for wedding photography, going out, and traveling, very youthful and stylish!",
+                            IdBrand = 7,
+                            IdCategory = 7,
+                            IsFeatured = false,
+                            IsUsed = "FALSE",
+                            Name = "New model men's and women's couple clothes",
+                            Price = 200f,
+                            Quantity = 20,
+                            Size = "L",
+                            Status = 1,
+                            Type = "New"
                         });
                 });
 
@@ -1166,6 +1823,12 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("DamagedLevel")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
@@ -1178,6 +1841,9 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
+
+                    b.Property<double>("ThornMoney")
+                        .HasColumnType("float");
 
                     b.HasKey("Id");
 
@@ -1200,7 +1866,13 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("CustomerId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CustomerPackageId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("DateReturn")
@@ -1217,12 +1889,20 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("QuantityOfItems")
+                        .HasColumnType("int");
+
                     b.Property<int>("Status")
                         .HasColumnType("int");
+
+                    b.Property<double>("TotalThornMoney")
+                        .HasColumnType("float");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CustomerId");
+
+                    b.HasIndex("CustomerPackageId");
 
                     b.HasIndex("PartnerId");
 
@@ -1306,6 +1986,18 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Roles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Admin"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Partner"
+                        });
                 });
 
             modelBuilder.Entity("SWD392.OutfitBox.DataLayer.Entities.Transaction", b =>
@@ -1348,7 +2040,7 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                         {
                             Id = 1,
                             Amount = 0.0,
-                            DateTransaction = new DateTime(2024, 7, 8, 17, 3, 22, 173, DateTimeKind.Local).AddTicks(6595),
+                            DateTransaction = new DateTime(2024, 7, 15, 21, 3, 11, 277, DateTimeKind.Local).AddTicks(8886),
                             DepositId = 1,
                             Paymethod = "",
                             Status = 0,
@@ -1376,10 +2068,7 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("RoldeId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("RoleId")
+                    b.Property<int>("RoleId")
                         .HasColumnType("int");
 
                     b.Property<int>("Status")
@@ -1390,6 +2079,44 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Email = "admin",
+                            Password = "123456",
+                            Phone = "123456789",
+                            RoleId = 1,
+                            Status = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Email = "leecois@gmail.com",
+                            Password = "123456",
+                            Phone = "12345678",
+                            RoleId = 1,
+                            Status = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Email = "Grap@gmail.com",
+                            Password = "123456",
+                            Phone = "",
+                            RoleId = 2,
+                            Status = 1
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Email = "Bee@gmail.com",
+                            Password = "123456",
+                            Phone = "",
+                            RoleId = 2,
+                            Status = 1
+                        });
                 });
 
             modelBuilder.Entity("SWD392.OutfitBox.DataLayer.Entities.Wallet", b =>
@@ -1602,6 +2329,12 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
+                    b.HasOne("SWD392.OutfitBox.DataLayer.Entities.CustomerPackage", "CustomerPackage")
+                        .WithMany()
+                        .HasForeignKey("CustomerPackageId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("SWD392.OutfitBox.DataLayer.Entities.Partner", "Partner")
                         .WithMany("ReturnOrders")
                         .HasForeignKey("PartnerId")
@@ -1609,6 +2342,8 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                         .IsRequired();
 
                     b.Navigation("Customer");
+
+                    b.Navigation("CustomerPackage");
 
                     b.Navigation("Partner");
                 });
@@ -1666,7 +2401,9 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                 {
                     b.HasOne("SWD392.OutfitBox.DataLayer.Entities.Role", "Role")
                         .WithMany("Users")
-                        .HasForeignKey("RoleId");
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Role");
                 });

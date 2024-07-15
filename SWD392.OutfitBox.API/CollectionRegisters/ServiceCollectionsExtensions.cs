@@ -28,6 +28,7 @@ using SWD392.OutfitBox.BusinessLayer.Services.UserPackageService;
 using SWD392.OutfitBox.BusinessLayer.Services.PaymentService;
 using SWD392.OutfitBox.BusinessLayer.Services.AdminService;
 using SWD392.OutfitBox.BackgroundWorker.RedisTask;
+using BusinessLayer.Services;
 
 namespace SWD392.OutfitBox.API.CollectionRegisters
 {
@@ -67,7 +68,7 @@ namespace SWD392.OutfitBox.API.CollectionRegisters
             services.AddScoped<IProductService,ProductService>();
             services.AddScoped<IItemsInUserPackageService, ItemsInUserPackageService>();
             services.AddScoped<IFirebaseService, FirebaseService>();
-            //services.AddScoped<IPaymentService, PaymentService>();
+            services.AddScoped<IPaymentService, PaymentService>();
             services.AddScoped<IFirebaseService, FirebaseService>();
             services.AddScoped<IAreaService, AreaService>();    
             services.AddScoped<IPartnerService, PartnerService>();  
