@@ -17,6 +17,7 @@ namespace SWD392.OutfitBox.DataLayer.Repositories.Interfaces
         Task<List<AdminData>> GetDailyOrders();
         Task<List<CustomerPackage>> GetCustomerPackageByCustomerId(int customerId);
         Task<List<CustomerPackage>> GetCustomerPackageByStatus(int status);
+        public Task<List<AdminData>> GetDashboardCompleteOrder();
         public Task<List<CustomerPackage>> GetListOrder(
     int? pageIndex = null,
     int? pageSize = null,
@@ -38,6 +39,7 @@ namespace SWD392.OutfitBox.DataLayer.Repositories.Interfaces
     double? maxTotalDeposit = null,
     double? minTotalDeposit = null);
         public Task<List<CustomerPackage>> GetAllCustomerPackage();
+        public Task<List<AdminData>> GetDashboardCancelOrder();
     }
-    
+
 }

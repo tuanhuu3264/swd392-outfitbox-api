@@ -13,5 +13,7 @@ namespace SWD392.OutfitBox.DataLayer.Interfaces
         public Task<Package> GetPackageById(int id);
         public Task<Package> CreatePackage(Package package);
         public Task<Package> UpdatePackage(Package package);
+        public Task<List<AdminObjectData>> GetDashboardPackages();
+        public Task<List<AdminObjectData>> GetDashboardPricePackages();
     }
 }
