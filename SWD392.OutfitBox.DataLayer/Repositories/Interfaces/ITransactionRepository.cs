@@ -10,5 +10,6 @@ namespace SWD392.OutfitBox.DataLayer.Interfaces
     {
         public Task<Transaction> CreateTransaction (Transaction transaction);
         public Task<List<Transaction>> GetAllTransactionsByUserId (int userId);
+        public Task<Transaction> GetTransactionsByVNPayCode (string code);
     }
 }

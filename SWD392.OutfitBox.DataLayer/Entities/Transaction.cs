@@ -20,7 +20,7 @@ namespace SWD392.OutfitBox.DataLayer.Entities
         public int WalletId { get; set; }
         [ForeignKey(nameof(WalletId))]
         public Wallet? Wallet { get; set; }
-
+        public string? VNPayID {  get; set; }
         public int DepositId {  get; set; }
         [ForeignKey(nameof(DepositId))]
         public Deposit? Deposit { get; set;}
