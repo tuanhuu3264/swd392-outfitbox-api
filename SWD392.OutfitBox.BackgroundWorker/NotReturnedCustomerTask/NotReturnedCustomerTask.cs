@@ -90,7 +90,6 @@ namespace SWD392.OutfitBox.BackgroundWorker.NotReturnedCustomerTask
             }
         }
 
-
         public Task StopAsync(CancellationToken cancellationToken)
         {
             throw new NotImplementedException();

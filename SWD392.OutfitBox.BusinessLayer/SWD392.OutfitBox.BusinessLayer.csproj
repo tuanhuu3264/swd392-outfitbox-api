@@ -20,6 +20,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<Folder Include="Services\RecomProduct\" />
 		<Folder Include="Services\UserPackageService\" />
 	</ItemGroup>
 

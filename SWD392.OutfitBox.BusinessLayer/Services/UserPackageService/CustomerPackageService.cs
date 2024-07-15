@@ -3,6 +3,7 @@ using Abp.Domain.Uow;
 using Abp.Extensions;
 using AutoMapper;
 using Azure.Core;
+using Castle.Core.Resource;
 using FirebaseAdmin.Messaging;
 using Microsoft.Extensions.Caching.Distributed;
 using Newtonsoft.Json;
@@ -12,6 +13,7 @@ using SWD392.OutfitBox.BusinessLayer.BusinessModels.PaymentModels;
 using SWD392.OutfitBox.DataLayer.Databases.Redis;
 using SWD392.OutfitBox.DataLayer.Entities;
 using SWD392.OutfitBox.DataLayer.FirebaseCloudMessaging;
+using SWD392.OutfitBox.DataLayer.Streaming.ProducerMessage;
 using SWD392.OutfitBox.DataLayer.UnitOfWork;
 using System;
 using System.Collections.Generic;
@@ -26,11 +28,11 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.UserPackageService
     public class CustomerPackageService : ICustomerPackageService
     {
         private readonly IUnitOfWork _unitOfWork;
-    
+
         private IMapper _mapper;
         private readonly IDatabase _cache;
         private readonly ConnectionMultiplexer _redis;
-        public CustomerPackageService(IUnitOfWork  unitOfWork,IMapper mapper)
+        public CustomerPackageService(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
@@ -42,7 +44,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.UserPackageService
             using (var transaction = _unitOfWork.BenginTransaction())
             {
                 try
-                {   
+                {
                     var customerPackageModel = await _unitOfWork._customerPackageRepository.GetCustomerPackgageAndItemsbyId(id);
                     if (customerPackageModel == null) throw new Exception("Not Found this CustomerPackage");
                     if (customerPackageModel.Status == status) throw new Exception("This CustomerPackage already has this status");
@@ -74,18 +76,18 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.UserPackageService
 
                         await _unitOfWork.SaveChangesAsync();
                         await _unitOfWork.CommitTransaction();
-                       
+
                         message.Notification = new Notification()
                         {
                             Title = "Order is accepted.",
-                            Body=$"The Order #{customerPackageModel.Id} is accepted. The order will be gived to you soon."
+                            Body = $"The Order #{customerPackageModel.Id} is accepted. The order will be gived to you soon."
                         };
-                         message.Notification = new Notification()
+                        message.Notification = new Notification()
                         {
                             Title = "Order is accepted.",
-                            Body=$"The Order #{customerPackageModel.Id} is accepted. The order will be gived to you soon."
+                            Body = $"The Order #{customerPackageModel.Id} is accepted. The order will be gived to you soon."
                         };
-                        if(message.Token!=null) FirebaseCloudMessagingHelper.SendNotificationByMessage(message);
+                        if (message.Token != null) FirebaseCloudMessagingHelper.SendNotificationByMessage(message);
                         return _mapper.Map<CustomerPackageModel>(updatedOrder);
                     }
                     else if (customerPackageModel.Status == 0 && status == -1)
@@ -108,18 +110,18 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.UserPackageService
 
                         var updatedOrder = await _unitOfWork._customerPackageRepository.SaveAsyn(customerPackageModel);
 
-                        
+
 
                         var customer = await _unitOfWork._customerRepository.GetCustomerById(customerPackageModel.CustomerId);
-                        var wallet = (await _unitOfWork._walletRepository.GetAllWalletsByUserId(customer.Id)).First(x=>x.WalletName=="Outfit4rent");
+                        var wallet = (await _unitOfWork._walletRepository.GetAllWalletsByUserId(customer.Id)).First(x => x.WalletName == "Outfit4rent");
 
                         var deposit = new Deposit()
                         {
-                            AmountMoney= (double)customerPackageModel.TotalDeposit,
-                            CustomerId=customer.Id,
-                            Date=DateTime.Now,
-                            Type="Return Money As Canceling Order",
-                            Transactions= new List<Transaction>()
+                            AmountMoney = (double)customerPackageModel.TotalDeposit,
+                            CustomerId = customer.Id,
+                            Date = DateTime.Now,
+                            Type = "Return Money As Canceling Order",
+                            Transactions = new List<Transaction>()
                             {
                                 new Transaction()
                                 {
@@ -145,7 +147,15 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.UserPackageService
                             Title = "Order is cancelled.",
                             Body = $"The Order #{customerPackageModel.Id} is cancelled. The deposit will be returned to you."
                         };
-                        if (message.Token != null)  FirebaseCloudMessagingHelper.SendNotificationByMessage(message);
+                        if (message.Token != null) FirebaseCloudMessagingHelper.SendNotificationByMessage(message);
+
+                        Task.WhenAll(
+                           ProducerMessage.ProductUpdateRedisMessage<List<CustomerPackageModel>>("delete-customer-packages-by-customerId", "delete", null, $"customer-packages-customer:{customerPackageModel.CustomerId}"),
+                           ProducerMessage.ProductUpdateRedisMessage<List<CustomerPackageModel>>("delete-customer-packages-by-customerId", "delete", null, $"customer-packages-status:{status}"),
+                           ProducerMessage.ProductUpdateRedisMessage<List<CustomerPackageModel>>("delete-customer-packages-by-customerId", "delete", null, $"customer-packages-status:{customerPackageModel.Status}"),
+                           ProducerMessage.ProductUpdateRedisMessage<CustomerPackageModel>("delete-customer-packages-byId" + customerPackageModel.Id, "delete", null, $"customer-packages-id:{customerPackageModel.Id}")
+
+                           );
                         return _mapper.Map<CustomerPackageModel>(updatedOrder);
                     }
                     else
@@ -166,16 +176,16 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.UserPackageService
             var customerPackage = _mapper.Map<CustomerPackage>(customerPackageModel);
 
             var package = await _unitOfWork._packageRepository.GetPackageById(customerPackage.PackageId);
-            if (package == null) throw new Exception("There is no package that has id: " +customerPackage.PackageId);
+            if (package == null) throw new Exception("There is no package that has id: " + customerPackage.PackageId);
 
             var user = await _unitOfWork._customerRepository.GetCustomerById(customerPackage.CustomerId);
-            if(user == null ) throw new Exception("There is no customer that has id: " + customerPackage.CustomerId);
+            if (user == null) throw new Exception("There is no customer that has id: " + customerPackage.CustomerId);
 
             var wallet = await _unitOfWork._walletRepository.GetWalletById(walletId);
-            if (wallet  == null) throw new Exception("There is no wallet that has id: " + walletId);
-            
-            
-            customerPackage.CreatedAt=DateTime.Now;
+            if (wallet == null) throw new Exception("There is no wallet that has id: " + walletId);
+
+
+            customerPackage.CreatedAt = DateTime.Now;
             customerPackage.PackageName = package.Name;
             customerPackage.DateTo = customerPackage.DateFrom.AddDays(package.AvailableRentDays);
             customerPackage.Price = package.Price;
@@ -220,7 +230,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.UserPackageService
                         throw new Exception($"The quantity of category {category.Name} is over required number");
                     }
                     categoryPackage.Remove(product.IdCategory);
-                    categoryPackage.Add(product.IdCategory,maxQuantity-item.Quantity);
+                    categoryPackage.Add(product.IdCategory, maxQuantity - item.Quantity);
                 }
             }
 
@@ -287,6 +297,10 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.UserPackageService
                     }
 
                     await _unitOfWork.CommitTransaction();
+                    Task.WhenAll(
+                           ProducerMessage.ProductUpdateRedisMessage<List<CustomerPackageModel>>("delete-customer-packages-by-customerId", "delete", null, $"customer-packages-customer:{customerPackageModel.CustomerId}"),
+                           ProducerMessage.ProductUpdateRedisMessage<List<CustomerPackageModel>>("delete-customer-packages-by-customerId", "delete", null, $"customer-packages-status:{0}")
+                           );
                     return _mapper.Map<CustomerPackageModel>(result);
                 }
                 catch (Exception ex)
@@ -297,15 +311,63 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.UserPackageService
             }
         }
         public async Task<List<CustomerPackageModel>> GetAllCustomerPackageByCustomerId(int customerId)
-        { 
+        {
+            try
+            {
+                var cacheCustomerPackages = _cache.StringGet($"customer-packages-customer:{customerId}").ToString();
+                var data = JsonConvert.DeserializeObject<List<CustomerPackageModel>>(cacheCustomerPackages);
+                if (cacheCustomerPackages != null && cacheCustomerPackages.Any())
+                {
+                    return data;
+                }
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine(ex.Message);
+            }
             var result = await _unitOfWork._customerPackageRepository.GetCustomerPackageByCustomerId(customerId);
+            foreach(var item in result)
+            {
+                foreach(var product in item.Items)
+                {
+                    product.Product = null;
+                }
+            }
+            if (result.Any())
+            {
+              await  Task.WhenAll(
+                   ProducerMessage.ProductUpdateRedisMessage<List<CustomerPackageModel>>("update-customer-packages-by-customerId" + customerId, "create", _mapper.Map<List<CustomerPackageModel>>(result), $"customer-packages-customer:{customerId}")
+               );
+            }
             return _mapper.Map<List<CustomerPackageModel>>(result);
         }
 
         public async Task<List<CustomerPackageModel>> GetCustomrPackagesByStatus(int status)
-        {   
+        {
+            try
+            {
+                var cacheCustomerPackages = _cache.StringGet($"customer-packages-status:{status}").ToString();
+                var data = JsonConvert.DeserializeObject<List<CustomerPackage>>(cacheCustomerPackages);
+                if (cacheCustomerPackages != null && cacheCustomerPackages.Any())
+                {
+                    return cacheCustomerPackages.Select(x => _mapper.Map<CustomerPackageModel>(x)).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine(ex.Message);
+            }
             var result = await _unitOfWork._customerPackageRepository.GetCustomerPackageByStatus(status);
-            return _mapper.Map<List<CustomerPackageModel>>(result);
+            var returnedData = _mapper.Map<List<CustomerPackageModel>>(result).ToList();
+            if (result.Any())
+            {
+                Task.WhenAll(
+                   ProducerMessage.ProductUpdateRedisMessage<List<CustomerPackageModel>>("update-customer-packages", "create", returnedData, $"customer-packages-status:{status}")
+               );
+            }
+            return returnedData;
         }
 
         public async Task<List<CustomerPackageModel>> GetListOrder(int? start = null, int? end = null, string sorted = "", string orders = "", string packageName = "", int? customerId = null, int? packageId = null, int? status = null, DateTime? dateFrom = null, DateTime? dateTo = null, string receiverName = "", string receiverPhone = "", string receiverAddress = "", double? maxPrice = null, double? minPrice = null, int? transactionId = null, int? quantityOfItems = null, double? maxTotalDeposit = null, double? minTotalDeposit = null)
@@ -318,7 +380,8 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.UserPackageService
                 if (!end.HasValue) end = 10;
                 result = result.Skip((int)start).Take((int)(end - start)).ToList();
                 return _mapper.Map<List<CustomerPackageModel>>(result);
-            }catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
@@ -326,9 +389,30 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.UserPackageService
 
         public async Task<CustomerPackageModel> GetPackagebyId(int packageid)
         {
-           var result = await _unitOfWork._customerPackageRepository.GetCustomerPackageById(packageid);
-            return _mapper.Map <CustomerPackageModel > (result);
-        }   
+            try
+            {
+                var cacheCustomerPackages = _cache.StringGet($"customer-packages-id:{packageid}").ToString();
+                var data = JsonConvert.DeserializeObject<CustomerPackage>(cacheCustomerPackages);
+                if (cacheCustomerPackages != null && cacheCustomerPackages.Any())
+                {
+                    return _mapper.Map<CustomerPackageModel>(cacheCustomerPackages);
+                }
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine(ex.Message);
+            }
+            var result = await _unitOfWork._customerPackageRepository.GetCustomerPackageById(packageid);
+            var returnedData = _mapper.Map<CustomerPackageModel>(result);
+            if (result != null)
+            {
+                Task.WhenAll(
+                   ProducerMessage.ProductUpdateRedisMessage<CustomerPackageModel>("update-customer-packages-byId" + packageid, "create", returnedData, $"customer-packages-id:{packageid}")
+               );
+            }
+            return returnedData;
+        }
     }
 
 

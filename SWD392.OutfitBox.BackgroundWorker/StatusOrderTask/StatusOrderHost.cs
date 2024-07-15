@@ -1,7 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
 using NetTopologySuite.Index.HPRtree;
+using SWD392.OutfitBox.BusinessLayer.BusinessModels;
 using SWD392.OutfitBox.DataLayer.Databases.Redis;
+using SWD392.OutfitBox.DataLayer.Entities;
+using SWD392.OutfitBox.DataLayer.Streaming.ProducerMessage;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -52,8 +55,13 @@ namespace SWD392.OutfitBox.BackgroundWorker.StatusOrderTask
                     {
                         item.Status = 2;
                     }
+                    ProducerMessage.ProductUpdateRedisMessage<CustomerPackage>("delete-customer-packages-byId" + customerPackage.Id, "delete", null, $"customer-packages-id:{customerPackage.Id}");
                 }
                 _context.SaveChanges();
+                Task.WhenAll(
+                         ProducerMessage.ProductUpdateRedisMessage<List<CustomerPackage>>("delete-customer-packages-by-customerId", "delete", null, $"customer-packages-status:{1}"),
+                         ProducerMessage.ProductUpdateRedisMessage<List<CustomerPackage>>("delete-customer-packages-by-customerId", "delete", null, $"customer-packages-status:{2}")
+                 );
             }
             catch (Exception ex)
             {

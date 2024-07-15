@@ -163,24 +163,5 @@ namespace SWD392.OutfitBox.API.Controllers
             }
             return StatusCode((int)response.StatusCode, response);
         }
-       /* [HttpGet("orders/{id}/products")]
-        public async Task<ActionResult<List<ProductModel>>> GetCustomerPackageByStatus([FromRoute] int status)
-        {
-            BaseResponse<List<ProductModel>> response;
-            try
-            {
-                var result = await _customerPackageService.GetCustomrPackagesByStatus(status);
-                response = new BaseResponse<List<ProductModel>>("Successfully", HttpStatusCode.OK, result.ToList());
-
-            }
-            catch (Exception ex)
-            {
-                response = new BaseResponse<List<ProductModel>>(ex.Message, HttpStatusCode.InternalServerError, null);
-            }
-
-            return StatusCode((int)response.StatusCode, response);
-        }*/
-
-
     }
 }

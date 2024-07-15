@@ -9,6 +9,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using SWD392.OutfitBox.BusinessLayer.BusinessModels;
+using StackExchange.Redis;
 
 namespace SWD392.OutfitBox.BusinessLayer.Services.CategoryPackageService
 {
@@ -16,10 +17,13 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.CategoryPackageService
     {
         public ICategoryPackageRepository _categoryPackageRepository;
         public IMapper _mapper;
+        private readonly StackExchange.Redis.IDatabase _cache;
         public CategoryPackageService(IMapper mapper, ICategoryPackageRepository categoryPackageRepository)
         {
             _categoryPackageRepository = categoryPackageRepository;
             _mapper = mapper;
+            ConnectionMultiplexer con = ConnectionMultiplexer.Connect("outfit4rent.online:6379");
+            _cache = con.GetDatabase();
         }
 
         public async Task<CategoryPackageModel> CreatePackage(CategoryPackageModel request)

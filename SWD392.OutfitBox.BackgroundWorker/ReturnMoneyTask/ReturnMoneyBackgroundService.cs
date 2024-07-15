@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using SWD392.OutfitBox.BusinessLayer.BusinessModels;
 using SWD392.OutfitBox.DataLayer.Databases.Redis;
 using SWD392.OutfitBox.DataLayer.Entities;
 using SWD392.OutfitBox.DataLayer.Streaming.ProducerMessage;
@@ -59,6 +60,9 @@ namespace SWD392.OutfitBox.BackgroundWorker.ReturnMoneyTask
                     var tasks = packageGroups.Select(group => Task.Run(async () => await ProcessPackages(group))).ToList();
 
                     await Task.WhenAll(tasks);
+                    Task.WhenAll(
+                           ProducerMessage.ProductUpdateRedisMessage<List<CustomerPackage>>("delete-customer-packages-by-customerId", "delete", null, $"customer-packages-status:{2}")
+                           );
                 }
                 _logger.LogInformation("Return Money Background Service completed work successfully.");
             }
@@ -127,6 +131,11 @@ namespace SWD392.OutfitBox.BackgroundWorker.ReturnMoneyTask
                     context.Add(deposit);
 
                     await context.SaveChangesAsync();
+                    Task.WhenAll(
+                           ProducerMessage.ProductUpdateRedisMessage<List<CustomerPackage>>("delete-customer-packages-by-customerId", "delete", null, $"customer-packages-customer:{package.CustomerId}"),
+                           ProducerMessage.ProductUpdateRedisMessage<CustomerPackage>("delete-customer-packages-byId" + package.Id, "delete", null, $"customer-packages-id:{package.Id}")
+
+                           );
                 }
 
                 await transaction.CommitAsync();
