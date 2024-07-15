@@ -145,7 +145,7 @@ namespace BusinessLayer.Services
                 if (user == null) {
                     throw new Exception("Not Found this customer");
                 }
-                string vnp_ReturnUrl = "https://localhost:7158/swagger";
+                string vnp_ReturnUrl = "api.outft4rent.online";
                 string vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
                 string vnp_TmnCode = "F8V1A5TK";
                 string vnp_HashSecret = "GCLECYOCZYQLDTIUGHGWZAWPNALXPLOJ";
