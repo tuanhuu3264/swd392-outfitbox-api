@@ -19,7 +19,7 @@ namespace SWD392.OutfitBox.API.Controllers
         {
             _favouriteProductService = favouriteProductService;
         }
-        [HttpPost("favourited-products/customers/{customerId}/products/{productId}")]
+        [HttpPost("customers/{customerId}/favorited-products/{productId}")]
         public async Task<ActionResult<BaseResponse<FavouriteProductModel>>> CreateFavouriteProduct(int customerId, int productId)
         {
             BaseResponse<FavouriteProductModel> response;
@@ -34,13 +34,13 @@ namespace SWD392.OutfitBox.API.Controllers
             }
             return response;
         }
-        [HttpDelete("favourited-products/customers/{customerId}/products/{productId}")]
+        [HttpDelete("customers/{customerId}/favorited-products/{productId}")]
         public async Task<ActionResult<BaseResponse<string>>> DeleteFavouriteProduct(int customerId, int productId)
         {
             BaseResponse<string> response;
             try
             {
-                var data = await _favouriteProductService.CreateFavouriteProduct(productId, customerId);
+                var data = await _favouriteProductService.DeleteFavouriteProduct(productId, customerId);
                 response = new BaseResponse<string>("Delete favourite product successfully.", HttpStatusCode.OK, "");
             }
             catch (ArgumentNullException ex)
@@ -53,7 +53,7 @@ namespace SWD392.OutfitBox.API.Controllers
             }
             return StatusCode((int)response.StatusCode, response);
         }
-        [HttpGet("favourited-products/customers/{customerId}")]
+        [HttpGet("customers/{customerId}/favorited-product")]
         public async Task<ActionResult<BaseResponse<List<ProductModel>>>> GetFavouriteProductByCustomerId([FromRoute] int customerId)
         {
             BaseResponse<List<ProductModel>> response;

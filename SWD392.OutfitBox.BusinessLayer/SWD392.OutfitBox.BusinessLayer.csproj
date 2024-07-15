@@ -9,6 +9,7 @@
 	<ItemGroup>
 		<PackageReference Include="AspNetCore.Firebase.Authentication" Version="2.0.1" />
 		<PackageReference Include="AutoMapper" Version="13.0.1" />
+		<PackageReference Include="dotenv.net" Version="3.2.0" />
 		<PackageReference Include="FirebaseAdmin" Version="3.0.0" />
 		<PackageReference Include="FirebaseStorage.net" Version="1.0.3" />
 		<PackageReference Include="FirebaseAuthentication.net" Version="4.1.0" />
@@ -19,6 +20,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<Folder Include="Services\RecomProduct\" />
 		<Folder Include="Services\UserPackageService\" />
 	</ItemGroup>
 

@@ -1,58 +1,114 @@
 ﻿using Confluent.Kafka;
+using FirebaseAdmin.Messaging;
+using Newtonsoft.Json;
 using SWD392.OutfitBox.DataLayer.Entities;
+using SWD392.OutfitBox.DataLayer.Streaming.ProducerMessage;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using static Confluent.Kafka.ConfigPropertyNames;
-using static Org.BouncyCastle.Math.EC.ECCurve;
 
 namespace SWD392.OutfitBox.DataLayer.Streaming.CosumerMessage
 {
-    public class CosumerMessage
+    public class CosumerBrandMessage
     {
-        public CosumerMessage() { }
-        public async Task ProccessProductMessage()
+        public static async Task<(Message, CustomerPackage)> ProcessMessageNotification(CancellationToken cancellationToken)
         {
+            Message<CustomerPackage> lastMessage = null;
+
             using (var c = new ConsumerBuilder<Ignore, string>(Config.GetConsumerConfig()).Build())
             {
-                c.Subscribe("Products");
-
-                CancellationTokenSource cts = new CancellationTokenSource();
-                Console.CancelKeyPress += (_, e) =>
-                {
-                    e.Cancel = true; // Prevent the process from terminating.
-                    cts.Cancel();
-                };
+                c.Subscribe("Notifications-User");
 
                 try
                 {
-                    // Seek to the end of the partition(s)
                     c.Assign(c.Assignment);
                     foreach (var partition in c.Assignment)
                     {
                         c.Seek(new TopicPartitionOffset(partition.Topic, partition.Partition, Offset.End));
                     }
 
-                    // Consume the last message
-                    try
+                    while (!cancellationToken.IsCancellationRequested)
                     {
-                        var cr = c.Consume(cts.Token);
-                        Console.WriteLine($"Consumed message '{  cr.Value}' at: '{cr.TopicPartitionOffset}'.");
-                    }
-                    catch (ConsumeException e)
-                    {
-                        Console.WriteLine($"Error occurred: {e.Error.Reason}");
+                        try
+                        {
+                            var cr = c.Consume(cancellationToken);
+                            if (cr.Value != null) c.Commit(cr);
+                            Console.WriteLine($"Consumed message '{cr?.Value}' at: '{cr.TopicPartitionOffset}'.");
+
+                            lastMessage = JsonConvert.DeserializeObject<Message<CustomerPackage>>(cr.Value);
+                            return (new Message()
+                            {
+                                Notification = new Notification()
+                                {
+                                    Title = $"Return Money In Order #{lastMessage.Data.Id}",
+                                    Body = $"Thank you for using our services, your deposit in order #{lastMessage.Data.Id} is returned successfully. The money is {lastMessage.Data.ReturnDeposit}",
+                                },
+                            }, lastMessage.Data);
+                        }
+                        catch (ConsumeException e)
+                        {
+                            Console.WriteLine($"Error occurred: {e.Error.Reason}");
+                        }
                     }
                 }
                 catch (OperationCanceledException)
                 {
-                    // Ensure the c leaves the group cleanly and final offsets are committed.
+                    // Expected exception on shutdown, no need to handle
+                }
+                finally
+                {
                     c.Close();
                 }
             }
+
+            return (new Message()
+            {
+            }, new CustomerPackage());
         }
+
+        public static async Task<Message<TEntity>> ProcessMessageSetValueRedis<TEntity> (CancellationToken cancellationToken) where TEntity: class
+        {
+            Message<TEntity> lastMessage = null;
+
+            using (var c = new ConsumerBuilder<Ignore, string>(Config.GetConsumerConfig()).Build())
+            {
+                c.Subscribe("Redis-UpdateData");
+
+                try
+                {
+                    c.Assign(c.Assignment);
+                    foreach (var partition in c.Assignment)
+                    {
+                        c.Seek(new TopicPartitionOffset(partition.Topic, partition.Partition, Offset.End));
+                    }
+
+                    while (!cancellationToken.IsCancellationRequested)
+                    {
+                        var cr = c.Consume(cancellationToken);
+
+                        if (cr.Value != null) c.Commit(cr);
+                        Console.WriteLine($"Consumed message '{cr?.Value}' at: '{cr.TopicPartitionOffset}'.");
+
+                        lastMessage = JsonConvert.DeserializeObject<Message<TEntity>>(cr.Value);
+                        return lastMessage;
+                    }
+                }
+                catch (ConsumeException e)
+                {
+                    throw new Exception(e.Message);
+                }
+                catch (OperationCanceledException)
+                {
+
+                }
+                finally
+                {
+                    c.Close();
+                }
+            }
+
+            return lastMessage;
+        }
+
     }
 }

@@ -14,5 +14,6 @@ namespace SWD392.OutfitBox.DataLayer.Interfaces
         public Task<ProductReturnOrder> GetProductReturnOrderById(int Id);
         public Task<List<ProductReturnOrder>> GetProductsReturnOrder();
         public Task<List<ProductReturnOrder>> CreateProductReturnOrders(ProductReturnOrder[] productReturnOrder);
+        public Task<List<ProductReturnOrder>> GetProductReturnOrderByReturnOrderId(int returnOrderId);
     }
 }

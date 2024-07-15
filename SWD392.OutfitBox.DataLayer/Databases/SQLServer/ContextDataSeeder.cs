@@ -56,43 +56,51 @@ namespace SWD392.OutfitBox.DataLayer.Databases.Redis
                 {
                     ID = 1,
                     Name = "Shirt",
-                    Description = "T-Shirt,Vest,Polo,Smock,..."
+                    Description = "T-Shirt,Vest,Polo,Smock,...",
+                    ImageUrl = "https://hoangnguyenstore.com/wp-content/uploads/2021/11/ao-so-mi-dior-hoa-tiet-nhen-asmd01-5.webp"
                 },
                 new Category
                 {
                     ID = 2,
                     Name = "Short",
-                    Description = "Gauchos,Jeans,Trousers,..."
+                    Description = "Gauchos,Jeans,Trousers,...",
+                    ImageUrl = "https://cf.shopee.vn/file/53ba7e3dcff647db1ff302f6c378a0bc"
                 },
                 new Category
                 {
                     ID = 3,
                     Name = "Skirt",
-                    Description = "Skater,Circle,Aline,Maxi,Sarong,..."
+                    Description = "Skater,Circle,Aline,Maxi,Sarong,...",
+                    ImageUrl = "https://lzd-img-global.slatic.net/g/p/ff217e1a9b75a39108b8a04c22d164dc.jpg_720x720q80.jpg"
                 },
                 new Category
                 {
                     ID = 4,
                     Name = "Dress",
-                    Description = "A-line,Empire,Tent,Princess,Shift,..."
+                    Description = "A-line,Empire,Tent,Princess,Shift,...",
+                    ImageUrl= "https://image.dhgate.com/0x0s/f2-albu-g17-M00-71-84-rBVa4V_J8_iAXsmWAADRlVU_URo051.jpg/2021-black-ball-gown-gothic-wedding-dresses.jpg"
                 },
                 new Category
                 {
                     ID = 5,
                     Name = "Costumes",
-                    Description = "Ao dai,Traditional clothers,..."
+                    Description = "Ao dai,Traditional clothers,...",
+                    ImageUrl= "https://i.pinimg.com/originals/47/2c/21/472c21c67c84e2d69866319ccf7906d6.jpg"
                 },
                 new Category
                 {
                     ID = 6,
                     Name = "Accessories",
-                    Description = "Sunglasses,Tie,Watch,Bow,..."
+                    Description = "Sunglasses,Tie,Watch,Bow,...",
+                    ImageUrl = "https://d2hg8ctx8thzji.cloudfront.net/clusterfeed.net/wp-content/uploads/2020/07/6CommonlyUsedAccessoriestoChooseFrom-750x532.jpg"
+
                 },
                  new Category
                  {
                      ID= 7,
                      Name= "Couple",
-                     Description = "Way for couples or friends to express their affection and bond with each other"
+                     Description = "Way for couples or friends to express their affection and bond with each other",
+                     ImageUrl= "https://top.chon.vn/wp-content/uploads/2019/09/shop-do-doi-5.jpg"
                  }
                 );
             modelBuilder.Entity<Product>().HasData(

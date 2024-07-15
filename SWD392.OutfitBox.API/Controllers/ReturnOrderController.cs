@@ -5,6 +5,7 @@ using Pipelines.Sockets.Unofficial;
 using SWD392.OutfitBox.API.Configurations.HTTPResponse;
 using SWD392.OutfitBox.API.DTOs.ReturnOrder;
 using SWD392.OutfitBox.BusinessLayer.BusinessModels;
+using SWD392.OutfitBox.BusinessLayer.BusinessModels.PaymentModels;
 using SWD392.OutfitBox.BusinessLayer.Services.ReturnOrderService;
 using SWD392.OutfitBox.DataLayer.Entities;
 using System.Net;
@@ -96,6 +97,22 @@ namespace SWD392.OutfitBox.API.Controllers
             catch (Exception ex)
             {
                 response = new BaseResponse<ReturnOrderModel>(ex.Message, HttpStatusCode.InternalServerError, null);
+            }
+            return StatusCode((int)response.StatusCode, response);
+        }
+
+        [HttpPatch("return-orders/{id}/products")]
+        public async Task<ActionResult<List<ProductInReturnOrderViewModel>>> GetProductListInReturnOrder([FromRoute] int id)
+        {
+            BaseResponse<List<ProductInReturnOrderViewModel>> response;
+            try
+            {
+                var data = await _returnOrderService.GetByReturnOrderId(id);
+                response = new BaseResponse<List<ProductInReturnOrderViewModel>>("Change status return order successfully.", HttpStatusCode.OK, data);
+            }
+            catch (Exception ex)
+            {
+                response = new BaseResponse<List<ProductInReturnOrderViewModel>>(ex.Message, HttpStatusCode.InternalServerError, null);
             }
             return StatusCode((int)response.StatusCode, response);
         }

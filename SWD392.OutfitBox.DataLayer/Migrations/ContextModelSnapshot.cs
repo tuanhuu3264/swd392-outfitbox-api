@@ -167,7 +167,7 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                         {
                             ID = 1,
                             Description = "T-Shirt,Vest,Polo,Smock,...",
-                            ImageUrl = "",
+                            ImageUrl = "https://hoangnguyenstore.com/wp-content/uploads/2021/11/ao-so-mi-dior-hoa-tiet-nhen-asmd01-5.webp",
                             IsFeatured = false,
                             Name = "Shirt",
                             Status = 0
@@ -176,7 +176,7 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                         {
                             ID = 2,
                             Description = "Gauchos,Jeans,Trousers,...",
-                            ImageUrl = "",
+                            ImageUrl = "https://cf.shopee.vn/file/53ba7e3dcff647db1ff302f6c378a0bc",
                             IsFeatured = false,
                             Name = "Short",
                             Status = 0
@@ -185,7 +185,7 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                         {
                             ID = 3,
                             Description = "Skater,Circle,Aline,Maxi,Sarong,...",
-                            ImageUrl = "",
+                            ImageUrl = "https://lzd-img-global.slatic.net/g/p/ff217e1a9b75a39108b8a04c22d164dc.jpg_720x720q80.jpg",
                             IsFeatured = false,
                             Name = "Skirt",
                             Status = 0
@@ -194,7 +194,7 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                         {
                             ID = 4,
                             Description = "A-line,Empire,Tent,Princess,Shift,...",
-                            ImageUrl = "",
+                            ImageUrl = "https://image.dhgate.com/0x0s/f2-albu-g17-M00-71-84-rBVa4V_J8_iAXsmWAADRlVU_URo051.jpg/2021-black-ball-gown-gothic-wedding-dresses.jpg",
                             IsFeatured = false,
                             Name = "Dress",
                             Status = 0
@@ -203,7 +203,7 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                         {
                             ID = 5,
                             Description = "Ao dai,Traditional clothers,...",
-                            ImageUrl = "",
+                            ImageUrl = "https://i.pinimg.com/originals/47/2c/21/472c21c67c84e2d69866319ccf7906d6.jpg",
                             IsFeatured = false,
                             Name = "Costumes",
                             Status = 0
@@ -212,7 +212,7 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                         {
                             ID = 6,
                             Description = "Sunglasses,Tie,Watch,Bow,...",
-                            ImageUrl = "",
+                            ImageUrl = "https://d2hg8ctx8thzji.cloudfront.net/clusterfeed.net/wp-content/uploads/2020/07/6CommonlyUsedAccessoriestoChooseFrom-750x532.jpg",
                             IsFeatured = false,
                             Name = "Accessories",
                             Status = 0
@@ -221,7 +221,7 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                         {
                             ID = 7,
                             Description = "Way for couples or friends to express their affection and bond with each other",
-                            ImageUrl = "",
+                            ImageUrl = "https://top.chon.vn/wp-content/uploads/2019/09/shop-do-doi-5.jpg",
                             IsFeatured = false,
                             Name = "Couple",
                             Status = 0
@@ -431,7 +431,7 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                             Phone = "0325739910",
                             Picture = "",
                             Status = 1,
-                            Time = new DateTime(2024, 7, 8, 17, 3, 22, 173, DateTimeKind.Local).AddTicks(6446)
+                            Time = new DateTime(2024, 7, 15, 17, 43, 37, 867, DateTimeKind.Local).AddTicks(4067)
                         },
                         new
                         {
@@ -443,7 +443,7 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                             Phone = "123",
                             Picture = "",
                             Status = 1,
-                            Time = new DateTime(2024, 7, 8, 17, 3, 22, 173, DateTimeKind.Local).AddTicks(6484)
+                            Time = new DateTime(2024, 7, 15, 17, 43, 37, 867, DateTimeKind.Local).AddTicks(4087)
                         },
                         new
                         {
@@ -455,7 +455,7 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                             Phone = "123",
                             Picture = "",
                             Status = 1,
-                            Time = new DateTime(2024, 7, 8, 17, 3, 22, 173, DateTimeKind.Local).AddTicks(6486)
+                            Time = new DateTime(2024, 7, 15, 17, 43, 37, 867, DateTimeKind.Local).AddTicks(4089)
                         },
                         new
                         {
@@ -467,7 +467,7 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                             Phone = "123",
                             Picture = "",
                             Status = 1,
-                            Time = new DateTime(2024, 7, 8, 17, 3, 22, 173, DateTimeKind.Local).AddTicks(6487)
+                            Time = new DateTime(2024, 7, 15, 17, 43, 37, 867, DateTimeKind.Local).AddTicks(4090)
                         });
                 });
 
@@ -479,6 +479,9 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("CustomerId")
                         .HasColumnType("int");
 
@@ -487,6 +490,9 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
 
                     b.Property<DateTime>("DateTo")
                         .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsReturnedDeposit")
+                        .HasColumnType("bit");
 
                     b.Property<int>("PackageId")
                         .HasColumnType("int");
@@ -513,6 +519,9 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<double>("ReturnDeposit")
+                        .HasColumnType("float");
+
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
@@ -536,15 +545,18 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                         new
                         {
                             Id = 1,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CustomerId = 1,
-                            DateFrom = new DateTime(2024, 7, 8, 17, 3, 22, 173, DateTimeKind.Local).AddTicks(6550),
-                            DateTo = new DateTime(2024, 8, 7, 17, 3, 22, 173, DateTimeKind.Local).AddTicks(6550),
+                            DateFrom = new DateTime(2024, 7, 15, 17, 43, 37, 867, DateTimeKind.Local).AddTicks(4161),
+                            DateTo = new DateTime(2024, 8, 14, 17, 43, 37, 867, DateTimeKind.Local).AddTicks(4162),
+                            IsReturnedDeposit = false,
                             PackageId = 1,
                             PackageName = "Newcomer Trial",
                             Price = 200.0,
                             ReceiverAddress = "Nha Van Hoa Sinh Vien",
                             ReceiverName = "Khanh Sky",
                             ReceiverPhone = "0325739910",
+                            ReturnDeposit = 0.0,
                             Status = 1,
                             TransactionId = 1
                         });
@@ -583,7 +595,7 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                             Id = 1,
                             AmountMoney = 20.0,
                             CustomerId = 1,
-                            Date = new DateTime(2024, 7, 8, 17, 3, 22, 173, DateTimeKind.Local).AddTicks(6634),
+                            Date = new DateTime(2024, 7, 15, 17, 43, 37, 867, DateTimeKind.Local).AddTicks(4266),
                             Type = "Khuyen Mai"
                         });
                 });
@@ -764,6 +776,9 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ReturnedQuantity")
                         .HasColumnType("int");
 
                     b.Property<int>("Status")
@@ -1164,6 +1179,12 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("DamagedLevel")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
 
@@ -1175,6 +1196,9 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
+
+                    b.Property<double>("ThornMoney")
+                        .HasColumnType("float");
 
                     b.HasKey("Id");
 
@@ -1197,7 +1221,13 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("CustomerId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CustomerPackageId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("DateReturn")
@@ -1214,12 +1244,20 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("QuantityOfItems")
+                        .HasColumnType("int");
+
                     b.Property<int>("Status")
                         .HasColumnType("int");
+
+                    b.Property<double>("TotalThornMoney")
+                        .HasColumnType("float");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CustomerId");
+
+                    b.HasIndex("CustomerPackageId");
 
                     b.HasIndex("PartnerId");
 
@@ -1345,7 +1383,7 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                         {
                             Id = 1,
                             Amount = 0.0,
-                            DateTransaction = new DateTime(2024, 7, 8, 17, 3, 22, 173, DateTimeKind.Local).AddTicks(6595),
+                            DateTransaction = new DateTime(2024, 7, 15, 17, 43, 37, 867, DateTimeKind.Local).AddTicks(4200),
                             DepositId = 1,
                             Paymethod = "",
                             Status = 0,
@@ -1599,6 +1637,12 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
+                    b.HasOne("SWD392.OutfitBox.DataLayer.Entities.CustomerPackage", "CustomerPackage")
+                        .WithMany()
+                        .HasForeignKey("CustomerPackageId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("SWD392.OutfitBox.DataLayer.Entities.Partner", "Partner")
                         .WithMany("ReturnOrders")
                         .HasForeignKey("PartnerId")
@@ -1606,6 +1650,8 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                         .IsRequired();
 
                     b.Navigation("Customer");
+
+                    b.Navigation("CustomerPackage");
 
                     b.Navigation("Partner");
                 });

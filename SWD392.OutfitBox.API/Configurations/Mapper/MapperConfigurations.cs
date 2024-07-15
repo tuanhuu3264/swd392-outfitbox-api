@@ -17,6 +17,7 @@ using SWD392.OutfitBox.API.DTOs.Wallet;
 using SWD392.OutfitBox.API.RequestModels.CustomerPackage;
 using SWD392.OutfitBox.BusinessLayer;
 using SWD392.OutfitBox.BusinessLayer.BusinessModels;
+using SWD392.OutfitBox.BusinessLayer.BusinessModels.PaymentModels;
 using SWD392.OutfitBox.DataLayer.Entities;
 
 namespace SWD392.OutfitBox.API.Configurations.Mapper
@@ -130,17 +131,18 @@ namespace SWD392.OutfitBox.API.Configurations.Mapper
         {
             CreateMap<ProductReturnOrderModel, CreateProductReturnOrderRequestDTO>().ReverseMap();
             CreateMap<ProductReturnOrder, ProductReturnOrderModel>();
+            CreateMap<ProductReturnOrder, ProductInReturnOrderViewModel>().ForMember(x=>x.Product, opt=>opt.MapFrom(y=>y.Product));
             CreateMap<ProductReturnOrderModel, ProductReturnOrder>().ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
             ;
         }
         public void ReturnOrderProfile()
         {
-            CreateMap<CreateReturnOrderRequestDTO, ReturnOrderModel>().ReverseMap();
+            CreateMap<CreateReturnOrderRequestDTO, ReturnOrderModel>().ForMember(x=>x.ProductReturnOrders, opt=>opt.MapFrom(x=>x.ProductReturnOrders)).ReverseMap();
 
             CreateMap<ReturnOrderModel, ReturnOrder>()
                 .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
 
-            CreateMap<ReturnOrder, ReturnOrderModel>();
+            CreateMap<ReturnOrder, ReturnOrderModel>().ForMember(x=>x.ProductReturnOrders, opt=>opt.MapFrom(x=>x.ProductReturnOrders));
         }
         public void PartnerProfile()
         {

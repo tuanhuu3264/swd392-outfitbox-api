@@ -48,5 +48,11 @@ namespace SWD392.OutfitBox.DataLayer.Repositories
             await this.SaveChangesAsync();
             return await this.Get().FirstAsync(x=>x.Id== productReturnOrder.Id);
         }
+
+        public async Task<List<ProductReturnOrder>> GetProductReturnOrderByReturnOrderId(int returnOrderId)
+        {
+            var result = await this.Get().Include(x=>x.Product).ThenInclude(x=>x.Images).Where(x=>x.ReturnOrderId==returnOrderId).ToListAsync();
+            return result;
+        }
     }
 }

@@ -9,6 +9,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using SWD392.OutfitBox.BusinessLayer.BusinessModels;
+using StackExchange.Redis;
 
 namespace SWD392.OutfitBox.BusinessLayer.Services.CategoryPackageService
 {
@@ -16,10 +17,13 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.CategoryPackageService
     {
         public ICategoryPackageRepository _categoryPackageRepository;
         public IMapper _mapper;
+        private readonly StackExchange.Redis.IDatabase _cache;
         public CategoryPackageService(IMapper mapper, ICategoryPackageRepository categoryPackageRepository)
         {
             _categoryPackageRepository = categoryPackageRepository;
             _mapper = mapper;
+            ConnectionMultiplexer con = ConnectionMultiplexer.Connect("outfit4rent.online:6379");
+            _cache = con.GetDatabase();
         }
 
         public async Task<CategoryPackageModel> CreatePackage(CategoryPackageModel request)
@@ -37,7 +41,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.CategoryPackageService
         }
 
         public async Task<List<CategoryPackageModel>> GetAllCategoryPackagesByPackageId(int packageId)
-        {
+        {   
             return (await _categoryPackageRepository.GetAllCategoryPackagesByPackageId(packageId)).Select(x => _mapper.Map<CategoryPackageModel>(x)).ToList();
         }
 
@@ -47,7 +51,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.CategoryPackageService
             var updatedCategoryPackage = await _categoryPackageRepository.GetCategoryPackageById(request.Id.Value);
             updatedCategoryPackage.Status = request.Status.HasValue ? request.Status.Value : updatedCategoryPackage.Status;
             updatedCategoryPackage.MaxAvailableQuantity = request.MaxAvailableQuantity.HasValue? request.MaxAvailableQuantity.Value : updatedCategoryPackage.MaxAvailableQuantity;
-            // tu them di ku
+            // tu them di ku ??? giao cho lam keu tu them ??
             var returnedCategoryPackage = await _categoryPackageRepository.UpdateCategoryPackage(updatedCategoryPackage);
             
             return _mapper.Map<CategoryPackageModel>(returnedCategoryPackage);

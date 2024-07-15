@@ -14,6 +14,7 @@ namespace SWD392.OutfitBox.DataLayer.Entities
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public int Status { get; set; }
+        public int DamagedLevel { get; set; }
         public int ProductId { get; set; }        
         [ForeignKey("ProductId")]
         public Product? Product { get; set; }     
@@ -21,5 +22,7 @@ namespace SWD392.OutfitBox.DataLayer.Entities
         [ForeignKey("ReturnOrderId")]
         public ReturnOrder? ReturnOrder { get; set; }
         public int Quantity { get; set; }
+        public double ThornMoney { get; set; }
+        public string? Description {  get; set; }
     }
 }

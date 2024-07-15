@@ -18,6 +18,8 @@ namespace SWD392.OutfitBox.API.DTOs.ReturnOrder
         [Required(ErrorMessage = "The customer package id is required.")]
         [Range(1, int.MaxValue, ErrorMessage = "The customer package id is over range of data.")]
         public int CustomerPackageId { get; set; }
+        [Range(1, int.MaxValue, ErrorMessage = "The customer id is over range of data.")]
+        public int CustomerId { get; set; }
         [Required(ErrorMessage = "The date return is required.")]
        
         public DateTime DateReturn { get; set; }

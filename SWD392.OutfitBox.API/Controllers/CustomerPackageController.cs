@@ -19,7 +19,7 @@ namespace SWD392.OutfitBox.API.Controllers
             _customerPackageService = customerPackageService;
             _mapper = mapper;
         }
-        [HttpPatch("customers/packages/{id}/status/{status}")]
+        [HttpPatch("orders/{id}/status/{status}")]
         public async Task<ActionResult<CustomerPackageModel>> UpdateCustomerPackage([FromRoute] int id, [FromRoute] int status)
         {
             BaseResponse<CustomerPackageModel> response;
@@ -40,13 +40,67 @@ namespace SWD392.OutfitBox.API.Controllers
 
             return StatusCode((int)response.StatusCode, response);
         }
-        [HttpGet("customers/packages/{packageId}")]
-        public async Task<ActionResult<CustomerPackageModel>> GetCustomerPackageById( [FromRoute] int packageId)
+        [HttpGet("orders")]
+        public async Task<ActionResult<List<CustomerPackageModel>>> GetCustomerPackages(
+            [FromQuery(Name ="_start")]
+
+            int? start = null,
+            [FromQuery(Name ="_end")]
+            int? end = null,
+            [FromQuery(Name="_sort")]
+            string sorted = "",
+            [FromQuery(Name ="_order")]
+            string orders = "",
+            [FromQuery]
+            string packageName = "",
+            [FromQuery]
+            int? customerId = null,
+            [FromQuery]
+            int? packageId = null,
+            [FromQuery]
+            int? status = null,
+            [FromQuery]
+            DateTime? dateFrom = null,
+            [FromQuery]
+            DateTime? dateTo = null,
+            [FromQuery(Name ="receiverName_like")]
+            string receiverName = "",
+            [FromQuery(Name ="receiverPhone_like")]
+            string receiverPhone = "",
+            [FromQuery(Name = "receiverAddress_like")]
+            string receiverAddress = "",
+            [FromQuery]
+            double? maxPrice = null,
+            [FromQuery]
+            double? minPrice = null,
+            [FromQuery] int? transactionId = null,
+            [FromQuery]
+             int? quantityOfItems = null,
+            [FromQuery] double? maxTotalDeposit = null,
+            [FromQuery] double? minTotalDeposit = null)
+        {
+            BaseResponse<List<CustomerPackageModel>> response;
+            try
+            {   
+
+                var result = await _customerPackageService.GetListOrder(start,end,sorted,orders,packageName,customerId,packageId,status,dateFrom,dateTo,receiverName,receiverPhone,receiverAddress,maxPrice,minPrice,transactionId,quantityOfItems,maxTotalDeposit,minTotalDeposit);
+                response = new BaseResponse<List<CustomerPackageModel>>("Successfully", HttpStatusCode.OK, result.ToList());
+
+            }
+            catch (Exception ex)
+            {
+                response = new BaseResponse<List<CustomerPackageModel>>(ex.Message, HttpStatusCode.InternalServerError, null);
+            }
+
+            return StatusCode((int)response.StatusCode, response);
+        }
+        [HttpGet("orders/{id}")]
+        public async Task<ActionResult<CustomerPackageModel>> GetCustomerPackageById([FromRoute] int id)
         {
             BaseResponse<CustomerPackageModel> response;
             try
             {
-                var result = await _customerPackageService.GetPackagebyId(packageId);
+                var result = await _customerPackageService.GetPackagebyId(id);
                 response = new BaseResponse<CustomerPackageModel>("Successfully", HttpStatusCode.OK, result);
 
             }
@@ -57,22 +111,57 @@ namespace SWD392.OutfitBox.API.Controllers
 
             return StatusCode((int)response.StatusCode, response);
         }
-        [HttpPost("customers/packages")]
-        public async Task<ActionResult<CustomerPackageModel>> CreateCustomerPackage([FromBody] CustomerPackageRequest request)
+        [HttpGet("orders/customers/{customerId}")]
+        public async Task<ActionResult<List<CustomerPackageModel>>> GetCustomerPackageByCustomerId([FromRoute] int customerId)
+        {
+            BaseResponse<List<CustomerPackageModel>> response;
+            try
+            {
+                var result = await _customerPackageService.GetAllCustomerPackageByCustomerId(customerId);
+                response = new BaseResponse<List<CustomerPackageModel>>("Successfully", HttpStatusCode.OK, result.ToList());
+
+            }
+            catch (Exception ex)
+            {
+                response = new BaseResponse<List<CustomerPackageModel>>(ex.Message, HttpStatusCode.InternalServerError, null);
+            }
+
+            return StatusCode((int)response.StatusCode, response);
+        }
+        [HttpGet("orders/status/{status}")]
+        public async Task<ActionResult<List<CustomerPackageModel>>> GetCustomerPackageByStatus([FromRoute] int status)
+        {
+            BaseResponse<List<CustomerPackageModel>> response;
+            try
+            {
+                var result = await _customerPackageService.GetCustomrPackagesByStatus(status);
+                response = new BaseResponse<List<CustomerPackageModel>>("Successfully", HttpStatusCode.OK, result.ToList());
+
+            }
+            catch (Exception ex)
+            {
+                response = new BaseResponse<List<CustomerPackageModel>>(ex.Message, HttpStatusCode.InternalServerError, null);
+            }
+
+            return StatusCode((int)response.StatusCode, response);
+        }
+        [HttpPost("orders/customers/{customerId}/packages/{packageId}")]
+        public async Task<ActionResult<CustomerPackageModel>> CreateCustomerPackage([FromBody] CustomerPackageRequest request, [FromRoute] int customerId, [FromRoute] int packageId)
         {
             BaseResponse<CustomerPackageModel> response;
             try
             {
                 var customerPackage = _mapper.Map<CustomerPackageModel>(request);
-                var result = await _customerPackageService.CreateCustomerPackage(customerPackage);
+                customerPackage.CustomerId = customerId;
+                customerPackage.PackageId = packageId;
+                var result = await _customerPackageService.CreateCustomerPackage(customerPackage, request.WalletId);
                 response = new BaseResponse<CustomerPackageModel>("Successfully", HttpStatusCode.OK, result);
             }
             catch (Exception ex)
             {
-                response = new BaseResponse<CustomerPackageModel>(ex.Message,HttpStatusCode.InternalServerError, null);
+                response = new BaseResponse<CustomerPackageModel>(ex.Message, HttpStatusCode.InternalServerError, null);
             }
             return StatusCode((int)response.StatusCode, response);
         }
-
     }
 }

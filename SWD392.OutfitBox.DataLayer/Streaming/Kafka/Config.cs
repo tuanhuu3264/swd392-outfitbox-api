@@ -11,13 +11,15 @@ public class Config
     public static ProducerConfig GetProducerConfig() => new ProducerConfig
     {  
         BootstrapServers = "34.123.203.83:9092",
+        AllowAutoCreateTopics = true,
+        BatchSize=1024,
     };
 
     public static ConsumerConfig  GetConsumerConfig() => new ConsumerConfig
     {
-        EnableAutoCommit = false,
+        EnableAutoCommit = true,
         AutoOffsetReset = AutoOffsetReset.Earliest,
-        GroupId = "Oce",
+        GroupId = "Node-1",
         BootstrapServers = "34.123.203.83:9092",
     };
 }

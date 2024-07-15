@@ -18,8 +18,13 @@ namespace SWD392.OutfitBox.BusinessLayer.BusinessModels
         public string? Address { get; set; } = string.Empty;
         public string? Phone { get; set; } = string.Empty;
         public int? Status { get; set; }
+        public double? TotalThornMoney { get; set; }
         public int? CustomerId { get; set; }
         public int? PartnerId { get; set; }
+        public int? QuantityOfItems { get; set; }
+        public int? CustomerPackageId { get; set; }
+        public DateTime? CreatedAt { get; set; }
+        public List<ProductReturnOrderModel>? ProductReturnOrders {  get; set; } 
 
     }
 }

@@ -27,6 +27,7 @@ using SWD392.OutfitBox.BusinessLayer.Services.BrandService;
 using SWD392.OutfitBox.BusinessLayer.Services.UserPackageService;
 using SWD392.OutfitBox.BusinessLayer.Services.PaymentService;
 using SWD392.OutfitBox.BusinessLayer.Services.AdminService;
+using SWD392.OutfitBox.BackgroundWorker.RedisTask;
 
 namespace SWD392.OutfitBox.API.CollectionRegisters
 {
@@ -43,7 +44,7 @@ namespace SWD392.OutfitBox.API.CollectionRegisters
             {
                 options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
             });
-           
+            services.AddScoped<DeviceTokenService>();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.ServiesRegister();
             services.AddScoped<IUnitOfWork,UnitOfWork>();

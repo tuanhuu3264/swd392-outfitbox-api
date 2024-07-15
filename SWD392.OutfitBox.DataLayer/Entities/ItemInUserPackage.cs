@@ -25,5 +25,6 @@ namespace SWD392.OutfitBox.DataLayer.Entities
         [ForeignKey("UserPackageId")]
         public CustomerPackage? UserPackage { get; set; }
         public int Quantity { get; set; }
+        public int ReturnedQuantity { get; set; }
     }
 }
