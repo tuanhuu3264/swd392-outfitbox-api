@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SWD392.OutfitBox.BusinessLayer.BusinessModels.PaymentModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.PaymentService
 {
     public interface IPaymentService
     {
-        //Task<ResponsePayment> GetInformationPayment(VNPayRequestDTO dto);
+        Task<ResponsePayment> GetInformationPayment(VNPayModel dto);
         Task<string> CallAPIPayByUserId(int userId, double money);
     }
 }

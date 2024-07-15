@@ -17,9 +17,9 @@ namespace SWD392.OutfitBox.DataLayer.Repositories
         }
         public async Task<Deposit> CreateDeposit(Deposit deposit)
         {
-            await this.AddAsync(deposit);
+            var result = await this.AddAsync(deposit);
             await this.SaveChangesAsync();
-            return await this.Get().OrderBy(x => x.Id).LastAsync();
+            return result;
         }
     }
 }
