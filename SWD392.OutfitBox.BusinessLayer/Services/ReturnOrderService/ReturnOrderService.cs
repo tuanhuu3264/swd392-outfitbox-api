@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using SWD392.OutfitBox.BusinessLayer.BusinessModels;
 using SWD392.OutfitBox.BusinessLayer.BusinessModels.PaymentModels;
 using SWD392.OutfitBox.DataLayer.Entities;
-using SWD392.OutfitBox.DataLayer.Migrations;
 using SWD392.OutfitBox.DataLayer.UnitOfWork;
 using System;
 using System.Collections.Generic;

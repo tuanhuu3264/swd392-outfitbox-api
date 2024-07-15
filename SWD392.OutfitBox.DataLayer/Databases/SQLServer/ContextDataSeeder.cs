@@ -49,6 +49,30 @@ namespace SWD392.OutfitBox.DataLayer.Databases.Redis
                     Description = "With an unwavering commitment to quality craftsmanship, ethical practices, and timeless design, O4R is poised to become the go-to destination for fashion-conscious individuals seeking both substance and style",
                     ImageUrl = "https://file.hstatic.net/1000003969/file/logo-svg.svg",
                     Status = 1
+                },
+                new Brand
+                {
+                    ID = 5,
+                    Name = "Uniqlo",
+                    Description = "Uniqlo LLC is a Japanese casual wear design, apparel, and retail company.",
+                    ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/9/92/UNIQLO_logo.svg",
+                    Status = 1
+                },
+                new Brand
+                {
+                    ID = 6,
+                    Name = "Zara",
+                    Description = "Zara is a Spanish clothing and accessories brand.",
+                    ImageUrl = "https://img.salehere.co.th/p/1200x0/2024/02/16/gdlpd8hwxiob.jpg",
+                    Status = 1
+                },
+                new Brand
+                {
+                    ID = 7,
+                    Name = "Pull&Bear",
+                    Description = "Famous Spanish fashion brand Pull&Bear.",
+                    ImageUrl = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgJ2G23IAT9jiabKjH8VZ09gtj9BRXH2kCsA&s",
+                    Status = 1
                 }
         );
             modelBuilder.Entity<Category>().HasData(
@@ -234,7 +258,34 @@ namespace SWD392.OutfitBox.DataLayer.Databases.Redis
                 IdCategory = 7,
                 IdBrand = 3,
                 Type = "New"
-            }) ;
+            },
+                new Product { ID = 9, Name = "Men's sports shirt", Price = 200, Size = "XL", Description = "Men's sports shirt absorbent and dries quickly", Status = 1, IsUsed = "FALSE", Deposit = 0.2, IdCategory = 1, Quantity = 20, AvailableQuantity = 20, IdBrand = 2, Type = "New" },
+                new Product { ID = 10, Name = "Women's low waist A-line dress", Price = 120, Size = "S", Description = "Fabric/material: Chemical fiber/Polyester (Polyester Fiber) Ingredient content: 100%", Status = 1, IsUsed = "FALSE", Deposit = 0, IdCategory = 3, Quantity = 20, AvailableQuantity = 20, IdBrand = 3, Type = "New" },
+                new Product { ID = 11, Name = "T-shirt with embroidered bow tie and cool elastic sleeves, loose-sleeved form", Price = 100, Size = "M", Description = "Cool t-shirt with wide FORM sleeves and embroidered chest", Status = 1, IsUsed = "FALSE", Deposit = 0, IdCategory = 1, Quantity = 20, AvailableQuantity = 20, IdBrand = 1, Type = "New" },
+                new Product { ID = 12, Name = "BEARLESS Unisex T-shirt", Price = 100, Size = "L", Description = "The fabric is beautiful, not fuzzy, not shrinkable, soft and thick, absorbs sweat extremely quickly, and is super cool to wear.", Status = 1, IsUsed = "FALSE", Deposit = 0, IdCategory = 1, Quantity = 20, AvailableQuantity = 20, IdBrand = 1, Type = "New" },
+                new Product { ID = 13, Name = "Bohemian irregular wavy lace skirt", Price = 100, Size = "M", Description = "Style: Casual Travel/Simple Popular elements / Craftsmanship: Ruffles", Status = 1, IsUsed = "FALSE", Deposit = 0, IdCategory = 3, Quantity = 20, AvailableQuantity = 20, IdBrand = 3, Type = "New" },
+                new Product { ID = 14, Name = "White Lolita Dress with Lace Flare", Price = 100, Size = "M", Description = "White Lolita Dress with Flared Flared Lace and Elastic Waist for Women", Status = 1, IsUsed = "FALSE", Deposit = 0, IdCategory = 3, Quantity = 20, AvailableQuantity = 20, IdBrand = 3, Type = "New" },
+                new Product { ID = 15, Name = "Áo bà ba cổ tròn vạt đứng lụa siêu cao cấp (Traditional of VN)", Price = 100, Size = "L", Description = "The material is light, soft and super cool to wear. The design is youthful, cute, feminine with many beautiful patterns", Status = 1, IsUsed = "FALSE", Deposit = 0, IdCategory = 5, Quantity = 20, AvailableQuantity = 20, IdBrand = 5, Type = "New" },
+                new Product { ID = 16, Name = "Áo bà ba lụa gấm tơ cao cấp  (Traditional of VN)", Price = 120, Size = "L", Description = "High quality brocade silk ao dai, super pretty stylized sleeves", Status = 1, IsUsed = "FALSE", Deposit = 0, IdCategory = 5, Quantity = 20, AvailableQuantity = 20, IdBrand = 5, Type = "New" },
+                new Product { ID = 17, Name = "Thai School Uniform Men's Version", Price = 150, Size = "XL", Description = "Fans of Thai movies cannot miss this uniform", Status = 1, IsUsed = "FALSE", Deposit = 0, IdCategory = 5, Quantity = 20, AvailableQuantity = 20, IdBrand = 5, Type = "New" },
+                new Product { ID = 18, Name = "Blue Japanese Female School Uniform", Price = 150, Size = "M", Description = "Style: Sweet and fresh / College", Status = 1, IsUsed = "FALSE", Deposit = 0, IdCategory = 5, Quantity = 20, AvailableQuantity = 20, IdBrand = 5, Type = "New" },
+                new Product { ID = 19, Name = "Idylls Women's Turban", Price = 80, Size = "X", Description = "Popular elements: Flowers Quantity: 1 headscarf + 1 sunglasses", Status = 1, IsUsed = "FALSE", Deposit = 0, IdCategory = 6, Quantity = 20, AvailableQuantity = 20, IdBrand = 6, Type = "New" },
+                new Product { ID = 20, Name = "Accessories Square twisted necklaces of all sizes 3mm, 4mm, 5mm, 6mm, 8mm, 10mm", Price = 900, Size = "M", Description = "Square twisted wire of all sizes, machine cut, 45cm and 50cm thick", Status = 1, IsUsed = "FALSE", Deposit = 0, IdCategory = 6, Quantity = 20, AvailableQuantity = 20, IdBrand = 6, Type = "New" },
+                new Product { ID = 21, Name = "Casio 42.5 mm Men's Watch MTP-M100D-7AVDF", Price = 1500, Size = "M", Description = "G-Shock with strong design and high durability, Edifice with modern design and many outstanding features, Sheen with classic and luxurious design.", Status = 1, IsUsed = "FALSE", Deposit = 0, IdCategory = 6, Quantity = 20, AvailableQuantity = 20, IdBrand = 6, Type = "New" },
+                new Product { ID = 22, Name = "Citizen 28mm Women's Watch EM0809-83Z", Price = 1500, Size = "M", Description = "The main design trend of Citizen watches is simple and elegant.", Status = 1, IsUsed = "FALSE", Deposit = 0, IdCategory = 6, Quantity = 20, AvailableQuantity = 20, IdBrand = 6, Type = "New" },
+                new Product { ID = 23, Name = "UV protection sunglasses from NICOLE Korea", Price = 500, Size = "XL", Description = "Unisex glasses for both men and women Anti-ultraviolet rays, UV400 rays, maximum eye protection", Status = 1, IsUsed = "FALSE", Deposit = 0, IdCategory = 6, Quantity = 20, AvailableQuantity = 20, IdBrand = 6, Type = "New" },
+                new Product { ID = 24, Name = "Men's and women's couple's set of couple's clothes for traveling to the beach", Price = 300, Size = "XL", Description = "Unique high-end beach travel couple outfit set for men and women for summer 2024", Status = 1, IsUsed = "FALSE", Deposit = 0, IdCategory = 7, Quantity = 20, AvailableQuantity = 20, IdBrand = 7, Type = "New" },
+                new Product { ID = 25, Name = "Pink double set includes men's shirt, women's skirt and cardigan", Price = 300, Size = "M", Description = "D.r silk dress with fancy off-the-shoulder lantern form for women to wear to go out and travel to the beach", Status = 1, IsUsed = "FALSE", Deposit = 0, IdCategory = 7, Quantity = 20, AvailableQuantity = 20, IdBrand = 7, Type = "New" },
+                new Product { ID = 26, Name = "Vintage Women's 2-shoulder bow-tie dress", Price = 120, Size = "M", Description = "Short dress, Korean luxury Ulzzang babydoll dress Maxi", Status = 1, IsUsed = "FALSE", Deposit = 0, IdCategory = 4, Quantity = 20, AvailableQuantity = 20, IdBrand = 4, Type = "New" },
+                new Product { ID = 27, Name = "Spring and Autumn Fashion Casual Wide Leg Corduroy Pants for Men", Price = 100, Size = "L", Description = "Fabric name: Corduroy, Elasticity: Microplastic", Status = 1, IsUsed = "FALSE", Deposit = 0, IdCategory = 2, Quantity = 20, AvailableQuantity = 20, IdBrand = 2, Type = "New" },
+                new Product { ID = 28, Name = "Women's high-waisted wide-leg sports pants with vertical striped pattern, sporty fashion style", Price = 100, Size = "M", Description = "Bigsize high-waist cargo pants model. Very beautiful straight shape. Easy to coordinate with different types of outfits: going out, going to work, going to parties... Loose, loose-fitting pants will bring you comfort and ease.", Status = 1, IsUsed = "FALSE", Deposit = 0, IdCategory = 2, Quantity = 20, AvailableQuantity = 20, IdBrand = 2, Type = "New" },
+                new Product { ID = 29, Name = "Polo Uniform T-shirt made of 4-way crocodile material", Price = 100, Size = "M", Description = "Thai crocodile t-shirt with 4-way stretch as uniform for employees with instant decal printing", Status = 1, IsUsed = "FALSE", Deposit = 0, IdCategory = 5, Quantity = 20, AvailableQuantity = 20, IdBrand = 5, Type = "New" },
+                new Product { ID = 30, Name = "Short-sleeved hotel uniform, waiter, restaurant work uniform", Price = 100, Size = "S", Description = "Fabric name: polyester. Main fabric component: polyester", Status = 1, IsUsed = "FALSE", Deposit = 0, IdCategory = 5, Quantity = 20, AvailableQuantity = 20, IdBrand = 5, Type = "New" },
+                new Product { ID = 31, Name = "Korean retro style Small Square Frame Sunglasses", Price = 200, Size = "M", Description = "Full rim glasses. Fashion style", Status = 1, IsUsed = "FALSE", Deposit = 0, IdCategory = 6, Quantity = 20, AvailableQuantity = 20, IdBrand = 6, Type = "New" },
+                new Product { ID = 32, Name = "Retro fashion cat eye sunglasses for women", Price = 150, Size = "M", Description = "100% brand new, high quality", Status = 1, IsUsed = "FALSE", Deposit = 0, IdCategory = 6, Quantity = 20, AvailableQuantity = 20, IdBrand = 6, Type = "New" },
+                new Product { ID = 33, Name = "JENNIE sunglasses with Y2K style", Price = 300, Size = "M", Description = "100% brand new, high quality", Status = 1, IsUsed = "FALSE", Deposit = 0, IdCategory = 6, Quantity = 20, AvailableQuantity = 20, IdBrand = 6, Type = "New" },
+                new Product { ID = 34, Name = "Cute men's and women's couple's clothes", Price = 200, Size = "M", Description = "Couple shirt dresses/matching outfits for men and women.", Status = 1, IsUsed = "FALSE", Deposit = 0, IdCategory = 7, Quantity = 20, AvailableQuantity = 20, IdBrand = 7, Type = "New" },
+                new Product { ID = 35, Name = "New model men's and women's couple clothes", Price = 200, Size = "L", Description = "Latest models of men's and women's couple clothes, used for wedding photography, going out, and traveling, very youthful and stylish!", Status = 1, IsUsed = "FALSE", Deposit = 0, IdCategory = 7, Quantity = 20, AvailableQuantity = 20, IdBrand = 7, Type = "New" });
             modelBuilder.Entity<Package>().HasData(
                new Package
                {
@@ -510,8 +561,34 @@ namespace SWD392.OutfitBox.DataLayer.Databases.Redis
                       ID= 18,
                       Link = "https://down-vn.img.susercontent.com/file/sg-11134201-7rd4d-lvcplok5iobc5f",
                       IdProduct = 7
-                  }
-                  
+                  },
+                new Image { ID = 19, Link = "https://down-vn.img.susercontent.com/file/sg-11134201-7rd46-lvwmevojczsfbe", IdProduct = 9 },
+                new Image { ID = 20, Link = "https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lwjun5k781y12e", IdProduct = 10 },
+                new Image { ID = 21, Link = "https://down-vn.img.susercontent.com/file/vn-11134207-7qukw-lhsgugwdqg7991", IdProduct = 11 },
+                new Image { ID = 22, Link = "https://down-vn.img.susercontent.com/file/sg-11134201-7rd5a-lv49t9zt96ekd7", IdProduct = 12 },
+                new Image { ID = 23, Link = "https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lvfjui2cg87hd0", IdProduct = 13 },
+                new Image { ID = 24, Link = "https://down-vn.img.susercontent.com/file/vn-11134201-7r98o-lp66e2bf9opnd0", IdProduct = 14 },
+                new Image { ID = 25, Link = "https://down-vn.img.susercontent.com/file/166a8d410782cede0c9aab49f2ddfbb5", IdProduct = 15 },
+                new Image { ID = 26, Link = "https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-luuu44mmw1zm38", IdProduct = 16 },
+                new Image { ID = 27, Link = "https://down-vn.img.susercontent.com/file/sg-11134201-7rcem-lsz1l11wdxtrd6", IdProduct = 17 },
+                new Image { ID = 28, Link = "https://down-vn.img.susercontent.com/file/sg-11134201-7rd4z-lu0ei4d8jihjf3", IdProduct = 18 },
+                new Image { ID = 29, Link = "https://down-vn.img.susercontent.com/file/sg-11134201-7rd6s-lvmvkwgtbyx80a", IdProduct = 19 },
+                new Image { ID = 30, Link = "https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lubowd6lh1xtd3", IdProduct = 20 },
+                new Image { ID = 31, Link = "https://www.thegioididong.com/dong-ho-deo-tay/casio-mtp-m100d-7avdf-nam#top-color-images-gallery-1174", IdProduct = 21 },
+                new Image { ID = 32, Link = "https://www.thegioididong.com/dong-ho-deo-tay/citizen-em0809-83z-nu#top-color-images-gallery-15", IdProduct = 22 },
+                new Image { ID = 33, Link = "https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lwifcpy87x099f", IdProduct = 23 },
+                new Image { ID = 34, Link = "https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lv6d50ieiv167f", IdProduct = 24 },
+                new Image { ID = 35, Link = "https://down-vn.img.susercontent.com/file/vn-11134207-7qukw-lgl8he41htnu33", IdProduct = 25 },
+                new Image { ID = 36, Link = "https://down-vn.img.susercontent.com/file/cn-11134207-7r98o-lp4ymq73hkkcf0", IdProduct = 26 },
+                new Image { ID = 37, Link = "https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lw2susc23ye1af", IdProduct = 27 },
+                new Image { ID = 38, Link = "https://down-vn.img.susercontent.com/file/sg-11134201-22120-ap2882tdo4kv7c", IdProduct = 28 },
+                new Image { ID = 39, Link = "https://down-vn.img.susercontent.com/file/cn-11134207-7qukw-lgoo5rn93r6k17", IdProduct = 29 },
+                new Image { ID = 40, Link = "https://down-vn.img.susercontent.com/file/cn-11134301-7qukw-ljqq0pro1hisbc", IdProduct = 30 },
+                new Image { ID = 41, Link = "https://down-vn.img.susercontent.com/file/sg-11134201-7rcd3-lrtwdc5pxtvgce", IdProduct = 31 },
+                new Image { ID = 42, Link = "https://down-vn.img.susercontent.com/file/sg-11134201-7rccd-ls6ht57qzywrfc", IdProduct = 32 },
+                new Image { ID = 43, Link = "https://down-vn.img.susercontent.com/file/vn-11134207-7qukw-lgngo6qyhohee1", IdProduct = 33 },
+                new Image { ID = 44, Link = "https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lmmrmhaq9e5baa", IdProduct = 34 }
+
                 );
             modelBuilder.Entity<Customer>().HasData(
                     new Customer
@@ -653,6 +730,16 @@ namespace SWD392.OutfitBox.DataLayer.Databases.Redis
                     Type = "Khuyen Mai",
                     Date = DateTime.Now,
                 });
+            modelBuilder.Entity<Role>().HasData(
+                new Role{Id=1,Name = "Admin"},
+                new Role { Id=2,Name ="Partner"}
+                );
+            modelBuilder.Entity<User>().HasData(
+                new User { Id = 1, Email = "admin", Password = "123456", Phone = "123456789", Status = 1, RoleId = 1 },
+                new User { Id = 2, Email = "leecois@gmail.com", Password = "123456", Phone = "12345678", Status = 1, RoleId = 1 },
+                new User { Id=3,Email="Grap@gmail.com",Password="123456",Status=1, RoleId = 2},
+                new User { Id = 4, Email = "Bee@gmail.com", Password = "123456", Status = 1, RoleId = 2 }
+                );
         }
 
 
