@@ -23,12 +23,16 @@ namespace SWD392.OutfitBox.DataLayer.Repositories
         {
             var result = await this.AddAsync(transaction);
             await this.SaveChangesAsync(); 
-            return await this.Get().OrderBy(x=>x.Id).LastAsync();
+            return result;
         }
 
-        public Task<List<Transaction>> GetAllTransactionsByUserId(int userId)
+        public async Task<List<Transaction>> GetAllTransactionsByUserId(int userId)
         {
-            return this.Get().Include(x => x.Wallet).ThenInclude(x => x.Customer).Where(x => x.Wallet != null && x.Wallet.Customer != null && x.Wallet.Customer.Id == userId).ToListAsync();
+            return await this.Get().Include(x => x.Wallet).ThenInclude(x => x.Customer).Where(x => x.Wallet != null && x.Wallet.Customer != null && x.Wallet.Customer.Id == userId).ToListAsync();
+        }
+        public async Task<Transaction> GetTransactionsByVNPayCode(string code)
+        {
+            return await this.Get().FirstOrDefaultAsync(x=>x.VNPayID==code);
         }
 
         public async Task<List<Transaction>> GetByDate(DateTime date)

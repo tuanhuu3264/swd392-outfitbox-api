@@ -13,5 +13,6 @@ namespace SWD392.OutfitBox.DataLayer.Interfaces
         public  Task<List<Transaction>> GetByDate(DateTime date);
         public  Task<List<Transaction>> GetByMonth(DateTime date);
         public  Task<List<Transaction>> GetByYear(DateTime date);
+        public Task<Transaction> GetTransactionsByVNPayCode (string code);
     }
 }

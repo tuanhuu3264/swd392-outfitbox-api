@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using SWD392.OutfitBox.BusinessLayer.BusinessModels;
+using SWD392.OutfitBox.BusinessLayer.BusinessModels.PaymentModels;
 using SWD392.OutfitBox.BusinessLayer.Enum;
 
 using SWD392.OutfitBox.BusinessLayer.Services.PaymentService;
@@ -12,7 +13,6 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static System.Net.WebRequestMethods;
 
 namespace BusinessLayer.Services
 {
@@ -26,114 +26,125 @@ namespace BusinessLayer.Services
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
+        public async Task<ResponsePayment> GetInformationPayment(VNPayModel dto)
+        {
 
+            string vnp_HashSecret = "GCLECYOCZYQLDTIUGHGWZAWPNALXPLOJ";
 
-        //public async Task<ResponsePayment> GetInformationPayment(VNPayRequestDTO dto)
-        //{
+            var vnpayData = dto.urlResponse.Split("?")[1];
+            VNPayHelper vnpay = new VNPayHelper();
 
-        //    string vnp_HashSecret = "GCLECYOCZYQLDTIUGHGWZAWPNALXPLOJ";
+            foreach (string s in vnpayData.Split("&"))
+            {
 
-        //    var vnpayData = dto.urlResponse.Split("?")[1];
-        //    VNPayHelper vnpay = new VNPayHelper();
+                if (!string.IsNullOrEmpty(s) && s.StartsWith("vnp_"))
+                {
+                    vnpay.AddResponseData(s.Split("=")[0], s.Split("=")[1]);
+                }
+            }
+            string orderId = vnpay.GetResponseData("vnp_OrderInfo").Replace("+", " ").Replace("%3A", ":").Split(":")[1].Trim();
+            string vnpayTranId = vnpay.GetResponseData("vnp_TransactionNo");
+            string vnp_ResponseCode = vnpay.GetResponseData("vnp_ResponseCode");
+            string orderInfo = vnpay.GetResponseData("vnp_OrderInfo").Replace("+", " ").Replace("%3A", ":");
+            String vnp_SecureHash = vnpay.GetResponseData("vnp_SecureHash");
+            String TerminalID = vnpay.GetResponseData("vnp_TmnCode");
+            long vnp_Amount = Convert.ToInt64(vnpay.GetResponseData("vnp_Amount")) / 100;
+            String bankCode = vnpay.GetResponseData("vnp_BankCode");
+            string transactionStatus = vnpay.GetResponseData("vnp_TransactionStatus");
+            string txnRef = vnpay.GetResponseData("vnp_TxnRef");
+            string responseCode = vnpay.GetResponseData("vnp_ResponseCode");
+            string bankTranNo = vnpay.GetResponseData("vnp_BankTranNo");
+            string cardType = vnpay.GetResponseData("vnp_CardType");
+            string payDate = vnpay.GetResponseData("vnp_PayDate");
+            string hashSecret = vnpay.GetResponseData("vnp_HashSecret");
 
-        //    foreach (string s in vnpayData.Split("&"))
-        //    {
+            var check = await _unitOfWork._transactionRepository.GetTransactionsByVNPayCode(vnpayTranId);
+            if (check != null) { vnp_ResponseCode = "07"; transactionStatus = "02"; 
+            }
+            VnPayResponse response = new VnPayResponse()
+            {
+                TransactionVNId = vnpayTranId,
+                OrderInfo = orderInfo,
+                Amount = vnp_Amount,
+                BankCode = bankCode,
+                BankTranNo = bankTranNo,
+                CardType = cardType,
+                PayDate = payDate,
+                ResponseCode = responseCode,
+                TransactionStatus = transactionStatus,
+                TxnRef = txnRef
+            };
+            if (vnp_ResponseCode == "00" && transactionStatus == "00")
+            {
+                using (_unitOfWork.BenginTransaction())
+                {
+                    await _unitOfWork.CommitTransaction();
+                    try
+                    {
+                        var wallet = await _unitOfWork._walletRepository.GetWalletByCode(bankCode);
+                        if (wallet.Id == 0)
+                        {
+                            wallet = new Wallet
+                            {
+                                WalletCode = bankCode,
+                                WalletName = bankTranNo,
+                                WalletPassword = "123456",
+                                OTP = 123456,
+                                Status = 1,
+                                CustomerId = dto.userId,
 
-        //        if (!string.IsNullOrEmpty(s) && s.StartsWith("vnp_"))
-        //        {
-        //            vnpay.AddResponseData(s.Split("=")[0], s.Split("=")[1]);
-        //        }
-        //    }
-        //    string orderId = vnpay.GetResponseData("vnp_OrderInfo").Replace("+", " ").Replace("%3A", ":").Split(":")[1].Trim();
-        //    string vnpayTranId = vnpay.GetResponseData("vnp_TransactionNo");
-        //    string vnp_ResponseCode = vnpay.GetResponseData("vnp_ResponseCode");
-        //    string orderInfo = vnpay.GetResponseData("vnp_OrderInfo").Replace("+", " ").Replace("%3A", ":");
-        //    String vnp_SecureHash = vnpay.GetResponseData("vnp_SecureHash");
-        //    String TerminalID = vnpay.GetResponseData("vnp_TmnCode");
-        //    long vnp_Amount = Convert.ToInt64(vnpay.GetResponseData("vnp_Amount")) / 100;
-        //    String bankCode = vnpay.GetResponseData("vnp_BankCode");
-        //    string transactionStatus = vnpay.GetResponseData("vnp_TransactionStatus");
-        //    string txnRef = vnpay.GetResponseData("vnp_TxnRef");
-        //    string responseCode = vnpay.GetResponseData("vnp_ResponseCode");
-        //    string bankTranNo = vnpay.GetResponseData("vnp_BankTranNo");
-        //    string cardType = vnpay.GetResponseData("vnp_CardType");
-        //    string payDate = vnpay.GetResponseData("vnp_PayDate");
-        //    string hashSecret = vnpay.GetResponseData("vnp_HashSecret");
-
-
-        //    var responseCodeMessage = ReturnedErrorMessageResponseCode(responseCode);
-        //    var transactionStatusMessage = ReturnedErrorMessageTransactionStatus(transactionStatus);
-        //    VnPayResponse response = new VnPayResponse()
-        //    {
-        //        TransactionId = vnpayTranId,
-        //        OrderInfo = orderInfo,
-        //        Amount = vnp_Amount,
-        //        BankCode = bankCode,
-        //        BankTranNo = bankTranNo,
-        //        CardType = cardType,
-        //        PayDate = payDate,
-        //        ResponseCode = responseCode,
-        //        TransactionStatus = transactionStatus,
-        //        TxnRef = txnRef
-        //    };
-        //    if (vnp_ResponseCode == "00" && transactionStatus == "00")
-        //    {
-        //        var order = await _unitOfWork._customerPackageRepository.GetCustomerPackageById(int.Parse(orderId));
-        //        if (order == null) throw new Exception("Error to payment: Can not find order to payment");
-
-        //        var deposit = new DepositModel()
-        //        {
-        //            CustomerId = dto.userId,
-        //            AmountMoney = vnp_Amount,
-        //            Date = DateTime.Now,
-        //            Type = "Payment"
-        //        };
-        //        var result = _unitOfWork._depositRepository.CreateDeposit(deposit);
-
-        //        var wallet = await _unitOfWork._walletRepository.GetWalletByCode(bankCode);
-        //        if (wallet.Id == 0)
-        //        {
-        //            wallet = new Wallet
-        //            {
-        //                WalletCode = bankCode,
-        //                WalletName = "Test",
-        //                WalletPassword = "123456",
-        //                OTP = 123456,
-        //                Status = 1,
-        //                CustomerId = dto.userId,
-
-        //            };
-        //            wallet = await _unitOfWork._walletRepository.CreateWallet(dto.userId, wallet);
-        //        }
-
-        //        var transaction = new TransactionModel()
-        //        {
-        //            DateTransaction = DateTime.Now,
-        //            Amount = vnp_Amount,
-        //            Status = *//*transactionStatus*//* 1,
-        //            Paymethod = "Online",
-        //            WalletId = wallet.Id,
-        //            DepositId = deposit.Id
-        //        };
-        //        transaction = await _unitOfWork._transactionRepository.CreateTransaction(transaction);
-        //        order.Status = (int)CustomerPacketEnum.Payment;
-        //        await _unitOfWork._customerPackageRepository.SaveAsyn(order);
-        //    }
-        //    ResponsePayment payment = new ResponsePayment()
-        //    {
-        //        ResponseCodeMessage = responseCodeMessage,
-        //        TransactionStatusMessage = transactionStatusMessage,
-        //        VnPayResponse = response
-        //    };
-        //    return payment;
-
-        //}
+                            };
+                            wallet = await _unitOfWork._walletRepository.CreateWallet(dto.userId, wallet);
+                        }
+                        var deposit = new Deposit()
+                        {
+                            CustomerId = dto.userId,
+                            AmountMoney = vnp_Amount / 25000,
+                            Date = DateTime.Now,
+                            Type = "Payment",
+                        };
+                        var result = await _unitOfWork._depositRepository.CreateDeposit(deposit);
+                        var transaction = new Transaction()
+                        {
+                            DateTransaction = DateTime.Now,
+                            Amount = vnp_Amount / 25000,
+                            VNPayID = vnpayTranId,
+                            Status = 1,
+                            Paymethod = "Online",
+                            WalletId = wallet.Id,
+                            DepositId = result.Id
+                        };
+                        transaction = await _unitOfWork._transactionRepository.CreateTransaction(transaction);
+                        var customer = await _unitOfWork._customerRepository.GetCustomerById(dto.userId);
+                        customer.MoneyInWallet = customer.MoneyInWallet + vnp_Amount / 25000;
+                        await _unitOfWork._customerRepository.UpdateCustomer(customer);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.ToString());
+                        await _unitOfWork.RollbackTransaction();
+                    }
+                }
+            }
+            var responseCodeMessage = ReturnedErrorMessageResponseCode(vnp_ResponseCode);
+            var transactionStatusMessage = ReturnedErrorMessageTransactionStatus(transactionStatus);
+            ResponsePayment payment = new ResponsePayment()
+            {
+                ResponseCodeMessage = responseCodeMessage,
+                TransactionStatusMessage = transactionStatusMessage,
+                VnPayResponse = response
+            };
+            return payment;
+        }
 
         public async Task<string> CallAPIPayByUserId(int userId, double money)
         {
             try
             {
                 var user = await _unitOfWork._customerRepository.GetCustomerById(userId);
+                if (user == null) {
+                    throw new Exception("Not Found this customer");
+                }
                 string vnp_ReturnUrl = "https://localhost:7158/swagger";
                 string vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
                 string vnp_TmnCode = "F8V1A5TK";
@@ -142,7 +153,7 @@ namespace BusinessLayer.Services
                 {
                     throw new Exception("Merchant code or secret key is missing.");
                 }
-                var amount =money.ToString();
+                var amount =(money*2500000).ToString();
                 var vnp_TxnRef = $"{userId}{userId}{DateTime.Now.ToString("HHmmss")}";
                 var vnp_Amount = amount;
 
