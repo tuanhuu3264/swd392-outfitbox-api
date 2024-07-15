@@ -99,7 +99,7 @@ namespace BusinessLayer.Services
                         var deposit = new Deposit()
                         {
                             CustomerId = dto.userId,
-                            AmountMoney = vnp_Amount / 24000,
+                            AmountMoney = vnp_Amount / 25000,
                             Date = DateTime.Now,
                             Type = "Payment",
                         };
@@ -107,7 +107,7 @@ namespace BusinessLayer.Services
                         var transaction = new Transaction()
                         {
                             DateTransaction = DateTime.Now,
-                            Amount = vnp_Amount / 24000,
+                            Amount = vnp_Amount / 25000,
                             VNPayID = vnpayTranId,
                             Status = 1,
                             Paymethod = "Online",
@@ -116,7 +116,7 @@ namespace BusinessLayer.Services
                         };
                         transaction = await _unitOfWork._transactionRepository.CreateTransaction(transaction);
                         var customer = await _unitOfWork._customerRepository.GetCustomerById(dto.userId);
-                        customer.MoneyInWallet = customer.MoneyInWallet + vnp_Amount / 24000;
+                        customer.MoneyInWallet = customer.MoneyInWallet + vnp_Amount / 25000;
                         await _unitOfWork._customerRepository.UpdateCustomer(customer);
                     }
                     catch (Exception ex)
@@ -153,7 +153,7 @@ namespace BusinessLayer.Services
                 {
                     throw new Exception("Merchant code or secret key is missing.");
                 }
-                var amount =(money*2400000).ToString();
+                var amount =(money*2500000).ToString();
                 var vnp_TxnRef = $"{userId}{userId}{DateTime.Now.ToString("HHmmss")}";
                 var vnp_Amount = amount;
 
