@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using SWD392.OutfitBox.BusinessLayer.BusinessModels;
 using SWD392.OutfitBox.BusinessLayer.BusinessModels.PaymentModels;
 using SWD392.OutfitBox.DataLayer.Entities;
+using SWD392.OutfitBox.DataLayer.Streaming.ProducerMessage;
 using SWD392.OutfitBox.DataLayer.UnitOfWork;
 using System;
 using System.Collections.Generic;
@@ -36,10 +37,11 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.ReturnOrderService
             var customerPackage = await _unitOfWork._customerPackageRepository.GetCustomerPackageById(requestDTO.CustomerPackageId.Value);
             if (customerPackage == null)
                 throw new Exception("No order found with ID: " + requestDTO.CustomerPackageId.Value);
-
+            
             if (customerPackage.CustomerId != customer.Id)
                 throw new Exception("The user doesn't have permission to create this return order");
-
+            if (customerPackage.Status == 0 || customerPackage.Status == -1 || (customerPackage.IsReturnedDeposit == true)) 
+                throw new Exception("The return order can be created as it is invalid status to create");
             var partner = await _unitOfWork._partnerRepository.GetPartnerById(requestDTO.PartnerId.Value);
             if (partner == null)
                 throw new Exception("No partner found with ID: " + requestDTO.PartnerId.Value);
@@ -50,7 +52,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.ReturnOrderService
                 if (!productIds.Contains((int)item.ProductId))
                     throw new Exception("Product with ID: " + item.ProductId + " not found in the original order to return");
             }
-
+            Dictionary<int, int> updatedQuantity = new Dictionary<int, int>();
             Dictionary<int, int> checkSuitableQuantity = customerPackage.Items
                 .ToDictionary(x => x.ProductId, x => x.Quantity - x.ReturnedQuantity);
 
@@ -58,8 +60,11 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.ReturnOrderService
             {
                 if (checkSuitableQuantity.TryGetValue((int)item.ProductId, out var availableQuantity))
                 {
+                    if (availableQuantity == 0)
+                        throw new Exception("There are too many products with ID: " + item.ProductId + " to return");
                     if (item.Quantity > availableQuantity)
                         throw new Exception("There are too many products with ID: " + item.ProductId + " to return");
+                    updatedQuantity.Add((int)item.ProductId, (int)item.Quantity);
                 }
                 else
                 {
@@ -71,7 +76,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.ReturnOrderService
                 await _unitOfWork.CommitTransaction();
                     try
                 {
-                    Dictionary<int, int> updatedQuantity = new Dictionary<int, int>();
+                 
                     var productsInCustomerPackage = await _unitOfWork._itemsInUserPackageRepository.GetByUserPackageId(mappingReturnOrder.CustomerPackageId);
                     foreach (var item in productsInCustomerPackage)
                     {
@@ -87,6 +92,12 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.ReturnOrderService
                     mappingReturnOrder.QuantityOfItems = requestDTO.ProductReturnOrders.Sum(x => x.Quantity.Value);
 
                     var result = await _unitOfWork._returnOrderRepository.CreateReturnOrder(mappingReturnOrder);
+                    Task.WhenAll(
+                         ProducerMessage.ProductUpdateRedisMessage<List<CustomerPackageModel>>("delete-customer-packages-by-customerId", "delete", null, $"customer-packages-customer:{requestDTO.CustomerId}"),
+                         ProducerMessage.ProductUpdateRedisMessage<List<CustomerPackageModel>>("delete-customer-packages-by-statusId", "delete", null, $"customer-packages-status:{1}"),
+                         ProducerMessage.ProductUpdateRedisMessage<CustomerPackageModel>("delete-customer-packages-byId" + requestDTO.Id, "delete", null, $"customer-packages-id:{requestDTO.Id}")
+
+                         );
                     return _mapper.Map<ReturnOrderModel>(result);
                 }catch(Exception ex)
                 {
