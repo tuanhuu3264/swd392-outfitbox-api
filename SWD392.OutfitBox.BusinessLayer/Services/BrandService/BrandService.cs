@@ -1,8 +1,12 @@
 ﻿using Abp.Extensions;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
+using NReJSON;
+using StackExchange.Redis;
 using SWD392.OutfitBox.BusinessLayer.BusinessModels;
 using SWD392.OutfitBox.DataLayer.Databases.Redis;
 using SWD392.OutfitBox.DataLayer.Databases.Redis.Tasks;
@@ -27,6 +31,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.BrandService
         private readonly IConfiguration _configuration;
         private readonly IDistributedCache _distributedCache;
         private readonly UpdateRedisData _updateRedisData;
+        private readonly StackExchange.Redis.IDatabase _cache;
         public BrandService(IUnitOfWork unitOfWork, IMapper mapper, IConfiguration configuration, IDistributedCache distributedCache, UpdateRedisData updateRedisData)
         {
             _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
@@ -34,13 +39,16 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.BrandService
             _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
             _distributedCache = distributedCache ?? throw new ArgumentNullException(nameof(distributedCache));
             _updateRedisData = updateRedisData;
+            ConnectionMultiplexer con = ConnectionMultiplexer.Connect("outfit4rent.online:6379");
+            _cache = con.GetDatabase();
         }
 
         public async Task<List<BrandModel>> GetAllBrands()
         {
             try
             {
-                var cacheBrands = await _distributedCache.GetRecordAsync<List<Brand>>("all-brands");
+                var cacheBrands =  _cache.StringGet("all-brands").ToString();
+                var result = JsonConvert.DeserializeObject<List<Brand>>(cacheBrands);
                 if (cacheBrands != null && cacheBrands.Any())
                 {
                     return cacheBrands.Select(x => _mapper.Map<BrandModel>(x)).ToList();
@@ -56,7 +64,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.BrandService
             if (data != null && data.Any())
             {
               Task.WhenAll(
-                    ProducerMessage.ProductListBrandMessage("update-all-brands", "create", data, "all-brands")
+                    ProducerMessage.ProductUpdateRedisMessage<List<Brand>>("update-all-brands", "create", data, "all-brands")
                 );
             }
 
@@ -71,8 +79,9 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.BrandService
             var result = await _unitOfWork._brandRepository.CreateBrand(addedBrand);
 
              Task.WhenAll(
-                ProducerMessage.ProductListBrandMessage("delete-all-brands", "delete", null, "all-brands"),
-                ProducerMessage.ProductListBrandMessage("delete-featured-brands", "delete", null, "featured-brands")
+                ProducerMessage.ProductUpdateRedisMessage<List<Brand>>("delete-all-brands", "delete", null, "all-brands"),
+                ProducerMessage.ProductUpdateRedisMessage<List<Brand>>("delete-featured-brands", "delete", null, "featured-brands"),
+                ProducerMessage.ProductUpdateRedisMessage<List<Brand>>("delete-featured-brands", "delete", null, "featured-brands")
             );
 
             return _mapper.Map<BrandModel>(result);
@@ -99,11 +108,11 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.BrandService
 
             var result = await _unitOfWork._brandRepository.UpdateBrand(checking);
 
-             Task.WhenAll(
-                ProducerMessage.ProductBrandMessage("delete-brand", "delete", null, "Brands-"+brand.ID),
-                ProducerMessage.ProductListBrandMessage("delete-all-brands", "delete", null, "all-brands"),
-                ProducerMessage.ProductListBrandMessage("delete-featured-brands", "delete", null, "featured-brands")
-            );
+            Task.WhenAll(
+               ProducerMessage.ProductUpdateRedisMessage<List<Brand>>("delete-all-brands", "delete", null, "all-brands"),
+               ProducerMessage.ProductUpdateRedisMessage<List<Brand>>("delete-featured-brands", "delete", null, "featured-brands"),
+               ProducerMessage.ProductUpdateRedisMessage<List<Brand>>("delete-featured-brands", "delete", null, "featured-brands")
+           );
 
             return _mapper.Map<BrandModel>(result);
         }
@@ -123,9 +132,9 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.BrandService
 
             var result = await _unitOfWork._brandRepository.DeleteBrand(data);
             Task.WhenAll(
-                 ProducerMessage.ProductBrandMessage("delete-brand", "delete", null, "Brands-" + id),
-                ProducerMessage.ProductListBrandMessage("delete-all-brands", "delete", null, "all-brands"),
-                ProducerMessage.ProductListBrandMessage("delete-featured-brands", "delete", null, "featured-brands")
+                ProducerMessage.ProductUpdateRedisMessage<List<Brand>>("delete-all-brands", "delete", null, "all-brands"),
+                ProducerMessage.ProductUpdateRedisMessage<List<Brand>>("delete-featured-brands", "delete", null, "featured-brands"),
+                ProducerMessage.ProductUpdateRedisMessage<List<Brand>>("delete-featured-brands", "delete", null, "featured-brands")
             );
 
             return result;
@@ -148,9 +157,10 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.BrandService
             var result = await _unitOfWork._brandRepository.UpdateBrand(data);
 
             Task.WhenAll(
-                ProducerMessage.ProductBrandMessage("delete-brand", "delete", null, "Brands-" + id),
-                ProducerMessage.ProductListBrandMessage("delete-all-brands", "delete", null, "all-brands"),
-               ProducerMessage.ProductListBrandMessage("delete-featured-brands", "delete", null, "featured-brands"));
+                   ProducerMessage.ProductUpdateRedisMessage<List<Brand>>("delete-all-brands", "delete", null, "all-brands"),
+                   ProducerMessage.ProductUpdateRedisMessage<List<Brand>>("delete-featured-brands", "delete", null, "featured-brands"),
+                   ProducerMessage.ProductUpdateRedisMessage<List<Brand>>("delete-featured-brands", "delete", null, "featured-brands")
+               );
 
             return _mapper.Map<BrandModel>(result);
         }
@@ -159,16 +169,18 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.BrandService
         {
             try
             {
-                var cacheBrand = await _distributedCache.GetRecordAsync<Brand>($"{nameof(Brand)}s-{id}");
-                if (cacheBrand != null)
+                var cacheBrands = _cache.StringGet("brands-"+id).ToString();
+                var data = JsonConvert.DeserializeObject<Brand>(cacheBrands);
+                if (cacheBrands != null && cacheBrands.Any())
                 {
-                    return _mapper.Map<BrandModel>(cacheBrand);
+                    return _mapper.Map<BrandModel>(data);
                 }
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }
+
 
             var result = await _unitOfWork._brandRepository.GetById(id);
             if (result == null)
@@ -181,7 +193,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.BrandService
                 item.Brand = null;
                 item.Category = null;
             }
-              ProducerMessage.ProductBrandMessage("update-brand-" + id, "create", result, $"{nameof(Brand)}s-{id}");
+            ProducerMessage.ProductUpdateRedisMessage<Brand>("update-brands-1", "create", result, "brands-" + id);
             return _mapper.Map<BrandModel>(result);
         }
 
@@ -211,8 +223,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.BrandService
             if (data.Any())
             {
                  Task.WhenAll(
-                    ProducerMessage.ProductListBrandMessage("update-all-brands", "create", data, "all-brands"),
-                    ProducerMessage.ProductListBrandMessage("update-featured-brands", "update", data, "featured-brands")
+                    ProducerMessage.ProductUpdateRedisMessage<List<Brand>>("update-all-brands", "create", data, "featured-brands")
                 );
 
                 await _distributedCache.SetRecordAsync("featured-brands", data);

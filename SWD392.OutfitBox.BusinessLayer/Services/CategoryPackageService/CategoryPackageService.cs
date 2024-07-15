@@ -37,7 +37,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.CategoryPackageService
         }
 
         public async Task<List<CategoryPackageModel>> GetAllCategoryPackagesByPackageId(int packageId)
-        {
+        {   
             return (await _categoryPackageRepository.GetAllCategoryPackagesByPackageId(packageId)).Select(x => _mapper.Map<CategoryPackageModel>(x)).ToList();
         }
 
@@ -47,7 +47,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.CategoryPackageService
             var updatedCategoryPackage = await _categoryPackageRepository.GetCategoryPackageById(request.Id.Value);
             updatedCategoryPackage.Status = request.Status.HasValue ? request.Status.Value : updatedCategoryPackage.Status;
             updatedCategoryPackage.MaxAvailableQuantity = request.MaxAvailableQuantity.HasValue? request.MaxAvailableQuantity.Value : updatedCategoryPackage.MaxAvailableQuantity;
-            // tu them di ku
+            // tu them di ku ??? giao cho lam keu tu them ??
             var returnedCategoryPackage = await _categoryPackageRepository.UpdateCategoryPackage(updatedCategoryPackage);
             
             return _mapper.Map<CategoryPackageModel>(returnedCategoryPackage);

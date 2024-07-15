@@ -99,7 +99,93 @@ namespace SWD392.OutfitBox.DataLayer.Streaming.CosumerMessage
 
             return lastMessage;
         }
+        public static async Task<Message<Category>> ProcessCategoryMessageSetValueRedis(CancellationToken cancellationToken)
+        {
+            Message<Category> lastMessage = null;
 
+            using (var c = new ConsumerBuilder<Ignore, string>(Config.GetConsumerConfig()).Build())
+            {
+                c.Subscribe("Categories");
+
+                try
+                {
+                    c.Assign(c.Assignment);
+                    foreach (var partition in c.Assignment)
+                    {
+                        c.Seek(new TopicPartitionOffset(partition.Topic, partition.Partition, Offset.End));
+                    }
+
+                    while (!cancellationToken.IsCancellationRequested)
+                    {
+                        var cr = c.Consume(cancellationToken);
+
+                        if (cr.Value != null) c.Commit(cr);
+                        Console.WriteLine($"Consumed message '{cr?.Value}' at: '{cr.TopicPartitionOffset}'.");
+
+                        lastMessage = JsonConvert.DeserializeObject<Message<Category>>(cr.Value);
+                        return lastMessage;
+                    }
+                }
+                catch (ConsumeException e)
+                {
+                    throw new Exception(e.Message);
+                }
+                catch (OperationCanceledException)
+                {
+
+                }
+                finally
+                {
+                    c.Close();
+                }
+            }
+
+
+            return lastMessage;
+        }
+
+        public static async Task<Message<List<Category>>> ProcessListCategoryMessageSetValueRedis(CancellationToken cancellationToken)
+        {
+            Message<List<Category>> lastMessage = null;
+
+            using (var c = new ConsumerBuilder<Ignore, string>(Config.GetConsumerConfig()).Build())
+            {
+                c.Subscribe("List-Categories");
+
+                try
+                {
+                    c.Assign(c.Assignment);
+                    foreach (var partition in c.Assignment)
+                    {
+                        c.Seek(new TopicPartitionOffset(partition.Topic, partition.Partition, Offset.End));
+                    }
+
+                    while (!cancellationToken.IsCancellationRequested)
+                    {
+                        var cr = c.Consume(cancellationToken);
+
+                        if (cr.Value != null) c.Commit(cr);
+                        Console.WriteLine($"Consumed message '{cr?.Value}' at: '{cr.TopicPartitionOffset}'.");
+
+                        lastMessage = JsonConvert.DeserializeObject<Message<List<Category>>>(cr.Value);
+                        return lastMessage;
+                    }
+                }
+                catch (ConsumeException e)
+                {
+                    throw new Exception(e.Message);
+                }
+                catch (OperationCanceledException)
+                {
+
+                }
+                finally
+                {
+                    c.Close();
+                }
+            }
+            return lastMessage;
+        }
         public static async Task<(Message, CustomerPackage)> ProcessMessageNotification(CancellationToken cancellationToken)
         {
             Message<CustomerPackage> lastMessage = null;
@@ -153,6 +239,50 @@ namespace SWD392.OutfitBox.DataLayer.Streaming.CosumerMessage
             return (new Message()
             {
             }, new CustomerPackage());
+        }
+
+        public static async Task<Message<TEntity>> ProcessMessageSetValueRedis<TEntity> (CancellationToken cancellationToken) where TEntity: class
+        {
+            Message<TEntity> lastMessage = null;
+
+            using (var c = new ConsumerBuilder<Ignore, string>(Config.GetConsumerConfig()).Build())
+            {
+                c.Subscribe("Redis-UpdateData");
+
+                try
+                {
+                    c.Assign(c.Assignment);
+                    foreach (var partition in c.Assignment)
+                    {
+                        c.Seek(new TopicPartitionOffset(partition.Topic, partition.Partition, Offset.End));
+                    }
+
+                    while (!cancellationToken.IsCancellationRequested)
+                    {
+                        var cr = c.Consume(cancellationToken);
+
+                        if (cr.Value != null) c.Commit(cr);
+                        Console.WriteLine($"Consumed message '{cr?.Value}' at: '{cr.TopicPartitionOffset}'.");
+
+                        lastMessage = JsonConvert.DeserializeObject<Message<TEntity>>(cr.Value);
+                        return lastMessage;
+                    }
+                }
+                catch (ConsumeException e)
+                {
+                    throw new Exception(e.Message);
+                }
+                catch (OperationCanceledException)
+                {
+
+                }
+                finally
+                {
+                    c.Close();
+                }
+            }
+
+            return lastMessage;
         }
 
     }

@@ -63,6 +63,78 @@ namespace SWD392.OutfitBox.DataLayer.Streaming.ProducerMessage
                 }
             }
         }
+        /// 
+        public static async Task ProductListCategoryMessage(string messageContent, string command, List<Category> entity, string key)
+        {
+            var message = new Message<List<Category>>()
+            {
+                Command = command,
+                Data = entity,
+                MessageContent = messageContent,
+                Key = key
+            };
+            var serializedMessage = JsonConvert.SerializeObject(message);
+            using (var p = new ProducerBuilder<Null, string>(Config.GetProducerConfig()).Build())
+            {
+                try
+                {
+                    var dr = await p.ProduceAsync("List-Categories", new Message<Null, string> { Value = serializedMessage, Timestamp = Timestamp.Default, Key = null, });
+                    Console.WriteLine($"Delivered '{dr.Value}' to '{dr.TopicPartitionOffset}'");
+                }
+                catch (ProduceException<Null, string> e)
+                {
+                    Console.WriteLine($"Delivery failed: {e.Error.Reason}");
+                }
+            }
+        }
+        public static async Task ProductCategoryMessage(string messageContent, string command, Category entity, string key)
+        {
+            var message = new Message<Category>()
+            {
+                Command = command,
+                Data = entity,
+                MessageContent = messageContent,
+                Key = key
+            };
+            var serializedMessage = JsonConvert.SerializeObject(message);
+            using (var p = new ProducerBuilder<Null, string>(Config.GetProducerConfig()).Build())
+            {
+                try
+                {
+                    var dr = await p.ProduceAsync("Categories", new Message<Null, string> { Value = serializedMessage, Timestamp = Timestamp.Default, Key = null, });
+                    Console.WriteLine($"Delivered '{dr.Value}' to '{dr.TopicPartitionOffset}'");
+                }
+                catch (ProduceException<Null, string> e)
+                {
+                    Console.WriteLine($"Delivery failed: {e.Error.Reason}");
+                }
+            }
+        }
+        /// 
+
+        public static async Task ProductOrderMessage(string messageContent, string command, List<CustomerPackage> entity, string key)
+        {
+            var message = new Message<List<CustomerPackage>>()
+            {
+                Command = command,
+                Data = entity,
+                MessageContent = messageContent,
+                Key = key
+            };
+            var serializedMessage = JsonConvert.SerializeObject(message);
+            using (var p = new ProducerBuilder<Null, string>(Config.GetProducerConfig()).Build())
+            {
+                try
+                {
+                    var dr = await p.ProduceAsync("List-Orders", new Message<Null, string> { Value = serializedMessage, Timestamp = Timestamp.Default, Key = null, });
+                    Console.WriteLine($"Delivered '{dr.Value}' to '{dr.TopicPartitionOffset}'");
+                }
+                catch (ProduceException<Null, string> e)
+                {
+                    Console.WriteLine($"Delivery failed: {e.Error.Reason}");
+                }
+            }
+        }
         public static async Task ProductProcessNotification(string messageContent, string command, CustomerPackage customerPackage, string key)
         {
             var message = new Message<CustomerPackage>()
@@ -86,6 +158,30 @@ namespace SWD392.OutfitBox.DataLayer.Streaming.ProducerMessage
                 }
             }
         }
+        public static async Task ProductUpdateRedisMessage<TEntity>(string messageContent, string command, TEntity entity, string key) where TEntity : class
+        {
+            var message = new Message<string>()
+            {
+                Command = command,
+                Data = JsonConvert.SerializeObject(entity),
+                MessageContent = messageContent,
+                Key = key
+            };
+            var serializedMessage = JsonConvert.SerializeObject(message);
+            using (var p = new ProducerBuilder<Null, string>(Config.GetProducerConfig()).Build())
+            {
+                try
+                {
+                    var dr = await p.ProduceAsync("Redis-UpdateData", new Message<Null, string> { Value = serializedMessage, Timestamp = Timestamp.Default, Key = null, });
+                    Console.WriteLine($"Delivered '{dr.Value}' to '{dr.TopicPartitionOffset}'");
+                }
+                catch (ProduceException<Null, string> e)
+                {
+                    Console.WriteLine($"Delivery failed: {e.Error.Reason}");
+                }
+            }
+        }
+
     }
     public class Message<T> where T : class
     {   

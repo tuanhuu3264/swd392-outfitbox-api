@@ -20,7 +20,6 @@ namespace SWD392.OutfitBox.API.Configurations.Databases
              opt =>
                    {
                        opt.Configuration = "Outfit4rent.online:6379";
-                       opt.InstanceName = "Outfit4rent-";
                    });
         }
     }

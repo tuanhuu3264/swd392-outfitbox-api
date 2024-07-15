@@ -1,10 +1,14 @@
-﻿using AutoMapper;
+﻿using Abp.Runtime.Caching;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
+using StackExchange.Redis;
 using SWD392.OutfitBox.BusinessLayer.BusinessModels;
 using SWD392.OutfitBox.DataLayer.Entities;
 using SWD392.OutfitBox.DataLayer.Firebase;
 using SWD392.OutfitBox.DataLayer.Interfaces;
+using SWD392.OutfitBox.DataLayer.Streaming.ProducerMessage;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,11 +22,14 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.CategoryService
         public ICategoryRepository _categoryRepository { get; set; }
         public IMapper _mapper;
         public IConfiguration _configuration;
+        private readonly StackExchange.Redis.IDatabase _cache;
         public CategoryService(ICategoryRepository categoryRepository, IMapper mapper, IConfiguration configuration)
         {
             _categoryRepository = categoryRepository;
             _mapper = mapper;
             _configuration = configuration;
+            ConnectionMultiplexer con = ConnectionMultiplexer.Connect("outfit4rent.online:6379");
+            _cache = con.GetDatabase();
         }
         public async Task<CategoryModel> ChangeStatus(int id, int status)
         {
@@ -31,6 +38,10 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.CategoryService
             category.Status = status;
             if (status == 0) category.IsFeatured = false;
             var updatedCategory = await _categoryRepository.UpdateCategory(category);
+            Task.WhenAll(
+                    ProducerMessage.ProductUpdateRedisMessage<List<Category>>("update-all-categories", "delete", null, "all-categories"),
+                    ProducerMessage.ProductUpdateRedisMessage<List<Category>>("update-all-categories", "delete", null, "featured-categories")
+                );
             return _mapper.Map<CategoryModel>(updatedCategory);
         }
 
@@ -39,17 +50,59 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.CategoryService
             category.Status = 1;
             var mappingCategory = _mapper.Map<Category>(category);
             var createdCategory = await _categoryRepository.CreateCategory(mappingCategory);
+            Task.WhenAll(
+                    ProducerMessage.ProductUpdateRedisMessage<List<Category>>("update-all-categories", "delete", null, "all-categories"),
+                    ProducerMessage.ProductUpdateRedisMessage<List<Category>>("update-all-categories", "delete", null, "featured-categories")
+                );
             return _mapper.Map<CategoryModel>(createdCategory);
         }
 
         public async Task<List<CategoryModel>> GetAllCategories()
         {
-            return (await _categoryRepository.GetAllCategories()).Select(x=>_mapper.Map<CategoryModel>(x)).ToList();
+            try
+            {
+                var cacheCategories = _cache.StringGet("all-categories").ToString();
+                var result = JsonConvert.DeserializeObject<List<Category>>(cacheCategories);
+                if (cacheCategories != null && cacheCategories.Any())
+                {
+                    return cacheCategories.Select(x => _mapper.Map<CategoryModel>(x)).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            var data = await _categoryRepository.GetAllCategories();
+            if (data != null && data.Any())
+            {
+                Task.WhenAll(
+                    ProducerMessage.ProductUpdateRedisMessage<List<Category>>("update-all-categories", "create", data, "all-categories")
+                );
+            }
+            return _mapper.Map<List<CategoryModel>>(data);
         }
 
         public async Task<CategoryModel> GetCategoryById(int id)
         {
-            return _mapper.Map<CategoryModel>(await _categoryRepository.GetById(id)); 
+            try
+            {
+                var cacheCategories = _cache.StringGet($"categories-{id}").ToString();
+                var result = JsonConvert.DeserializeObject<Category>(cacheCategories);
+                if (cacheCategories != null && cacheCategories.Any())
+                {
+                    return _mapper.Map<CategoryModel>(result);
+
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            var data= await _categoryRepository.GetById(id); 
+            if(data!=null) Task.WhenAll(
+                    ProducerMessage.ProductUpdateRedisMessage<Category>("update-all-categories", "create", data, $"Categories-{data.ID}")
+                );
+            return _mapper.Map<CategoryModel>(data);
         }
 
         public async Task<CategoryModel> UpdateCategory(CategoryModel category)
@@ -65,6 +118,10 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.CategoryService
             checkingCategory.Description = category.Description!=null? category.Description: checkingCategory.Description; 
             
             var updatedCategory = await _categoryRepository.UpdateCategory(checkingCategory);
+            Task.WhenAll(
+                    ProducerMessage.ProductUpdateRedisMessage<List<Category>>("update-all-categories", "delete", null, "all-categories"),
+                    ProducerMessage.ProductUpdateRedisMessage<List<Category>>("update-all-categories", "delete", null, "featured-categories")
+                );
             return _mapper.Map<CategoryModel>(updatedCategory);
         }
         public async Task<string> UploadCategoryImage(IFormFile image)
@@ -75,8 +132,27 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.CategoryService
 
         public async Task<List<CategoryModel>> GetFeaturedCategories()
         {
-            return (await _categoryRepository.GetAllCategories()).Where(x=>x.IsFeatured==true && x.Status==1)
-                    .Select(x => _mapper.Map<CategoryModel>(x)).ToList();
+            try
+            {
+                var cacheCategories = _cache.StringGet("featured-categories").ToString();
+                var result = JsonConvert.DeserializeObject<List<Category>>(cacheCategories);
+                if (cacheCategories != null && cacheCategories.Any())
+                {
+                    return cacheCategories.Select(x => _mapper.Map<CategoryModel>(x)).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            var data = (await _categoryRepository.GetAllCategories()).Where(x=>x.IsFeatured).ToList();
+            if (data != null && data.Any())
+            {
+                Task.WhenAll(
+                    ProducerMessage.ProductUpdateRedisMessage<List<Category>>("update-all-categories", "create", data, "featured-categories")
+                );
+            }
+            return _mapper.Map<List<CategoryModel>>(data);
         }
     }
 }

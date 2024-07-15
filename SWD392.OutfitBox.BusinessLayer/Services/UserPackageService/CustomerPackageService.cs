@@ -3,9 +3,15 @@ using Abp.Domain.Uow;
 using Abp.Extensions;
 using AutoMapper;
 using Azure.Core;
+using FirebaseAdmin.Messaging;
+using Microsoft.Extensions.Caching.Distributed;
+using Newtonsoft.Json;
+using StackExchange.Redis;
 using SWD392.OutfitBox.BusinessLayer.BusinessModels;
 using SWD392.OutfitBox.BusinessLayer.BusinessModels.PaymentModels;
+using SWD392.OutfitBox.DataLayer.Databases.Redis;
 using SWD392.OutfitBox.DataLayer.Entities;
+using SWD392.OutfitBox.DataLayer.FirebaseCloudMessaging;
 using SWD392.OutfitBox.DataLayer.UnitOfWork;
 using System;
 using System.Collections.Generic;
@@ -20,22 +26,33 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.UserPackageService
     public class CustomerPackageService : ICustomerPackageService
     {
         private readonly IUnitOfWork _unitOfWork;
+    
         private IMapper _mapper;
-        public CustomerPackageService(IUnitOfWork unitOfWork,IMapper mapper)
+        private readonly IDatabase _cache;
+        private readonly ConnectionMultiplexer _redis;
+        public CustomerPackageService(IUnitOfWork  unitOfWork,IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _redis = ConnectionMultiplexer.Connect("outfit4rent.online:6379");
+            _cache = _redis.GetDatabase();
         }
         public async Task<CustomerPackageModel> ChangeStatus(int id, int status)
         {
             using (var transaction = _unitOfWork.BenginTransaction())
             {
                 try
-                {
+                {   
                     var customerPackageModel = await _unitOfWork._customerPackageRepository.GetCustomerPackgageAndItemsbyId(id);
                     if (customerPackageModel == null) throw new Exception("Not Found this CustomerPackage");
                     if (customerPackageModel.Status == status) throw new Exception("This CustomerPackage already has this status");
-
+                    Message message = new Message();
+                    var serializedModel = _cache.StringGet(customerPackageModel.CustomerId.ToString());
+                    if (serializedModel.HasValue)
+                    {
+                        var deviceModel = JsonConvert.DeserializeObject<DeviceTokenModels>(serializedModel);
+                        message.Token = deviceModel.DeviceToken;
+                    }
                     var itemInCustomerPackageModel = await _unitOfWork._itemsInUserPackageRepository.GetByUserPackageId(customerPackageModel.Id);
 
                     //-1 - canceled order
@@ -57,7 +74,18 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.UserPackageService
 
                         await _unitOfWork.SaveChangesAsync();
                         await _unitOfWork.CommitTransaction();
-
+                       
+                        message.Notification = new Notification()
+                        {
+                            Title = "Order is accepted.",
+                            Body=$"The Order #{customerPackageModel.Id} is accepted. The order will be gived to you soon."
+                        };
+                         message.Notification = new Notification()
+                        {
+                            Title = "Order is accepted.",
+                            Body=$"The Order #{customerPackageModel.Id} is accepted. The order will be gived to you soon."
+                        };
+                        if(message.Token!=null) FirebaseCloudMessagingHelper.SendNotificationByMessage(message);
                         return _mapper.Map<CustomerPackageModel>(updatedOrder);
                     }
                     else if (customerPackageModel.Status == 0 && status == -1)
@@ -80,7 +108,30 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.UserPackageService
 
                         var updatedOrder = await _unitOfWork._customerPackageRepository.SaveAsyn(customerPackageModel);
 
+                        
+
                         var customer = await _unitOfWork._customerRepository.GetCustomerById(customerPackageModel.CustomerId);
+                        var wallet = (await _unitOfWork._walletRepository.GetAllWalletsByUserId(customer.Id)).First(x=>x.WalletName=="Outfit4rent");
+
+                        var deposit = new Deposit()
+                        {
+                            AmountMoney= (double)customerPackageModel.TotalDeposit,
+                            CustomerId=customer.Id,
+                            Date=DateTime.Now,
+                            Type="Return Money As Canceling Order",
+                            Transactions= new List<Transaction>()
+                            {
+                                new Transaction()
+                                {
+                                    WalletId=wallet.Id,
+                                    DateTransaction=DateTime.Now,
+                                    Amount=(double)customerPackageModel.TotalDeposit,
+                                    Paymethod="Online",
+                                    Status=1,
+                                }
+                            }
+                        };
+                        await _unitOfWork._depositRepository.CreateDeposit(deposit);
                         if (customer != null)
                         {
                             customer.MoneyInWallet += (long)(customerPackageModel.TotalDeposit + customerPackageModel.Price);
@@ -89,7 +140,12 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.UserPackageService
 
                         await _unitOfWork.SaveChangesAsync();
                         await _unitOfWork.CommitTransaction();
-
+                        message.Notification = new Notification()
+                        {
+                            Title = "Order is cancelled.",
+                            Body = $"The Order #{customerPackageModel.Id} is cancelled. The deposit will be returned to you."
+                        };
+                        if (message.Token != null)  FirebaseCloudMessagingHelper.SendNotificationByMessage(message);
                         return _mapper.Map<CustomerPackageModel>(updatedOrder);
                     }
                     else

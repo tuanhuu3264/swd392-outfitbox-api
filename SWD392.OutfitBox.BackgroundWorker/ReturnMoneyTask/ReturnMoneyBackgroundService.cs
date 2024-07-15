@@ -52,13 +52,14 @@ namespace SWD392.OutfitBox.BackgroundWorker.ReturnMoneyTask
                     .Where(p => p.Status == 2 && !p.IsReturnedDeposit && p.DateTo.AddDays(4).Date == DateTime.Now.Date)
                     .Include(x => x.Items)
                     .ToListAsync();
+                if (customerPackages.Any())
+                {
+                    var packageGroups = SplitList(customerPackages, 4);
 
-                var packageGroups = SplitList(customerPackages, 4);
+                    var tasks = packageGroups.Select(group => Task.Run(async () => await ProcessPackages(group))).ToList();
 
-                var tasks = packageGroups.Select(group => Task.Run(async () => await ProcessPackages(group))).ToList();
-
-                await Task.WhenAll(tasks);
-
+                    await Task.WhenAll(tasks);
+                }
                 _logger.LogInformation("Return Money Background Service completed work successfully.");
             }
             catch (Exception ex)
