@@ -16,7 +16,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.ReturnOrderService
         public Task<ReturnOrderModel> CreateReturnOrder(ReturnOrderModel requestDTO);
         public Task<string> DeleteReturnOrder(int id);
         public Task<ReturnOrderModel> GetReturnOrderById(int id);
-        public Task<ReturnOrderModel> ChangeStatus(int id, int status);
+        public Task<ReturnOrderModel> ChangeStatus(int id, int status, List<ProductReturnOrderModel> models);
         public Task<List<ProductInReturnOrderViewModel>> GetByReturnOrderId(int returnOrderId);
     }
 }

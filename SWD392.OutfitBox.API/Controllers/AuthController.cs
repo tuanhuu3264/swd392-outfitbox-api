@@ -60,6 +60,59 @@ namespace SWD392.OutfitBox.API.Controllers
             }
             return StatusCode((int)response.StatusCode, response);
         }
+        [HttpPost("device-tokens/partners/{id}/{token}")]
+        public async Task<ActionResult<BaseResponse<LoginModel>>> AddDeviceTokenPartner([FromRoute] int id, [FromRoute] string token)
+        {
+
+            BaseResponse<string> response;
+            try
+            {
+                _authService.SaveChangeDeviceTokenPartner(token, id);
+                
+                response = new BaseResponse<string>("Add Token successfully.", System.Net.HttpStatusCode.OK, null);
+            }
+            catch (Exception ex)
+            {
+                response = new BaseResponse<string>("Add Token unsuccessfully.", System.Net.HttpStatusCode.OK, null);
+            }
+            return StatusCode((int)response.StatusCode, response);
+        }
+        [HttpDelete("device-tokens/partners/{id}")]
+        public async Task<ActionResult<BaseResponse<LoginModel>>> DeleteDeviceTokenPartner([FromRoute] int id, [FromRoute] string token)
+        {
+
+            BaseResponse<string> response;
+            try
+            {
+                _authService.LogoutDeleteDeviceTokenPartner(id);
+
+                response = new BaseResponse<string>("Delete Token successfully.", System.Net.HttpStatusCode.OK, null);
+            }
+            catch (Exception ex)
+            {
+                response = new BaseResponse<string>("Delete Token unsuccessfully.", System.Net.HttpStatusCode.OK, null);
+            }
+            return StatusCode((int)response.StatusCode, response);
+        }
+
+        [HttpDelete("device-tokens/customers/{id}")]
+        public async Task<ActionResult<BaseResponse<LoginModel>>> LogoutDeleteDeviceTokenUser([FromRoute] int id, [FromRoute] string token)
+        {
+
+            BaseResponse<string> response;
+            try
+            {
+                _authService.LogoutDeleteDeviceTokenUser(id);
+
+                response = new BaseResponse<string>("Delete Token successfully.", System.Net.HttpStatusCode.OK, null);
+            }
+            catch (Exception ex)
+            {
+                response = new BaseResponse<string>("Delete Token unsuccessfully.", System.Net.HttpStatusCode.OK, null);
+            }
+            return StatusCode((int)response.StatusCode, response);
+        }
 
     }
+
 }

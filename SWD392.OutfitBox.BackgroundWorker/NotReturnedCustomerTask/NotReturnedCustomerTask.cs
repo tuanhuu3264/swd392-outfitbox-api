@@ -32,7 +32,7 @@ namespace SWD392.OutfitBox.BackgroundWorker.NotReturnedCustomerTask
         public Task StartAsync(CancellationToken cancellationToken)
         {
             _logger.LogInformation("NotReturnedCustomer Background Service is starting.");
-            _timer = new Timer(DoWork, null, TimeSpan.Zero, TimeSpan.FromHours(12));
+            _timer = new Timer(DoWork, null, TimeSpan.Zero, TimeSpan.FromMinutes(3));
             return Task.CompletedTask;
         }
 
@@ -40,7 +40,7 @@ namespace SWD392.OutfitBox.BackgroundWorker.NotReturnedCustomerTask
         {
             try
             {
-                var _context = new Context();
+                Context _context = new Context();
                 _logger.LogInformation("Checking for customers with expired orders.");
 
                 var customers = await _context.Set<ItemInUserPackage>()
@@ -53,43 +53,43 @@ namespace SWD392.OutfitBox.BackgroundWorker.NotReturnedCustomerTask
                     .Distinct()
                     .ToListAsync();
 
-                // Limit concurrency to 4 threads
-                var parallelOptions = new ParallelOptions { MaxDegreeOfParallelism = 4 };
-                Parallel.ForEach(customers, parallelOptions, async (customerId) =>
+                if (customers.Any())
                 {
-                    try
-                    {
-                        ConnectionMultiplexer _redis = ConnectionMultiplexer.Connect("outfit4rent.online:6379");
-                        var stringData = await _redis.GetDatabase().StringGetAsync(customerId.ToString());
-
-                        if (stringData.HasValue)
+                    foreach (var customer in customers) {
+                        try
                         {
-                            var data = JsonConvert.DeserializeObject<DeviceTokenModels>(stringData);
-                            Message message = new Message()
+                            ConnectionMultiplexer _redis = ConnectionMultiplexer.Connect("outfit4rent.online:6379");
+                            var stringData = await _redis.GetDatabase().StringGetAsync(customer.ToString());
+
+                            if (stringData.HasValue)
                             {
-                                Token = data.DeviceToken,
-                                Notification = new Notification()
+                                var data = JsonConvert.DeserializeObject<DeviceTokenModels>(stringData);
+                                Message message = new Message()
                                 {
-                                    Title = "Expired Products !!!!",
-                                    Body = "Oops, you have expired products that have not been returned. Please check!",
-                                }
-                            };
-                            await FirebaseCloudMessagingHelper.SendNotificationByMessage(message);
+                                    Token = data.DeviceToken,
+                                    Notification = new Notification()
+                                    {
+                                        Title = "Expired Products !!!!",
+                                        Body = "Oops, you have expired products that have not been returned. Please check!",
+                                    }
+                                };
+                                await FirebaseCloudMessagingHelper.SendNotificationByMessage(message);
+                            }
+                            _logger.LogInformation($"Sending notification to customer {customer} to return items.");
                         }
-                        _logger.LogInformation($"Sending notification to customer {customerId} to return items.");
+                        catch (Exception ex)
+                        {
+                            _logger.LogError(ex, $"Error processing customer {customer}");
+                        }
                     }
-                    catch (Exception ex)
-                    {
-                        _logger.LogError(ex, $"Error processing customer {customerId}");
-                    }
-                });
+                };
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error in background task.");
             }
         }
-
+       
         public Task StopAsync(CancellationToken cancellationToken)
         {
             throw new NotImplementedException();

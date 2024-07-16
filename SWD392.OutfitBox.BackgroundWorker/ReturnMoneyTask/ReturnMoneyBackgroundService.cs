@@ -31,7 +31,7 @@ namespace SWD392.OutfitBox.BackgroundWorker.ReturnMoneyTask
         public Task StartAsync(CancellationToken cancellationToken)
         {
             _logger.LogInformation("Return Money Background Service is starting.");
-            _timer = new Timer(DoWork, null, TimeSpan.Zero, TimeSpan.FromHours(24));
+            _timer = new Timer(DoWork, null, TimeSpan.Zero, TimeSpan.FromHours(1));
             return Task.CompletedTask;
         }
 
@@ -55,68 +55,39 @@ namespace SWD392.OutfitBox.BackgroundWorker.ReturnMoneyTask
                     .ToListAsync();
                 if (customerPackages.Any())
                 {
-                    var packageGroups = SplitList(customerPackages, 4);
-
-                    var tasks = packageGroups.Select(group => Task.Run(async () => await ProcessPackages(group))).ToList();
-
-                    await Task.WhenAll(tasks);
-                    Task.WhenAll(
-                           ProducerMessage.ProductUpdateRedisMessage<List<CustomerPackage>>("delete-customer-packages-by-customerId", "delete", null, $"customer-packages-status:{2}")
-                           );
-                }
-                _logger.LogInformation("Return Money Background Service completed work successfully.");
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"An error occurred: {ex.Message}");
-            }
-        }
-
-        private List<List<CustomerPackage>> SplitList(List<CustomerPackage> list, int n)
-        {
-            var listCount = list.Count;
-            var groupSize = (listCount + n - 1) / n; // ceiling division
-            return Enumerable.Range(0, n)
-                .Select(i => list.Skip(i * groupSize).Take(groupSize).ToList())
-                .ToList();
-        }
-
-        private async Task ProcessPackages(List<CustomerPackage> packages)
-        {
-            try
-            {
-                using var context = new Context();
-                using var transaction = await context.Database.BeginTransactionAsync();
-
-                foreach (var package in packages)
-                {
-                    var customer = await context.Set<Customer>().FirstOrDefaultAsync(x => x.Id == package.CustomerId);
-                    if (customer == null) continue;
-
-                    var returnOrders = await context.Set<ReturnOrder>()
-                        .Where(x => x.CustomerPackageId == package.Id)
-                        .ToListAsync();
-
-                    var wallet = await context.Set<Wallet>()
-                        .FirstOrDefaultAsync(x => x.CustomerId == customer.Id && x.WalletName == "Outfit4rent");
-
-                    if (wallet == null) continue;
-
-                    package.ReturnDeposit = (double)package.TotalDeposit;
-                    package.ReturnDeposit -= returnOrders.Sum(x => x.TotalThornMoney);
-                    package.IsReturnedDeposit = true;
-                    context.Update(package);
-
-                    customer.MoneyInWallet += (long)package.ReturnDeposit;
-                    context.Update(customer);
-
-                    var deposit = new Deposit()
+                    try
                     {
-                        CustomerId = customer.Id,
-                        Type = "Return Money",
-                        Date = DateTime.Now.Date,
-                        AmountMoney = package.ReturnDeposit,
-                        Transactions = new List<Transaction>()
+                        using var transaction = await context.Database.BeginTransactionAsync();
+
+                        foreach (var package in customerPackages)
+                        {
+                            var customer = await context.Set<Customer>().FirstOrDefaultAsync(x => x.Id == package.CustomerId);
+                            if (customer == null) continue;
+
+                            var returnOrders = await context.Set<ReturnOrder>()
+                                .Where(x => x.CustomerPackageId == package.Id)
+                                .ToListAsync();
+
+                            var wallet = await context.Set<Wallet>()
+                                .FirstOrDefaultAsync(x => x.CustomerId == customer.Id && x.WalletName == "Outfit4rent");
+
+                            if (wallet == null) continue;
+
+                            package.ReturnDeposit = (double)package.TotalDeposit;
+                            package.ReturnDeposit -= returnOrders.Sum(x => x.TotalThornMoney);
+                            package.IsReturnedDeposit = true;
+                            context.Update(package);
+
+                            customer.MoneyInWallet += (long)package.ReturnDeposit;
+                            context.Update(customer);
+
+                            var deposit = new Deposit()
+                            {
+                                CustomerId = customer.Id,
+                                Type = "Return Money",
+                                Date = DateTime.Now.Date,
+                                AmountMoney = package.ReturnDeposit,
+                                Transactions = new List<Transaction>()
                         {
                             new Transaction()
                             {
@@ -127,27 +98,34 @@ namespace SWD392.OutfitBox.BackgroundWorker.ReturnMoneyTask
                                 WalletId = wallet.Id
                             }
                         }
-                    };
-                    context.Add(deposit);
+                            };
+                            context.Add(deposit);
 
-                    await context.SaveChangesAsync();
-                    Task.WhenAll(
-                           ProducerMessage.ProductUpdateRedisMessage<List<CustomerPackage>>("delete-customer-packages-by-customerId", "delete", null, $"customer-packages-customer:{package.CustomerId}"),
-                           ProducerMessage.ProductUpdateRedisMessage<CustomerPackage>("delete-customer-packages-byId" + package.Id, "delete", null, $"customer-packages-id:{package.Id}")
+                            await context.SaveChangesAsync();
+                            Task.WhenAll(
+                                   ProducerMessage.ProductUpdateRedisMessage<List<CustomerPackage>>("delete-customer-packages-by-customerId", "delete", null, $"customer-packages-customer:{package.CustomerId}"),
+                                   ProducerMessage.ProductUpdateRedisMessage<CustomerPackage>("delete-customer-packages-byId" + package.Id, "delete", null, $"customer-packages-id:{package.Id}")
 
-                           );
+                                   );
+                        }
+
+                        await transaction.CommitAsync();
+
+                        foreach (var package in customerPackages)
+                        {
+                            await ProducerMessage.ProductProcessNotification("Return Money Is Successfully", "", package, "return-money-order-" + package.Id);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger.LogError($"An error occurred while processing packages: {ex.Message}");
+                    }
                 }
-
-                await transaction.CommitAsync();
-
-                foreach (var package in packages)
-                {
-                    await ProducerMessage.ProductProcessNotification("Return Money Is Successfully", "", package, "return-money-order-" + package.Id);
-                }
+                _logger.LogInformation("Return Money Background Service completed work successfully.");
             }
             catch (Exception ex)
             {
-                _logger.LogError($"An error occurred while processing packages: {ex.Message}");
+                _logger.LogError($"An error occurred: {ex.Message}");
             }
         }
     }

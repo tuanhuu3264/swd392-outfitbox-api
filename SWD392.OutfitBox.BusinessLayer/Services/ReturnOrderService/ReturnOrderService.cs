@@ -1,8 +1,11 @@
 ﻿using AutoMapper;
+using FirebaseAdmin.Messaging;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
+using StackExchange.Redis;
 using SWD392.OutfitBox.BusinessLayer.BusinessModels;
 using SWD392.OutfitBox.BusinessLayer.BusinessModels.PaymentModels;
 using SWD392.OutfitBox.DataLayer.Entities;
+using SWD392.OutfitBox.DataLayer.FirebaseCloudMessaging;
 using SWD392.OutfitBox.DataLayer.Streaming.ProducerMessage;
 using SWD392.OutfitBox.DataLayer.UnitOfWork;
 using System;
@@ -17,10 +20,13 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.ReturnOrderService
     {
         public IUnitOfWork _unitOfWork { get; set; }
         public IMapper _mapper { get; set; }
+        public IDatabase _cache { get; set; }
         public ReturnOrderService(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            ConnectionMultiplexer con = ConnectionMultiplexer.Connect("outfit4rent.online:6379");
+            _cache = con.GetDatabase();
         }
 
         public async Task<ReturnOrderModel> CreateReturnOrder(ReturnOrderModel requestDTO)
@@ -37,10 +43,10 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.ReturnOrderService
             var customerPackage = await _unitOfWork._customerPackageRepository.GetCustomerPackageById(requestDTO.CustomerPackageId.Value);
             if (customerPackage == null)
                 throw new Exception("No order found with ID: " + requestDTO.CustomerPackageId.Value);
-            
+
             if (customerPackage.CustomerId != customer.Id)
                 throw new Exception("The user doesn't have permission to create this return order");
-            if (customerPackage.Status == 0 || customerPackage.Status == -1 || (customerPackage.IsReturnedDeposit == true)) 
+            if (customerPackage.Status == 0 || customerPackage.Status == -1 || (customerPackage.IsReturnedDeposit == true))
                 throw new Exception("The return order can be created as it is invalid status to create");
             var partner = await _unitOfWork._partnerRepository.GetPartnerById(requestDTO.PartnerId.Value);
             if (partner == null)
@@ -74,19 +80,32 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.ReturnOrderService
             using (_unitOfWork.BenginTransaction())
             {
                 await _unitOfWork.CommitTransaction();
-                    try
+                try
                 {
-                 
+
+                    Dictionary<int, double> moneyPerProduct = new Dictionary<int, double>();
                     var productsInCustomerPackage = await _unitOfWork._itemsInUserPackageRepository.GetByUserPackageId(mappingReturnOrder.CustomerPackageId);
                     foreach (var item in productsInCustomerPackage)
                     {
                         if (updatedQuantity.TryGetValue(item.ProductId, out int quantity))
-                        {
+                        {   
+                            moneyPerProduct.Add(item.ProductId, item.Deposit/item.Quantity);
                             item.ReturnedQuantity += quantity;
                             await _unitOfWork._itemsInUserPackageRepository.UpdateItem(item);
                         }
                     }
 
+                    if(mappingReturnOrder.ProductReturnOrders!=null)
+                    foreach(var item in mappingReturnOrder.ProductReturnOrders)
+                        {
+                            if (moneyPerProduct.TryGetValue(item.ProductId, out double price))
+                            {
+
+                                if (item.DamagedLevel == 1) item.ThornMoney = item.Quantity * price * 0.2;
+                                if (item.DamagedLevel == 2) item.ThornMoney = item.Quantity * price * 0.5;
+                                if (item.DamagedLevel == 3) item.ThornMoney = item.Quantity * price * 1;
+                            }
+                        }
                     mappingReturnOrder.Status = 0;
                     mappingReturnOrder.CreatedAt = DateTime.Now;
                     mappingReturnOrder.QuantityOfItems = requestDTO.ProductReturnOrders.Sum(x => x.Quantity.Value);
@@ -98,8 +117,10 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.ReturnOrderService
                          ProducerMessage.ProductUpdateRedisMessage<CustomerPackageModel>("delete-customer-packages-byId" + requestDTO.Id, "delete", null, $"customer-packages-id:{requestDTO.Id}")
 
                          );
+                    FirebaseCloudMessagingHelper.SendNotificationToTopic("new-orders", "You have a new return order.", "The return order is created. Please to check! Return Order Id: " + result.Id);
                     return _mapper.Map<ReturnOrderModel>(result);
-                }catch(Exception ex)
+                }
+                catch (Exception ex)
                 {
                     await _unitOfWork.RollbackTransaction();
                     throw new Exception(ex.Message);
@@ -125,8 +146,9 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.ReturnOrderService
             return _mapper.Map<ReturnOrderModel>(await _unitOfWork._returnOrderRepository.GetReturnOrderById(id));
         }
 
-        public async Task<ReturnOrderModel> ChangeStatus(int id, int status)
+        public async Task<ReturnOrderModel> ChangeStatus(int id, int status, List<ProductReturnOrderModel> models)
         {
+            Message message = new Message();
             using (var transaction = _unitOfWork.BenginTransaction())
             {
                 try
@@ -138,20 +160,8 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.ReturnOrderService
                     if (returnOrder.Status == status)
                         throw new Exception("This return order already has this status.");
 
-                    returnOrder.Status = status;
+                   
                     Dictionary<int, int> updatedQuantity = new Dictionary<int, int>();
-
-                    if (returnOrder.Status == 0 && status == 1)
-                    {
-
-                        var productsInReturnOrder = await _unitOfWork._productReturnOrderRepository.GetProductReturnOrderByReturnOrderId(id);
-                        foreach (var item in productsInReturnOrder)
-                        {
-                            var product = item.Product;
-                            product.Quantity += item.Quantity;
-                            await _unitOfWork._productRepository.UpdateProduct(product);
-                        }
-                    }
                     if (returnOrder.ProductReturnOrders != null)
                     {
                         foreach (var item in returnOrder.ProductReturnOrders)
@@ -161,9 +171,69 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.ReturnOrderService
                             updatedQuantity[item.ProductId] = item.Quantity;
                         }
                     }
+                    if (returnOrder.Status == 0 && status == 1)
+                    {
+
+                        var productsInReturnOrder = await _unitOfWork._productReturnOrderRepository.GetProductReturnOrderByReturnOrderId(id);
+                        foreach (var item in productsInReturnOrder)
+                        {
+                            var product = await _unitOfWork._productRepository.GetById(item.ProductId);
+                            if (item.DamagedLevel != 3) product.Quantity += item.Quantity;
+                            await _unitOfWork._productRepository.UpdateProduct(product);
+                        }
+                        foreach(var model in models)
+                        {
+                            var productInReturnOrder = await _unitOfWork._productReturnOrderRepository.GetProductReturnOrderById(id);
+                            productInReturnOrder.ThornMoney = (double)model.ThornMoney;
+                            productInReturnOrder.DamagedLevel= (int)model.DamagedLevel;
+                            await _unitOfWork._productReturnOrderRepository.UpdatePoductReturnOrder(productInReturnOrder);
+                        }
+                        message = new Message()
+                        {
+                            Notification = new Notification()
+                            {
+                                Title = "Completed Orders",
+                                Body = $"Your return order {returnOrder.Id} is completed"
+                            }
+                        };
+                    } else if(returnOrder.Status == 0 && status == -1)
+                    {
+                        var productInOrder = await _unitOfWork._itemsInUserPackageRepository.GetByUserPackageId(returnOrder.CustomerPackageId);
+                        foreach(var  item in productInOrder)
+                        {
+                            if(updatedQuantity.TryGetValue(item.ProductId, out int quantity ))
+                            {
+                                item.ReturnedQuantity-= quantity;
+                                await _unitOfWork._itemsInUserPackageRepository.UpdateItem(item);
+                            }
+                        }
+                        message = new Message()
+                        {
+                            Notification = new Notification()
+                            {
+                                Title = "Canceled Orders",
+                                Body = $"Your return order {returnOrder.Id} is Canceled"
+                            }
+                        };
+                    }
+
+                    returnOrder.Status = status;
                     await _unitOfWork._returnOrderRepository.UpdateReturnOrder(returnOrder);
                     await _unitOfWork.CommitTransaction();
+                    if(status ==1 || status ==2 )
+                    try
+                    {
+                            var token = _cache.StringGet("partner:device-tokens:" + returnOrder.PartnerId);
+                            if (token.HasValue)
+                            {
+                                message.Token = token;
+                                FirebaseCloudMessagingHelper.SendNotificationByMessage(message);
+                            }
+                    }
+                    catch (Exception ex)
+                    {
 
+                    }
                     return _mapper.Map<ReturnOrderModel>(returnOrder);
                 }
                 catch (Exception ex)

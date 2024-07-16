@@ -82,11 +82,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.UserPackageService
                             Title = "Order is accepted.",
                             Body = $"The Order #{customerPackageModel.Id} is accepted. The order will be gived to you soon."
                         };
-                        message.Notification = new Notification()
-                        {
-                            Title = "Order is accepted.",
-                            Body = $"The Order #{customerPackageModel.Id} is accepted. The order will be gived to you soon."
-                        };
+                    
                         if (message.Token != null) FirebaseCloudMessagingHelper.SendNotificationByMessage(message);
                         return _mapper.Map<CustomerPackageModel>(updatedOrder);
                     }
@@ -244,11 +240,12 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.UserPackageService
                     if (product == null) throw new Exception($"Product with ID {item.ProductId} not found.");
                     item.DateGive = customerPackage.DateFrom;
                     item.Status = 0;
-                    item.Deposit = product.Deposit;
+                    item.Deposit = product.Deposit * item.Quantity;
                     item.TornMoney = 0;
                     product.Quantity -= item.Quantity;
-                    customerPackage.TotalDeposit += product.Price * item.Quantity;
-                    products.Add(product);
+
+                    customerPackage.TotalDeposit +=product.Deposit * item.Quantity;
+                    await _unitOfWork._productRepository.UpdateProduct(product);
                 }
             }
 
@@ -299,8 +296,10 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.UserPackageService
                     await _unitOfWork.CommitTransaction();
                     Task.WhenAll(
                            ProducerMessage.ProductUpdateRedisMessage<List<CustomerPackageModel>>("delete-customer-packages-by-customerId", "delete", null, $"customer-packages-customer:{customerPackageModel.CustomerId}"),
-                           ProducerMessage.ProductUpdateRedisMessage<List<CustomerPackageModel>>("delete-customer-packages-by-customerId", "delete", null, $"customer-packages-status:{0}")
+                           ProducerMessage.ProductUpdateRedisMessage<List<CustomerPackageModel>>("delete-customer-packages-by-customerId", "delete", null, $"customer-packages-status:{0}"),
+                            FirebaseCloudMessagingHelper.SendNotificationToTopic("new-orders", "You have a new order.", "The order is created. Please to check! Order Id: " + result.Id)
                            );
+                   
                     return _mapper.Map<CustomerPackageModel>(result);
                 }
                 catch (Exception ex)

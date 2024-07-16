@@ -2,6 +2,7 @@
 using FirebaseAdmin.Auth;
 using Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Infrastructure;
 using Microsoft.IdentityModel.Tokens;
+using StackExchange.Redis;
 using SWD392.OutfitBox.BusinessLayer.BusinessModels;
 using SWD392.OutfitBox.BusinessLayer.Exceptions.Auth;
 using SWD392.OutfitBox.BusinessLayer.Helpers;
@@ -19,14 +20,28 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.AuthService{
     {
         public IMapper _mapper;
         public IUserRepository _userRepository { get; set; }
+        public IDatabase _cache;
         public IPartnerRepository _partnerRepository { get; set; }
         public AuthService(IMapper mapper, IUserRepository userRepository, IPartnerRepository partnerRepository)
         {
             _userRepository = userRepository;
             _mapper = mapper;
             _partnerRepository = partnerRepository;
+            ConnectionMultiplexer connectionMultiplexer = ConnectionMultiplexer.Connect("outfit4rent.online:6379");
+            _cache = connectionMultiplexer.GetDatabase();
         }
-
+        public void SaveChangeDeviceTokenPartner(string deviceToken, int id) 
+        {
+            _cache.StringSet("partner:device-tokens:"+id.ToString(), deviceToken);
+        }
+        public void LogoutDeleteDeviceTokenUser(int id)
+        {
+            _cache.StringGetDelete(id.ToString());
+        }
+        public void LogoutDeleteDeviceTokenPartner(int id)
+        {
+            _cache.StringGetDelete("partner:device-tokens:" + id.ToString());
+        }
         public async Task<LoginModel> LoginSystem(string email, string password)
         {
        

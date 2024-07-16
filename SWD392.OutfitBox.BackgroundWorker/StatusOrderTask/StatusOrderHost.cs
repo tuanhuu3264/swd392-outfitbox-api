@@ -19,17 +19,17 @@ namespace SWD392.OutfitBox.BackgroundWorker.StatusOrderTask
         private readonly Context _context;
         public StatusOrderHost()
         {
-            _context ??= new Context();
+            
         }
         public void Dispose()
         {
             _timer?.Dispose();
-            _context.Dispose();
+        
         }
 
         Task IHostedService.StartAsync(CancellationToken cancellationToken)
         {
-                    _timer = new Timer(DoWork, null, TimeSpan.Zero, TimeSpan.FromHours(12));
+                    _timer = new Timer(DoWork, null, TimeSpan.Zero, TimeSpan.FromMinutes(15));
                     return Task.CompletedTask;
         }
 
@@ -44,10 +44,12 @@ namespace SWD392.OutfitBox.BackgroundWorker.StatusOrderTask
         {
             try
             {
+                Context _context = new Context();
                 var customerPackages = _context.CustomerPackages
                     .Where(p => p.DateTo <= DateTime.Today && p.Status !=2 && p.Status !=-1)
                     .Include(x=>x.Items)
-                    .ToList();              
+                    .ToList();     
+                if(customerPackages.Any())
                 foreach (var customerPackage in customerPackages)
                 {
                     customerPackage.Status = 2;
@@ -62,6 +64,7 @@ namespace SWD392.OutfitBox.BackgroundWorker.StatusOrderTask
                          ProducerMessage.ProductUpdateRedisMessage<List<CustomerPackage>>("delete-customer-packages-by-customerId", "delete", null, $"customer-packages-status:{1}"),
                          ProducerMessage.ProductUpdateRedisMessage<List<CustomerPackage>>("delete-customer-packages-by-customerId", "delete", null, $"customer-packages-status:{2}")
                  );
+                _context.Dispose();
             }
             catch (Exception ex)
             {

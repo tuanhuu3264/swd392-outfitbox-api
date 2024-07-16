@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using Pipelines.Sockets.Unofficial;
 using SWD392.OutfitBox.API.Configurations.HTTPResponse;
 using SWD392.OutfitBox.API.DTOs.ReturnOrder;
+using SWD392.OutfitBox.API.RequestModels.ReturnOrder;
+using SWD392.OutfitBox.BusinessLayer;
 using SWD392.OutfitBox.BusinessLayer.BusinessModels;
 using SWD392.OutfitBox.BusinessLayer.BusinessModels.PaymentModels;
 using SWD392.OutfitBox.BusinessLayer.Services.ReturnOrderService;
@@ -85,13 +87,19 @@ namespace SWD392.OutfitBox.API.Controllers
             }
             return StatusCode((int)response.StatusCode, response);
         }
-        [HttpPatch("return-orders/{id}/status/{status}")]
-        public async Task<ActionResult<ReturnOrderModel>> ChangeStatus([FromRoute] int id, [FromRoute] int status)
+        [HttpPut("return-orders/{id}/status/{status}")]
+        public async Task<ActionResult<ReturnOrderModel>> ChangeStatus([FromRoute] int id, [FromRoute] int status, [FromBody] UpdateReturnOrdeeRequest updateReturnOrdeeRequest)
         {
             BaseResponse<ReturnOrderModel> response;
             try
             {
-                var data = await _returnOrderService.ChangeStatus(id,status);
+                var list = updateReturnOrdeeRequest.Products.Select(x => new ProductReturnOrderModel()
+                {
+                    ThornMoney=x.ThornMoney,
+                    DamagedLevel=x.DamagedLevel,
+                    Id=x.Id,
+                }).ToList();
+                var data = await _returnOrderService.ChangeStatus(id,status, list);
                 response = new BaseResponse<ReturnOrderModel>("Change status return order successfully.", HttpStatusCode.OK, data);
             }
             catch (Exception ex)
