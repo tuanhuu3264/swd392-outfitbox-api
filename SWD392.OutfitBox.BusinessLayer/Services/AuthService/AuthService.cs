@@ -67,6 +67,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.AuthService{
             var refreshTokenHandler = AuthHelper.GetPartnerToken(partner, 3);
             return new LoginModel()
             {   
+                Id = partner.Id,
                 RefreshToken= new JwtSecurityTokenHandler().WriteToken(refreshTokenHandler),
                 Token = new JwtSecurityTokenHandler().WriteToken(accessTokenHandler),
                 Expiration = accessTokenHandler.ValidTo
