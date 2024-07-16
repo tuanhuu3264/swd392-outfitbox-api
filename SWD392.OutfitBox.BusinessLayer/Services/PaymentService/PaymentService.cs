@@ -36,13 +36,11 @@ namespace BusinessLayer.Services
 
             foreach (string s in vnpayData.Split("&"))
             {
-
                 if (!string.IsNullOrEmpty(s) && s.StartsWith("vnp_"))
                 {
                     vnpay.AddResponseData(s.Split("=")[0], s.Split("=")[1]);
                 }
             }
-            string orderId = vnpay.GetResponseData("vnp_OrderInfo").Replace("+", " ").Replace("%3A", ":").Split(":")[1].Trim();
             string vnpayTranId = vnpay.GetResponseData("vnp_TransactionNo");
             string vnp_ResponseCode = vnpay.GetResponseData("vnp_ResponseCode");
             string orderInfo = vnpay.GetResponseData("vnp_OrderInfo").Replace("+", " ").Replace("%3A", ":");
@@ -72,7 +70,8 @@ namespace BusinessLayer.Services
                 PayDate = payDate,
                 ResponseCode = responseCode,
                 TransactionStatus = transactionStatus,
-                TxnRef = txnRef
+                TxnRef = txnRef,
+                UserId = int.Parse(orderInfo)
             };
             if (vnp_ResponseCode == "00" && transactionStatus == "00")
             {
@@ -91,14 +90,14 @@ namespace BusinessLayer.Services
                                 WalletPassword = "123456",
                                 OTP = 123456,
                                 Status = 1,
-                                CustomerId = dto.userId,
+                                CustomerId = response.UserId.Value,
 
                             };
-                            wallet = await _unitOfWork._walletRepository.CreateWallet(dto.userId, wallet);
+                            wallet = await _unitOfWork._walletRepository.CreateWallet(response.UserId.Value, wallet);
                         }
                         var deposit = new Deposit()
                         {
-                            CustomerId = dto.userId,
+                            CustomerId = response.UserId.Value,
                             AmountMoney = vnp_Amount / 25000,
                             Date = DateTime.Now,
                             Type = "Payment",
@@ -115,7 +114,7 @@ namespace BusinessLayer.Services
                             DepositId = result.Id
                         };
                         transaction = await _unitOfWork._transactionRepository.CreateTransaction(transaction);
-                        var customer = await _unitOfWork._customerRepository.GetCustomerById(dto.userId);
+                        var customer = await _unitOfWork._customerRepository.GetCustomerById(response.UserId.Value);
                         customer.MoneyInWallet = customer.MoneyInWallet + vnp_Amount / 25000;
                         await _unitOfWork._customerRepository.UpdateCustomer(customer);
                     }
@@ -145,7 +144,7 @@ namespace BusinessLayer.Services
                 if (user == null) {
                     throw new Exception("Not Found this customer");
                 }
-                string vnp_ReturnUrl = "api.outft4rent.online";
+                string vnp_ReturnUrl = "https://ackerman.fun/payment";
                 string vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
                 string vnp_TmnCode = "F8V1A5TK";
                 string vnp_HashSecret = "GCLECYOCZYQLDTIUGHGWZAWPNALXPLOJ";
@@ -166,7 +165,7 @@ namespace BusinessLayer.Services
                 vnpay.AddRequestData("vnp_CurrCode", "VND");
                 vnpay.AddRequestData("vnp_IpAddr", Utils.GetIpAddress());
                 vnpay.AddRequestData("vnp_Locale", "vn");
-                vnpay.AddRequestData("vnp_OrderInfo", $"Rechange for user: {user.Name}");
+                vnpay.AddRequestData("vnp_OrderInfo", $"{user.Id}");
                 vnpay.AddRequestData("vnp_OrderType", "order");
                 vnpay.AddRequestData("vnp_ReturnUrl", vnp_ReturnUrl);
                 vnpay.AddRequestData("vnp_TxnRef", vnp_TxnRef);
