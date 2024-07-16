@@ -25,7 +25,6 @@ namespace SWD392.OutfitBox.API.Controllers
         public async Task<IActionResult> ChangeStatusPayOrderOnline([FromBody]VNPayRequestDTO request)
         {
             var dto = new VNPayModel();
-            dto.userId = request.userId;
             dto.urlResponse = request.urlResponse;
             var result = await _paymentService.GetInformationPayment(dto);
             return Ok(result);
