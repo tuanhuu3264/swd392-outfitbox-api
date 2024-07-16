@@ -44,5 +44,6 @@ namespace SWD392.OutfitBox.DataLayer.Repositories
             var result = await this.Get().FirstAsync(x=>x.ID==category.ID); 
             return result;
         }
+
     }
 }

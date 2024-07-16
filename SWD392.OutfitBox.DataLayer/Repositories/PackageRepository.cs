@@ -43,5 +43,28 @@ namespace SWD392.OutfitBox.DataLayer.Repositories
 
             return await GetPackageById(package.Id);
         }
+        public async Task<List<AdminObjectData>> GetDashboardPackages()
+        {
+            var list = await this.Get().Include(x => x.CustomerPackages).Select(x => new AdminObjectData
+            {
+                Id = x.Id,
+                Name = x.Name,
+                Value = x.CustomerPackages.Count(),
+                Url = x.ImageUrl
+            }).ToListAsync();
+            return list;
+        }
+
+        public async Task<List<AdminObjectData>> GetDashboardPricePackages()
+        {
+            var list = await this.Get().Include(x => x.CustomerPackages).Select(x => new AdminObjectData
+            {
+                Id = x.Id,
+                Name = x.Name,
+                Value = x.CustomerPackages.Sum(x=>x.Price),
+                Url = x.ImageUrl
+            }).ToListAsync();
+            return list;
+        }
     }
 }

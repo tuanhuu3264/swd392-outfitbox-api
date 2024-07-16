@@ -50,5 +50,26 @@ namespace SWD392.OutfitBox.DataLayer.Repositories
             var result = await this.Get().Where(x => x.DateTransaction!=null && x.DateTransaction.Year == date.Year).ToListAsync();
             return result;
         }
+
+        public async Task<List<AdminData>> GetNumberTransaction()
+        {
+            var data = await this.Get().GroupBy(x => x.DateTransaction.Date).OrderBy(x => x.Key).Select(g => new AdminData
+            {
+                Date = g.Key,
+                Value = g.Count()
+            }
+            ).ToListAsync();
+            return data;
+        }
+        public async Task<List<AdminData>> GetValueTransaction()
+        {
+            var data = await this.Get().GroupBy(x => x.DateTransaction.Date).OrderBy(x => x.Key).Select(g => new AdminData
+            {
+                Date = g.Key,
+                Value = g.Sum(x=>x.Amount)
+            }
+          ).ToListAsync();
+            return data;
+        }
     }
 }

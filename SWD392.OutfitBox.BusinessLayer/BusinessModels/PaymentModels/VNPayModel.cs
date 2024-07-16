@@ -9,7 +9,6 @@ namespace SWD392.OutfitBox.BusinessLayer.BusinessModels.PaymentModels
 {
     public class VNPayModel
     {
-        public int userId { get; set; }
         [Url]
         public string urlResponse { get; set; } = null!;
     }

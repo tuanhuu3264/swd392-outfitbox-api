@@ -8,9 +8,7 @@ using System.Threading.Tasks;
 namespace SWD392.OutfitBox.API.DTOs.VNPay
 {
     public class VNPayRequestDTO
-    {
-        public int userId { get; set; }
-        [Url]
+    {   [Url]
         public string urlResponse { get; set; } = null!;
     }
 }

@@ -16,6 +16,7 @@ namespace SWD392.OutfitBox.BusinessLayer.BusinessModels.PaymentModels
     }
     public class VnPayResponse
     {
+        public int? UserId { get; set; }
         public string? BankTranNo { get; set; }
         public string? PayDate { get; set; }
         public string? OrderInfo { get; set; }
