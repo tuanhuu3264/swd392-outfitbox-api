@@ -44,10 +44,10 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.AuthService{
         }
         public async Task<LoginModel> LoginPartner(string email, string password)
         {
-            var checking = await _partnerRepository.GetPartners(null,null,null,null, email.ToLower().Trim());
+            var checking = await _partnerRepository.GetPartners(null,null,null,null,email.ToLower().Trim());
             if (checking.IsNullOrEmpty()) return new LoginModel();
-            if(checking.First().Password!=password) return new LoginModel();
-            var partner = checking.First();
+            var partner = checking.FirstOrDefault(x => x.Password == password);
+            if (partner==null) return new LoginModel();
             var accessTokenHandler = AuthHelper.GetPartnerToken(partner,1);
             var refreshTokenHandler = AuthHelper.GetPartnerToken(partner, 3);
             return new LoginModel()
