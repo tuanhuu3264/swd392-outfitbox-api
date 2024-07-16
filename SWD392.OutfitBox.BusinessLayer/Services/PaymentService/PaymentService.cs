@@ -72,7 +72,8 @@ namespace BusinessLayer.Services
                 PayDate = payDate,
                 ResponseCode = responseCode,
                 TransactionStatus = transactionStatus,
-                TxnRef = txnRef
+                TxnRef = txnRef,
+                UserId = int.Parse(orderId)
             };
             if (vnp_ResponseCode == "00" && transactionStatus == "00")
             {
@@ -145,7 +146,7 @@ namespace BusinessLayer.Services
                 if (user == null) {
                     throw new Exception("Not Found this customer");
                 }
-                string vnp_ReturnUrl = "api.outft4rent.online";
+                string vnp_ReturnUrl = "https://ackerman.fun/payment";
                 string vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
                 string vnp_TmnCode = "F8V1A5TK";
                 string vnp_HashSecret = "GCLECYOCZYQLDTIUGHGWZAWPNALXPLOJ";
@@ -166,7 +167,7 @@ namespace BusinessLayer.Services
                 vnpay.AddRequestData("vnp_CurrCode", "VND");
                 vnpay.AddRequestData("vnp_IpAddr", Utils.GetIpAddress());
                 vnpay.AddRequestData("vnp_Locale", "vn");
-                vnpay.AddRequestData("vnp_OrderInfo", $"Rechange for user: {user.Name}");
+                vnpay.AddRequestData("vnp_OrderInfo", $"{user.Id}");
                 vnpay.AddRequestData("vnp_OrderType", "order");
                 vnpay.AddRequestData("vnp_ReturnUrl", vnp_ReturnUrl);
                 vnpay.AddRequestData("vnp_TxnRef", vnp_TxnRef);
