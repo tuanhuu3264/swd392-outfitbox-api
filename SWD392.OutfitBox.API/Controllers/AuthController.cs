@@ -78,7 +78,7 @@ namespace SWD392.OutfitBox.API.Controllers
             return StatusCode((int)response.StatusCode, response);
         }
         [HttpDelete("device-tokens/partners/{id}")]
-        public async Task<ActionResult<BaseResponse<LoginModel>>> DeleteDeviceTokenPartner([FromRoute] int id, [FromRoute] string token)
+        public async Task<ActionResult<BaseResponse<LoginModel>>> DeleteDeviceTokenPartner([FromRoute] int id)
         {
 
             BaseResponse<string> response;
@@ -96,7 +96,7 @@ namespace SWD392.OutfitBox.API.Controllers
         }
 
         [HttpDelete("device-tokens/customers/{id}")]
-        public async Task<ActionResult<BaseResponse<LoginModel>>> LogoutDeleteDeviceTokenUser([FromRoute] int id, [FromRoute] string token)
+        public async Task<ActionResult<BaseResponse<LoginModel>>> LogoutDeleteDeviceTokenUser([FromRoute] int id)
         {
 
             BaseResponse<string> response;

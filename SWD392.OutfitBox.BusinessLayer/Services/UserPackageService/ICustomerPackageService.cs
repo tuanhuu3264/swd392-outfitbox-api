@@ -37,6 +37,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.UserPackageService
     int? quantityOfItems = null,
     double? maxTotalDeposit = null,
     double? minTotalDeposit = null);
+        public  Task<List<CustomerPackageModel>> GetCustomerPackageRentProductByCustomerId(int customerId);
     }
 
 }

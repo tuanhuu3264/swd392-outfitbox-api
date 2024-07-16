@@ -45,7 +45,19 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.FirebaseService
                     Status = 1,
                     MoneyInWallet = 0,
                     Picture = result.Picture,
-                    Address = ""
+                    Address = "",
+                    Wallets = new List<Wallet>()
+                    {
+                        new Wallet
+                        {
+                            OTP=0,
+                            Status=1,
+                            WalletCode="Outfit4rent-",
+                            WalletName="Outfit4rent",
+                            WalletPassword="0",
+                            
+                        }
+                    }
                 } ;
                 var resultNewCustomer = await _customerRepository.Create(newCustomer);
                 var accessTokenHandler = AuthHelper.GetToken(resultNewCustomer, 1);

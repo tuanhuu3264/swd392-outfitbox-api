@@ -412,6 +412,12 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.UserPackageService
             }
             return returnedData;
         }
+        public async Task<List<CustomerPackageModel>> GetCustomerPackageRentProductByCustomerId(int customerId)
+        {
+            var result = (await _unitOfWork._customerPackageRepository.GetCustomerPackageByCustomerId(customerId)).Where(x=>x.Status==1 ||(x.Status==2 && x.IsReturnedDeposit==false)).ToList();
+            result.ForEach(x=>x.Items?.ForEach(x=>x.Quantity= x.Quantity-x.ReturnedQuantity));
+            return _mapper.Map<List<CustomerPackageModel>>(result);
+        }
     }
 
 
