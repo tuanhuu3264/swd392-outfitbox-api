@@ -28,11 +28,24 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.AdminService
             result.Data = new List<AdminData>();
             if (data != null && data.Count > 1)
             {
+                for (var i = DateTime.Now.Date; i >= data.Min(x => x.Date).Date;i=i.AddDays(-1))
+                {
+                    var test = data.Min(x => x.Date).Date;
+                    if (data.Any(x => x.Date.Date != i))
+                    {
+                        data.Add(new AdminData { Date = i, Value = 0 });
+                    }
+                }
                 data = data.OrderBy(c => c.Date).ToList();
                 var lastCustomer = data[^1];
                 var penultimateCustomer = data[^2];
                 var trend = lastCustomer.Value - penultimateCustomer.Value;
-                result.Trend = trend;
+                if (penultimateCustomer.Value == 0)
+                {
+                result.Trend = 0;
+                }
+                else
+                result.Trend = trend / penultimateCustomer.Value * 100;
             }
             foreach (var customer in data)
             {
@@ -55,7 +68,12 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.AdminService
                 var lastCustomer = data[^1];
                 var penultimateCustomer = data[^2];
                 var trend = lastCustomer.Value - penultimateCustomer.Value;
-                result.Trend = trend;
+                if (penultimateCustomer.Value == 0)
+                {
+                    result.Trend = 0;
+                }
+                else
+                    result.Trend = trend / penultimateCustomer.Value * 100;
             }
             foreach (var customer in data)
             {
@@ -78,7 +96,12 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.AdminService
                 var lastCustomer = data[^1];
                 var penultimateCustomer = data[^2];
                 var trend = lastCustomer.Value - penultimateCustomer.Value;
-                result.Trend = trend;
+                if (penultimateCustomer.Value == 0)
+                {
+                    result.Trend = 0;
+                }
+                else
+                    result.Trend = trend / penultimateCustomer.Value * 100;
             }
             foreach (var customer in data)
             {
@@ -102,7 +125,12 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.AdminService
                 var lastCustomer = data[^1];
                 var penultimateCustomer = data[^2];
                 var trend = lastCustomer.Value - penultimateCustomer.Value;
-                result.Trend = trend;
+                if (penultimateCustomer.Value == 0)
+                {
+                    result.Trend = 0;
+                }
+                else
+                    result.Trend = trend / penultimateCustomer.Value * 100;
             }
             foreach (var customer in data)
             {
@@ -147,7 +175,12 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.AdminService
                 var lastCustomer = data[^1];
                 var penultimateCustomer = data[^2];
                 var trend = lastCustomer.Value - penultimateCustomer.Value;
-                result.Trend = trend;
+                if (penultimateCustomer.Value == 0)
+                {
+                    result.Trend = 0;
+                }
+                else
+                    result.Trend = trend / penultimateCustomer.Value * 100;
             }
             foreach (var customer in data)
             {
@@ -169,7 +202,12 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.AdminService
                 var lastCustomer = data[^1];
                 var penultimateCustomer = data[^2];
                 var trend = lastCustomer.Value - penultimateCustomer.Value;
-                result.Trend = trend;
+                if (penultimateCustomer.Value == 0)
+                {
+                    result.Trend = 0;
+                }
+                else
+                    result.Trend = trend / penultimateCustomer.Value * 100;
             }
             foreach (var customer in data)
             {
