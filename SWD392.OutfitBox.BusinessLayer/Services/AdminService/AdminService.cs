@@ -26,12 +26,17 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.AdminService
             double sum = 0;
             var result = new AdminModel();
             result.Data = new List<AdminData>();
+
             if (data != null && data.Count > 1)
             {
-                for (var i = DateTime.Now.Date; i >= data.Min(x => x.Date).Date;i=i.AddDays(-1))
+                foreach (var item in data)
                 {
-                    var test = data.Min(x => x.Date).Date;
-                    if (data.Any(x => x.Date.Date != i))
+                    item.Date = item.Date.ToUniversalTime().Date;
+                }
+
+                for (var i = DateTime.UtcNow.Date; i >= data.Min(x => x.Date).Date; i = i.AddDays(-1))
+                {
+                    if (!data.Any(x => x.Date.Date == i))
                     {
                         data.Add(new AdminData { Date = i, Value = 0 });
                     }
@@ -40,21 +45,28 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.AdminService
                 var lastCustomer = data[^1];
                 var penultimateCustomer = data[^2];
                 var trend = lastCustomer.Value - penultimateCustomer.Value;
+
                 if (penultimateCustomer.Value == 0)
                 {
-                result.Trend = 0;
+                    result.Trend = 0;
                 }
                 else
-                result.Trend = trend / penultimateCustomer.Value * 100;
+                {
+                    result.Trend = trend / penultimateCustomer.Value * 100;
+                }
             }
             foreach (var customer in data)
             {
-                result.Data.Add(customer);
+                var formattedDate = customer.Date.ToLocalTime().ToString("yyyy-MM-ddTHH:mm:ss");
+                result.Data.Add(new AdminData { Date = DateTime.Parse(formattedDate), Value = customer.Value });
                 sum += customer.Value;
             }
+            result.Total = sum;
             return result;
-
         }
+
+
+
 
         public async Task<AdminModel> GetDailyRevenue()
         {
@@ -62,23 +74,40 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.AdminService
             double sum = 0;
             var result = new AdminModel();
             result.Data = new List<AdminData>();
+
             if (data != null && data.Count > 1)
             {
+                foreach (var item in data)
+                {
+                    item.Date = item.Date.ToUniversalTime().Date;
+                }
+
+                for (var i = DateTime.UtcNow.Date; i >= data.Min(x => x.Date).Date; i = i.AddDays(-1))
+                {
+                    if (!data.Any(x => x.Date.Date == i))
+                    {
+                        data.Add(new AdminData { Date = i, Value = 0 });
+                    }
+                }
                 data = data.OrderBy(c => c.Date).ToList();
                 var lastCustomer = data[^1];
                 var penultimateCustomer = data[^2];
                 var trend = lastCustomer.Value - penultimateCustomer.Value;
+
                 if (penultimateCustomer.Value == 0)
                 {
                     result.Trend = 0;
                 }
                 else
+                {
                     result.Trend = trend / penultimateCustomer.Value * 100;
+                }
             }
             foreach (var customer in data)
             {
-                result.Data.Add(customer);
-                sum = sum + customer.Value;
+                var formattedDate = customer.Date.ToLocalTime().ToString("yyyy-MM-ddTHH:mm:ss");
+                result.Data.Add(new AdminData { Date = DateTime.Parse(formattedDate), Value = customer.Value });
+                sum += customer.Value;
             }
             result.Total = sum;
             return result;
@@ -90,23 +119,40 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.AdminService
             double sum = 0;
             var result = new AdminModel();
             result.Data = new List<AdminData>();
+
             if (data != null && data.Count > 1)
             {
+                foreach (var item in data)
+                {
+                    item.Date = item.Date.ToUniversalTime().Date;
+                }
+
+                for (var i = DateTime.UtcNow.Date; i >= data.Min(x => x.Date).Date; i = i.AddDays(-1))
+                {
+                    if (!data.Any(x => x.Date.Date == i))
+                    {
+                        data.Add(new AdminData { Date = i, Value = 0 });
+                    }
+                }
                 data = data.OrderBy(c => c.Date).ToList();
                 var lastCustomer = data[^1];
                 var penultimateCustomer = data[^2];
                 var trend = lastCustomer.Value - penultimateCustomer.Value;
+
                 if (penultimateCustomer.Value == 0)
                 {
                     result.Trend = 0;
                 }
                 else
+                {
                     result.Trend = trend / penultimateCustomer.Value * 100;
+                }
             }
             foreach (var customer in data)
             {
-                result.Data.Add(customer);
-                sum = sum + customer.Value;
+                var formattedDate = customer.Date.ToLocalTime().ToString("yyyy-MM-ddTHH:mm:ss");
+                result.Data.Add(new AdminData { Date = DateTime.Parse(formattedDate), Value = customer.Value });
+                sum += customer.Value;
             }
             result.Total = sum;
             return result;
@@ -119,23 +165,40 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.AdminService
             double sum = 0;
             var result = new AdminModel();
             result.Data = new List<AdminData>();
+
             if (data != null && data.Count > 1)
             {
+                foreach (var item in data)
+                {
+                    item.Date = item.Date.ToUniversalTime().Date;
+                }
+
+                for (var i = DateTime.UtcNow.Date; i >= data.Min(x => x.Date).Date; i = i.AddDays(-1))
+                {
+                    if (!data.Any(x => x.Date.Date == i))
+                    {
+                        data.Add(new AdminData { Date = i, Value = 0 });
+                    }
+                }
                 data = data.OrderBy(c => c.Date).ToList();
                 var lastCustomer = data[^1];
                 var penultimateCustomer = data[^2];
                 var trend = lastCustomer.Value - penultimateCustomer.Value;
+
                 if (penultimateCustomer.Value == 0)
                 {
                     result.Trend = 0;
                 }
                 else
+                {
                     result.Trend = trend / penultimateCustomer.Value * 100;
+                }
             }
             foreach (var customer in data)
             {
-                result.Data.Add(customer);
-                sum = sum + customer.Value;
+                var formattedDate = customer.Date.ToLocalTime().ToString("yyyy-MM-ddTHH:mm:ss");
+                result.Data.Add(new AdminData { Date = DateTime.Parse(formattedDate), Value = customer.Value });
+                sum += customer.Value;
             }
             result.Total = sum;
             return result;
@@ -169,23 +232,40 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.AdminService
             double sum = 0;
             var result = new AdminModel();
             result.Data = new List<AdminData>();
+
             if (data != null && data.Count > 1)
             {
+                foreach (var item in data)
+                {
+                    item.Date = item.Date.ToUniversalTime().Date;
+                }
+
+                for (var i = DateTime.UtcNow.Date; i >= data.Min(x => x.Date).Date; i = i.AddDays(-1))
+                {
+                    if (!data.Any(x => x.Date.Date == i))
+                    {
+                        data.Add(new AdminData { Date = i, Value = 0 });
+                    }
+                }
                 data = data.OrderBy(c => c.Date).ToList();
                 var lastCustomer = data[^1];
                 var penultimateCustomer = data[^2];
                 var trend = lastCustomer.Value - penultimateCustomer.Value;
+
                 if (penultimateCustomer.Value == 0)
                 {
                     result.Trend = 0;
                 }
                 else
+                {
                     result.Trend = trend / penultimateCustomer.Value * 100;
+                }
             }
             foreach (var customer in data)
             {
-                result.Data.Add(customer);
-                sum = sum + customer.Value;
+                var formattedDate = customer.Date.ToLocalTime().ToString("yyyy-MM-ddTHH:mm:ss");
+                result.Data.Add(new AdminData { Date = DateTime.Parse(formattedDate), Value = customer.Value });
+                sum += customer.Value;
             }
             result.Total = sum;
             return result;
@@ -196,23 +276,40 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.AdminService
             double sum = 0;
             var result = new AdminModel();
             result.Data = new List<AdminData>();
+
             if (data != null && data.Count > 1)
             {
+                foreach (var item in data)
+                {
+                    item.Date = item.Date.ToUniversalTime().Date;
+                }
+
+                for (var i = DateTime.UtcNow.Date; i >= data.Min(x => x.Date).Date; i = i.AddDays(-1))
+                {
+                    if (!data.Any(x => x.Date.Date == i))
+                    {
+                        data.Add(new AdminData { Date = i, Value = 0 });
+                    }
+                }
                 data = data.OrderBy(c => c.Date).ToList();
                 var lastCustomer = data[^1];
                 var penultimateCustomer = data[^2];
                 var trend = lastCustomer.Value - penultimateCustomer.Value;
+
                 if (penultimateCustomer.Value == 0)
                 {
                     result.Trend = 0;
                 }
                 else
+                {
                     result.Trend = trend / penultimateCustomer.Value * 100;
+                }
             }
             foreach (var customer in data)
             {
-                result.Data.Add(customer);
-                sum = sum + customer.Value;
+                var formattedDate = customer.Date.ToLocalTime().ToString("yyyy-MM-ddTHH:mm:ss");
+                result.Data.Add(new AdminData { Date = DateTime.Parse(formattedDate), Value = customer.Value });
+                sum += customer.Value;
             }
             result.Total = sum;
             return result;
