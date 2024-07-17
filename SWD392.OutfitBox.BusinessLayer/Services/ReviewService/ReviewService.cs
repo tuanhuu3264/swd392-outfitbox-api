@@ -52,7 +52,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.ReviewService
             return (await _reviewRepository.GetAllEnabledReviewsByCustomerId(customerId)).Select(x => _mapper.Map<ReviewModel>(x)).ToList();
         }
 
-        public async Task<List<ReviewModel>?> GetAllReviews()
+        public async Task<List<ReviewModel>> GetAllReviews()
         {
             var result = await _reviewRepository.GetReviews();
             return _mapper.Map<List<ReviewModel>>(result);

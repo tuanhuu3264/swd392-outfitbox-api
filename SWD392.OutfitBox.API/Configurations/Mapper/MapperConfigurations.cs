@@ -103,9 +103,12 @@ namespace SWD392.OutfitBox.API.Configurations.Mapper
         {
             CreateMap<CreateReviewRequestDTO, ReviewModel>().ForMember(x=>x.Images, otp => otp.MapFrom(x => x.ReviewImages));
             CreateMap<ReviewImageModel,ImageRequestModel>().ForMember(otp=>otp.Url,x=>x.MapFrom(y=>y.Url)).ReverseMap();
-            CreateMap<Review, ReviewModel>().ForMember(x=>x.Images , otp => otp.MapFrom(x=>x.ReviewImages)).ReverseMap();
+            CreateMap<Review, ReviewModel>().ForMember(x=>x.Images , otp => otp.MapFrom(x=>x.ReviewImages))
+                .ForPath(x=>x.CustomerName,otp=>otp.MapFrom(x=>x.User.Name))
+                .ForPath(x => x.CustomerAvatar, otp => otp.MapFrom(x => x.User.Picture))
+                .ReverseMap();
             CreateMap<ReviewImage, ReviewImageModel>().ReverseMap();
-            CreateMap<ReviewModel, Review>().ForMember(x=>x.ReviewImages,otp=>otp.MapFrom(x=>x.Images)).ReverseMap();
+            //CreateMap<ReviewModel, Review>().ForMember(x=>x.ReviewImages,otp=>otp.MapFrom(x=>x.Images)).ReverseMap();
 
         }
         public void FavouriteProductProfile()
