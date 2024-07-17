@@ -53,7 +53,6 @@ namespace SWD392.OutfitBox.DataLayer.Databases.Redis
         {
         modelBuilder.Seed();
             modelBuilder.Entity<CustomerPackage>().HasOne(x=>x.Customer).WithMany(x=>x.UserPackages).HasForeignKey(x=>x.CustomerId).OnDelete(DeleteBehavior.NoAction);
-            modelBuilder.Entity<ReturnOrder>().HasOne(x=>x.Customer).WithMany(x=>x.ReturnOrders).HasForeignKey(x=>x.CustomerId).OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<Deposit>().HasMany(x => x.Transactions).WithOne(x => x.Deposit).HasForeignKey(x => x.DepositId).OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<CustomerPackage>().HasOne(x => x.Transaction).WithMany(x=>x.CustomerPackages).OnDelete(DeleteBehavior.NoAction);
 

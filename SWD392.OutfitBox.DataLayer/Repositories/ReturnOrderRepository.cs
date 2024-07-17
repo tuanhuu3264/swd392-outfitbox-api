@@ -39,7 +39,7 @@ namespace SWD392.OutfitBox.DataLayer.Repositories
         {
             var query = this.Get();
             if(partnerid.HasValue) query=query.Where(x=>x.PartnerId==partnerid.Value);
-            if(customerId.HasValue) query=query.Where(x=>x.CustomerId==customerId.Value);
+            if(customerId.HasValue) query=query.Where(x=>x.CustomerPackage.CustomerId==customerId.Value);
             if(pageSize.HasValue && pageNumber.HasValue) query = query.Skip((pageNumber.Value - 1) * pageSize.Value);
             return await query.ToListAsync();
             

@@ -22,12 +22,8 @@ namespace SWD392.OutfitBox.DataLayer.Entities
         public int CustomerPackageId { get; set; }
         public double TotalThornMoney { get; set; }
         public DateTime CreatedAt { get; set; }
-
         [ForeignKey(nameof(CustomerPackageId))]
         public CustomerPackage? CustomerPackage { get; set; }
-        public int CustomerId { get; set; }
-        [ForeignKey("CustomerId")]
-        public Customer? Customer { get; set; }
         public int PartnerId { get; set; }
         [ForeignKey(nameof(PartnerId))]
         public Partner? Partner { get; set; }

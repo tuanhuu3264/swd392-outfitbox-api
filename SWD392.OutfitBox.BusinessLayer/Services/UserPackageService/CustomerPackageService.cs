@@ -181,7 +181,6 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.UserPackageService
             var wallet = await _unitOfWork._walletRepository.GetWalletById(walletId);
             if (wallet == null) throw new Exception("There is no wallet that has id: " + walletId);
 
-
             customerPackage.CreatedAt = DateTime.Now;
             customerPackage.PackageName = package.Name;
             customerPackage.DateTo = customerPackage.DateFrom.AddDays(package.AvailableRentDays);
@@ -239,13 +238,12 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.UserPackageService
                 {
                     var product = await _unitOfWork._productRepository.GetById(item.ProductId);
                     if (product == null) throw new Exception($"Product with ID {item.ProductId} not found.");
-                    item.DateGive = customerPackage.DateFrom;
                     item.Status = 0;
                     item.Deposit = product.Deposit * item.Quantity;
                     item.TornMoney = 0;
                     product.Quantity -= item.Quantity;
 
-                    customerPackage.TotalDeposit +=product.Deposit * item.Quantity;
+                    customerPackage.TotalDeposit +=product.Deposit * item.Quantity*package.Price;
                     await _unitOfWork._productRepository.UpdateProduct(product);
                 }
             }
@@ -282,6 +280,9 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.UserPackageService
 
                     if (result != null)
                     {
+                        Random random = new Random();
+                        result.OrderCode = "O4R" + result.Id + random.Next(1000, 9999);
+                        await _unitOfWork._customerPackageRepository.SaveAsyn(customerPackage);
                         foreach (var product in products)
                         {
                             await _unitOfWork._productRepository.UpdateProduct(product);

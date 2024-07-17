@@ -15,8 +15,6 @@ namespace SWD392.OutfitBox.BusinessLayer.BusinessModels
         public int? Status {  get; set; }
         public int? ProductId { get; set; }
         public int? UserPackageId { get; set; }
-        public DateTime? DateGive { get; set; }
-        public DateTime? DateReceive { get; set; }
         public double? TornMoney {  get; set; }
         public int? Quantity { get; set; }
         public int? ReturnedQuantity { get; set; }

@@ -18,6 +18,7 @@ namespace SWD392.OutfitBox.DataLayer.Entities
         public int CustomerId { get; set; } 
         public int PackageId { get; set; }
         public string PackageName { get; set; } = string.Empty;
+        public string? OrderCode {  get; set; }
         public DateTime DateFrom { get; set; }
         public DateTime DateTo { get; set; }
         public double Price { get; set; }
@@ -36,7 +37,6 @@ namespace SWD392.OutfitBox.DataLayer.Entities
         public Transaction? Transaction { get; set; }
         public int? QuantityOfItems {  get; set; }
         public double? TotalDeposit { get; set; }
-
         public double ReturnDeposit { get; set; }
         public bool IsReturnedDeposit { get; set; } 
     }
