@@ -19,11 +19,11 @@ namespace SWD392.OutfitBox.DataLayer.Entities
         public int Status {  get; set; }
         public DateTime Date { get; set; }
         public int CustomerId { get; set; }
-        public int ProductId { get; set; }
+        public int PackageId { get; set; }
         [ForeignKey(nameof(CustomerId))]
         public Customer? User { get; set; }
-        [ForeignKey(nameof(ProductId))]
-        public Product? Product { get; set; }
+        [ForeignKey(nameof(PackageId))]
+        public Package? Package { get; set; }
         public List<ReviewImage>? ReviewImages { get; set; }
 
     }

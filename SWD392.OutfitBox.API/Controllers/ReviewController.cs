@@ -80,7 +80,7 @@ namespace SWD392.OutfitBox.API.Controllers
             {   
                 var mapping = _mapper.Map<ReviewModel>(request);
                 var data = await _reviewService.CreateReview(mapping);
-                response = new BaseResponse<ReviewModel>("Create review successfully by customer.", HttpStatusCode.Created, data);
+                response = new BaseResponse<ReviewModel>("Create review successfully by customer.", HttpStatusCode.OK, data);
             }
             catch (Exception ex)
             {

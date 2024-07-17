@@ -21,9 +21,9 @@ namespace SWD392.OutfitBox.API.DTOs.Review
         [Range(1, int.MaxValue, ErrorMessage = "The customer id is over range of data.")]
         public int CustomerId { get; set; }
 
-        [Required(ErrorMessage = "The product id is required.")]
-        [Range(1, int.MaxValue, ErrorMessage = "The product id is over range of data.")]
-        public int ProductId { get; set; }
+        [Required(ErrorMessage = "The package id is required.")]
+        [Range(1, int.MaxValue, ErrorMessage = "The package id is over range of data.")]
+        public int PackageId { get; set; }
         public List<string> ReviewImages { get; set; } = new List<string>();
     }
 }

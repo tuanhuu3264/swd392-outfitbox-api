@@ -8,11 +8,10 @@ using System.Threading.Tasks;
 
 namespace SWD392.OutfitBox.BusinessLayer.BusinessModels
 {
-    public class ReviewImage
+    public class ReviewImageModel
     {
         public int? Id { get; set; }
         public string? Url { get; set; }
         public int? ReviewId { get; set; }
-        
     }
 }
