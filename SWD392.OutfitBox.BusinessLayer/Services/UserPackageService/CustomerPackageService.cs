@@ -7,6 +7,7 @@ using Castle.Core.Resource;
 using FirebaseAdmin.Messaging;
 using Microsoft.Extensions.Caching.Distributed;
 using Newtonsoft.Json;
+using Org.BouncyCastle.Crypto;
 using StackExchange.Redis;
 using SWD392.OutfitBox.BusinessLayer.BusinessModels;
 using SWD392.OutfitBox.BusinessLayer.BusinessModels.PaymentModels;
@@ -416,6 +417,13 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.UserPackageService
         {
             var result = (await _unitOfWork._customerPackageRepository.GetCustomerPackageByCustomerId(customerId)).Where(x=>x.Status==1 ||(x.Status==2 && x.IsReturnedDeposit==false)).ToList();
             result.ForEach(x=>x.Items?.ForEach(x=>x.Quantity= x.Quantity-x.ReturnedQuantity));
+            return _mapper.Map<List<CustomerPackageModel>>(result);
+        }
+
+        public async Task<List<CustomerPackageModel>> GetNotReturnedMoneyCustomerPackage()
+        {
+            var result = (await _unitOfWork._customerPackageRepository.GetAllCustomerPackage()).Where(x => x.Status != 0 && x.Status != -1 && x.IsReturnedDeposit == false).ToList();
+            result.ForEach(x => x.Items?.ForEach(x => x.Quantity = x.Quantity - x.ReturnedQuantity));
             return _mapper.Map<List<CustomerPackageModel>>(result);
         }
     }

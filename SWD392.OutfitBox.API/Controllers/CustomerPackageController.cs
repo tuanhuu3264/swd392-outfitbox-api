@@ -163,7 +163,7 @@ namespace SWD392.OutfitBox.API.Controllers
             }
             return StatusCode((int)response.StatusCode, response);
         }
-        [HttpPost("orders/returned-products/customers/{customerId}")]
+        [HttpGet("customers/{customerId}/returned-products")]
         public async Task<ActionResult<List<CustomerPackageModel>>> CreateCustomerPackage( [FromRoute] int customerId)
         {
             BaseResponse<List<CustomerPackageModel>> response;
@@ -179,5 +179,22 @@ namespace SWD392.OutfitBox.API.Controllers
             }
             return StatusCode((int)response.StatusCode, response);
         }
+        [HttpGet("orders/not-returned-money")]
+        public async Task<ActionResult<List<CustomerPackageModel>>> GetNotReturnedMoneyCustomerPackage()
+        {
+            BaseResponse<List<CustomerPackageModel>> response;
+            try
+            {
+
+                var result = await _customerPackageService.GetNotReturnedMoneyCustomerPackage();
+                response = new BaseResponse<List<CustomerPackageModel>>("Successfully", HttpStatusCode.OK, result);
+            }
+            catch (Exception ex)
+            {
+                response = new BaseResponse<List<CustomerPackageModel>>(ex.Message, HttpStatusCode.InternalServerError, null);
+            }
+            return StatusCode((int)response.StatusCode, response);
+        }
+
     }
 }
