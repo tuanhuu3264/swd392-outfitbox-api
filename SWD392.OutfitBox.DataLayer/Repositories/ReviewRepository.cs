@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace SWD392.OutfitBox.DataLayer.Repositories
 {
@@ -67,6 +68,14 @@ namespace SWD392.OutfitBox.DataLayer.Repositories
         public async Task<List<Review>> GetReviews()
         {
             var result = await this.Get().Include(x => x.ReviewImages).Include(x=>x.User).ToListAsync();
+            return result;
+        }
+        public async Task<ReviewData> GetRatingbyPackageId(int id)
+        {
+            var result = new ReviewData();
+            var rating = await this.Get().GroupBy(x=>x.NumberStars).Select(x=> new RatingStar { StarNumber = x.Key,Quantity = x.Count()}).ToListAsync();
+            result.PackageId = id;
+            result.RatingStars = rating;
             return result;
         }
     }

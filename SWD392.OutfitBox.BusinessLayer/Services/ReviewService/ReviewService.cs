@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SWD392.OutfitBox.BusinessLayer.BusinessModels;
+using SWD392.OutfitBox.BusinessLayer.BusinessModels.AdminModel;
 
 namespace SWD392.OutfitBox.BusinessLayer.Services.ReviewService
 {
@@ -70,5 +71,20 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.ReviewService
             if (result == null){ throw new Exception("Not Found"); }
             return _mapper.Map<ReviewModel>(result);
         }
+        public async Task<ReviewDataModel> GetReviewDataModelByPackageId(int packageId)
+        {
+            var list = await _reviewRepository.GetRatingbyPackageId(packageId);
+            var result = _mapper.Map<ReviewDataModel>(list);
+            result.QuantityOfReviews = result.RatingStars.Sum(x => x.Quantity) ;
+            result.AverageStar = 0;
+            var sum = 0;
+            foreach ( var item in result.RatingStars) {
+                item.Rate = (double)item.Quantity / result.QuantityOfReviews;
+                sum = sum + item.StarNumber * item.Quantity;
+            }
+            result.AverageStar = (double)sum / result.QuantityOfReviews;
+            return result;
+        }
+
     }
 }

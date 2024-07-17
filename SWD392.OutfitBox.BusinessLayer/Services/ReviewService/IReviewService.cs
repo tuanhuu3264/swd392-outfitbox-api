@@ -1,6 +1,6 @@
 ﻿
 using SWD392.OutfitBox.BusinessLayer.BusinessModels;
-
+using SWD392.OutfitBox.BusinessLayer.BusinessModels.AdminModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,5 +19,6 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.ReviewService
         public Task<bool> DeleteReviewById(int id);
         public Task<List<ReviewModel>> GetAllReviewsByPackageId(int packageId);
         public Task<List<ReviewModel>?> GetAllReviews();
+        public Task<ReviewDataModel> GetReviewDataModelByPackageId(int packageId);
     }
 }

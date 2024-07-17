@@ -6,6 +6,7 @@ using SWD392.OutfitBox.API.Configurations.HTTPResponse;
 using SWD392.OutfitBox.API.Controllers.Endpoints;
 using SWD392.OutfitBox.API.DTOs.Review;
 using SWD392.OutfitBox.BusinessLayer.BusinessModels;
+using SWD392.OutfitBox.BusinessLayer.BusinessModels.AdminModel;
 using SWD392.OutfitBox.BusinessLayer.Services.ReviewService;
 using SWD392.OutfitBox.DataLayer.Entities;
 using SWD392.OutfitBox.DataLayer.Repositories;
@@ -131,6 +132,22 @@ namespace SWD392.OutfitBox.API.Controllers
             catch (Exception ex)
             {
                 response = new BaseResponse<List<ReviewModel>>(ex.Message, HttpStatusCode.InternalServerError, null);
+            }
+
+            return StatusCode((int)response.StatusCode, response);
+        }
+        [HttpGet("reviews/packages/{packageId}/ratings")]
+        public async Task<ActionResult<BaseResponse<ReviewDataModel>>> GetAllReviewRatingsByPackageId([FromRoute] int packageId)
+        {
+            BaseResponse<ReviewDataModel> response;
+            try
+            {
+                var data = await _reviewService.GetReviewDataModelByPackageId(packageId);
+                response = new BaseResponse<ReviewDataModel>("Get Rating successfully by package.", HttpStatusCode.OK, data);
+            }
+            catch (Exception ex)
+            {
+                response = new BaseResponse<ReviewDataModel>(ex.Message, HttpStatusCode.InternalServerError, null);
             }
 
             return StatusCode((int)response.StatusCode, response);

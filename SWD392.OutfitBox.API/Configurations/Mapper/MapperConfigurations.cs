@@ -17,6 +17,7 @@ using SWD392.OutfitBox.API.DTOs.Wallet;
 using SWD392.OutfitBox.API.RequestModels.CustomerPackage;
 using SWD392.OutfitBox.BusinessLayer;
 using SWD392.OutfitBox.BusinessLayer.BusinessModels;
+using SWD392.OutfitBox.BusinessLayer.BusinessModels.AdminModel;
 using SWD392.OutfitBox.BusinessLayer.BusinessModels.PaymentModels;
 using SWD392.OutfitBox.DataLayer.Entities;
 using static System.Net.WebRequestMethods;
@@ -108,6 +109,8 @@ namespace SWD392.OutfitBox.API.Configurations.Mapper
                 .ForPath(x => x.CustomerAvatar, otp => otp.MapFrom(x => x.User.Picture));
             CreateMap<ReviewModel, Review>().ForMember(x => x.ReviewImages, otp => otp.MapFrom(x => x.Images));
             CreateMap<ReviewImage, ReviewImageModel>().ReverseMap();
+            CreateMap<ReviewData, ReviewDataModel>().ForMember(x => x.RatingStars, otp => otp.MapFrom(x => x.RatingStars)).ReverseMap();
+            CreateMap<RatingStar, RatingStarModel>().ReverseMap();
             //CreateMap<ReviewModel, Review>().ForMember(x=>x.ReviewImages,otp=>otp.MapFrom(x=>x.Images)).ReverseMap();
 
         }
