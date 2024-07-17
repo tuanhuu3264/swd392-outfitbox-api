@@ -18,5 +18,6 @@ namespace SWD392.OutfitBox.BusinessLayer.BusinessModels
         public DateTime? Date { get; set; }
         public int? CustomerId { get; set; }
         public int? PackageId { get; set; }
+        public List<ReviewImageModel> Images { get; set; }
     }
 }

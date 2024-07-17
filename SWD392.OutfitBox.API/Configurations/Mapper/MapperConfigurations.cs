@@ -19,6 +19,7 @@ using SWD392.OutfitBox.BusinessLayer;
 using SWD392.OutfitBox.BusinessLayer.BusinessModels;
 using SWD392.OutfitBox.BusinessLayer.BusinessModels.PaymentModels;
 using SWD392.OutfitBox.DataLayer.Entities;
+using static System.Net.WebRequestMethods;
 
 namespace SWD392.OutfitBox.API.Configurations.Mapper
 {
@@ -100,9 +101,11 @@ namespace SWD392.OutfitBox.API.Configurations.Mapper
 
         public void ReviewProfile()
         {
-            CreateMap<CreateReviewRequestDTO, ReviewModel>();
-            CreateMap<Review, ReviewModel>();
-            CreateMap<ReviewModel, Review>().ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
+            CreateMap<CreateReviewRequestDTO, ReviewModel>().ForMember(x=>x.Images, otp => otp.MapFrom(x => x.ReviewImages));
+            CreateMap<ReviewImageModel,ImageRequestModel>().ForMember(otp=>otp.Url,x=>x.MapFrom(y=>y.Url)).ReverseMap();
+            CreateMap<Review, ReviewModel>().ForMember(x=>x.Images , otp => otp.MapFrom(x=>x.ReviewImages)).ReverseMap();
+            CreateMap<ReviewImage, ReviewImageModel>().ReverseMap();
+            CreateMap<ReviewModel, Review>().ForMember(x=>x.ReviewImages,otp=>otp.MapFrom(x=>x.Images)).ReverseMap();
 
         }
         public void FavouriteProductProfile()

@@ -30,7 +30,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.ReviewService
         {
             var review = _mapper.Map<Review>(requestDTO);
             review.Date = DateTime.Now;
-            review.Status = 0;
+            review.Status = 1;
             var result = await _reviewRepository.CreateReview(review);
             return _mapper.Map<ReviewModel>(result);
         }
@@ -54,7 +54,9 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.ReviewService
 
         public async Task<ReviewModel> GetReviewById(int id)
         {
-            return _mapper.Map<ReviewModel>(await _reviewRepository.GetReviewById(id));
+            var result = await _reviewRepository.GetReviewById(id);
+            if (result == null){ throw new Exception("Not Found"); }
+            return _mapper.Map<ReviewModel>(result);
         }
     }
 }
