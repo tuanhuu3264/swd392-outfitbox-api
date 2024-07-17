@@ -15,5 +15,7 @@ namespace SWD392.OutfitBox.DataLayer.Interfaces
         public Task<Review> ActiveOrDeactiveReview(int id);
         public Task<bool> DeleteReviewById(int id);
         public Task<Review> GetReviewById(int id);
+        public Task<List<Review>> GetReviewByPackageId(int id);
+        public Task<List<Review>> GetReviews();
     }
 }

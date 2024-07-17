@@ -17,5 +17,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.ReviewService
        public Task<ReviewModel> ActiveOrDeactiveReviewById(int id);
         public Task<ReviewModel> GetReviewById (int id);
         public Task<bool> DeleteReviewById(int id);
+        public Task<List<ReviewModel>> GetAllReviewsByPackageId(int packageId);
+        public Task<List<ReviewModel>?> GetAllReviews();
     }
 }

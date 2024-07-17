@@ -52,6 +52,18 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.ReviewService
             return (await _reviewRepository.GetAllEnabledReviewsByCustomerId(customerId)).Select(x => _mapper.Map<ReviewModel>(x)).ToList();
         }
 
+        public async Task<List<ReviewModel>?> GetAllReviews()
+        {
+            var result = await _reviewRepository.GetReviews();
+            return _mapper.Map<List<ReviewModel>>(result);
+        }
+
+        public async Task<List<ReviewModel>> GetAllReviewsByPackageId(int packageId)
+        {
+            var result= await _reviewRepository.GetReviewByPackageId(packageId);
+            return _mapper.Map<List<ReviewModel>>(result);
+        }
+
         public async Task<ReviewModel> GetReviewById(int id)
         {
             var result = await _reviewRepository.GetReviewById(id);
