@@ -17,6 +17,8 @@ namespace SWD392.OutfitBox.BusinessLayer.BusinessModels
         public int? Status {  get; set; }
         public DateTime? Date { get; set; }
         public int? CustomerId { get; set; }
+        public string? CustomerName { get; set; }
+        public string? CustomerAvatar { get; set; }
         public int? PackageId { get; set; }
         public List<ReviewImageModel> Images { get; set; }
     }

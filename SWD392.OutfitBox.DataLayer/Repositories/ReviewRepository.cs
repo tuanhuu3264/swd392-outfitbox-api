@@ -44,29 +44,29 @@ namespace SWD392.OutfitBox.DataLayer.Repositories
 
         public async Task<List<Review>> GetAllEnabledReviews()
         {
-            return await this.Get().Include(x=>x.ReviewImages).Where(x=>x.Status == 1).ToListAsync();
+            return await this.Get().Include(x=>x.ReviewImages).Include(x => x.User).Where(x=>x.Status == 1).ToListAsync();
         }
 
         public async Task<List<Review>> GetAllEnabledReviewsByCustomerId(int customerId)
         {
-            return await this.Get().Include(x => x.ReviewImages).Where(x => x.Status == 1 && x.CustomerId==customerId).ToListAsync();
+            return await this.Get().Include(x => x.ReviewImages).Include(x => x.User).Where(x => x.Status == 1 && x.CustomerId==customerId).ToListAsync();
         }
 
         public async Task<Review> GetReviewById(int id)
         {
-            var result = await this.Get().Include(x=>x.ReviewImages).Where(x=>x.Id==id).FirstOrDefaultAsync();
+            var result = await this.Get().Include(x=>x.ReviewImages).Include(x => x.User).Where(x=>x.Id==id).FirstOrDefaultAsync();
             return result;  
         }
 
         public async Task<List<Review>> GetReviewByPackageId(int id)
         {
-            var result = await this.Get().Include(x => x.ReviewImages).Where(x => x.PackageId == id).ToListAsync();
+            var result = await this.Get().Include(x => x.ReviewImages).Include(x => x.User).Where(x => x.PackageId == id).ToListAsync();
             return result;
         }
 
         public async Task<List<Review>> GetReviews()
         {
-            var result = await this.Get().Include(x => x.ReviewImages).ToListAsync();
+            var result = await this.Get().Include(x => x.ReviewImages).Include(x=>x.User).ToListAsync();
             return result;
         }
     }
