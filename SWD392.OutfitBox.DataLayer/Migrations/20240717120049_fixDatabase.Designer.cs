@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SWD392.OutfitBox.DataLayer.Databases.Redis;
 
@@ -11,9 +12,11 @@ using SWD392.OutfitBox.DataLayer.Databases.Redis;
 namespace SWD392.OutfitBox.DataLayer.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20240717120049_fixDatabase")]
+    partial class fixDatabase
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -458,7 +461,7 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                             Phone = "0325739910",
                             Picture = "",
                             Status = 1,
-                            Time = new DateTime(2024, 7, 17, 19, 59, 11, 954, DateTimeKind.Local).AddTicks(8722)
+                            Time = new DateTime(2024, 7, 17, 19, 0, 49, 487, DateTimeKind.Local).AddTicks(201)
                         },
                         new
                         {
@@ -470,7 +473,7 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                             Phone = "123",
                             Picture = "",
                             Status = 1,
-                            Time = new DateTime(2024, 7, 17, 19, 59, 11, 954, DateTimeKind.Local).AddTicks(8741)
+                            Time = new DateTime(2024, 7, 17, 19, 0, 49, 487, DateTimeKind.Local).AddTicks(223)
                         },
                         new
                         {
@@ -482,7 +485,7 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                             Phone = "123",
                             Picture = "",
                             Status = 1,
-                            Time = new DateTime(2024, 7, 17, 19, 59, 11, 954, DateTimeKind.Local).AddTicks(8743)
+                            Time = new DateTime(2024, 7, 17, 19, 0, 49, 487, DateTimeKind.Local).AddTicks(225)
                         },
                         new
                         {
@@ -494,7 +497,7 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                             Phone = "123",
                             Picture = "",
                             Status = 1,
-                            Time = new DateTime(2024, 7, 17, 19, 59, 11, 954, DateTimeKind.Local).AddTicks(8744)
+                            Time = new DateTime(2024, 7, 17, 19, 0, 49, 487, DateTimeKind.Local).AddTicks(226)
                         });
                 });
 
@@ -520,9 +523,6 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
 
                     b.Property<bool>("IsReturnedDeposit")
                         .HasColumnType("bit");
-
-                    b.Property<string>("OrderCode")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("PackageId")
                         .HasColumnType("int");
@@ -577,8 +577,8 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                             Id = 1,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CustomerId = 1,
-                            DateFrom = new DateTime(2024, 7, 17, 19, 59, 11, 954, DateTimeKind.Local).AddTicks(8790),
-                            DateTo = new DateTime(2024, 8, 16, 19, 59, 11, 954, DateTimeKind.Local).AddTicks(8791),
+                            DateFrom = new DateTime(2024, 7, 17, 19, 0, 49, 487, DateTimeKind.Local).AddTicks(308),
+                            DateTo = new DateTime(2024, 8, 16, 19, 0, 49, 487, DateTimeKind.Local).AddTicks(308),
                             IsReturnedDeposit = false,
                             PackageId = 1,
                             PackageName = "Newcomer Trial",
@@ -625,7 +625,7 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                             Id = 1,
                             AmountMoney = 20.0,
                             CustomerId = 1,
-                            Date = new DateTime(2024, 7, 17, 19, 59, 11, 954, DateTimeKind.Local).AddTicks(8854),
+                            Date = new DateTime(2024, 7, 17, 19, 0, 49, 487, DateTimeKind.Local).AddTicks(381),
                             Type = "Khuyen Mai"
                         });
                 });
@@ -948,6 +948,12 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime?>("DateGive")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DateReceive")
+                        .HasColumnType("datetime2");
 
                     b.Property<double>("Deposit")
                         .HasColumnType("float");
@@ -1863,7 +1869,7 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("CustomerId")
+                    b.Property<int>("CustomerId")
                         .HasColumnType("int");
 
                     b.Property<int>("CustomerPackageId")
@@ -2037,7 +2043,7 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                         {
                             Id = 1,
                             Amount = 0.0,
-                            DateTransaction = new DateTime(2024, 7, 17, 19, 59, 11, 954, DateTimeKind.Local).AddTicks(8820),
+                            DateTransaction = new DateTime(2024, 7, 17, 19, 0, 49, 487, DateTimeKind.Local).AddTicks(344),
                             DepositId = 1,
                             Paymethod = "",
                             Status = 0,
@@ -2320,9 +2326,11 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
 
             modelBuilder.Entity("SWD392.OutfitBox.DataLayer.Entities.ReturnOrder", b =>
                 {
-                    b.HasOne("SWD392.OutfitBox.DataLayer.Entities.Customer", null)
+                    b.HasOne("SWD392.OutfitBox.DataLayer.Entities.Customer", "Customer")
                         .WithMany("ReturnOrders")
-                        .HasForeignKey("CustomerId");
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.HasOne("SWD392.OutfitBox.DataLayer.Entities.CustomerPackage", "CustomerPackage")
                         .WithMany()
@@ -2335,6 +2343,8 @@ namespace SWD392.OutfitBox.DataLayer.Migrations
                         .HasForeignKey("PartnerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Customer");
 
                     b.Navigation("CustomerPackage");
 
