@@ -32,7 +32,7 @@ namespace SWD392.OutfitBox.DataLayer.Repositories
         {
             var result = await this.AddAsync(review);
             await this.SaveChangesAsync(); 
-            return await this.Get().OrderBy(x=>x.Id).LastAsync();
+            return await GetReviewById(review.Id);
         }
 
         public async Task<bool> DeleteReviewById(int id)
@@ -55,7 +55,7 @@ namespace SWD392.OutfitBox.DataLayer.Repositories
         public async Task<Review> GetReviewById(int id)
         {
             var result = await this.Get().Include(x=>x.ReviewImages).Where(x=>x.Id==id).FirstOrDefaultAsync();
-            return result == null ? new Review() : result;  
+            return result;  
         }
     }
 }
