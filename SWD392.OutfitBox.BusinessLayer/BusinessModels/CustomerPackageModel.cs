@@ -17,6 +17,7 @@ namespace SWD392.OutfitBox.BusinessLayer.BusinessModels
         public int? CustomerId { get; set; }
         public int? PackageId { get; set; }
         public string? PackageName { get; set; } = string.Empty;
+        public string? OrderCode {  get; set; } 
         public DateTime? DateFrom { get; set; }
         public DateTime? DateTo { get; set; }
         public double? Price { get; set; }
