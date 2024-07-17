@@ -57,5 +57,17 @@ namespace SWD392.OutfitBox.DataLayer.Repositories
             var result = await this.Get().Include(x=>x.ReviewImages).Where(x=>x.Id==id).FirstOrDefaultAsync();
             return result;  
         }
+
+        public async Task<List<Review>> GetReviewByPackageId(int id)
+        {
+            var result = await this.Get().Include(x => x.ReviewImages).Where(x => x.PackageId == id).ToListAsync();
+            return result;
+        }
+
+        public async Task<List<Review>> GetReviews()
+        {
+            var result = await this.Get().Include(x => x.ReviewImages).ToListAsync();
+            return result;
+        }
     }
 }

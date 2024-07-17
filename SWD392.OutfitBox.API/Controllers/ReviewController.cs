@@ -103,5 +103,37 @@ namespace SWD392.OutfitBox.API.Controllers
             }
             return StatusCode((int)response.StatusCode, response);
         }
+        [HttpGet("reviews/packages/{packageId}")]
+        public async Task<ActionResult<BaseResponse<List<ReviewModel>>>> GetAllReviewsByPackageId([FromRoute] int packageId)
+        {
+            BaseResponse<List<ReviewModel>> response;
+            try
+            {
+                var data = await _reviewService.GetAllReviewsByPackageId(packageId);
+                response = new BaseResponse<List<ReviewModel>>("Get reviews successfully by package.", HttpStatusCode.OK, data);
+            }
+            catch (Exception ex)
+            {
+                response = new BaseResponse<List<ReviewModel>>(ex.Message, HttpStatusCode.InternalServerError, null);
+            }
+
+            return StatusCode((int)response.StatusCode, response);
+        }
+        [HttpGet("reviews/")]
+        public async Task<ActionResult<BaseResponse<List<ReviewModel>>>> GetAllReviews()
+        {
+            BaseResponse<List<ReviewModel>> response;
+            try
+            {
+                var data = await _reviewService.GetAllReviews();
+                response = new BaseResponse<List<ReviewModel>>("Get reviews successfully.", HttpStatusCode.OK, data);
+            }
+            catch (Exception ex)
+            {
+                response = new BaseResponse<List<ReviewModel>>(ex.Message, HttpStatusCode.InternalServerError, null);
+            }
+
+            return StatusCode((int)response.StatusCode, response);
+        }
     }
 }
