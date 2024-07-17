@@ -73,7 +73,7 @@ namespace SWD392.OutfitBox.DataLayer.Repositories
         public async Task<ReviewData> GetRatingbyPackageId(int id)
         {
             var result = new ReviewData();
-            var rating = await this.Get().GroupBy(x=>x.NumberStars).Select(x=> new RatingStar { StarNumber = x.Key,Quantity = x.Count()}).ToListAsync();
+            var rating = await this.Get().Where(x=>x.PackageId==id).GroupBy(x=>x.NumberStars).Select(x=> new RatingStar { StarNumber = x.Key,Quantity = x.Count()}).ToListAsync();
             result.PackageId = id;
             result.RatingStars = rating;
             return result;
