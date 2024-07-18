@@ -42,11 +42,10 @@ namespace SWD392.OutfitBox.API.Controllers
         }
         [HttpGet("orders")]
         public async Task<ActionResult<List<CustomerPackageModel>>> GetCustomerPackages(
-            [FromQuery(Name ="_start")]
-
-            int? start = null,
-            [FromQuery(Name ="_end")]
-            int? end = null,
+            [FromQuery]
+            int? pageSize,
+            [FromQuery(Name = "current")]
+            int? pagendex,
             [FromQuery(Name="_sort")]
             string sorted = "",
             [FromQuery(Name ="_order")]
@@ -83,7 +82,7 @@ namespace SWD392.OutfitBox.API.Controllers
             try
             {   
 
-                var result = await _customerPackageService.GetListOrder(start,end,sorted,orders,packageName,customerId,packageId,status,dateFrom,dateTo,receiverName,receiverPhone,receiverAddress,maxPrice,minPrice,transactionId,quantityOfItems,maxTotalDeposit,minTotalDeposit);
+                var result = await _customerPackageService.GetListOrder(pageSize, pagendex, sorted,orders,packageName,customerId,packageId,status,dateFrom,dateTo,receiverName,receiverPhone,receiverAddress,maxPrice,minPrice,transactionId,quantityOfItems,maxTotalDeposit,minTotalDeposit);
                 response = new BaseResponse<List<CustomerPackageModel>>("Successfully", HttpStatusCode.OK, result.ToList());
 
             }

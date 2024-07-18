@@ -377,9 +377,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.UserPackageService
             {
                 var result = await _unitOfWork._customerPackageRepository.GetListOrder(null, null, sorted, orders, packageName, customerId, packageId, status, dateFrom, dateTo, receiverName, receiverPhone, receiverAddress, maxPrice, minPrice, transactionId, quantityOfItems, maxTotalDeposit, minTotalDeposit);
 
-                if (!start.HasValue) start = 0;
-                if (!end.HasValue) end = 10;
-                result = result.Skip((int)start).Take((int)(end - start)).ToList();
+                result = result.ToList();
                 return _mapper.Map<List<CustomerPackageModel>>(result);
             }
             catch (Exception ex)
