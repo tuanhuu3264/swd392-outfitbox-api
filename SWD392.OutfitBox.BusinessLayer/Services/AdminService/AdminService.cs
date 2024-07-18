@@ -31,7 +31,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.AdminService
             {
                 foreach (var item in data)
                 {
-                    item.Date = item.Date.ToUniversalTime().Date;
+                    item.Date = TimeZoneInfo.ConvertTimeFromUtc(item.Date.ToUniversalTime(), TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time")).Date; ;
                 }
 
                 for (var i = DateTime.UtcNow.Date; i >= data.Min(x => x.Date).Date; i = i.AddDays(-1))
@@ -57,7 +57,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.AdminService
             }
             foreach (var customer in data)
             {
-                var formattedDate = customer.Date.ToLocalTime().ToString("yyyy-MM-ddTHH:mm:ss");
+                var formattedDate = TimeZoneInfo.ConvertTimeToUtc(customer.Date, TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time")).ToString("yyyy-MM-ddTHH:mm:ss");
                 result.Data.Add(new AdminData { Date = DateTime.Parse(formattedDate), Value = customer.Value });
                 sum += customer.Value;
             }
@@ -79,10 +79,10 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.AdminService
             {
                 foreach (var item in data)
                 {
-                    item.Date = item.Date.ToUniversalTime().Date;
+                    item.Date = TimeZoneInfo.ConvertTimeFromUtc(item.Date.ToUniversalTime(), TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time")).Date; ;
                 }
 
-                for (var i = DateTime.UtcNow.Date; i >= data.Min(x => x.Date).Date; i = i.AddDays(-1))
+                for (var i = DateTime.Now.Date; i >= data.Min(x => x.Date).Date; i = i.AddDays(-1))
                 {
                     if (!data.Any(x => x.Date.Date == i))
                     {
@@ -100,12 +100,12 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.AdminService
                 }
                 else
                 {
-                    result.Trend = trend / penultimateCustomer.Value * 100;
+                    result.Trend = trend;
                 }
             }
             foreach (var customer in data)
             {
-                var formattedDate = customer.Date.ToLocalTime().ToString("yyyy-MM-ddTHH:mm:ss");
+                var formattedDate = TimeZoneInfo.ConvertTimeToUtc(customer.Date, TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time")).ToString("yyyy-MM-ddTHH:mm:ss");
                 result.Data.Add(new AdminData { Date = DateTime.Parse(formattedDate), Value = customer.Value });
                 sum += customer.Value;
             }
@@ -124,7 +124,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.AdminService
             {
                 foreach (var item in data)
                 {
-                    item.Date = item.Date.ToUniversalTime().Date;
+                    item.Date = TimeZoneInfo.ConvertTimeFromUtc(item.Date.ToUniversalTime(), TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time")).Date; ;
                 }
 
                 for (var i = DateTime.UtcNow.Date; i >= data.Min(x => x.Date).Date; i = i.AddDays(-1))
@@ -150,7 +150,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.AdminService
             }
             foreach (var customer in data)
             {
-                var formattedDate = customer.Date.ToLocalTime().ToString("yyyy-MM-ddTHH:mm:ss");
+                var formattedDate = TimeZoneInfo.ConvertTimeToUtc(customer.Date, TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time")).ToString("yyyy-MM-ddTHH:mm:ss");
                 result.Data.Add(new AdminData { Date = DateTime.Parse(formattedDate), Value = customer.Value });
                 sum += customer.Value;
             }
@@ -170,7 +170,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.AdminService
             {
                 foreach (var item in data)
                 {
-                    item.Date = item.Date.ToUniversalTime().Date;
+                    item.Date = TimeZoneInfo.ConvertTimeFromUtc(item.Date.ToUniversalTime(), TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time")).Date; ;
                 }
 
                 for (var i = DateTime.UtcNow.Date; i >= data.Min(x => x.Date).Date; i = i.AddDays(-1))
@@ -196,7 +196,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.AdminService
             }
             foreach (var customer in data)
             {
-                var formattedDate = customer.Date.ToLocalTime().ToString("yyyy-MM-ddTHH:mm:ss");
+                var formattedDate = TimeZoneInfo.ConvertTimeToUtc(customer.Date, TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time")).ToString("yyyy-MM-ddTHH:mm:ss");
                 result.Data.Add(new AdminData { Date = DateTime.Parse(formattedDate), Value = customer.Value });
                 sum += customer.Value;
             }
@@ -237,7 +237,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.AdminService
             {
                 foreach (var item in data)
                 {
-                    item.Date = item.Date.ToUniversalTime().Date;
+                    item.Date = TimeZoneInfo.ConvertTimeFromUtc(item.Date.ToUniversalTime(), TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time")).Date; ;
                 }
 
                 for (var i = DateTime.UtcNow.Date; i >= data.Min(x => x.Date).Date; i = i.AddDays(-1))
@@ -263,7 +263,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.AdminService
             }
             foreach (var customer in data)
             {
-                var formattedDate = customer.Date.ToLocalTime().ToString("yyyy-MM-ddTHH:mm:ss");
+                var formattedDate = TimeZoneInfo.ConvertTimeToUtc(customer.Date, TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time")).ToString("yyyy-MM-ddTHH:mm:ss");
                 result.Data.Add(new AdminData { Date = DateTime.Parse(formattedDate), Value = customer.Value });
                 sum += customer.Value;
             }
@@ -281,7 +281,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.AdminService
             {
                 foreach (var item in data)
                 {
-                    item.Date = item.Date.ToUniversalTime().Date;
+                    item.Date = TimeZoneInfo.ConvertTimeFromUtc(item.Date.ToUniversalTime(), TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time")).Date; ;
                 }
 
                 for (var i = DateTime.UtcNow.Date; i >= data.Min(x => x.Date).Date; i = i.AddDays(-1))
@@ -307,7 +307,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.AdminService
             }
             foreach (var customer in data)
             {
-                var formattedDate = customer.Date.ToLocalTime().ToString("yyyy-MM-ddTHH:mm:ss");
+                var formattedDate = TimeZoneInfo.ConvertTimeToUtc(customer.Date, TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time")).ToString("yyyy-MM-ddTHH:mm:ss");
                 result.Data.Add(new AdminData { Date = DateTime.Parse(formattedDate), Value = customer.Value });
                 sum += customer.Value;
             }
