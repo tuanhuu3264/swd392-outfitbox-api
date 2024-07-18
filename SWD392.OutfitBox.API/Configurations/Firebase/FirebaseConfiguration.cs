@@ -35,10 +35,10 @@ namespace SWD392.OutfitBox.API.Configurations.Firebase
         public static void CreateFirebaseApp(this IConfiguration configuration)
         {
             FirebaseApp.Create(new AppOptions
-            { 
+            {
                 Credential = GoogleCredential.FromFile(configuration["FirebaseAdmin:Path"]),
                 ProjectId = configuration["FirebaseAdmin:ProjectId"]
-               
+
             });
         }
     }
