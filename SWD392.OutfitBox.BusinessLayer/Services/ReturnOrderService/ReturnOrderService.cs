@@ -35,23 +35,30 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.ReturnOrderService
                 throw new Exception("There are no products in the return order");
 
             var mappingReturnOrder = _mapper.Map<ReturnOrder>(requestDTO);
+            List<ProductReturnOrder> listProductReturnOrder = new List<ProductReturnOrder>();
+            if(mappingReturnOrder.ProductReturnOrders!=null)
+            foreach(var item in mappingReturnOrder.ProductReturnOrders)
+            {
+                if(item.Quantity>0) listProductReturnOrder.Add(item);
+            } 
+            mappingReturnOrder.ProductReturnOrders = listProductReturnOrder;
 
-            var customer = await _unitOfWork._customerRepository.GetCustomerById(requestDTO.CustomerId.Value);
-            if (customer == null)
-                throw new Exception("No customer found with ID: " + requestDTO.CustomerId.Value);
+            
 
             var customerPackage = await _unitOfWork._customerPackageRepository.GetCustomerPackageById(requestDTO.CustomerPackageId.Value);
             if (customerPackage == null)
                 throw new Exception("No order found with ID: " + requestDTO.CustomerPackageId.Value);
 
-            if (customerPackage.CustomerId != customer.Id)
-                throw new Exception("The user doesn't have permission to create this return order");
+           
             if (customerPackage.Status == 0 || customerPackage.Status == -1 || (customerPackage.IsReturnedDeposit == true))
                 throw new Exception("The return order can be created as it is invalid status to create");
+            var customer = await _unitOfWork._customerRepository.GetCustomerById(customerPackage.CustomerId);
+            if (customer == null)
+                throw new Exception("No customer found with ID: " + customerPackage.CustomerId);
             var partner = await _unitOfWork._partnerRepository.GetPartnerById(requestDTO.PartnerId.Value);
             if (partner == null)
                 throw new Exception("No partner found with ID: " + requestDTO.PartnerId.Value);
-
+            
             var productIds = customerPackage.Items.Select(x => x.ProductId).ToHashSet();
             foreach (var item in requestDTO.ProductReturnOrders)
             {

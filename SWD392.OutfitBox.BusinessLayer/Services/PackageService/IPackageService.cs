@@ -15,7 +15,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.PackageService
         public Task<PackageModel> UpdatePackage(PackageModel package);
         public Task<PackageModel> ChangeStatus(int id, int status);
         public Task<string> UploadFile(IFormFile file);
-
+        public  Task<PackageModel> UpdateCategoryPackage(CategoryPackageModel[] categoryPackageModels, int packageId);
         public Task<PackageModel> GetPackageByIdV2(int v);
     }
 }
