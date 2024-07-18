@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using SWD392.OutfitBox.BusinessLayer.BusinessModels;
 using SWD392.OutfitBox.BusinessLayer.BusinessModels.AdminModel;
+using SWD392.OutfitBox.DataLayer.UnitOfWork;
 
 namespace SWD392.OutfitBox.BusinessLayer.Services.ReviewService
 {
@@ -16,10 +17,12 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.ReviewService
     {
         public IReviewRepository _reviewRepository;
         public IMapper _mapper;
-        public ReviewService(IMapper mapper, IReviewRepository reviewRepository)
+        public IUnitOfWork _unitOfWork;
+        public ReviewService(IMapper mapper, IReviewRepository reviewRepository,IUnitOfWork unitOfWork)
         {
             _reviewRepository = reviewRepository;
             _mapper = mapper;
+            _unitOfWork = unitOfWork;
         }
         public async Task<ReviewModel> ActiveOrDeactiveReviewById(int id)
         {
@@ -73,16 +76,20 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.ReviewService
         }
         public async Task<ReviewDataModel> GetReviewDataModelByPackageId(int packageId)
         {
+            var test = await _unitOfWork._packageRepository.GetPackageById(packageId);
+            if(test.Id == 0) { throw new Exception("Not Found"); }
+            var check = await this.GetAllReviewsByPackageId(packageId);
+            if (!check.Any()) { return null; }
             var list = await _reviewRepository.GetRatingbyPackageId(packageId);
             var result = _mapper.Map<ReviewDataModel>(list);
             result.QuantityOfReviews = result.RatingStars.Sum(x => x.Quantity) ;
             result.AverageStar = 0;
             var sum = 0;
             foreach ( var item in result.RatingStars) {
-                item.Rate = (double)item.Quantity / result.QuantityOfReviews;
+                item.Rate = double.Round((double)item.Quantity / result.QuantityOfReviews,1);
                 sum = sum + item.StarNumber * item.Quantity;
             }
-            result.AverageStar = (double)sum / result.QuantityOfReviews;
+            result.AverageStar = double.Round((double)sum / result.QuantityOfReviews,1);
             return result;
         }
 
