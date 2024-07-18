@@ -29,19 +29,16 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.AdminService
 
             if (data != null && data.Count > 1)
             {
-                foreach (var item in data)
+                for (var i = DateTime.Now.Date; i.Date >= data.Min(x => x.Date.Date); i = i.AddDays(-1))
                 {
-                    item.Date = TimeZoneInfo.ConvertTimeFromUtc(item.Date.ToUniversalTime(), TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time")).Date; ;
-                }
-
-                for (var i = DateTime.UtcNow.Date; i >= data.Min(x => x.Date).Date; i = i.AddDays(-1))
-                {
-                    if (!data.Any(x => x.Date.Date == i))
+                    if (!data.Any(x => x.Date.Date == i.Date))
                     {
-                        data.Add(new AdminData { Date = i, Value = 0 });
+                        data.Add(new AdminData { Date = i.Date, Value = 0 });
                     }
                 }
+
                 data = data.OrderBy(c => c.Date).ToList();
+
                 var lastCustomer = data[^1];
                 var penultimateCustomer = data[^2];
                 var trend = lastCustomer.Value - penultimateCustomer.Value;
@@ -52,16 +49,19 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.AdminService
                 }
                 else
                 {
-                    result.Trend = trend / penultimateCustomer.Value * 100;
+                    result.Trend = trend / (double)penultimateCustomer.Value * 100;
                 }
             }
+
             foreach (var customer in data)
             {
-                var formattedDate = TimeZoneInfo.ConvertTimeToUtc(customer.Date, TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time")).ToString("yyyy-MM-ddTHH:mm:ss");
-                result.Data.Add(new AdminData { Date = DateTime.Parse(formattedDate), Value = customer.Value });
+               
+                result.Data.Add(new AdminData { Date = customer.Date, Value = customer.Value });
                 sum += customer.Value;
             }
+
             result.Total = sum;
+
             return result;
         }
 
@@ -77,19 +77,16 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.AdminService
 
             if (data != null && data.Count > 1)
             {
-                foreach (var item in data)
+                for (var i = DateTime.Now.Date; i.Date >= data.Min(x => x.Date.Date); i = i.AddDays(-1))
                 {
-                    item.Date = TimeZoneInfo.ConvertTimeFromUtc(item.Date.ToUniversalTime(), TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time")).Date; ;
-                }
-
-                for (var i = DateTime.Now.Date; i >= data.Min(x => x.Date).Date; i = i.AddDays(-1))
-                {
-                    if (!data.Any(x => x.Date.Date == i))
+                    if (!data.Any(x => x.Date.Date == i.Date))
                     {
                         data.Add(new AdminData { Date = i, Value = 0 });
                     }
                 }
+
                 data = data.OrderBy(c => c.Date).ToList();
+
                 var lastCustomer = data[^1];
                 var penultimateCustomer = data[^2];
                 var trend = lastCustomer.Value - penultimateCustomer.Value;
@@ -100,16 +97,19 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.AdminService
                 }
                 else
                 {
-                    result.Trend = trend;
+                    result.Trend = trend / (double)penultimateCustomer.Value * 100;
                 }
             }
+
             foreach (var customer in data)
             {
-                var formattedDate = TimeZoneInfo.ConvertTimeToUtc(customer.Date, TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time")).ToString("yyyy-MM-ddTHH:mm:ss");
-                result.Data.Add(new AdminData { Date = DateTime.Parse(formattedDate), Value = customer.Value });
+
+                result.Data.Add(new AdminData { Date = customer.Date, Value = customer.Value });
                 sum += customer.Value;
             }
+
             result.Total = sum;
+
             return result;
         }
 
@@ -122,19 +122,16 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.AdminService
 
             if (data != null && data.Count > 1)
             {
-                foreach (var item in data)
+                for (var i = DateTime.Now.Date; i.Date >= data.Min(x => x.Date.Date); i = i.AddDays(-1))
                 {
-                    item.Date = TimeZoneInfo.ConvertTimeFromUtc(item.Date.ToUniversalTime(), TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time")).Date; ;
-                }
-
-                for (var i = DateTime.UtcNow.Date; i >= data.Min(x => x.Date).Date; i = i.AddDays(-1))
-                {
-                    if (!data.Any(x => x.Date.Date == i))
+                    if (!data.Any(x => x.Date.Date == i.Date))
                     {
                         data.Add(new AdminData { Date = i, Value = 0 });
                     }
                 }
+
                 data = data.OrderBy(c => c.Date).ToList();
+
                 var lastCustomer = data[^1];
                 var penultimateCustomer = data[^2];
                 var trend = lastCustomer.Value - penultimateCustomer.Value;
@@ -145,18 +142,22 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.AdminService
                 }
                 else
                 {
-                    result.Trend = trend / penultimateCustomer.Value * 100;
+                    result.Trend = trend / (double)penultimateCustomer.Value * 100;
                 }
             }
+
             foreach (var customer in data)
             {
-                var formattedDate = TimeZoneInfo.ConvertTimeToUtc(customer.Date, TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time")).ToString("yyyy-MM-ddTHH:mm:ss");
-                result.Data.Add(new AdminData { Date = DateTime.Parse(formattedDate), Value = customer.Value });
+
+                result.Data.Add(new AdminData { Date = customer.Date, Value = customer.Value });
                 sum += customer.Value;
             }
+
             result.Total = sum;
+
             return result;
         }
+
 
         public async Task<AdminModel> GetNumberTransaction()
         {
@@ -165,22 +166,18 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.AdminService
             double sum = 0;
             var result = new AdminModel();
             result.Data = new List<AdminData>();
-
             if (data != null && data.Count > 1)
             {
-                foreach (var item in data)
+                for (var i = DateTime.Now.Date; i.Date >= data.Min(x => x.Date.Date); i = i.AddDays(-1))
                 {
-                    item.Date = TimeZoneInfo.ConvertTimeFromUtc(item.Date.ToUniversalTime(), TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time")).Date; ;
-                }
-
-                for (var i = DateTime.UtcNow.Date; i >= data.Min(x => x.Date).Date; i = i.AddDays(-1))
-                {
-                    if (!data.Any(x => x.Date.Date == i))
+                    if (!data.Any(x => x.Date.Date == i.Date))
                     {
                         data.Add(new AdminData { Date = i, Value = 0 });
                     }
                 }
+
                 data = data.OrderBy(c => c.Date).ToList();
+
                 var lastCustomer = data[^1];
                 var penultimateCustomer = data[^2];
                 var trend = lastCustomer.Value - penultimateCustomer.Value;
@@ -191,16 +188,19 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.AdminService
                 }
                 else
                 {
-                    result.Trend = trend / penultimateCustomer.Value * 100;
+                    result.Trend = trend / (double)penultimateCustomer.Value * 100;
                 }
             }
+
             foreach (var customer in data)
             {
-                var formattedDate = TimeZoneInfo.ConvertTimeToUtc(customer.Date, TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time")).ToString("yyyy-MM-ddTHH:mm:ss");
-                result.Data.Add(new AdminData { Date = DateTime.Parse(formattedDate), Value = customer.Value });
+
+                result.Data.Add(new AdminData { Date = customer.Date, Value = customer.Value });
                 sum += customer.Value;
             }
+
             result.Total = sum;
+
             return result;
         }
         public async Task<List<AdminObjectData>> GetTrendingPackage()
@@ -214,7 +214,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.AdminService
             var list = await _unitOfWork._packageRepository.GetDashboardPricePackages();
             return list;
         }
-        //
+        
         public async Task<List<AdminObjectData>> GetQuantityRentingProduct()
         {
             var list = await _unitOfWork._itemsInUserPackageRepository.GetRentingProducts();
@@ -235,19 +235,16 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.AdminService
 
             if (data != null && data.Count > 1)
             {
-                foreach (var item in data)
+                for (var i = DateTime.Now.Date; i.Date >= data.Min(x => x.Date.Date); i = i.AddDays(-1))
                 {
-                    item.Date = TimeZoneInfo.ConvertTimeFromUtc(item.Date.ToUniversalTime(), TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time")).Date; ;
-                }
-
-                for (var i = DateTime.UtcNow.Date; i >= data.Min(x => x.Date).Date; i = i.AddDays(-1))
-                {
-                    if (!data.Any(x => x.Date.Date == i))
+                    if (!data.Any(x => x.Date.Date == i.Date))
                     {
                         data.Add(new AdminData { Date = i, Value = 0 });
                     }
                 }
+
                 data = data.OrderBy(c => c.Date).ToList();
+
                 var lastCustomer = data[^1];
                 var penultimateCustomer = data[^2];
                 var trend = lastCustomer.Value - penultimateCustomer.Value;
@@ -258,16 +255,19 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.AdminService
                 }
                 else
                 {
-                    result.Trend = trend / penultimateCustomer.Value * 100;
+                    result.Trend = trend / (double)penultimateCustomer.Value * 100;
                 }
             }
+
             foreach (var customer in data)
             {
-                var formattedDate = TimeZoneInfo.ConvertTimeToUtc(customer.Date, TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time")).ToString("yyyy-MM-ddTHH:mm:ss");
-                result.Data.Add(new AdminData { Date = DateTime.Parse(formattedDate), Value = customer.Value });
+
+                result.Data.Add(new AdminData { Date = customer.Date, Value = customer.Value });
                 sum += customer.Value;
             }
+
             result.Total = sum;
+
             return result;
         }
         public async Task<AdminModel> GetCanceledOrder()
@@ -276,22 +276,18 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.AdminService
             double sum = 0;
             var result = new AdminModel();
             result.Data = new List<AdminData>();
-
             if (data != null && data.Count > 1)
             {
-                foreach (var item in data)
+                for (var i = DateTime.Now.Date; i.Date >= data.Min(x => x.Date.Date); i = i.AddDays(-1))
                 {
-                    item.Date = TimeZoneInfo.ConvertTimeFromUtc(item.Date.ToUniversalTime(), TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time")).Date; ;
-                }
-
-                for (var i = DateTime.UtcNow.Date; i >= data.Min(x => x.Date).Date; i = i.AddDays(-1))
-                {
-                    if (!data.Any(x => x.Date.Date == i))
+                    if (!data.Any(x => x.Date.Date == i.Date))
                     {
                         data.Add(new AdminData { Date = i, Value = 0 });
                     }
                 }
+
                 data = data.OrderBy(c => c.Date).ToList();
+
                 var lastCustomer = data[^1];
                 var penultimateCustomer = data[^2];
                 var trend = lastCustomer.Value - penultimateCustomer.Value;
@@ -302,16 +298,19 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.AdminService
                 }
                 else
                 {
-                    result.Trend = trend / penultimateCustomer.Value * 100;
+                    result.Trend = trend / (double)penultimateCustomer.Value * 100;
                 }
             }
+
             foreach (var customer in data)
             {
-                var formattedDate = TimeZoneInfo.ConvertTimeToUtc(customer.Date, TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time")).ToString("yyyy-MM-ddTHH:mm:ss");
-                result.Data.Add(new AdminData { Date = DateTime.Parse(formattedDate), Value = customer.Value });
+
+                result.Data.Add(new AdminData { Date = customer.Date, Value = customer.Value });
                 sum += customer.Value;
             }
+
             result.Total = sum;
+
             return result;
         }
         public async Task<List<AdminObjectData>> GetLostProduct()
