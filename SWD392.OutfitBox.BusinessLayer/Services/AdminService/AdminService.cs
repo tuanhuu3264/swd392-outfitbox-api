@@ -100,7 +100,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.AdminService
                 }
                 else
                 {
-                    result.Trend = trend / penultimateCustomer.Value * 100;
+                    result.Trend = trend;
                 }
             }
             foreach (var customer in data)
