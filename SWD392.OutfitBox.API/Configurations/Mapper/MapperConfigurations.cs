@@ -64,6 +64,7 @@ namespace SWD392.OutfitBox.API.Configurations.Mapper
             CreateMap<Package, PackageModel>();
             CreateMap<Package, PackageModel>();
             CreateMap<CategoryPackageDTO, CategoryPackageModel>();
+            CreateMap<UpdateCategoryPackageDTO,CategoryPackageModel>();
             CreateMap<PackageModel, Package>().ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
         }
         public void CategoryPackageProfile()

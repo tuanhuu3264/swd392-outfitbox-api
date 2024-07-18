@@ -24,5 +24,10 @@ namespace SWD392.OutfitBox.API.DTOs.Package
 
         public CategoryPackageDTO[]? CategoryPackages { get; set; }
     }
-    
+    public class UpdateCategoryPackageDTO
+    {
+        public int? CategoryId { get; set; }
+        public string? CategoryName { get; set; } = string.Empty;
+        public int? MaxAvailableQuantity { get; set; }
+    }
 }

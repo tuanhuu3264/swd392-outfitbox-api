@@ -170,6 +170,28 @@ namespace SWD392.OutfitBox.API.Controllers
             }
             return StatusCode((int)response.StatusCode, response);
         }
-   
+
+        [HttpPatch("packages/category-packagaes/{id}")]
+        public async Task<ActionResult<PackageModel>> UpdateCategoryInPackage([FromRoute] int id, [FromBody] UpdateCategoryPackageDTO[] updatePackageRequestDTO)
+        {
+            BaseResponse<PackageModel> response;
+            try
+            {
+                var mapping = _mapper.Map<CategoryPackageModel[]>(updatePackageRequestDTO);
+         
+                var data = await _packageService.UpdateCategoryPackage(mapping, id);
+                response = new BaseResponse<PackageModel>("Update package successfully.", HttpStatusCode.Accepted, data);
+            }
+            catch (ArgumentNullException ex)
+            {
+                response = new BaseResponse<PackageModel>(ex.Message, HttpStatusCode.NotFound, null);
+            }
+            catch (Exception ex)
+            {
+                response = new BaseResponse<PackageModel>(ex.Message, HttpStatusCode.InternalServerError, null);
+            }
+            return StatusCode((int)response.StatusCode, response);
+        }
+
     }
 }
