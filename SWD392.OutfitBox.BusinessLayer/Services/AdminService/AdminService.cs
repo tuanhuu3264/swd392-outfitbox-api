@@ -49,7 +49,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.AdminService
                 }
                 else
                 {
-                    result.Trend = trend / (double)penultimateCustomer.Value * 100;
+                    result.Trend = trend ;
                 }
             }
 
@@ -97,7 +97,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.AdminService
                 }
                 else
                 {
-                    result.Trend = trend / (double)penultimateCustomer.Value * 100;
+                    result.Trend = trend ;
                 }
             }
 
