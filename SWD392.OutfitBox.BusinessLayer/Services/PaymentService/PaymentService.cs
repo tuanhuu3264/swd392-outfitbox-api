@@ -1,10 +1,15 @@
-﻿using AutoMapper;
+﻿using Abp.Runtime.Caching;
+using AutoMapper;
+using FirebaseAdmin.Messaging;
+using Newtonsoft.Json;
+using StackExchange.Redis;
 using SWD392.OutfitBox.BusinessLayer.BusinessModels;
 using SWD392.OutfitBox.BusinessLayer.BusinessModels.PaymentModels;
 using SWD392.OutfitBox.BusinessLayer.Enum;
 
 using SWD392.OutfitBox.BusinessLayer.Services.PaymentService;
 using SWD392.OutfitBox.DataLayer.Entities;
+using SWD392.OutfitBox.DataLayer.FirebaseCloudMessaging;
 using SWD392.OutfitBox.DataLayer.UnitOfWork;
 using SWD392.OutfitBox.DataLayer.VNPay;
 using System;
@@ -20,11 +25,15 @@ namespace BusinessLayer.Services
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private readonly IDatabase _cache;
+        private readonly ConnectionMultiplexer _redis;
 
         public PaymentService(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _redis = ConnectionMultiplexer.Connect("outfit4rent.online:6379");
+            _cache = _redis.GetDatabase();
         }
         public async Task<ResponsePayment> GetInformationPayment(VNPayModel dto)
         {
@@ -117,6 +126,19 @@ namespace BusinessLayer.Services
                         var customer = await _unitOfWork._customerRepository.GetCustomerById(response.UserId.Value);
                         customer.MoneyInWallet = customer.MoneyInWallet + vnp_Amount / 25000;
                         await _unitOfWork._customerRepository.UpdateCustomer(customer);
+                        Message message = new Message();
+                        var serializedModel = _cache.StringGet(customer.Id.ToString());
+                        if (serializedModel.HasValue)
+                        {
+                            var deviceModel = JsonConvert.DeserializeObject<DeviceTokenModels>(serializedModel);
+                            message.Token = deviceModel.DeviceToken;
+                        }
+                        message.Notification = new Notification()
+                        {
+                            Title = "Recharge successfully",
+                            Body = $"The system successfully recharge {customer.MoneyInWallet} to your wallet"
+                        };
+                        if (message.Token != null) FirebaseCloudMessagingHelper.SendNotificationByMessage(message);
                     }
                     catch (Exception ex)
                     {

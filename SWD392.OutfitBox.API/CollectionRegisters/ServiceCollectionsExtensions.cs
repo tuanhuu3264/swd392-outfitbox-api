@@ -58,7 +58,7 @@ namespace SWD392.OutfitBox.API.CollectionRegisters
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IPackageService, PackageService>();
-          //services.AddScoped<ITransactionService, TransactionService>();
+            services.AddScoped<ITransactionService, TransactionService>();
             services.AddScoped<ICustomerService, CustomerService>();
             services.AddScoped<IWalletService, WalletService>();
             services.AddScoped<IRoleService, RoleService>();

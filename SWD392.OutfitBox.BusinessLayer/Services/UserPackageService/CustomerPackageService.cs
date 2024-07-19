@@ -124,6 +124,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.UserPackageService
                                 {
                                     WalletId=wallet.Id,
                                     DateTransaction=DateTime.Now,
+                                    Content="Return Money Order"+customerPackageModel.OrderCode,
                                     Amount=(double)customerPackageModel.TotalDeposit,
                                     Paymethod="Online",
                                     Status=1,
@@ -239,7 +240,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.UserPackageService
                     var product = await _unitOfWork._productRepository.GetById(item.ProductId);
                     if (product == null) throw new Exception($"Product with ID {item.ProductId} not found.");
                     item.Status = 0;
-                    item.Deposit = product.Deposit * item.Quantity;
+                    item.Deposit = product.Deposit * item.Quantity*package.Price;
                     item.TornMoney = 0;
                     product.Quantity -= item.Quantity;
 
@@ -267,17 +268,18 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.UserPackageService
                     var createdTransaction = await _unitOfWork._transactionRepository.CreateTransaction(new Transaction()
                     {
                         Amount = createdDeposit.AmountMoney,
+                        Content = $"Buy Order ",
                         DateTransaction = DateTime.Now,
                         DepositId = createdDeposit.Id,
                         Paymethod = wallet.WalletName,
                         WalletId = wallet.Id,
-                        Status = 0,
+                        Status = 1,
                     });
 
                     customerPackage.TransactionId = createdTransaction.Id;
                     customerPackage.QuantityOfItems = customerPackageModel.ItemInUsers.Sum(x => x.Quantity);
                     var result = await _unitOfWork._customerPackageRepository.CreateUserPackage(customerPackage);
-
+              
                     if (result != null)
                     {
                         Random random = new Random();

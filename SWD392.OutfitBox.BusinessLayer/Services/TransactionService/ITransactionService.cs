@@ -12,5 +12,6 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.TransactionService
  
         public Task<List<TransactionModel>> GetAllTransactionsByWalletId(int walletId, int userId);
         public Task<List<TransactionModel>> GetAllTransactionsByUserId(int userId);
+
     }
 }

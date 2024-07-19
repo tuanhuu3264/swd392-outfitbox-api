@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="BackupService\" />
     <Folder Include="FirebaseTasks\" />
     <Folder Include="ListenTask\" />
     <Folder Include="NotifyTasks\" />

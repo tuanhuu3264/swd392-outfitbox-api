@@ -71,5 +71,6 @@ namespace SWD392.OutfitBox.DataLayer.Repositories
           ).ToListAsync();
             return data;
         }
+
     }
 }

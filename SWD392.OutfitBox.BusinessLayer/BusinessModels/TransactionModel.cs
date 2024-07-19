@@ -11,6 +11,7 @@ namespace SWD392.OutfitBox.BusinessLayer.BusinessModels
     public class TransactionModel
     {
         public int? Id { get; set; }
+        public string? Content {  get; set; }
         public DateTime? DateTransaction { get; set; }
         public double? Amount { get; set; }
         public int? Status { get; set; }

@@ -15,6 +15,7 @@ namespace SWD392.OutfitBox.DataLayer.Entities
         public int Id { get; set; }
         public DateTime DateTransaction { get; set; }
         public double Amount { get; set; }
+        public string? Content { get; set; }
         public int Status { get; set; }
         public string Paymethod { get; set; } = string.Empty;
         public int WalletId { get; set; }
