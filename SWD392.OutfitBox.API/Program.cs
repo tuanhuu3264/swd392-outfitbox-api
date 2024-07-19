@@ -7,6 +7,7 @@ using SWD392.OutfitBox.API.Configurations.Authorizations;
 using SWD392.OutfitBox.API.Configurations.Databases;
 using SWD392.OutfitBox.API.Configurations.Firebase;
 using SWD392.OutfitBox.API.Configurations.Swagger;
+using SWD392.OutfitBox.BackgroundWorker.BackupService;
 using SWD392.OutfitBox.BackgroundWorker.NotReturnedCustomerTask;
 using SWD392.OutfitBox.BackgroundWorker.RedisTask;
 using SWD392.OutfitBox.BackgroundWorker.ReturnMoneyTask;
@@ -41,6 +42,7 @@ builder.Services.AddHostedService<NotificationUserBackgroundService>();
 builder.Services.AddHostedService<ReturnMoneyBackgroundService>();
 builder.Services.AddHostedService<NotReturnedCustomerTask>();
 builder.Services.AddHostedService<SetDataRedis>();
+builder.Services.AddHostedService<BackupTask>();
 
 var app = builder.Build();
 

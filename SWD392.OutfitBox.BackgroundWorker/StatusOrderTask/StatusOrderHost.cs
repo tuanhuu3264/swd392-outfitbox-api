@@ -29,7 +29,7 @@ namespace SWD392.OutfitBox.BackgroundWorker.StatusOrderTask
 
         Task IHostedService.StartAsync(CancellationToken cancellationToken)
         {
-                    _timer = new Timer(DoWork, null, TimeSpan.Zero, TimeSpan.FromMinutes(15));
+                    _timer = new Timer(DoWork, null, TimeSpan.Zero, TimeSpan.FromMinutes(10));
                     return Task.CompletedTask;
         }
 
@@ -61,8 +61,8 @@ namespace SWD392.OutfitBox.BackgroundWorker.StatusOrderTask
                 }
                 _context.SaveChanges();
                 Task.WhenAll(
-                         ProducerMessage.ProductUpdateRedisMessage<List<CustomerPackage>>("delete-customer-packages-by-customerId", "delete", null, $"customer-packages-status:{1}"),
-                         ProducerMessage.ProductUpdateRedisMessage<List<CustomerPackage>>("delete-customer-packages-by-customerId", "delete", null, $"customer-packages-status:{2}")
+                         ProducerMessage.ProductUpdateRedisMessage<List<CustomerPackage>>("delete-customer-packages-by-customer-package-id-1", "delete", null, $"customer-packages-status:{1}"),
+                         ProducerMessage.ProductUpdateRedisMessage<List<CustomerPackage>>("delete-customer-packages-by-customer-package-id-1", "delete", null, $"customer-packages-status:{2}")
                  );
                 _context.Dispose();
             }

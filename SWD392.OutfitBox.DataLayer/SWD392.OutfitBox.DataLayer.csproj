@@ -9,6 +9,7 @@
 	<ItemGroup>
 		<Folder Include="Constants\" />
 		<Folder Include="Libraries\" />
+		<Folder Include="Hubs\" />
 	</ItemGroup>
 
 	<ItemGroup>

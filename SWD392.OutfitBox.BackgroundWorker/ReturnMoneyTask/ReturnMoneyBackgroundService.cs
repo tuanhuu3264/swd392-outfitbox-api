@@ -31,7 +31,7 @@ namespace SWD392.OutfitBox.BackgroundWorker.ReturnMoneyTask
         public Task StartAsync(CancellationToken cancellationToken)
         {
             _logger.LogInformation("Return Money Background Service is starting.");
-            _timer = new Timer(DoWork, null, TimeSpan.Zero, TimeSpan.FromHours(1));
+            _timer = new Timer(DoWork, null, TimeSpan.Zero, TimeSpan.FromMinutes(15));
             return Task.CompletedTask;
         }
 
@@ -50,7 +50,7 @@ namespace SWD392.OutfitBox.BackgroundWorker.ReturnMoneyTask
             {
                 using var context = new Context();
                 var customerPackages = await context.CustomerPackages
-                    .Where(p => p.Status == 2 && !p.IsReturnedDeposit && p.DateTo.AddDays(4).Date == DateTime.Now.Date)
+                    .Where(p => p.Status == 2 && !p.IsReturnedDeposit && p.DateTo.AddDays(1).Date == DateTime.Now.Date)
                     .Include(x => x.Items)
                     .ToListAsync();
                 if (customerPackages.Any())

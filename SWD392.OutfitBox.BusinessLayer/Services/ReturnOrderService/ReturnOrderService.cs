@@ -179,9 +179,10 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.ReturnOrderService
                             updatedQuantity[item.ProductId] = item.Quantity;
                         }
                     }
+                    returnOrder.TotalThornMoney = 0;
                     if (returnOrder.Status == 0 && status == 1)
                     {
-
+                        var customerPackage = await _unitOfWork._customerPackageRepository.GetCustomerPackageById(returnOrder.CustomerPackageId);
                         var productsInReturnOrder = await _unitOfWork._productReturnOrderRepository.GetProductReturnOrderByReturnOrderId(id);
                         foreach (var item in productsInReturnOrder)
                         {
@@ -195,7 +196,10 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.ReturnOrderService
                             productInReturnOrder.ThornMoney = (double)model.ThornMoney;
                             productInReturnOrder.DamagedLevel= (int)model.DamagedLevel;
                             await _unitOfWork._productReturnOrderRepository.UpdatePoductReturnOrder(productInReturnOrder);
+                            
+                            returnOrder.TotalThornMoney +=(double)model.ThornMoney;
                         }
+                       
                         message = new Message()
                         {
                             Notification = new Notification()

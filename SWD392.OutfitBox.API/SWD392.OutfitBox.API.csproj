@@ -55,4 +55,10 @@
 		</Content>
 	</ItemGroup>
 
+	<ItemGroup>
+	  <None Update="database_backup.bak">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </None>
+	</ItemGroup>
+
 </Project>
