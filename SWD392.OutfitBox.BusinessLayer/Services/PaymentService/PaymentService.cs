@@ -108,7 +108,7 @@ namespace BusinessLayer.Services
                         {
                             CustomerId = response.UserId.Value,
                             AmountMoney = vnp_Amount / 25000,
-                            Date = DateTime.NowAddHours(7),
+                            Date = DateTime.Now.AddHours(7),
                             Type = "Payment",
                         };
                         var result = await _unitOfWork._depositRepository.CreateDeposit(deposit);

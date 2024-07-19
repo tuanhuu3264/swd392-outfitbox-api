@@ -113,9 +113,9 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.ReturnOrderService
                                 if (item.DamagedLevel == 3) item.ThornMoney = item.Quantity * price * 1;
                             }
                         }
-                    mappingReturnOrder.DateReturn=DateTime.Now;
+                    mappingReturnOrder.DateReturn = DateTime.Now.AddHours(7);
                     mappingReturnOrder.Status = 0;
-                    mappingReturnOrder.CreatedAt = DateTime.Now;
+                    mappingReturnOrder.CreatedAt = DateTime.Now.AddHours(7);
                     mappingReturnOrder.QuantityOfItems = requestDTO.ProductReturnOrders.Sum(x => x.Quantity.Value);
 
                     var result = await _unitOfWork._returnOrderRepository.CreateReturnOrder(mappingReturnOrder);

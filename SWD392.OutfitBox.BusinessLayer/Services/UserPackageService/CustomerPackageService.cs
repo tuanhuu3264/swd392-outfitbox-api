@@ -116,14 +116,14 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.UserPackageService
                         {
                             AmountMoney = (double)customerPackageModel.TotalDeposit,
                             CustomerId = customer.Id,
-                            Date = DateTime.Now,
+                            Date = DateTime.Now.AddHours(7),
                             Type = "Return Money As Canceling Order",
                             Transactions = new List<Transaction>()
                             {
                                 new Transaction()
                                 {
                                     WalletId=wallet.Id,
-                                    DateTransaction=DateTime.Now,
+                                    DateTransaction= DateTime.Now.AddHours(7),
                                     Content="Return Money Order"+customerPackageModel.OrderCode,
                                     Amount=(double)customerPackageModel.TotalDeposit,
                                     Paymethod="Online",
@@ -256,7 +256,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.UserPackageService
             {
                 CustomerId = customerPackage.CustomerId,
                 AmountMoney = (double)(customerPackage.Price + customerPackage.TotalDeposit),
-                Date = DateTime.Now,
+                Date = DateTime.Now.AddHours(7),
                 Type = "Payment for rent"
             };
 
@@ -269,7 +269,7 @@ namespace SWD392.OutfitBox.BusinessLayer.Services.UserPackageService
                     {
                         Amount = createdDeposit.AmountMoney,
                         Content = $"Buy Order ",
-                        DateTransaction = DateTime.Now,
+                        DateTransaction = DateTime.Now.AddHours(7),
                         DepositId = createdDeposit.Id,
                         Paymethod = wallet.WalletName,
                         WalletId = wallet.Id,
