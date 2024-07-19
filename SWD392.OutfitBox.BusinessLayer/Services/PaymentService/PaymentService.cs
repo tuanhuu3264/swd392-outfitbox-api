@@ -89,7 +89,7 @@ namespace BusinessLayer.Services
                     await _unitOfWork.CommitTransaction();
                     try
                     {
-                        var wallet = await _unitOfWork._walletRepository.GetWalletByCode(bankCode);
+                        var wallet = await _unitOfWork._walletRepository.GetWalletByCode(bankCode, int.Parse(orderInfo));
                         if (wallet.Id == 0)
                         {
                             wallet = new Wallet
